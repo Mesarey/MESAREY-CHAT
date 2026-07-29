@@ -1,0 +1,17 @@
+# credenciales
+.env
+
+# estado y config local generados en la primera corrida
+config.json
+polybot_state.json
+polybot.log
+polybot_trades.csv
+polybackfill_cache.json
+polybackfill_operaciones.csv
+
+# kill switch
+STOP
+
+# python
+__pycache__/
+*.pyc
