@@ -78,6 +78,7 @@ CONFIG_FILE = "config.json"
 TRADES_CSV = "polybot_trades.csv"
 LOG_FILE = "polybot.log"
 KILL_FILE = "STOP"
+HA_CACHE_FILE = "ha_windows.json"
 
 log = logging.getLogger("polybot")
 
@@ -305,6 +306,30 @@ class HAEngine:
         # no acumular memoria indefinidamente
         for key in sorted(self.wins)[:-400]:
             del self.wins[key]
+
+    def save(self, path: str) -> None:
+        """Persiste las ventanas a disco para no perder el calentamiento si el
+        proceso se reinicia (crash, reinicio del servidor, etc.)."""
+        data = {
+            str(k): {"start": w.start, "bars": [[b.t, b.o, b.h, b.l, b.c] for b in w.bars]}
+            for k, w in self.wins.items()
+        }
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            json.dump(data, fh)
+        os.replace(tmp, path)
+
+    def load(self, path: str) -> None:
+        if not os.path.exists(path):
+            return
+        try:
+            with open(path, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
+        except (json.JSONDecodeError, OSError):
+            return
+        for k, w in data.items():
+            bars = [Bar(t=b[0], o=b[1], h=b[2], l=b[3], c=b[4]) for b in w["bars"]]
+            self.wins[int(k)] = Win15(start=w["start"], bars=bars)
 
     def _ha(self) -> Tuple[List[int], List[float], List[float]]:
         keys = [k for k in sorted(self.wins) if self.wins[k].complete]
@@ -681,6 +706,7 @@ class Bot:
         self.feed = Feed(cfg)
         self.poly = Poly()
         self.ha = HAEngine()
+        self.ha.load(HA_CACHE_FILE)
         self.risk = Risk(cfg)
         self.broker = Broker(live)
         self.st = State.load(cfg.capital_inicial)
@@ -688,6 +714,9 @@ class Bot:
         if self.st.equity_inicial == 0:
             self.st.equity_inicial = cfg.capital_inicial
         self._csv_header()
+        if self.ha.wins:
+            log.info("Calentamiento recuperado de %s: %d ventanas en memoria.",
+                     HA_CACHE_FILE, len(self.ha.wins))
 
     # ---------- registro ----------
 
@@ -834,6 +863,7 @@ class Bot:
 
     def tick(self) -> None:
         self.ha.ingest(self.feed.last_1m(120))
+        self.ha.save(HA_CACHE_FILE)
         if not self.ha.ready():
             log.info("Calentando Heikin Ashi (%d ventanas necesarias)...", HAEngine.WARMUP)
             return

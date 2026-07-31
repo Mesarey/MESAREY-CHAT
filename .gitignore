@@ -4,6 +4,7 @@
 # estado y config local generados en la primera corrida
 config.json
 polybot_state.json
+ha_windows.json
 polybot.log
 polybot_trades.csv
 polybackfill_cache.json
