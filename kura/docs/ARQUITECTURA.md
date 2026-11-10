@@ -2,8 +2,14 @@
 
 Sistema de recompensas, afirmaciones y dinámicas. App para iOS y Android.
 
-> Estado: propuesta inicial. Los nombres dentro del universo (Resonancia, Ritmo, Destellos…) son provisionales.
-> Pendiente: ajustar la sección de mundos/HUD cuando se revisen los prototipos de personajes.
+> Estado: el mundo de Alaira ya está implementado en `apps/mobile` (ver su README). El resto es diseño.
+> Los nombres dentro del universo (Resonancia, Destellos…) son provisionales.
+>
+> Diferencias entre este documento y lo implementado:
+> - **Constancia**: los prototipos de HUD muestran «días seguidos» con recompensa al día 10, y así se implementó. El «ritmo semanal» de la sección 5.5 queda como alternativa a decidir.
+> - **Motor de reglas**: vive en `apps/mobile/src/domain` y se moverá a `packages/domain` cuando exista el servidor.
+> - **Animación**: se usa la API `Animated` de React Native y SVG. Rive entra cuando haya personajes por capas.
+> - **Datos**: todo se guarda en el dispositivo; los eventos se acumulan en una bandeja de salida lista para el servidor.
 
 ---
 
