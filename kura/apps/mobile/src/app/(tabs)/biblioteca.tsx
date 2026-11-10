@@ -13,7 +13,7 @@ const sections: { title: string; text: string; icon: string; href: Href }[] = [
   { title: 'Respiración', text: 'Ejercicios para volver a tu ritmo', icon: 'orbita', href: '/respiracion' },
 ];
 
-export default function Explorar() {
+export default function Biblioteca() {
   const router = useRouter();
   const [q, setQ] = useState('');
   const results = useMemo(() => {
@@ -30,7 +30,7 @@ export default function Explorar() {
     <Screen moon="right">
       <Rise style={{ minHeight: 190, justifyContent: 'center' }}>
         <Body style={{ letterSpacing: 6, fontSize: 16 }}>KURA</Body>
-        <Display size={50} style={{ marginTop: 26 }}>Explorar</Display>
+        <Display size={50} style={{ marginTop: 26 }}>Biblioteca</Display>
         <Body muted>Encuentra lo que necesitas hoy.</Body>
       </Rise>
       <View style={{ alignItems: 'center', marginBottom: 12 }}>

@@ -50,7 +50,7 @@ export default function Camino() {
     <Screen moon="right">
       <Wordmark />
       <Rise style={{ alignItems: 'center' }}>
-        <Display size={44}>Tu camino</Display>
+        <Display size={44}>Mi camino</Display>
         <Body muted size={17}>Cada día cuenta.</Body>
       </Rise>
 

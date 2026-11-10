@@ -18,15 +18,18 @@ import { color, font, MAX_WIDTH } from '@/theme/tokens';
 import { Icon } from './Icon';
 import { nativeDriver, WorldBackground } from './WorldBackground';
 
+/** Los tamaños de título se definieron para una serif estrecha; Montserrat es más ancha y se compensa aquí. */
+const DISPLAY_SCALE = 0.78;
+
 export function Display({ size = 34, style, ...p }: TextProps & { size?: number }) {
-  return <RNText {...p} style={[{ fontFamily: font.display, fontSize: size, lineHeight: size * 1.12, color: color.text }, style]} />;
+  return <RNText {...p} style={[{ fontFamily: font.display, fontSize: size * DISPLAY_SCALE, lineHeight: size * DISPLAY_SCALE * 1.18, letterSpacing: -0.4, color: color.text }, style]} />;
 }
 
 export function Body({ size = 15, muted, bold, style, ...p }: TextProps & { size?: number; muted?: boolean; bold?: boolean }) {
   return (
     <RNText
       {...p}
-      style={[{ fontFamily: bold ? font.bodyBold : font.body, fontSize: size, lineHeight: size * 1.4, color: muted ? color.muted : color.text }, style]}
+      style={[{ fontFamily: bold ? font.bodyBold : font.body, fontSize: size * 0.95, lineHeight: size * 1.4, color: muted ? color.muted : color.text }, style]}
     />
   );
 }

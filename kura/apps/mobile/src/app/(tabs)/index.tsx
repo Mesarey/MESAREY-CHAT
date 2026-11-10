@@ -48,7 +48,13 @@ export default function Hoy() {
       <View style={s.hero}>
         <Image source={require('../../../assets/alaira/alaira-bust.png')} style={s.alaira} resizeMode="contain" accessibilityLabel="Alaira" />
         <Rise>
-          <Body style={s.logo}>KURA</Body>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+            <Body style={s.logo}>KURA</Body>
+            <Tap onPress={() => router.navigate('/mundos')} accessibilityLabel="Cambiar de mundo" testID="selector-mundo" style={s.world}>
+              <Body size={13}>Alaira</Body>
+              <Icon name="chevron" size={12} tint={color.text} weight={2} />
+            </Tap>
+          </View>
           <Body size={17} style={{ marginTop: 28 }}>{greeting[dayPartOf(new Date())]}</Body>
           <Display size={38} testID="saludo-nombre">{name}</Display>
           <View style={s.rule} />
@@ -129,6 +135,7 @@ const s = StyleSheet.create({
   hero: { minHeight: 284, justifyContent: 'flex-start' },
   alaira: { position: 'absolute', right: -58, top: 0, width: 240, height: 311 },
   logo: { fontFamily: font.body, letterSpacing: 6, fontSize: 16 },
+  world: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 1, borderColor: color.faint, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 5, backgroundColor: color.card },
   rule: { width: 30, height: 1.5, backgroundColor: color.gold, marginVertical: 12 },
   chips: { flexDirection: 'row', gap: 10, marginTop: 6 },
   chip: { width: 76, height: 68, borderRadius: 14, borderWidth: 1, borderColor: color.faint, backgroundColor: color.card, alignItems: 'center', justifyContent: 'center', gap: 4 },

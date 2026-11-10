@@ -5,9 +5,10 @@ import { Icon } from './Icon';
 import { Tap } from './kit';
 
 const tabs: Record<string, { label: string; icon: string }> = {
-  index: { label: 'Hoy', icon: 'estrella' },
-  explorar: { label: 'Explorar', icon: 'grid' },
-  camino: { label: 'Tu camino', icon: 'loto' },
+  index: { label: 'Hoy', icon: 'casa' },
+  mundos: { label: 'Mundos', icon: 'orbita' },
+  camino: { label: 'Mi camino', icon: 'estrella' },
+  biblioteca: { label: 'Biblioteca', icon: 'libro' },
   perfil: { label: 'Perfil', icon: 'perfil' },
 };
 
@@ -50,6 +51,6 @@ const s = StyleSheet.create({
   bar: { backgroundColor: color.cardStrong, borderTopWidth: 1, borderTopColor: color.faint, paddingTop: 10 },
   row: { flexDirection: 'row', width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center' },
   item: { alignItems: 'center', gap: 4 },
-  label: { fontFamily: font.body, fontSize: 13 },
+  label: { fontFamily: font.body, fontSize: 11.5 },
   mark: { width: 44, height: 2, borderRadius: 1, marginTop: 4, backgroundColor: 'transparent' },
 });

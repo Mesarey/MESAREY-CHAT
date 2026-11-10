@@ -8,12 +8,13 @@ App de KURA para iOS y Android (Expo + React Native + TypeScript). Hoy contiene 
 |---|---|
 | Bienvenida | Alaira pregunta el nombre |
 | Hoy | Saludo, foco del día, «cuéntale a Alaira», afirmación de hoy (escuchar / guardar), ritual |
-| Explorar | Afirmaciones, Filosofía, Respiración, Mi memoria, Mis sesiones, búsqueda |
+| Mundos | Los cinco guías; Alaira disponible, el resto «próximamente» |
+| Biblioteca | Afirmaciones, Filosofía, Respiración, Mi memoria, Mis sesiones, búsqueda |
 | Afirmaciones | 8 categorías, favoritas, sesión de 3 afirmaciones que se sellan manteniendo presionado |
 | Filosofía | 3 obras, 23 frases con fuente, «sorpréndeme», búsqueda |
 | Respiración | Ritmo 4-2-6, 1 o 5 minutos |
 | Ritual | Pausa → 1 minuto de respiración → 3 afirmaciones |
-| Tu camino | Días seguidos, sendero de 10 faroles, próxima recompensa, logros |
+| Mi camino | Días seguidos, sendero de 10 faroles, próxima recompensa, logros |
 | Perfil | Vínculo con Alaira (nivel y resonancia), ambientaciones, colección |
 
 Recompensas: 9 logros, 9 objetos (fragmentos de historia, títulos, un paquete de afirmaciones y la ambientación **Aurora**, que cambia el cielo del mundo).

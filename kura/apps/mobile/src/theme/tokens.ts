@@ -13,10 +13,9 @@ export const color = {
 };
 
 export const font = {
-  display: 'CormorantGaramond_600SemiBold',
-  displayMedium: 'CormorantGaramond_500Medium',
-  body: 'NunitoSans_400Regular',
-  bodyBold: 'NunitoSans_600SemiBold',
+  display: 'Montserrat_600SemiBold',
+  body: 'Montserrat_400Regular',
+  bodyBold: 'Montserrat_600SemiBold',
 };
 
 /** Una ambientación es la "piel" del mundo: cielo, luna y brillo. Se desbloquean como recompensa. */
@@ -48,4 +47,5 @@ export const ambiences: Record<string, Ambience> = {
   },
 };
 
-export const MAX_WIDTH = 520;
+/** Ancho máximo de la columna de contenido: teléfonos la llenan, tabletas la amplían hasta aquí. */
+export const MAX_WIDTH = 720;

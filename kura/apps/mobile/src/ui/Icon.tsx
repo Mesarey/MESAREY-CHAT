@@ -17,6 +17,7 @@ const icons: Record<string, Draw> = {
       stroke="none"
     />
   ),
+  casa: line('M4 11l8-7 8 7v8.5a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1V11Z'),
   grid: (c) => (
     <>
       {[4, 13.5].flatMap((x) => [4, 13.5].map((y) => <Rect key={`${x}-${y}`} x={x} y={y} width={6.5} height={6.5} rx={1.4} stroke={c} />))}

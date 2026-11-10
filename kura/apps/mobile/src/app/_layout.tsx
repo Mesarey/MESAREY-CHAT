@@ -1,5 +1,4 @@
-import { CormorantGaramond_500Medium, CormorantGaramond_600SemiBold } from '@expo-google-fonts/cormorant-garamond';
-import { NunitoSans_400Regular, NunitoSans_600SemiBold } from '@expo-google-fonts/nunito-sans';
+import { Montserrat_400Regular, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
 import { useFonts } from 'expo-font';
 import { Redirect, Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -10,7 +9,7 @@ import { ambiences } from '@/theme/tokens';
 import { RewardOverlay } from '@/ui/RewardOverlay';
 
 export default function RootLayout() {
-  const [fontsReady] = useFonts({ CormorantGaramond_500Medium, CormorantGaramond_600SemiBold, NunitoSans_400Regular, NunitoSans_600SemiBold });
+  const [fontsReady] = useFonts({ Montserrat_400Regular, Montserrat_600SemiBold });
   const hydrated = useKura((s) => s.hydrated);
   const name = useKura((s) => s.name);
   const pathname = usePathname();
