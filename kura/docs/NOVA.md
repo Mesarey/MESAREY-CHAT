@@ -50,3 +50,11 @@ npm run android:apk
 ```
 
 Requiere JDK 17, Android SDK (platform 37, build-tools 37, NDK 27.1) y acceso a `dl.google.com` y `repo.reactnative.dev`. Sale en `android/app/build/outputs/apk/release/app-release.apk`, firmado con la llave debug que genera Expo (no hay llave de publicación en el repo).
+
+## Demo web en un solo HTML
+
+```bash
+./scripts/demo-web.sh
+```
+
+Exporta la web sin rutas asíncronas (solo durante el comando; `app.json` se restaura) y arma `dist-demo/index.html` con el código, las imágenes y las fuentes incrustadas. En pantallas anchas se muestra dentro de un marco de teléfono de 390 × 844; en un teléfono ocupa toda la pantalla. El progreso se guarda en el navegador de quien lo abre.
