@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nova_widget_compact_label">NOVA · compacto</string>
+    <string name="nova_widget_wide_label">NOVA · amplio</string>
+    <string name="nova_widget_compact_desc">Una frase: nega del día o regla clave.</string>
+    <string name="nova_widget_wide_desc">Frase, contexto y acceso a practicar.</string>
+    <string name="nova_widget_next">Otra</string>
+    <string name="nova_widget_practice">Practicar</string>
+    <string name="nova_widget_config">Opciones del widget</string>
+    <string name="nova_widget_config_title">Widget de NOVA</string>
+    <string name="nova_widget_mode">Qué muestra</string>
+    <string name="nova_widget_mode_nega">Nega del día</string>
+    <string name="nova_widget_mode_regla">Regla o frase clave</string>
+    <string name="nova_widget_theme">Tema</string>
+    <string name="nova_widget_theme_noche">Noche violeta (KURA)</string>
+    <string name="nova_widget_theme_aurora">Aurora (KURA)</string>
+    <string name="nova_widget_theme_nova">Medianoche (NOVA)</string>
+    <string name="nova_widget_discreet">Texto discreto</string>
+    <string name="nova_widget_discreet_help">Solo reglas de conversación, sin la marca NOVA ni el ID.</string>
+    <string name="nova_widget_done">Listo</string>
+    <string name="nova_widget_sample">«Te pedí una recomendación y me diste tres.»</string>
+    <string name="nova_widget_sample_label">NOVA · NEGA DEL DÍA</string>
+    <string name="nova_widget_sample_ctx">Qué observar: da tres recomendaciones cuando le pediste una.</string>
+    <color name="nova_accent">#6FC3FF</color>
+    <color name="nova_gold">#F3CF8A</color>
+    <color name="nova_text">#F5F1FF</color>
+    <color name="nova_muted">#BDB7E3</color>
+    <color name="nova_ink">#07162B</color>
+    <style name="NovaWidgetConfig" parent="@android:style/Theme.DeviceDefault.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">360dp</item>
+        <item name="android:windowMinWidthMinor">300dp</item>
+    </style>
+</resources>

@@ -1,0 +1,470 @@
+{
+ "version": 1,
+ "fuente": "NOVA_1000_Negas_Observacion.md",
+ "meta": 1000,
+ "total": 66,
+ "negas": [
+  {
+   "id": "N-0001",
+   "texto": "Te ríes antes de contar el chiste.",
+   "queObservar": "Se adelanta al remate con su propia risa.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0005",
+   "texto": "Nomás dijiste «chisme» y se te iluminó la cara.",
+   "queObservar": "Se entusiasma al anunciar algo ligero.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0006",
+   "texto": "Hasta hiciste el ruido del coche.",
+   "queObservar": "Mete un sonido al narrar cómo pasó algo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0019",
+   "texto": "Ni empezó la canción y ya cantaste lo que sigue.",
+   "queObservar": "Reconoce la rola por sus primeros segundos y adelanta el verso.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0036",
+   "texto": "Según tú venías de compañía y ya armaste el plan.",
+   "queObservar": "Se suma a un plan y luego ayuda a organizarlo por gusto.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0053",
+   "texto": "Dijiste que no bailabas y ya le enseñaste el paso a dos personas.",
+   "queObservar": "Primero se muestra reservada y luego comparte un paso.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0056",
+   "texto": "Ese aplauso es para ti y todos lo sabemos.",
+   "queObservar": "Se aplaude jugando después de completar algo sencillo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0066",
+   "texto": "Te pedí una recomendación y me diste tres.",
+   "queObservar": "Da tres recomendaciones cuando le pediste una.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0101",
+   "texto": "Le hablaste bonito a la impresora y sí te hizo caso.",
+   "queObservar": "Anima a una máquina que termina funcionando.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0146",
+   "texto": "Saludaste al perro como si también lo hubieran invitado.",
+   "queObservar": "Incluye a una mascota en los saludos del grupo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0153",
+   "texto": "Con esa presentación hasta yo quería conocerme.",
+   "queObservar": "Hace una presentación especialmente entusiasta de quien habla.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0160",
+   "texto": "Le echaste porras al elevador como si fuera a subir más rápido.",
+   "queObservar": "Anima al elevador mientras esperan.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0162",
+   "texto": "Se movió la sombra y te mudaste.",
+   "queObservar": "Cambia sus cosas de lugar para quedarse a la sombra.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0202",
+   "texto": "Te dije un chisme y tú traías la segunda parte.",
+   "queObservar": "Completa una anécdota ligera con lo que pasó después.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0206",
+   "texto": "Ni entramos y ya escogiste dónde va la foto.",
+   "queObservar": "Ubica el fondo para una foto antes de entrar.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0207",
+   "texto": "Dijiste que el perro no te hacía caso y ya va atrás de ti.",
+   "queObservar": "El perro empieza a seguirla apenas termina el comentario.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0208",
+   "texto": "Ya le pusiste nombre al grupo y todavía falta ver quién va.",
+   "queObservar": "Crea el nombre del chat antes de confirmar quién se suma.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0211",
+   "texto": "Te aprendiste el comercial y no sabes qué vendía.",
+   "queObservar": "Recita un anuncio pero no recuerda el producto.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0214",
+   "texto": "Pediste un consejo y terminaste dándome uno tú.",
+   "queObservar": "El intercambio da la vuelta y ella acaba aconsejándote.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0215",
+   "texto": "Me dedicaste la rola y tú te quedaste con el micrófono.",
+   "queObservar": "Dedica una canción y acaba cantándola ella en karaoke.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0217",
+   "texto": "Ni sabíamos el nombre de la banda y tú ya estabas pidiendo otra.",
+   "queObservar": "Pide un bis a un grupo que acaba de descubrir.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0219",
+   "texto": "Dijiste que te daba frío y fuiste directo por el helado.",
+   "queObservar": "Se queja del clima y se le antoja un helado.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0222",
+   "texto": "Te pedí que lo probaras y ya preguntaste cómo se hace.",
+   "queObservar": "Le gusta algo y pasa directo a averiguar la receta.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0223",
+   "texto": "Ibas por una maceta y ya estás pensando dónde va el jardín.",
+   "queObservar": "A partir de una compra pequeña empieza a imaginar más plantas.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0224",
+   "texto": "Le quitaste el polvo antes de decidir si te lo llevabas.",
+   "queObservar": "Empieza a cuidar un objeto de segunda mano que aún no decide comprar.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0225",
+   "texto": "Dijiste «ni cabe» y fuiste por la cinta para medirlo.",
+   "queObservar": "Prueba si un objeto puede caber justo después de descartarlo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0227",
+   "texto": "Todavía no cobras la apuesta y ya sabes en qué te la vas a gastar.",
+   "queObservar": "Planea usar el premio simbólico antes de recibirlo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0230",
+   "texto": "Esa blusa está súper cool, la vi como 3 veces hoy.",
+   "queObservar": "Ejemplo de Mitsuo. Reconoces la blusa porque la has visto varias veces ese día.",
+   "estado": "revisado",
+   "procedencia": "ejemplo_mitsuo"
+  },
+  {
+   "id": "N-0233",
+   "texto": "¿Todo eso salió de esa bolsita?",
+   "queObservar": "Acaba de sacar varias cosas de una bolsa pequeña.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0234",
+   "texto": "Qué bonito tu llavero. Apenas vi las llaves.",
+   "queObservar": "El llavero es mucho más llamativo que las llaves.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0236",
+   "texto": "Me gusta tu funda. Ni parecía un celular.",
+   "queObservar": "La funda tiene una forma poco común.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0237",
+   "texto": "Tu botella trae más stickers que espacio para agarrarla.",
+   "queObservar": "La botella está cubierta de stickers.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0238",
+   "texto": "Con ese paraguas no se moja nadie.",
+   "queObservar": "El paraguas es especialmente grande.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0241",
+   "texto": "Me gustan tus aretes. ¿Venían juntos o se conocieron hoy?",
+   "queObservar": "Lleva dos aretes distintos a propósito.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0242",
+   "texto": "Qué bonito tu broche. Pensé que venía bordado en la chamarra.",
+   "queObservar": "El broche combina tan bien con la prenda que parece parte del diseño.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0243",
+   "texto": "Con esa bufanda sí dan ganas de que haga frío.",
+   "queObservar": "Elige una bufanda que a ambos les gusta y se ríe al ponérsela.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0244",
+   "texto": "El sombrero sí entendió de qué era la fiesta.",
+   "queObservar": "El sombrero encaja especialmente bien con el tema del evento.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0245",
+   "texto": "Tu bolsa del mandado está más bonita que mi bolsa buena.",
+   "queObservar": "Trae una bolsa reutilizable de diseño que te gusta.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0247",
+   "texto": "¿Tú también escogiste la pluma por cómo suena el clic?",
+   "queObservar": "Se entretiene probando el clic de una pluma antes de usarla.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0248",
+   "texto": "Qué buen estampado. Me quedé buscando dónde empieza.",
+   "queObservar": "Una prenda tiene un patrón que se repite de una forma divertida.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0249",
+   "texto": "Qué buenos tus lentes. Si un día te cansas de ellos, aquí tienen casa.",
+   "queObservar": "Ya hablaron con gusto de sus lentes y quieres devolver el tema con un guiño.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0250",
+   "texto": "Con ese suéter hasta dan ganas de bajarle al aire.",
+   "queObservar": "El suéter se ve muy cómodo y ella acaba de comentar lo a gusto que está.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0252",
+   "texto": "Ese saco hace que a mí me den ganas de enderezarme.",
+   "queObservar": "Se prueba o enseña un saco especialmente elegante y ambos lo comentan.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0253",
+   "texto": "Ya le pusiste mantel a un picnic de diez minutos.",
+   "queObservar": "Saca un mantel para una pausa corta en el parque y lo hace con gusto.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0254",
+   "texto": "Hasta le buscaste la luz al pan dulce.",
+   "queObservar": "Mueve un pan hacia la luz para que salga mejor en una foto.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0255",
+   "texto": "Me dijiste que la peli estaba regular y me acabas de recomendar la secuela.",
+   "queObservar": "Su recomendación resulta mejor que su primera reseña.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0257",
+   "texto": "Le diste «me gusta» a la canción con todo el cuerpo.",
+   "queObservar": "Se mueve al empezar una canción que disfruta.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0258",
+   "texto": "No sabía que se podía bailar sentado hasta ahorita.",
+   "queObservar": "Se pone a bailar en su silla y se ríe.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0260",
+   "texto": "Acabas de darle más suspenso a una moneda que a toda la película.",
+   "queObservar": "Antes de lanzar una moneda para decidir, se toma su tiempo y lo hace en broma.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0261",
+   "texto": "Acabas de empacar un sándwich para un viaje de media cuadra.",
+   "queObservar": "Envuelve con mucho cuidado algo que van a comer a unos pasos.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0263",
+   "texto": "Primero oliste el café y luego dijiste buenos días. Entiendo el orden.",
+   "queObservar": "Antes de saludar comenta con gusto cómo huele el café.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0264",
+   "texto": "Pediste una bolsa para el pan y te lo comiste aquí mismo.",
+   "queObservar": "Acaba de pedir llevarse el pan y le gana el antojo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0265",
+   "texto": "Ese «ahí está fácil» incluía instrucciones con las dos manos.",
+   "queObservar": "Mientras explica una ruta sencilla, hace varios gestos y se divierte al notarlo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0268",
+   "texto": "El barista dijo tu nombre y contestaste como si te hubieran llamado al escenario.",
+   "queObservar": "Recibe su café con un pequeño saludo teatral que ella misma empieza.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0270",
+   "texto": "Con ese «ahorita vuelvo» hasta dejaste la canción escogida.",
+   "queObservar": "Se aparta un momento pero deja pendiente una canción que quiere escuchar.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0272",
+   "texto": "Te aprendiste el nombre del color antes de elegir la prenda.",
+   "queObservar": "Se entretiene con el nombre peculiar que la etiqueta le dio al color.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0274",
+   "texto": "Te dio tanta risa el nombre de la calle que ya lo estás usando de apodo.",
+   "queObservar": "Encuentra un nombre de calle gracioso y lo usa durante el paseo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0275",
+   "texto": "Me gusta que avisaste «voy a bailar» cuando ya estabas bailando.",
+   "queObservar": "Anuncia que se va a poner a bailar mientras ya sigue el ritmo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0276",
+   "texto": "Tú sí le encuentras música al ruido del semáforo.",
+   "queObservar": "Imita un ritmo que escuchó en un sonido cotidiano.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0277",
+   "texto": "Tú sí celebras cuando sale el pan de la tostadora.",
+   "queObservar": "Saluda en broma la tostada cuando salta.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0278",
+   "texto": "Qué bonita tu lonchera. Me dieron ganas de ver qué trajiste.",
+   "queObservar": "Trae una lonchera que llama la atención y comenta con gusto lo que empacó.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0279",
+   "texto": "Ese suéter tiene cara de que te lo van a querer pedir prestado.",
+   "queObservar": "Lleva un suéter llamativo y cómodo que te gustó de verdad.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0280",
+   "texto": "Ese vaso tiene más historia que lo que le pusiste adentro.",
+   "queObservar": "Cuenta de dónde salió un vaso antes de hablar de la bebida.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0281",
+   "texto": "Tú sí saludas a la gente que sale en los videos.",
+   "queObservar": "Le contesta jugando a alguien en un video que ambos están viendo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0282",
+   "texto": "Le sacaste foto al recibo porque no te creías el nombre del postre.",
+   "queObservar": "El nombre gracioso de un postre aparece en el recibo y quiere guardarlo.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  },
+  {
+   "id": "N-0287",
+   "texto": "Tú sí estrenas tenis buscando dónde bailar.",
+   "queObservar": "Habla con ganas de usar sus tenis nuevos para salir a bailar.",
+   "estado": "revisado",
+   "procedencia": "nova_original"
+  }
+ ]
+}

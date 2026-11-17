@@ -1,0 +1,2388 @@
+{
+ "version": 1,
+ "fuente": "NOVA_Banco_Oficial.md",
+ "libros": [
+  {
+   "id": "el-metodo",
+   "titulo": "El método",
+   "autor": "Neil Strauss",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_68bc9e7b61988191aba95a5ce006d0d4&account_id=personal",
+   "nota": "Fuente: Neil Strauss, El método (The Game), edición española adjunta. Las frases del libro se presentan adaptadas a español latinoamericano, con un tono casual cercano al de México. La columna «Libro» describe material de la comunidad retratada por Strauss. La columna «NOVA» propone cómo convertirlo en contenido editorial. Las frases nuevas son ejemplos escritos para este cuaderno.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "Lo que pediste localizar",
+     "paginas": null
+    },
+    {
+     "titulo": "Presencia y práctica",
+     "paginas": null
+    },
+    {
+     "titulo": "Aperturas, grupos y continuidad",
+     "paginas": null
+    },
+    {
+     "titulo": "Negas y humor",
+     "paginas": null
+    },
+    {
+     "titulo": "Rutinas y accesorios",
+     "paginas": null
+    },
+    {
+     "titulo": "Modelos y tácticas del libro",
+     "paginas": null
+    },
+    {
+     "titulo": "Alcance editorial",
+     "paginas": null
+    },
+    {
+     "titulo": "Índice de términos del glosario",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases para leer · Aperturas de El método",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "arte-seduccion",
+   "titulo": "El arte de la seducción",
+   "autor": "Robert Greene",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_daab1a9d89e481919d38ad19821704ab&account_id=personal",
+   "nota": "Guía de lectura previa basada en el PDF adjunto de Robert Greene. Recorre los nueve arquetipos, los 24 capítulos del proceso y los dos apéndices. Las páginas remiten al PDF. Las ideas de Greene están resumidas y las frases de NOVA son originales, escritas en español latinoamericano. Las situaciones sirven para discutir la enseñanza al preparar las fichas de aprendizaje.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "1. Qué puede tomar NOVA de los arquetipos",
+     "paginas": null
+    },
+    {
+     "titulo": "2. Los 24 capítulos y su posible ficha",
+     "paginas": null
+    },
+    {
+     "titulo": "Fase 1 · Cómo empieza el interés",
+     "paginas": null
+    },
+    {
+     "titulo": "Fase 2 · Qué hace memorable la conexión",
+     "paginas": null
+    },
+    {
+     "titulo": "Fase 3 · Cómo se construye cercanía",
+     "paginas": null
+    },
+    {
+     "titulo": "Fase 4 · Iniciativa y lo que sigue",
+     "paginas": null
+    },
+    {
+     "titulo": "3. Apéndices",
+     "paginas": null
+    },
+    {
+     "titulo": "4. Frases para leer en NOVA",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "models",
+   "titulo": "Models",
+   "autor": "Mark Manson",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_27f97f7e430481919b8ce49543cd333f&account_id=personal",
+   "nota": "Cuaderno integrado al banco maestro. Fuente: PDF en español adjunto. Las páginas son las del contador del PDF. Los puntos del libro están parafraseados. Las fichas, los diálogos y las frases de NOVA se escribieron en español latinoamericano con tono mexicano. Las citas de la antología conservan la redacción de la traducción adjunta, con normalización de espacios y ligaduras.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "Parte I · Realidad",
+     "paginas": null
+    },
+    {
+     "titulo": "1. No necesidad",
+     "paginas": "23–48"
+    },
+    {
+     "titulo": "2. Poder en la vulnerabilidad",
+     "paginas": "49–62"
+    },
+    {
+     "titulo": "3. El don de la verdad",
+     "paginas": "63–88"
+    },
+    {
+     "titulo": "Parte II · Estrategia",
+     "paginas": null
+    },
+    {
+     "titulo": "4. Polarización",
+     "paginas": "89–108"
+    },
+    {
+     "titulo": "5. Rechazo y éxito",
+     "paginas": "109–118"
+    },
+    {
+     "titulo": "6. Los tres fundamentos",
+     "paginas": "119–128"
+    },
+    {
+     "titulo": "Parte III · Vida honesta",
+     "paginas": null
+    },
+    {
+     "titulo": "7. Demografía",
+     "paginas": "129–150"
+    },
+    {
+     "titulo": "8. Estilo de vida y presentación",
+     "paginas": "150–170"
+    },
+    {
+     "titulo": "Parte IV · Acción honesta",
+     "paginas": null
+    },
+    {
+     "titulo": "9. ¿Cuáles son tus historias?",
+     "paginas": "171–192"
+    },
+    {
+     "titulo": "10. Cómo superar la ansiedad",
+     "paginas": "193–207"
+    },
+    {
+     "titulo": "Parte V · Comunicación honesta",
+     "paginas": null
+    },
+    {
+     "titulo": "11. Tus intenciones",
+     "paginas": "208–223"
+    },
+    {
+     "titulo": "12. Cómo coquetear mejor",
+     "paginas": "223–253"
+    },
+    {
+     "titulo": "13. El proceso de citas",
+     "paginas": "254–267"
+    },
+    {
+     "titulo": "14. Fisicalidad y sexo",
+     "paginas": "268–287"
+    },
+    {
+     "titulo": "Primer beso · Comparar los modelos",
+     "paginas": null
+    },
+    {
+     "titulo": "Cierre, epílogo y glosario",
+     "paginas": null
+    },
+    {
+     "titulo": "Antología · Frases textuales para cotejar",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases originales de NOVA",
+     "paginas": null
+    },
+    {
+     "titulo": "Primera ficha para probar · Me acerqué y se me acabaron las palabras",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "mito-carisma",
+   "titulo": "El mito del carisma",
+   "autor": "Olivia Fox Cabane",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_43b976fda8608191aff2829614c96267&account_id=personal",
+   "nota": "Cuaderno integrado al banco maestro. Fuente: PDF en español adjunto de Olivia Fox Cabane. Las páginas corresponden al contador del PDF. Las situaciones y frases de NOVA son ejemplos originales en español latinoamericano, con tono mexicano. Los métodos del libro se presentan como propuestas de Cabane. En esta aplicación, poder significa capacidad de actuar y transmitir seguridad.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "1. El carisma se practica",
+     "paginas": "11–14"
+    },
+    {
+     "titulo": "2. Presencia, poder y cordialidad",
+     "paginas": "15–29"
+    },
+    {
+     "titulo": "3. Obstáculos físicos y mentales",
+     "paginas": "30–45"
+    },
+    {
+     "titulo": "4. Cómo superar los obstáculos",
+     "paginas": "46–68"
+    },
+    {
+     "titulo": "5. Crear un estado que ayude",
+     "paginas": "69–98"
+    },
+    {
+     "titulo": "6. Cuatro estilos",
+     "paginas": "99–113"
+    },
+    {
+     "titulo": "7. Primeras impresiones",
+     "paginas": "119–130"
+    },
+    {
+     "titulo": "8. Hablar y escuchar",
+     "paginas": "132–146"
+    },
+    {
+     "titulo": "9. Lenguaje corporal",
+     "paginas": "148–168"
+    },
+    {
+     "titulo": "10. Situaciones difíciles",
+     "paginas": "170–191"
+    },
+    {
+     "titulo": "11. Presentaciones",
+     "paginas": "193–206"
+    },
+    {
+     "titulo": "12. Carisma en una crisis",
+     "paginas": "208–212"
+    },
+    {
+     "titulo": "13. Vivir con carisma",
+     "paginas": "213–227"
+    },
+    {
+     "titulo": "Ficha completa · Escuchar cuando hay química",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases del libro para cotejar",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases originales de NOVA",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "del-amor",
+   "titulo": "Del amor",
+   "autor": "Stendhal",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_7319f0e189a48191a6aa3e2834c04bdf&account_id=personal",
+   "nota": "Ruta de NOVA: cuando buscas algo más serio. Este material pertenece al recorrido sobre enamoramiento, reciprocidad, intimidad y expectativas. La asignación aplica a las enseñanzas, los casos y las frases para leer. Disponibilidad en CHAD: excluido.",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "secciones": [
+    {
+     "titulo": "Enseñanzas para desarrollar",
+     "paginas": null
+    },
+    {
+     "titulo": "1. Las cuatro formas del amor · Libro I, I",
+     "paginas": "29–32"
+    },
+    {
+     "titulo": "2. Cómo empieza el enamoramiento · II–IV",
+     "paginas": "32–39"
+    },
+    {
+     "titulo": "3. La primera cristalización · II, VI, XI–XII",
+     "paginas": "33, 40–42, 50–53"
+    },
+    {
+     "titulo": "4. La segunda cristalización · II–III",
+     "paginas": "35–38"
+    },
+    {
+     "titulo": "5. El cambio de ánimo y el ritmo de la confianza · V–VI, XIV–XV",
+     "paginas": "40–42, 55–58"
+    },
+    {
+     "titulo": "6. Belleza, primera impresión y flechazo · XVII–XXIV",
+     "paginas": "60–79"
+    },
+    {
+     "titulo": "7. Miradas, reserva y reputación · XXV–XXX",
+     "paginas": "80–102"
+    },
+    {
+     "titulo": "8. Intimidad y confidencias · XXXI–XXXIV",
+     "paginas": "102–120"
+    },
+    {
+     "titulo": "9. Celos y orgullo herido · XXXV–XXXIX",
+     "paginas": "120–142"
+    },
+    {
+     "titulo": "10. Desencanto y remedios · XL–XLI",
+     "paginas": "142–147"
+    },
+    {
+     "titulo": "11. Entorno, educación y posibilidad de elegir · Libro II",
+     "paginas": "147–239"
+    },
+    {
+     "titulo": "12. Werther, Don Juan y el fiasco · LIX–LX",
+     "paginas": "239–255"
+    },
+    {
+     "titulo": "13. Fragmentos y apéndices",
+     "paginas": "255–392"
+    },
+    {
+     "titulo": "Antología de frases y pasajes para citar",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases originales de NOVA",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "memorias",
+   "titulo": "Memorias",
+   "autor": "Giacomo Casanova",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_f36acee964c88191a8ce0bbd0e823906&account_id=personal",
+   "nota": "Cuaderno editorial para revisar antes de incorporarlo al banco. La edición adjunta reúne dos volúmenes de selección con 16 capítulos procedentes de los tomos originales 2, 4, 6, 8 y 9. La numeración de páginas corresponde al contador del PDF. Casanova narra en primera persona y a menudo atribuye intenciones a otros. Las fichas distinguen sus observaciones de sus interpretaciones. Los diálogos de NOVA son ejemplos originales en español latinoamericano.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "Aprendizajes por capítulo",
+     "paginas": null
+    },
+    {
+     "titulo": "Tomo original 2 · Entrar en un círculo, leer la situación y manejar el orgullo",
+     "paginas": null
+    },
+    {
+     "titulo": "Tomo original 4 · Qué muestran los episodios de los Plomos",
+     "paginas": null
+    },
+    {
+     "titulo": "Tomos originales 6 y 8 · Humor, etiqueta y conversación compartida",
+     "paginas": null
+    },
+    {
+     "titulo": "Tomo original 9 · Poder, reputación y discreción",
+     "paginas": null
+    },
+    {
+     "titulo": "Del salón al chat del grupo",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases textuales para leer",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases originales de NOVA",
+     "paginas": null
+    },
+    {
+     "titulo": "Ficha lista para revisar · El gesto y la historia",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "double-your-dating",
+   "titulo": "Double Your Dating",
+   "autor": "David DeAngelo",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_af650159668c819188398449edc31a4d&account_id=personal",
+   "nota": "Cuaderno editorial de David DeAngelo, basado en el PDF en inglés adjunto. Las páginas corresponden a la numeración impresa en el documento. Los títulos y extractos en inglés son de la fuente. Las interpretaciones y los diálogos en español mexicano son material editorial para NOVA.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "1. Actitud y expectativas",
+     "paginas": "11–25"
+    },
+    {
+     "titulo": "2. Autoimagen y práctica",
+     "paginas": "26–46"
+    },
+    {
+     "titulo": "3. Personalidad, estilo propio y horizonte",
+     "paginas": "48–63"
+    },
+    {
+     "titulo": "4. Humor, tono y cocky & funny",
+     "paginas": "64–96"
+    },
+    {
+     "titulo": "5. Apariencia, postura e interés",
+     "paginas": "97–104"
+    },
+    {
+     "titulo": "6. Estilo, preparación y cortesía",
+     "paginas": "106–111"
+    },
+    {
+     "titulo": "7. Dónde conocer gente y pedir contacto",
+     "paginas": "112–128"
+    },
+    {
+     "titulo": "8. La primera cita",
+     "paginas": "129–140"
+    },
+    {
+     "titulo": "9. Cercanía física y primer beso",
+     "paginas": "141–144"
+    },
+    {
+     "titulo": "10. Qué sostiene una relación",
+     "paginas": "145–147"
+    },
+    {
+     "titulo": "Frases del libro para leer",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases originales y afirmaciones de NOVA",
+     "paginas": null
+    },
+    {
+     "titulo": "Hacks de conversación · Fichas para probar",
+     "paginas": null
+    }
+   ]
+  },
+  {
+   "id": "arte-natural",
+   "titulo": "El arte natural de la seducción",
+   "autor": "Richard La Ruina",
+   "pdf": "https://chatgpt.com/library?file_id=libfile_9ede1bfb000081919664e2f840047a15&account_id=personal",
+   "nota": "Cuaderno de Richard La Ruina (Gambler) para revisión editorial. Las referencias usan el contador del PDF adjunto. Los diálogos de NOVA son adaptaciones en español mexicano. Las citas se identifican aparte. El autor presenta su experiencia de campo como respaldo. Sus afirmaciones sobre eficacia se registran como observaciones del autor.",
+   "ruta": "principal",
+   "secciones": [
+    {
+     "titulo": "Enseñanzas por bloque",
+     "paginas": null
+    },
+    {
+     "titulo": "Banco de hacks · Frase, momento y seguimiento",
+     "paginas": null
+    },
+    {
+     "titulo": "Negas y remates",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases del manual para leer",
+     "paginas": null
+    },
+    {
+     "titulo": "Frases y afirmaciones originales de NOVA",
+     "paginas": null
+    }
+   ]
+  }
+ ],
+ "pasajes": [
+  {
+   "id": "banco-el-metodo-nota-001",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "General · 6",
+   "texto": "Fiódor Dostoievski, Memorias del subsuelo. La conciencia de uno mismo y la dificultad de actuar.",
+   "contexto": "«Si repasas el saludo veinte veces, ya tuviste una conversación entera contigo».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-002",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 1 · 7",
+   "texto": "Betty Friedan, La mística de la feminidad. Los papeles rígidos también pesan sobre los hombres.",
+   "contexto": "«Puedes acercarte con curiosidad. Nadie te pidió entrar al lugar demostrando algo».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-003",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 2 · 20",
+   "texto": "Gloria Steinem, discurso de graduación en Vassar College. Desaprender hábitos adquiridos.",
+   "contexto": "«La próxima vez que ensayes una entrada, ensaya también cómo escuchar la respuesta».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-004",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 3 · 63",
+   "texto": "Salt-N-Pepa, Whatta Man. Estilo, atractivo y una conversación con sustancia.",
+   "contexto": "«Un buen outfit abre el tema. Lo que cuentas después dice más de ti».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-005",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 4 · 126",
+   "texto": "Clare Boothe Luce. Verse a uno mismo de otra forma a través de la mirada de alguien más.",
+   "contexto": "«Fíjate en cómo te sientes con esa persona cuando dejas de intentar impresionarla».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-006",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 5 · 174",
+   "texto": "Jenny Holzer, Benches. Sentirse amenazado por el brillo ajeno.",
+   "contexto": "«Si alguien trae más energía que tú, deja que se note. Todavía tienes algo que aportar».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-007",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 6 · 244",
+   "texto": "Carol Gilligan, In a Different Voice. Conversar como forma de entender el mundo compartido.",
+   "contexto": "«Si algo de lo que te contó te da curiosidad, quédate ahí un poco más».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-008",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 7 · 288",
+   "texto": "Margaret Mead, Masculino y femenino. Roles, cuidado y protección en una comparación con otros primates.",
+   "contexto": "«Si invitas a alguien a tu espacio, fíjate si ahí también puede sentirse a gusto».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-009",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 8 · 310",
+   "texto": "Ani DiFranco, The Story. Distancia entre los lugares asignados a chicos y chicas.",
+   "contexto": "«Deja un poco de espacio para ver si la otra persona también propone».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-010",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 9 · 373",
+   "texto": "Edna St. Vincent Millay. El lugar donde intentamos sostener el amor.",
+   "contexto": "«Si apenas se escuchan por el ruido, propón un lugar donde puedan hablar».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-011",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 10 · 401",
+   "texto": "Catharine MacKinnon, Hacia una teoría feminista del Estado. Poder y desigualdad en su análisis de la sexualidad.",
+   "contexto": "«Si alguien duda, baja el ritmo y dale tiempo para decidir».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-el-metodo-nota-012",
+   "libro": "el-metodo",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "Paso 11 · 444",
+   "texto": "Anne Sexton, For John, Who Begs Me Not to Enquire Further. Encontrar algo que aprender al ordenar lo vivido.",
+   "contexto": "«Decir qué buscas a tiempo le da a la otra persona espacio para elegir».",
+   "seccion": "Frases para leer · Aperturas de El método"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-001",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "1 · 208",
+   "texto": "Greene recomienda escoger a una persona receptiva según sus circunstancias y deseos.",
+   "contexto": "En la fiesta, alguien te hace espacio y pregunta de dónde conoces al anfitrión. «De la uni. ¿Ustedes cómo se conocieron?» Observa si también tiene ganas de conversar.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-002",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "2 · 219",
+   "texto": "La aproximación indirecta reduce la presión inicial. El libro incluye ocultar la intención.",
+   "contexto": "En una galería, «De todas las piezas, ¿cuál volverías a ver?» Si después quieres invitarla a salir, dilo cuando venga al caso.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-003",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "3 · 229",
+   "texto": "Los contrastes de carácter despiertan curiosidad. Greene los plantea como señales contradictorias.",
+   "contexto": "Ella te ubica por tocar techno. «También colecciono discos de bolero. Mi abuela tenía los mejores». Una sorpresa real da para hablar.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-004",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "4 · 242",
+   "texto": "La aprobación de otras personas puede aumentar el atractivo. El autor propone triangular.",
+   "contexto": "Presenta a tus amigos e incluye a todos. «Ella también arma playlists larguísimas. Seguro ustedes tienen de qué hablar». Observa cómo cambia el grupo cuando todos entran en la conversación.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-005",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "5 · 252",
+   "texto": "Greene propone crear inquietud para que la persona desee un cambio.",
+   "contexto": "Si ella dice «siempre terminamos en el mismo bar», puedes decir «Hay un lugar con jazz en vivo a dos cuadras. ¿Quieres conocerlo?» La alternativa responde a algo que ya expresó.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-006",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "6 · 263",
+   "texto": "Una insinuación deja espacio para que la otra persona imagine o pregunte.",
+   "contexto": "«Todavía me debes la historia de ese tatuaje». Si le da curiosidad seguir, deja que elija cómo contarla.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-007",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "7 · 272",
+   "texto": "Aprender los gustos y el lenguaje de alguien facilita entrar en su mundo.",
+   "contexto": "«Dijiste que te gusta el cine de terror. ¿Cuál fue el último que sí te asustó?» Pídele una recomendación que sí quieras ver.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-008",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "8 · 284",
+   "texto": "Una invitación gana fuerza cuando conecta con un deseo específico.",
+   "contexto": "«Abrió el lugar de ramen que me contaste. ¿Te late probarlo el viernes?» Da un plan que pueda aceptar, cambiar o dejar pasar.",
+   "seccion": "Fase 1 · Cómo empieza el interés"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-009",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "9 · 297",
+   "texto": "La sorpresa rompe la rutina y sostiene la atención.",
+   "contexto": "«Vi que hay una banda tocando aquí al lado. ¿Quieres asomarte diez minutos o nos quedamos?» La sorpresa funciona con una opción real.",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-010",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "10 · 308",
+   "texto": "El ritmo y las imágenes del lenguaje pueden afectar cómo se siente una conversación. Greene también propone usarlos para confundir.",
+   "contexto": "Cuando recomiendes un lugar, di algo concreto. «Es una terraza chiquita, ponen vinilos y se puede platicar».",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-011",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "11 · 325",
+   "texto": "Los gestos pequeños y específicos pueden pesar más que una declaración grande.",
+   "contexto": "«Me acordé de que te gustan las mesas de afuera. ¿Aquí te late?» El detalle sale de algo que ya te contó.",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-012",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "12 · 340",
+   "texto": "Un motivo, una imagen o un momento puede hacer que alguien recuerde tu presencia.",
+   "contexto": "Después de la cita, «Encontré la canción que pusieron cuando llegamos. Es esta». Mándala si viene al caso, y deja que ella decida si retoma el intercambio.",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-013",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "13 · 351",
+   "texto": "Mostrar una debilidad puede reducir la distancia. El libro la propone como recurso estratégico.",
+   "contexto": "«Sí me puse nervioso al llegar. Ya me relajé». Compartir algo breve y real puede abrir conversación.",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-014",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "14 · 363",
+   "texto": "Greene propone darle forma a una fantasía y mezclarla con lo que la persona vive.",
+   "contexto": "Los dos quieren bailar. «Hay una clase abierta de salsa el domingo. ¿Nos animamos?» Convertir una idea compartida en un plan concreto.",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-015",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "15 · 379",
+   "texto": "El libro plantea aislar para aumentar la influencia.",
+   "contexto": "Si el grupo está gritando para oírse, «¿Quieres sentarte allá un rato? Si prefieres quedarte con tus amigas, todo bien». El cambio de lugar es voluntario y reversible.",
+   "seccion": "Fase 2 · Qué hace memorable la conexión"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-016",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "16 · 392",
+   "texto": "Greene contrapone promesas y gestos que prueban entrega.",
+   "contexto": "Si ofreciste mandar la info de un concierto, mándala. «Aquí está el link del lugar que te dije». Una promesa chica cumplida suele decir más que un discurso.",
+   "seccion": "Fase 3 · Cómo se construye cercanía"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-017",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "17 · 409",
+   "texto": "El autor indaga en recuerdos y vínculos del pasado que vuelven a activar emociones.",
+   "contexto": "«¿Qué canción te recuerda un verano que te encantó?» Si el recuerdo le incomoda, cambia de tema con naturalidad.",
+   "seccion": "Fase 3 · Cómo se construye cercanía"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-018",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "18 · 426",
+   "texto": "Salirse de una rutina o de una regla social puede intensificar una experiencia.",
+   "contexto": "«¿Y si en vez de cenar pedimos postre y nos vamos a bailar?» La complicidad puede empezar con un cambio de plan que los dos quieran.",
+   "seccion": "Fase 3 · Cómo se construye cercanía"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-019",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "19 · 438",
+   "texto": "El lenguaje espiritual o artístico puede dar sensación de significado.",
+   "contexto": "Después de un concierto, «¿Qué parte te pegó más?» Deja que describa lo que sintió con sus palabras.",
+   "seccion": "Fase 3 · Cómo se construye cercanía"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-020",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "20 · 449",
+   "texto": "Greene describe el uso de malestar seguido de alivio o placer para intensificar el apego.",
+   "contexto": "Si hoy estás agotado, «Me dio gusto verte. Hoy sí necesito dormir temprano». Puedes ser cálido y poner un límite en la misma conversación.",
+   "seccion": "Fase 3 · Cómo se construye cercanía"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-021",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "21 · 465",
+   "texto": "El autor propone ceder iniciativa para que la otra persona también se acerque.",
+   "contexto": "«Me la pasé bien. La próxima tú eliges el lugar, si te late repetir». Observa si propone o retoma el tema por su cuenta.",
+   "seccion": "Fase 4 · Iniciativa y lo que sigue"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-022",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "22 · 477",
+   "texto": "La voz, la mirada, la cercanía y el ambiente influyen en la experiencia.",
+   "contexto": "Si caminan muy cerca, «¿Te puedo tomar de la mano?» La cercanía puede dar pie a preguntar.",
+   "seccion": "Fase 4 · Iniciativa y lo que sigue"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-023",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "23 · 493",
+   "texto": "Greene describe tomar la iniciativa cuando parece haber deseo.",
+   "contexto": "«Me dieron ganas de besarte. ¿Te gustaría?» Si duda, dale espacio. Si dice que no, acepta la respuesta con calma.",
+   "seccion": "Fase 4 · Iniciativa y lo que sigue"
+  },
+  {
+   "id": "banco-arte-seduccion-nota-024",
+   "libro": "arte-seduccion",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "24 · 504",
+   "texto": "El interés y las expectativas pueden cambiar después del momento más intenso.",
+   "contexto": "Después de la cita, «Me gustó verte. Yo sí quiero repetir, ¿tú cómo te quedaste?» Si buscas algo casual, dilo con palabras claras.",
+   "seccion": "Fase 4 · Iniciativa y lo que sigue"
+  },
+  {
+   "id": "banco-models-cita-001",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "53",
+   "texto": "La vulnerabilidad es el camino de la verdadera conexión humana",
+   "contexto": "Mostrar algo propio cuando la respuesta está abierta.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-cita-002",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "72",
+   "texto": "cuando no se espera nada a cambio",
+   "contexto": "El interés como regalo. Extracto de una frase más larga.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-cita-003",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "76",
+   "texto": "La no necesidad significa que te respetas a ti mismo y a los demás.",
+   "contexto": "Límites en las dos direcciones.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-cita-004",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "205",
+   "texto": "El coraje es un hábito.",
+   "contexto": "Práctica gradual cuando hay nervios.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-cita-005",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "224",
+   "texto": "Sus habilidades de comunicación son una serie de hábitos superpuestos.",
+   "contexto": "Entrenar una conducta por vez.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-cita-006",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "246",
+   "texto": "A veces los chistes son malos o poco divertidos.",
+   "contexto": "Dejar pasar una broma que no aterriza.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-cita-007",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "295",
+   "texto": "¿Y si fuera un regalo?",
+   "contexto": "Pregunta del epílogo para reflexionar después de un revés.",
+   "seccion": "Antología · Frases textuales para cotejar"
+  },
+  {
+   "id": "banco-models-nova-001",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si este plan solo te gusta porque ella dijo que sí, pregúntate qué plan habrías propuesto tú",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-002",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "A veces quedar bien te sale tan automático que ni alcanzas a decir qué querías",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-003",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Dile que te gustó su historia. Ya con eso dijiste algo real",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-004",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si te da nervio invitarla, haz la invitación en una frase y aguanta el silencio que sigue",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-005",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "La primera práctica es saludar. Si ya estás pensando en cómo invitarla, te brincaste la que te tocaba",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-006",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "“Hoy no puedo” también es algo que tú puedes decir",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-007",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si la broma no cayó, la conversación todavía tiene por dónde seguir",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-008",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si le preguntaste qué quería y te contestó claro, ya tienes algo mejor que una teoría",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-009",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Ve a un lugar donde te quedarías a gusto aunque hoy no conozcas a nadie",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-models-nova-010",
+   "libro": "models",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando te rechazan un plan, puedes seguir teniendo un buen día",
+   "contexto": "Frase original de NOVA a partir de Models.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-cita-001",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "235",
+   "texto": "Es una habilidad, una disciplina, igual que practicar un deporte o tocar un instrumento.",
+   "contexto": "Carisma entrenable.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-002",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "235",
+   "texto": "Cuando mostramos presencia, los que nos rodean sienten que los escuchamos, respetamos y valoramos.",
+   "contexto": "Atención.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-003",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "236",
+   "texto": "Ser consciente de que está mal es el primer paso para poder solucionarlo.",
+   "contexto": "Detectar malestar. Extracto con mayúscula inicial.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-004",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "237",
+   "texto": "Podemos alternar diferentes estilos de carisma o incluso mezclarlos.",
+   "contexto": "Elegir estilo.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-005",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "238",
+   "texto": "La presencia se comunica escuchando bien, sin interrumpir, y haciendo una pausa antes de hablar.",
+   "contexto": "Escucha.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-006",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "238",
+   "texto": "El timbre, el tono y el tempo de nuestro discurso son tan importantes como lo que decimos para determinar qué proyectamos.",
+   "contexto": "Voz.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-007",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "239",
+   "texto": "Cuide el valor de cada frase.",
+   "contexto": "Hablar en público.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-cita-008",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "240",
+   "texto": "El carisma es una herramienta poderosa que hay que usar responsablemente.",
+   "contexto": "Influencia.",
+   "seccion": "Frases del libro para cotejar"
+  },
+  {
+   "id": "banco-mito-carisma-nova-001",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando estás ensayando tu respuesta, hay detalles que ya se te fueron",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-002",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Antes de juzgar cómo va la cita, revisa si te está dando el sol en los ojos",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-003",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Haz la pregunta que te dejó su historia. Esa sí viene de estar escuchando",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-004",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si propones un plan con lugar y hora, el grupo por fin tiene algo que decidir",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-005",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Deja que el silencio dure lo suficiente para que también le toque hablar",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-006",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Un cumplido sobre algo que sí viste suena distinto",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-007",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si te trabaste, termina la frase. La otra persona todavía te está escuchando",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-008",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si ya cambió el plan, di qué pasó y qué opciones quedan",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-009",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando llegues al grupo, fíjate quién todavía no ha tenido espacio para entrar",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-mito-carisma-nova-010",
+   "libro": "mito-carisma",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si alguien bajó la voz para contártelo, acuérdate de eso cuando quieras repetirlo",
+   "contexto": "Frase original de NOVA a partir de El mito del carisma.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-cita-001",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "29",
+   "texto": "Trato de darme cuenta de esta pasión, cuyos desenvolvimientos sinceros tienen un carácter de belleza.",
+   "contexto": "Apertura del módulo.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-002",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "30",
+   "texto": "El amor-pasión nos hace olvidar todos nuestros intereses.",
+   "contexto": "Lo que desplaza la intensidad.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-003",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "32",
+   "texto": "He aquí lo que pasa en el alma: 1) La admiración.",
+   "contexto": "El primer indicio.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-004",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "33",
+   "texto": "No se puede reconocer el ramo primitivo.",
+   "contexto": "La imagen central de la idealización.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-005",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "35",
+   "texto": "El temor de una desgracia horrible se apodera en él, y con el temor la atención profunda á todos los detalles.",
+   "contexto": "La lupa de la incertidumbre.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-006",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "36",
+   "texto": "Se llega á dudar de la cristalización misma.",
+   "contexto": "Cuando la historia que te contaste empieza a caerse.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-007",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "36",
+   "texto": "Basta un grado mínimo de esperanza para engendrar el amor.",
+   "contexto": "Esperanza y anticipación.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-008",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "40",
+   "texto": "El amor es como la fiebre: nace y se extingue sin que la voluntad tome en ello la menor parte.",
+   "contexto": "Lo que sentimos sin decidirlo.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-009",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "40",
+   "texto": "En fin, el amor es de todas las edades.",
+   "contexto": "Lectura breve de apertura.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-010",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "41",
+   "texto": "Una dulce costumbre viene á embotar todas las penas de la vida y dar á los goces otro género de interés.",
+   "contexto": "Confianza y costumbre.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-011",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "41",
+   "texto": "Esta felicidad tan encantadora no la volveré á tener nunca, y la he perdido por mi culpa.",
+   "contexto": "La voz del amante tras la pérdida.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-012",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "50",
+   "texto": "Una vez comenzada la cristalización se goza con delicia de cada nueva belleza que se descubre en lo que se ama.",
+   "contexto": "Cómo se va poblando el retrato.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-013",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "53",
+   "texto": "Lo veis blanco y lo interpretáis en favor de vuestro amor; un instante después notáis que, en efecto, era negro y lo encontráis todavía concluyente en favor de vuestro amor.",
+   "contexto": "Dos señales opuestas, la misma conclusión.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-014",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "57",
+   "texto": "Esta fantasía es imposible de registrar y anotar. Anotarla es matarla por el momento.",
+   "contexto": "Lo que se pierde al explicar una emoción.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-015",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "70",
+   "texto": "Ven estas cosas, no como ellas son, sino como ellas las han creado.",
+   "contexto": "Lo que le agregaste tú.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-016",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "90",
+   "texto": "Puede decirse todo con una mirada, y, sin embargo, se puede negar siempre una mirada, porque no puede ser repetida textualmente.",
+   "contexto": "La ambigüedad de la mirada.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-017",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "110",
+   "texto": "La mayor felicidad que puede dar el amor es el primer apretón de manos de una mujer que se ama.",
+   "contexto": "La importancia de un gesto pequeño.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-018",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "116",
+   "texto": "Tener siempre una insignificante duda que calmar: he aquí lo que constituye la sed de todos los instantes; he aquí lo que hace la vida del amor feliz.",
+   "contexto": "Para discutir la atracción de la incertidumbre.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-019",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "116",
+   "texto": "El carácter de esta felicidad es la seriedad extrema.",
+   "contexto": "El contraste entre lo pequeño y lo que sentimos.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-020",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "131",
+   "texto": "Quiero hacer efecto sobre su corazón. Por esto voy mucho más allá de lo razonable.",
+   "contexto": "Orgullo y rivalidad en el pasaje del puntillo.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-021",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "241",
+   "texto": "La publicidad es necesaria al triunfo de los don Juan, como el secreto á los Werther.",
+   "contexto": "Vivir una escena y querer que se sepa.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-022",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "249",
+   "texto": "Nótese que las desesperaciones de amor constituyen anécdota.",
+   "contexto": "Por qué recordamos y contamos ciertas historias.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-023",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "272",
+   "texto": "Horas de placeres que no dependen de los sentidos mas que por los recuerdos.",
+   "contexto": "El lugar del recuerdo en lo que disfrutamos.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-024",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "272",
+   "texto": "El primer amor de un joven que entra en el mundo es un amor ambicioso.",
+   "contexto": "Lo que la admiración hace con la idea de uno mismo.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-cita-025",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "cita_textual",
+   "pagina": "340",
+   "texto": "Observáis tanta diferencia entre lo que soy en realidad y la manera de verme de este amable joven como entre una pequeña rama de arbusto seca y la linda cresta de diamantes que estos mineros me han ofrecido.",
+   "contexto": "La cristalización desde la perspectiva de la persona admirada.",
+   "seccion": "Antología de frases y pasajes para citar"
+  },
+  {
+   "id": "banco-del-amor-nova-001",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si un like te cambió toda la historia, revisa qué historia llevabas antes",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-002",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando te gusta alguien, hasta lo que falta por saber parece parte de su encanto",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-003",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Pregúntate qué te gustó de la cita cuando ya no había nadie mirando",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-004",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Fíjate qué te enseñó de ella la conversación y qué te enseñó de ti tu reacción",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-005",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si las dos interpretaciones te llevan a que sí le gustas, vuelve a lo que pasó",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-006",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Puedes extrañar una noche y todavía tener mucho que aprender de la persona con la que estuviste",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-007",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Esa canción te recordó lo que sentiste. Para saber qué sintió ella, escucha lo que te cuente",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-008",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si te interesa volver a verla, haz una invitación que pueda contestar en una frase",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-009",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Que te dé nervio que te vea con ganas también es parte de invitarla",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-del-amor-nova-010",
+   "libro": "del-amor",
+   "ruta": "cuando_buscas_algo_mas_serio",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "A veces te duele que se haya acabado. A veces te duele cómo quedaste en la historia. Vale la pena saber cuál",
+   "contexto": "Frase original de NOVA a partir de Del amor.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nota-001",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "IV · 10",
+   "texto": "La carta de Martorano abre el contacto con Jenaro Polo, quien amplía por voluntad propia la hospitalidad que se esperaba de él.",
+   "contexto": "Una presentación abre la conversación. Usa el vínculo para aterrizar tu saludo. «Ana me contó que tú escogiste el lugar. ¿Cómo lo encontraste?» Si la persona solo saluda, puedes darle las gracias y seguir conociendo al grupo.",
+   "seccion": "Tomo original 2 · Entrar en un círculo, leer la situación y manejar el orgullo"
+  },
+  {
+   "id": "banco-memorias-nota-002",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "V · 14",
+   "texto": "En el salón romano, Casanova entra sin presentación y al principio nadie le habla. En el mismo capítulo interpreta los motivos de Bellino y cuenta que en un momento prefirió callar.",
+   "contexto": "Aprende cómo funciona un grupo y pregunta antes de adivinar. Si todos se conocen, «Soy amigo de Ana. ¿Ustedes se conocen de aquí?» Si alguien se reserva algo, puede elegir cuándo hablar de ello.",
+   "seccion": "Tomo original 2 · Entrar en un círculo, leer la situación y manejar el orgullo"
+  },
+  {
+   "id": "banco-memorias-nota-003",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "VI · 24",
+   "texto": "En Sinigaglia, Casanova plantea conseguir otra habitación. Después, el relato describe un acercamiento iniciado por la otra persona. Más adelante Casanova reconoce que el afecto y su amor propio empujan sus decisiones en sentidos distintos.",
+   "contexto": "Una invitación concreta y una salida real. «¿Quieres que sigamos platicando aquí o prefieres descansar?» Distingue la respuesta a esa propuesta de cualquier paso posterior. Si te cuesta retirarte tras un no, pregúntate qué te importa más en ese momento: verla o evitar sentirte rechazado.",
+   "seccion": "Tomo original 2 · Entrar en un círculo, leer la situación y manejar el orgullo"
+  },
+  {
+   "id": "banco-memorias-nota-004",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XI · 33",
+   "texto": "Aparece una advertencia anónima. Casanova narra desde el futuro y el lector ya conoce parte del desenlace.",
+   "contexto": "Un aviso merece contexto. Si alguien te dice «creo que se molestó contigo», pregunta qué observó antes de actuar sobre el rumor.",
+   "seccion": "Tomo original 4 · Qué muestran los episodios de los Plomos"
+  },
+  {
+   "id": "banco-memorias-nota-005",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XII · 44",
+   "texto": "Para que se entienda el problema, el narrador describe las condiciones materiales del encierro.",
+   "contexto": "El entorno cambia la lectura. Una respuesta corta puede venir del ruido o de la prisa. «Aquí casi no te escucho. ¿Quieres moverte a esa mesa?»",
+   "seccion": "Tomo original 4 · Qué muestran los episodios de los Plomos"
+  },
+  {
+   "id": "banco-memorias-nota-006",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XIII · 57",
+   "texto": "Un cambio de calabozo interrumpe lo que Casanova esperaba hacer.",
+   "contexto": "Cambia de plan cuando cambian los hechos. Si el grupo decide quedarse en el lugar y tú pensabas proponer otra cosa, «Yo me quedo un rato. Si después quieren ir, vemos».",
+   "seccion": "Tomo original 4 · Qué muestran los episodios de los Plomos"
+  },
+  {
+   "id": "banco-memorias-nota-007",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XIV · 67",
+   "texto": "La entrega de cartas se apoya en la confianza y en el riesgo que corre quien acepta.",
+   "contexto": "Pide lo que necesitas con margen para que te digan que no. «¿Te late presentarme a tu amiga? Si anda ocupada, en otra». La amistad da contexto para pedir el favor.",
+   "seccion": "Tomo original 4 · Qué muestran los episodios de los Plomos"
+  },
+  {
+   "id": "banco-memorias-nota-008",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XV · 77",
+   "texto": "El episodio de la fuga muestra cómo un imprevisto altera el plan en tiempo real.",
+   "contexto": "Pausa antes de improvisar. Si algo cambia a mitad de una conversación, observa el dato nuevo. «Creo que ya vienen por ustedes. Me dio gusto saludarte».",
+   "seccion": "Tomo original 4 · Qué muestran los episodios de los Plomos"
+  },
+  {
+   "id": "banco-memorias-nota-009",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "IV, t. 6 · 86",
+   "texto": "Casanova se presenta como discípulo de Voltaire. Voltaire convierte el homenaje en un chiste sobre honorarios. Los dos ya tienen un asunto del que hablar.",
+   "contexto": "Reconocimiento específico y juego de vuelta. «Me gustó lo que dijiste de ese director». Si te responde «entonces me debes la entrada», puedes seguir: «Va, pero tú eliges la película». La broma nació de algo que ambos compartieron.",
+   "seccion": "Tomos originales 6 y 8 · Humor, etiqueta y conversación compartida"
+  },
+  {
+   "id": "banco-memorias-nota-010",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XX, t. 8 · 98",
+   "texto": "El recién llegado navega recomendaciones y reuniones de corte. Algunas cartas no producen lo que esperaba y él describe cierta charla como superficial.",
+   "contexto": "Distingue acceso de conexión. Tras un saludo formal, prueba un tema que sí te interese. «¿Qué te hizo venir a este evento?» Si el intercambio sigue breve, despídete con naturalidad.",
+   "seccion": "Tomos originales 6 y 8 · Humor, etiqueta y conversación compartida"
+  },
+  {
+   "id": "banco-memorias-nota-011",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XXI, t. 8 · 110",
+   "texto": "Por un lado, una interlocutora le señala una norma de etiqueta que él desconoce. Por otro, la conversación con Paulina encuentra una actividad compartida en el ajedrez.",
+   "contexto": "Ajusta cuando te explican una costumbre y aprovecha lo que hay a la mano. «Ah, no sabía. Gracias por decírmelo». Si alguien mueve una pieza del tablero, «¿Juegas? Si te late, echamos una». Observa si toma parte en el juego o solo estaba jugando con la pieza.",
+   "seccion": "Tomos originales 6 y 8 · Humor, etiqueta y conversación compartida"
+  },
+  {
+   "id": "banco-memorias-nota-012",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "VIII · 120",
+   "texto": "Casanova busca acceso a Federico de Prusia mediante una recomendación y pide que le indiquen la ocasión de la audiencia.",
+   "contexto": "Pide una oportunidad específica y facilita que elijan cuándo. «¿Te gustaría que nos viéramos con más calma? Si te late, dime qué día te queda».",
+   "seccion": "Tomo original 9 · Poder, reputación y discreción"
+  },
+  {
+   "id": "banco-memorias-nota-013",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "IX · 132",
+   "texto": "Casanova atribuye afecto y celos a Zaira en un vínculo con una fuerte desigualdad de poder. Su relato es una perspectiva interesada.",
+   "contexto": "Evalúa quién tiene libertad para elegir. Si tú supervisas a la persona o controlas su trabajo, una invitación romántica puede ponerla en una posición incómoda. La cordialidad en ese contexto admite muchas explicaciones.",
+   "seccion": "Tomo original 9 · Poder, reputación y discreción"
+  },
+  {
+   "id": "banco-memorias-nota-014",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "X · 140",
+   "texto": "El desafío de un tercero transforma una conversación en un problema de honor frente a testigos.",
+   "contexto": "Puedes dejar pasar una provocación pública. Si alguien intenta hacerte competir por atención, «Todo bien, yo vine a pasarla a gusto». Cambia de interlocutor o retírate.",
+   "seccion": "Tomo original 9 · Poder, reputación y discreción"
+  },
+  {
+   "id": "banco-memorias-nota-015",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XI · 148",
+   "texto": "Al volver a Varsovia, Casanova advierte que quienes antes lo recibían con entusiasmo ahora se muestran fríos. Interpreta el cambio desde su propia visión del grupo.",
+   "contexto": "Actualiza tu lectura con la conducta presente. Si alguien con quien platicabas mucho está distante al reencontrarse, dale espacio. Una cercanía anterior te cuenta cómo era el vínculo entonces.",
+   "seccion": "Tomo original 9 · Poder, reputación y discreción"
+  },
+  {
+   "id": "banco-memorias-nota-016",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "XII · 158",
+   "texto": "Casanova interpreta la cercanía de Ignacia a partir de apretones de brazo. Después, un secreto compartido circula por terceros y afecta sus relaciones.",
+   "contexto": "Distingue un gesto de la conclusión y protege lo que te cuentan. «Me gustó verte hoy. ¿Quieres que salgamos otro día?» Si necesitas pedir consejo, cuenta únicamente tus propias decisiones y evita repetir confidencias ajenas.",
+   "seccion": "Tomo original 9 · Poder, reputación y discreción"
+  },
+  {
+   "id": "banco-memorias-cita-001",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "86",
+   "texto": "Hace veinte años que soy su discípulo, y me siento feliz por lo que significa ver a mi maestro.",
+   "contexto": "Casanova a Voltaire. Cómo expresa admiración al presentarse.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-002",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "86",
+   "texto": "Caballero, hónreme aun durante veinte años y prométame traer, al cabo de ellos, mis honorarios.",
+   "contexto": "Voltaire, según Casanova. Cómo se devuelve una frase solemne con humor.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-003",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "98",
+   "texto": "A esta respuesta, cuyo mérito estuvo en la prontitud, todos los asistentes se echaron a reir y aplaudieron.",
+   "contexto": "La rapidez de la respuesta y su efecto en el grupo.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-004",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "105",
+   "texto": "La conversación fue lo que es siempre en la corte: nada más que frivolidades.",
+   "contexto": "Percepción del narrador sobre una reunión formal.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-005",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "110",
+   "texto": "Mi mesa, que era excelente, y mi casa no bastaban a mi felicidad.",
+   "contexto": "Qué sigue faltando cuando lo material está resuelto.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-006",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "139",
+   "texto": "La vida que yo llevaba era, pues, muy monótona, verdadera vida de hombre honrado, que recuerdo aún con placer.",
+   "contexto": "Casanova reconoce el disfrute de una vida más tranquila.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-007",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "148",
+   "texto": "A mi vuelta a Varsovia, fui recibido con frialdad donde antes me habían agasajado hasta la exageración.",
+   "contexto": "La recepción de un grupo puede cambiar.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-008",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "169",
+   "texto": "Ciertos apretones de brazo me indicaron un cambio de actitud en Ignacia: pensé que me aguardaba la felicidad.",
+   "contexto": "Qué pasó y qué creyó Casanova que significaba.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-cita-009",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "170",
+   "texto": "El barón vendió el secreto a Manucci, y esto bastó para que mi mayor amigo se convirtiese en mi enemigo más implacable.",
+   "contexto": "El costo de perder el control sobre una confidencia.",
+   "seccion": "Frases textuales para leer"
+  },
+  {
+   "id": "banco-memorias-nova-001",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si alguien te presentó, ya tienes cómo empezar. La segunda pregunta ponla tú",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-002",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando te devuelven la broma, ya tienen algo que jugar entre los dos",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-003",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si en la fiesta todos están jugando ajedrez, igual te conviene preguntar quién va ganando",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-004",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Después de una salida, acuérdate de quién hizo la segunda pregunta y de quién propuso volver a verse",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-005",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si un apretón de brazo te hizo imaginar otra cita, invítala y escucha qué dice",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-006",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si el plan cambió, vuelve a leer el momento. La gente también cambia de ritmo",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-007",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si necesitas que tus amigos se enteren, vale la pena preguntarte qué parte del encuentro querías vivir tú",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-memorias-nova-008",
+   "libro": "memorias",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "La historia que cuentas después también dice a quién querías impresionar",
+   "contexto": "Frase original de NOVA a partir de Memorias.",
+   "seccion": "Frases originales de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-cita-001",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "38",
+   "texto": "It All Comes Down To Your Skills.",
+   "contexto": "«Al final, se trata de las habilidades que practicas».",
+   "seccion": "Frases del libro para leer"
+  },
+  {
+   "id": "banco-double-your-dating-cita-002",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "48",
+   "texto": "Be Different In An Attractive Way",
+   "contexto": "«Encuentra una forma atractiva de mostrar qué te distingue».",
+   "seccion": "Frases del libro para leer"
+  },
+  {
+   "id": "banco-double-your-dating-cita-003",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "134",
+   "texto": "The First Date Is NOT An Interview",
+   "contexto": "«La primera cita no es un interrogatorio».",
+   "seccion": "Frases del libro para leer"
+  },
+  {
+   "id": "banco-double-your-dating-cita-004",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "146",
+   "texto": "Notice the details. Do thoughtful things.",
+   "contexto": "«Fíjate en los detalles. Haz cosas que demuestren atención».",
+   "seccion": "Frases del libro para leer"
+  },
+  {
+   "id": "banco-double-your-dating-cita-005",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "146",
+   "texto": "Relationships aren’t like investing.",
+   "contexto": "«Las relaciones se viven de otra forma que las inversiones».",
+   "seccion": "Frases del libro para leer"
+  },
+  {
+   "id": "banco-double-your-dating-nova-001",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si los dos se están picando con el juego, ya tienes de dónde sacar una broma",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-002",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando ella te hace una pregunta en serio, puedes darle una respuesta en serio",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-003",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si llevas cuatro preguntas seguidas, agarra un detalle de la última respuesta y platica de eso",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-004",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si te acabas de despedir, deja que la despedida haga su trabajo",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-005",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Puedes proponer un plan con seguridad y dejar que la otra persona elija",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-006",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Afirmación. «Puedo mostrar lo que me gusta aunque a la otra persona le guste algo distinto",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-007",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Afirmación. «Puedo escuchar una respuesta sin empezar a defender mi invitación",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-double-your-dating-nova-008",
+   "libro": "double-your-dating",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Afirmación. «Puedo coquetear con humor y ajustar el tono cuando cambia la conversación",
+   "contexto": "Frase original de NOVA a partir de Double Your Dating.",
+   "seccion": "Frases originales y afirmaciones de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nota-001",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "5–18 · Introducción, glosario y formación",
+   "texto": "Abridor, grupo, punto de enganche, indicadores de interés y aprendizaje mediante práctica. El relato biográfico describe el paso de memorizar rutinas a tener más soltura.",
+   "contexto": "Elige una sola conducta: saludar y esperar una respuesta. En una expo: «Qué onda, ¿tú ya viste la sala de arriba?» Al final anota qué escuchaste.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-002",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "18–23 · Evolución y atracción",
+   "texto": "El autor plantea una progresión desde aprender estructuras hasta adaptarlas. Mezcla observaciones propias con teorías generales de atracción.",
+   "contexto": "Practica tres aperturas distintas en el mismo lugar. Evalúa cuál conectaba con algo que los dos podían ver.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-003",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "24–38 · Antes de salir y estilo",
+   "texto": "Ropa, accesorios, corte, lenguaje corporal, preparación y elección de un estilo que encaje contigo.",
+   "contexto": "Usa algo que te guste y tenga historia. Si te preguntan por el anillo: «Lo compré en un tianguis y volví por él porque me quedé pensando en el diseño».",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-004",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "39–47 · Tres personajes, contexto y sistema",
+   "texto": "Mr. Sociable abre, Mr. Confort facilita conversación y el seductor expresa interés. El sistema distingue apertura, conversación y cierre.",
+   "contexto": "En el grupo: «¿Ustedes conocen al DJ?» Al conversar: «¿Cuál fue la primera vez que lo vieron?» Si quieres volver a verla: «Me gustó platicar contigo. ¿Vamos a su próximo set tú y yo?»",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-005",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "48–55 · Aperturas",
+   "texto": "Preabridor, apertura directa, de opinión, situacional y de rutina. El manual insiste en preparar la transición después de la primera respuesta.",
+   "contexto": "En vez de contar de golpe lo que viste, «Oigan…». Si te dan atención, «¿Vieron cómo se prendió todo el lugar con esa rola?» Después pregunta cuál les gustó.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-006",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "56–59 · Conversación y enganche",
+   "texto": "Conversación de peluquería, entrevista, monólogo y profundidad prematura. El punto de enganche aparece cuando la otra persona también sostiene el tema.",
+   "contexto": "Si responde «vine de Querétaro», «¿Qué te hizo venir justo a este festival?» Luego comparte el detalle que a ti te trajo. Una pregunta de vuelta o un tema nuevo que ella propone ayudan a leer el intercambio.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-007",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "59–74 · Ganchos, conexión y temas profundos",
+   "texto": "Observar, pasar de datos a experiencias, dar retroalimentación, discrepar y usar una historia para enlazar temas. También aparecen propuestas de introducir tensión.",
+   "contexto": "Si dice «me quiero ir a Nueva York», «¿Qué te emociona más: ir a conciertos o caminar sin plan?» Si te dice que quiere conocer Broadway, pregúntale qué obra elegiría. Si discrepan sobre una ciudad, cuenten qué les gustó a cada quien.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-008",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "75–88 · Contacto, número, beso y continuación",
+   "texto": "El autor enumera escaladas por contacto, cierres y transiciones de lugar. Las escenas sirven para examinar cómo cambia lo que se está proponiendo.",
+   "contexto": "«¿Te late que nos pasemos Insta para mandarnos la canción?» Si quieres cambiar de lugar, explica a dónde y deja que elija. Si quieres besarla: «Tengo ganas de besarte». Pausa y espera reciprocidad clara.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-009",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "89–94 · Acercamientos de día",
+   "texto": "Diferencias de ritmo entre club, tiendas, calle y otros espacios. El autor destaca que de día suelen faltar tiempo y pretextos compartidos.",
+   "contexto": "En una librería, «¿Ese autor sí te enganchó?» Si va de prisa o vuelve al estante, despídete. Si te recomienda otro título y pregunta qué lees, sigue por ahí.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-010",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "95–108 · Técnicas opcionales",
+   "texto": "El manual trata circunstancias que dificultan un reencuentro, distintos niveles de invitación, cómo acercarte cuando están bailando y respuestas juguetonas. También propone algunas técnicas de presión y cruces de límites.",
+   "contexto": "Si ambos disfrutan el mismo evento: «El viernes toca la misma banda. ¿Te late vernos allá?» Si la invitación es con amigos, dilo. Si es cita, acláralo cuando haga falta.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-011",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "109–120 · Juego interno",
+   "texto": "Cuaderno con afirmaciones, notas de aprendizaje, ideas para probar y registro de interacciones. Incluye ensayo, autoestima, iniciativa y creencias del autor sobre estatus.",
+   "contexto": "Define una meta observable: «Voy a dejar de hablar encima de la respuesta». Al volver, apunta qué probaste, qué ocurrió y qué cambiarías.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-012",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "121–122 · Pensamientos finales",
+   "texto": "El autor cuestiona que la identidad de seductor sea la meta y pide definir qué vida y qué relación se quieren.",
+   "contexto": "Completa dos frases: «Quiero aprender a…» y «El tipo de vínculo que hoy me interesa es…». Pueden tener respuestas distintas.",
+   "seccion": "Enseñanzas por bloque"
+  },
+  {
+   "id": "banco-arte-natural-nota-013",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**El “hey” antes de la frase · 48**",
+   "texto": "Llegas a una mesa que hace una pausa. «Oigan…» Espera a que te miren. «¿Saben quién puso la última rola?",
+   "contexto": "Si alguien contesta, retoma lo que dijo. Si siguen en su plática, deja que continúen.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-014",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**¿Esto está ocupado? · 50**",
+   "texto": "Ante un espacio libre y con tono de broma: «Oigan, ¿esto está ocupado?",
+   "contexto": "Si te hacen espacio, «Gracias». Si te dicen que esperan a alguien, «Va, todo bien».",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-015",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**El accesorio · 50**",
+   "texto": "El libro usa ajustar un accesorio como rutina. Aquí: «Ese sombrero se robó todo el outfit. ¿De dónde salió?",
+   "contexto": "Si tiene historia, escucha. Deja que la otra persona acomode su ropa o accesorio.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-016",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**El cumplido de ida y vuelta · 51**",
+   "texto": "Si ya están jugando: «Te tengo un cumplido». Si ella pregunta cuál: «Ese saco te quedó increíble",
+   "contexto": "Si te devuelve un halago, agradécelo. La escena también termina bien con un «gracias».",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-017",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**Desempatar una opinión · 52–53**",
+   "texto": "Oigan, necesitamos desempatar. ¿Cuál es el peor momento para decir “ya voy en camino” si todavía estás en tu casa?",
+   "contexto": "Pide una anécdota a quien se enganche. Usa un debate que ya traían o preséntalo como juego.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-018",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**La lectura de mano como tema · 53**",
+   "texto": "Pasan junto a un puesto: «¿Te daría curiosidad que te leyeran la mano solo por el chisme?",
+   "contexto": "Si cuenta una experiencia, pídele el detalle raro. Si quiere probar, cada quien elige si participa.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-019",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**Directo sin discurso · 53**",
+   "texto": "Te vi bailando y me dieron ganas de venir a saludarte. Soy Diego",
+   "contexto": "Haz una pausa. Si se presenta, pregunta por la canción. Si se gira hacia su grupo, despídete.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-020",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**La salida del interrogatorio · 56**",
+   "texto": "Después de que dice «soy de Puebla»: «Solo he ido por comida. ¿Qué lugar conoces que los turistas siempre se brincan?",
+   "contexto": "Escucha y comparte una experiencia propia breve.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-021",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**La opinión contraria · 66**",
+   "texto": "A mí esa última canción sí me gustó. ¿Qué fue lo que a ti no te latió?",
+   "contexto": "Dale espacio a defender su gusto y explica el tuyo en una frase.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-022",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**De dato a imagen · 71–72**",
+   "texto": "Si estuvieras en Nueva York mañana, ¿desayunarías en un diner o te irías derecho a un museo?",
+   "contexto": "Si elige museo, «¿Cuál tienes en mente?» Evita adjudicarle la emoción antes de que la cuente.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-023",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**El currículum · 104**",
+   "texto": "Si ambos se están riendo de cuántas preguntas llevan: «Ya casi te mando mi CV. ¿Tú también tienes referencias?",
+   "contexto": "Si la pregunta era seria, vuelve a contestarla.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-024",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**El baile como plan pequeño · 104**",
+   "texto": "¿Bailamos esta?",
+   "contexto": "Si sí, bailen. Si prefiere quedarse, puedes seguir bailando por tu cuenta.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-nota-025",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "resumen_del_libro",
+   "pagina": "**Continuidad por un objeto concreto · 75–88**",
+   "texto": "¿Te paso mi Insta y me mandas la playlist que dijiste?",
+   "contexto": "Si te da el nombre en lugar del contacto, agradece. Si se agregan, el primer mensaje retoma ese hilo.",
+   "seccion": "Banco de hacks · Frase, momento y seguimiento"
+  },
+  {
+   "id": "banco-arte-natural-cita-001",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "7",
+   "texto": "Abridor: la primera cosa que se dice al abordar un set.",
+   "contexto": "Glosario. En voz de NOVA, “set” puede explicarse como grupo.",
+   "seccion": "Frases del manual para leer"
+  },
+  {
+   "id": "banco-arte-natural-cita-002",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "48",
+   "texto": "El poder de “Hey” como un Pre-Abridor",
+   "contexto": "Encabezado sobre abrir el turno de palabra.",
+   "seccion": "Frases del manual para leer"
+  },
+  {
+   "id": "banco-arte-natural-cita-003",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "50",
+   "texto": "¿Este pedazo de pista está ocupado?",
+   "contexto": "Apertura textual para jugar con el espacio.",
+   "seccion": "Frases del manual para leer"
+  },
+  {
+   "id": "banco-arte-natural-cita-004",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "72",
+   "texto": "Sacar contenido emocional.",
+   "contexto": "Paso de un dato a lo que significa para quien lo cuenta.",
+   "seccion": "Frases del manual para leer"
+  },
+  {
+   "id": "banco-arte-natural-cita-005",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "109",
+   "texto": "Una lista de cosas que quieres probar en el campo de –abridores, rutinas, lo que sea.",
+   "contexto": "Registro de ideas para practicar.",
+   "seccion": "Frases del manual para leer"
+  },
+  {
+   "id": "banco-arte-natural-cita-006",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "cita_textual",
+   "pagina": "121",
+   "texto": "Ser un PUA no es un buen objetivo para una meta.",
+   "contexto": "La meta de aprendizaje necesita un propósito propio.",
+   "seccion": "Frases del manual para leer"
+  },
+  {
+   "id": "banco-arte-natural-nova-001",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Di “oigan”, espera un segundo y luego cuenta lo del caballo. Dale tiempo al grupo de darse cuenta de que le hablas",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nova-002",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si el primer tema se acaba, pregunta por el detalle que sí te dio curiosidad",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nova-003",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Cuando te digan algo que no compartes, ya tienes de dónde sacar otra pregunta",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nova-004",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Si vas a invitarla a otro lugar, dile cuál. Que ella tenga el plan completo también es parte de invitar",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nova-005",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Afirmación. «Puedo practicar un saludo y dejar que la conversación encuentre su ritmo",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nova-006",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Afirmación. «Tengo gustos propios y me interesa escuchar los de ella",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  },
+  {
+   "id": "banco-arte-natural-nova-007",
+   "libro": "arte-natural",
+   "ruta": "principal",
+   "clase": "original_nova",
+   "pagina": null,
+   "texto": "Afirmación. «Puedo hacer una invitación clara y escuchar la respuesta",
+   "contexto": "Frase original de NOVA a partir de El arte natural de la seducción.",
+   "seccion": "Frases y afirmaciones originales de NOVA"
+  }
+ ]
+}

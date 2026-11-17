@@ -1,0 +1,2893 @@
+{
+  "version": 1,
+  "total": 200,
+  "conteo": {
+    "escenario": 50,
+    "frase": 50,
+    "tip": 50,
+    "nega": 20,
+    "ejercicio": 30
+  },
+  "contenido": [
+    {
+      "id": "nova-mvp01-001-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Primera vez con el grupo",
+      "contenido": "Espera a que alguien termine su frase y saluda a la mesa entera. Si te preguntan de dónde conoces al anfitrión, contesta y devuelve la pregunta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Llegas a una mesa de amigos de un amigo. El anfitrión se levantó y todos hablan entre sí.",
+      "relacionados": [
+        "nova-mvp01-001-fra",
+        "nova-mvp01-001-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-001-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Primera vez con el grupo",
+      "contenido": "Hola, soy Diego. Vengo con Fer. ¿Ustedes de dónde lo conocen?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-001-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-001-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Primera vez con el grupo",
+      "contenido": "Cuando te presentan a varias personas juntas, aprende primero el nombre de quien te contesta y úsalo al despedirte.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-001-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-002-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Entrar por el tema",
+      "contenido": "Si alguien te mira o te hace espacio, puedes pedir el dato que falta. Si siguen contando la historia, escucha hasta que termine.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Llegas cuando el grupo ya se está riendo de algo que no oíste.",
+      "relacionados": [
+        "nova-mvp01-002-fra",
+        "nova-mvp01-002-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-002-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Entrar por el tema",
+      "contenido": "Alcancé a oír lo del taxi. ¿Qué pasó antes?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-002-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-002-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Entrar por el tema",
+      "contenido": "Repetir el último detalle que sí escuchaste permite entrar al tema sin pedir que vuelvan a contar todo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-002-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-003-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Presentar a dos personas",
+      "contenido": "Da nombres y un interés en común. Deja que ellos se hagan la primera pregunta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Tus dos amistades se quedaron frente a frente después de saludarse y tú conoces algo que las dos hacen.",
+      "relacionados": [
+        "nova-mvp01-003-fra",
+        "nova-mvp01-003-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-003-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Presentar a dos personas",
+      "contenido": "Ana, él es Fer. Los dos llegaron temprano porque querían ver al DJ que abre.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-003-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-003-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Presentar a dos personas",
+      "contenido": "Cuando presentas a alguien, elige un dato que esa persona ya cuente con gusto. La presentación le deja espacio para decidir qué más compartir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-003-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-004-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Volver a un grupo conocido",
+      "contenido": "Saluda a quien conoces e incluye con la mirada a quienes están junto a ella. Si alguno se presenta, cambia a su nombre.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Reconoces a una persona de la reunión anterior y al resto apenas los ubicas.",
+      "relacionados": [
+        "nova-mvp01-004-fra",
+        "nova-mvp01-004-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-004-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Volver a un grupo conocido",
+      "contenido": "Qué gusto verte otra vez. Soy Diego, por cierto, para los que no conocía.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-004-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-004-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Volver a un grupo conocido",
+      "contenido": "Si recuerdas el tema y se te fue el nombre, dilo con sencillez. «Me acuerdo de lo de tus discos. Recuérdame tu nombre».",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-004-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-005-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Una mesa que parece libre",
+      "contenido": "Haz la pregunta desde donde estás. Si guardan el lugar, agradece y busca otra silla. Si te hacen espacio, toma asiento y ve cómo va la plática.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Hay una silla vacía junto a un grupo en una terraza. Quieres sentarte y no sabes si esperan a alguien.",
+      "relacionados": [
+        "nova-mvp01-005-fra",
+        "nova-mvp01-005-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-005-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Una mesa que parece libre",
+      "contenido": "Oigan, ¿esto está ocupado?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-005-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-005-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Una mesa que parece libre",
+      "contenido": "Una pregunta práctica puede quedarse en eso. Si nadie retoma el saludo, sigue con lo que ibas a hacer.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-005-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-006-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Un grupo en medio de una despedida",
+      "contenido": "Saluda breve si hacen contacto. Si hay ganas de hablar, deja que el momento sea corto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Quieres saludar a alguien, pero sus amigos ya se pusieron los abrigos y están pidiendo el coche.",
+      "relacionados": [
+        "nova-mvp01-006-fra",
+        "nova-mvp01-006-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-006-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Un grupo en medio de una despedida",
+      "contenido": "Qué gusto verte. Ya vi que se van. Que lleguen bien.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-006-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-006-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Un grupo en medio de una despedida",
+      "contenido": "Las mochilas puestas y la atención en la salida te dicen más sobre el tiempo que queda que sobre cómo les caíste.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-006-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-007-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "La conversación privada",
+      "contenido": "Da un saludo corto y acomódate. Espera a que levanten la vista o te incluyan antes de preguntar de qué hablan.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Dos personas hablan bajito y miran una pantalla. Acabas de llegar a la mesa.",
+      "relacionados": [
+        "nova-mvp01-007-fra",
+        "nova-mvp01-007-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-007-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "La conversación privada",
+      "contenido": "Hola, aquí me acomodo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-007-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-007-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "La conversación privada",
+      "contenido": "En grupo puedes estar presente sin disputar el turno. Un saludo basta mientras se resuelve otro asunto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-007-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-008-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "escenario",
+      "titulo": "Espacio para quien llegó tarde",
+      "contenido": "Dale una línea de contexto y una pregunta que pueda contestar con lo que sabe.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Alguien se suma después de media hora y todas las referencias del tema vienen de antes.",
+      "relacionados": [
+        "nova-mvp01-008-fra",
+        "nova-mvp01-008-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-008-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "frase",
+      "titulo": "Espacio para quien llegó tarde",
+      "contenido": "Estamos escogiendo dónde cenar. ¿Ya probaste el lugar de enfrente?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-008-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-008-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "tip",
+      "titulo": "Espacio para quien llegó tarde",
+      "contenido": "Si quieres incluir a alguien, retoma el tema en una frase y deja que responda. Explicar todos los antecedentes puede quitarle el turno.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-008-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-009-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Papelería con dos opciones",
+      "contenido": "Pregunta solo si sí te interesa su opinión. Si dice que tampoco sabe, puedes comentar qué necesitas y volver a elegir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Los dos están frente a las libretas. La otra persona compara papel y tú tienes dos modelos en la mano.",
+      "relacionados": [
+        "nova-mvp01-009-fra",
+        "nova-mvp01-009-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-009-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Papelería con dos opciones",
+      "contenido": "¿Alcanzas a ver si esta aguanta plumón? Estoy entre las dos.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-009-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-009-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Papelería con dos opciones",
+      "contenido": "Una duda que ya traías suele sonar más natural que un tema inventado para abrir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-009-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-010-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Cine antes de entrar",
+      "contenido": "Responde a lo que dijo. Si se anima a comparar películas, cuéntale qué te trajo. Si entra su turno, deja que avance.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En la fila del cine, la persona de al lado mira la cartelera y comenta que hay dos funciones a la misma hora.",
+      "relacionados": [
+        "nova-mvp01-010-fra",
+        "nova-mvp01-010-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-010-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Cine antes de entrar",
+      "contenido": "Yo vine por la de terror. ¿Tú cuál estás viendo?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-010-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-010-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Cine antes de entrar",
+      "contenido": "Un buen momento para hablar en el cine es antes de la función o al salir. Durante la película, guarda el comentario.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-010-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-011-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Camino compartido",
+      "contenido": "Pregunta por la ruta manteniendo distancia. Si solo te da la indicación, agradece y sigue por tu lado.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En el parque, ambos se detienen frente a una desviación porque cerraron un sendero.",
+      "relacionados": [
+        "nova-mvp01-011-fra",
+        "nova-mvp01-011-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-011-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Camino compartido",
+      "contenido": "¿Sabes si por acá también se llega a la entrada?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-011-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-011-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Camino compartido",
+      "contenido": "En la calle, una explicación de camino se agradece. Si la otra persona sigue caminando, déjala seguir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-011-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-012-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Un puesto lleno",
+      "contenido": "Pregúntale por el sabor mirando el producto. Si te explica qué tan picante es, agradece y pide tu muestra.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En un bazar, una persona acaba de probar la salsa que estás pensando llevar.",
+      "relacionados": [
+        "nova-mvp01-012-fra",
+        "nova-mvp01-012-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-012-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Un puesto lleno",
+      "contenido": "¿Sí pica o nomás tiene cara?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-012-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-012-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Un puesto lleno",
+      "contenido": "El puesto te da una pregunta corta. Si alguien está atendiendo a más clientes, deja libre su tiempo después de resolverla.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-012-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-013-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Algo que trae puesto",
+      "contenido": "Comenta el parche. Si te cuenta de dónde salió, escucha. Si solo agradece, sigue con lo que hacías.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Ves una chamarra con un parche de una banda que de verdad conoces. Los dos están esperando en un lugar donde se puede hablar.",
+      "relacionados": [
+        "nova-mvp01-013-fra",
+        "nova-mvp01-013-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-013-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Algo que trae puesto",
+      "contenido": "Qué buen parche. ¿Es del tour pasado?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-013-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-013-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Algo que trae puesto",
+      "contenido": "Un detalle elegido por la persona, como un parche o un pin, abre un tema concreto y fácil de contestar.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-013-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-014-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Buscar una rola",
+      "contenido": "Parte de lo que acabas de oír. Si te dice el nombre, agradece y pruébalo tú mismo antes de pedir recomendaciones.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En una tienda de discos, alguien reconoce en voz alta la canción que el local está poniendo.",
+      "relacionados": [
+        "nova-mvp01-014-fra",
+        "nova-mvp01-014-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-014-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Buscar una rola",
+      "contenido": "¿Sí sabes cuál es? Me gustó un buen.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-014-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-014-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Buscar una rola",
+      "contenido": "Si pides un dato, dale tiempo de contestar antes de convertirlo en varias preguntas.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-014-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-015-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "El primer intento en clase",
+      "contenido": "Pide que confirme un detalle y prueba el paso juntos si le late. Cuando vuelve la instrucción, regresa a la clase.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En una clase de algo nuevo, a los dos les tocó repetir el mismo paso.",
+      "relacionados": [
+        "nova-mvp01-015-fra",
+        "nova-mvp01-015-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-015-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "El primer intento en clase",
+      "contenido": "¿La última vuelta era para este lado? Me perdí justo ahí.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-015-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-015-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "El primer intento en clase",
+      "contenido": "Mostrar que estás aprendiendo abre una conversación natural cuando los dos comparten la misma tarea.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-015-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-016-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "escenario",
+      "titulo": "Hacer espacio en un evento",
+      "contenido": "Mueve tus cosas y ofrécele el espacio. Si después se queda y comenta algo, conversa desde ahí.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Una persona se acerca a la mesa buscando dejar su vaso y tú tienes cosas regadas.",
+      "relacionados": [
+        "nova-mvp01-016-fra",
+        "nova-mvp01-016-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-016-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "frase",
+      "titulo": "Hacer espacio en un evento",
+      "contenido": "Ponlo aquí, ahorita quito esto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-016-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-016-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "tip",
+      "titulo": "Hacer espacio en un evento",
+      "contenido": "Una ayuda chiquita puede ser todo el intercambio. Deja que la otra persona decida si sigue hablando.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-016-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-017-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "Una respuesta con detalle",
+      "contenido": "Pregunta por la parte que te dio curiosidad antes de contar la tuya. Si te pregunta si tú lo harías, ahí entra tu experiencia.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Le preguntaste por su fin y contó que fue sola a un concierto. Tú ya tienes lista tu propia historia.",
+      "relacionados": [
+        "nova-mvp01-017-fra",
+        "nova-mvp01-017-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-017-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "Una respuesta con detalle",
+      "contenido": "¿Sí te gustó ir sola?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-017-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "Una respuesta con detalle",
+      "contenido": "Si el relato trae un detalle inesperado, sigue ese hilo antes de volver a preguntas generales.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-018-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "La anécdota que quedó a medias",
+      "contenido": "Espera a que pase la interrupción y vuelve al punto exacto si ella sigue ahí.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Alguien los interrumpe justo cuando estaba por decir cómo terminó su viaje.",
+      "relacionados": [
+        "nova-mvp01-018-fra",
+        "nova-mvp01-018-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-018-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "La anécdota que quedó a medias",
+      "contenido": "Te quedaste en que perdieron el último camión. ¿Qué hicieron?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-018-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-018-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "La anécdota que quedó a medias",
+      "contenido": "Retomar una historia interrumpida muestra que estabas escuchando y evita que tenga que arrancar de cero.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-018-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-019-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "Gustos distintos",
+      "contenido": "Di qué te gustó y pregunta qué le pasó a ella con la canción. Deja que la diferencia dure una respuesta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Te dice que la última canción fue la peor. Fue tu favorita y la conversación va en buen tono.",
+      "relacionados": [
+        "nova-mvp01-019-fra",
+        "nova-mvp01-019-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-019-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "Gustos distintos",
+      "contenido": "A mí esa sí me gustó. ¿A ti qué no te latió?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-019-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-019-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "Gustos distintos",
+      "contenido": "Puedes disentir sobre algo ligero con una razón corta. Evita subirle el tono a un desacuerdo que los dos se están tomando con calma.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-019-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-020-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "Una pregunta que puedes devolver",
+      "contenido": "Da un ejemplo concreto. Después haz una pregunta conectada con ese ejemplo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Te pregunta qué te gusta de tu trabajo y la respuesta completa tomaría varios minutos.",
+      "relacionados": [
+        "nova-mvp01-020-fra",
+        "nova-mvp01-020-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-020-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "Una pregunta que puedes devolver",
+      "contenido": "Me gusta cuando algo que planeé acaba pasando de verdad. ¿A ti qué parte de tu trabajo sí te da gusto hacer?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-020-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-020-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "Una pregunta que puedes devolver",
+      "contenido": "Una respuesta con un ejemplo deja más por dónde seguir que recitar tu puesto o devolver la pregunta sin contestar.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-020-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-021-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "No escuchaste el nombre",
+      "contenido": "Pide que lo repita ahora. Si vuelve el ruido, acércate lo justo para oír o propón moverse un poco.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Te acaban de presentar junto a una bocina y alcanzaste a escuchar todo menos el nombre.",
+      "relacionados": [
+        "nova-mvp01-021-fra",
+        "nova-mvp01-021-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-021-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "No escuchaste el nombre",
+      "contenido": "Perdón, con la música no caché tu nombre. ¿Cómo te llamas?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-021-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-021-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "No escuchaste el nombre",
+      "contenido": "Si el volumen dificulta hablar, puedes nombrar el problema en una frase. Evita fingir que escuchaste algo que luego tendrás que adivinar.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-021-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-022-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "El chiste no cayó",
+      "contenido": "Aclara en una frase si se puede. Si era un mal momento, reconoce cómo sonó y vuelve al tema.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Hiciste una broma corta y la otra persona te preguntó qué quisiste decir.",
+      "relacionados": [
+        "nova-mvp01-022-fra",
+        "nova-mvp01-022-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-022-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "El chiste no cayó",
+      "contenido": "Era por lo de la playlist. Ya explicada perdió todo. ¿Cuál dijiste que pusiera?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-022-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-022-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "El chiste no cayó",
+      "contenido": "Si la persona te dice que le incomodó, «Me salió mal, perdón» y dale espacio. Repetir el chiste con más fuerza suele alargar el mal rato.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-022-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-023-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "Algo que sí es personal",
+      "contenido": "Dale la posibilidad de seguir sin hacer preguntas en cadena. Si cambia de tema, acompaña el cambio.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En una primera plática menciona un cambio difícil de trabajo y se queda pensando.",
+      "relacionados": [
+        "nova-mvp01-023-fra",
+        "nova-mvp01-023-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-023-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "Algo que sí es personal",
+      "contenido": "Suena a que fue un cambio pesado. ¿Te late contarme o mejor hablamos de otra cosa?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-023-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-023-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "Algo que sí es personal",
+      "contenido": "Escuchar bien también es fijarte en lo que la otra persona decide dejar para después.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-023-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-024-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "escenario",
+      "titulo": "Silencio sin prisa",
+      "contenido": "Deja pasar el silencio. Si algo de verdad te llama la atención, comenta una sola cosa.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Llevan un rato conversando tranquilos. Ambos se quedan viendo lo que ocurre enfrente y nadie parece incómodo.",
+      "relacionados": [
+        "nova-mvp01-024-fra",
+        "nova-mvp01-024-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-024-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "frase",
+      "titulo": "Silencio sin prisa",
+      "contenido": "Está a gusto aquí.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-024-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-024-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "tip",
+      "titulo": "Silencio sin prisa",
+      "contenido": "Una pausa cómoda te da información. Si sigue cerca y tranquila, puedes esperar a que el próximo tema salga de cualquiera de los dos.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-024-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-025-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Seguir una broma que ella abrió",
+      "contenido": "Dale continuidad sin quitarle el momento. Si remata, ríete y deja que ella lleve el chiste.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Ella dice que se merece un trofeo por abrir un frasco que todos intentaron abrir.",
+      "relacionados": [
+        "nova-mvp01-025-fra",
+        "nova-mvp01-025-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-025-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Seguir una broma que ella abrió",
+      "contenido": "¿Te lo damos ahorita o hacemos ceremonia?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-025-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Seguir una broma que ella abrió",
+      "contenido": "Una broma suele caer más ligera cuando responde al juego que la otra persona ya decidió empezar.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-026-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Aguantar una nega suave",
+      "contenido": "Ríete si te dio risa y responde sobre tu tiro. Si no te gustó, vuelve al juego.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Te dice entre risas que necesitas clases de boliche justo después de que tu tiro se fue a la canaleta.",
+      "relacionados": [
+        "nova-mvp01-026-fra",
+        "nova-mvp01-026-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-026-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Aguantar una nega suave",
+      "contenido": "Sí, pero empieza por la parte donde la bola va derecho.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-026-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-026-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Aguantar una nega suave",
+      "contenido": "Cuando puedes bromear sobre tu propio error, le quitas presión al intercambio.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-026-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-027-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Exagerar algo chiquito",
+      "contenido": "Exagera la importancia de la decisión. Después, si hace falta escoger, propón algo que puedan aceptar todos.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "El grupo lleva varios minutos eligiendo una botana y todos están jugando a defender la suya.",
+      "relacionados": [
+        "nova-mvp01-027-fra",
+        "nova-mvp01-027-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-027-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Exagerar algo chiquito",
+      "contenido": "Ya se puso seria la elección de papitas.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-027-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-027-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Exagerar algo chiquito",
+      "contenido": "Exagerar lo que todos están haciendo reparte el chiste en el grupo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-027-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-028-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Cuando el remate era un cumplido",
+      "contenido": "Si te gustó, fíjate en un detalle del dibujo y dilo. Deja que lo guarde o lo muestre según quiera.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Ves que hizo un dibujo rápido de algo que acaba de pasar y se ríe al enseñártelo.",
+      "relacionados": [
+        "nova-mvp01-028-fra",
+        "nova-mvp01-028-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-028-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Cuando el remate era un cumplido",
+      "contenido": "Te quedó igualito. Hasta le pusiste cara de lunes.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-028-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-028-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Cuando el remate era un cumplido",
+      "contenido": "Un cumplido concreto suena distinto cuando señala algo que la otra persona decidió hacer.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-028-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-029-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Un apodo que ya se ganó",
+      "contenido": "Puedes devolver su propio juego. Usa su nombre al retomar la conversación.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Una amistad nueva se acaba de poner a arreglar la cafetera de todos y hace un chiste sobre el asunto.",
+      "relacionados": [
+        "nova-mvp01-029-fra",
+        "nova-mvp01-029-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-029-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Un apodo que ya se ganó",
+      "contenido": "Ya te quedaste con el puesto de encargada del café.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-029-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-029-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Un apodo que ya se ganó",
+      "contenido": "Si alguien se queda callado con un apodo, vuelve a su nombre. La broma era del momento.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-029-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-030-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Picarte de vuelta",
+      "contenido": "Reconoce que ganó y deja abierta la revancha si a los dos les divierte.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Tras ganar una ronda, te dice que te dejó practicar para que no te agüites.",
+      "relacionados": [
+        "nova-mvp01-030-fra",
+        "nova-mvp01-030-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-030-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Picarte de vuelta",
+      "contenido": "Gracias por tu paciencia. Ahora sí va la buena.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-030-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-030-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Picarte de vuelta",
+      "contenido": "Conservar la ligereza después de perder también deja que la otra persona disfrute su acierto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-030-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-031-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "Cuando nadie se enganchó",
+      "contenido": "Devuélvele el turno. Si algo de la historia te interesa, pregunta por eso.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Dijiste un remate al grupo y la persona que estaba contando termina su historia sin retomarlo.",
+      "relacionados": [
+        "nova-mvp01-031-fra",
+        "nova-mvp01-031-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-031-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "Cuando nadie se enganchó",
+      "contenido": "Y después de que llegaron, ¿sí alcanzaron a entrar?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-031-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-031-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "Cuando nadie se enganchó",
+      "contenido": "Un chiste puede salir de paso. Rara vez conviene convertirlo en el tema si el grupo ya siguió.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-031-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-032-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "escenario",
+      "titulo": "El cumplido que te devuelve",
+      "contenido": "Sigue el juego sin pedir de verdad la prenda. Si cuenta de dónde salió, cambia al tema real.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Dices que te gusta su chamarra y ella contesta que ya está esperando que se la pidas prestada.",
+      "relacionados": [
+        "nova-mvp01-032-fra",
+        "nova-mvp01-032-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-032-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "frase",
+      "titulo": "El cumplido que te devuelve",
+      "contenido": "Ya hasta me estás conociendo. ¿De dónde es?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-032-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-032-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "tip",
+      "titulo": "El cumplido que te devuelve",
+      "contenido": "Una réplica coqueta puede ser una forma de recibir el chiste. Con una frase y una pregunta basta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-032-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-033-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "escenario",
+      "titulo": "Una historia con algo para responder",
+      "contenido": "Manda una pregunta breve. Si contesta con historia, sigue el detalle. Si reacciona con un emoji, toma el saludo por lo que fue.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Subió una foto de un set con una canción que tú conoces. Te interesa el set y tienes algo real que preguntar.",
+      "relacionados": [
+        "nova-mvp01-033-fra",
+        "nova-mvp01-033-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-033-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "frase",
+      "titulo": "Una historia con algo para responder",
+      "contenido": "¿Sí puso esa completa? La última vez la mezcló rapidísimo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-033-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-033-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "tip",
+      "titulo": "Una historia con algo para responder",
+      "contenido": "Una reacción o un like puede cerrar el intercambio. Usa otra apertura cuando haya otro motivo real para escribir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-033-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-034-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "escenario",
+      "titulo": "Una recomendación por cumplir",
+      "contenido": "Entrega lo prometido en un mensaje. Si luego quieres invitarla y hay intercambio, hazlo por separado.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Durante la salida prometiste mandar el lugar donde compraste el disco. Tienes el nombre.",
+      "relacionados": [
+        "nova-mvp01-034-fra",
+        "nova-mvp01-034-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-034-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "frase",
+      "titulo": "Una recomendación por cumplir",
+      "contenido": "Te mando el link de la tienda del disco. Me acordé porque hoy pasé por ahí.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-034-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-034-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "tip",
+      "titulo": "Una recomendación por cumplir",
+      "contenido": "Cuando prometes un dato, mándalo claro. Así la persona puede usarlo sin tener que sostener una plática.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-034-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-035-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "escenario",
+      "titulo": "Cuando se quedó sin respuesta",
+      "contenido": "Dale espacio. Si coinciden después, puedes saludar como siempre.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Hablaron bien, mandaste una pregunta y hace varios días no contesta. No tienen ningún plan pendiente.",
+      "relacionados": [
+        "nova-mvp01-035-fra",
+        "nova-mvp01-035-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-035-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "frase",
+      "titulo": "Cuando se quedó sin respuesta",
+      "contenido": "Hola, qué gusto verte. ¿Qué tal te ha ido?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-035-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-035-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "tip",
+      "titulo": "Cuando se quedó sin respuesta",
+      "contenido": "Un tema que se cerró puede dejarse descansar. Evita usar otra historia como forma indirecta de pedir respuesta al mensaje anterior.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-035-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-036-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "escenario",
+      "titulo": "Cambiar de chat a plan",
+      "contenido": "Si sí quieres quedar, propón un día. Si dice que se le complica, deja el turno para que proponga.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "En Instagram ambos se mandan recomendaciones y ella dice que quiere conocer un café que tú mencionaste.",
+      "relacionados": [
+        "nova-mvp01-036-fra",
+        "nova-mvp01-036-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-036-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "frase",
+      "titulo": "Cambiar de chat a plan",
+      "contenido": "¿Te late conocerlo juntos el sábado? Yo puedo después de las cuatro.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-036-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-036-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "tip",
+      "titulo": "Cambiar de chat a plan",
+      "contenido": "Un plan responde tres dudas con poco texto: qué harían, cuándo y si es juntos.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-036-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-037-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "escenario",
+      "titulo": "Confirmación sin vueltas",
+      "contenido": "Manda una confirmación concreta. Si no responde y el plan dependía de confirmarla, sigue con tu día.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Hay un café acordado y falta definir el lugar exacto. Se acerca el día.",
+      "relacionados": [
+        "nova-mvp01-037-fra",
+        "nova-mvp01-037-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-037-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "frase",
+      "titulo": "Confirmación sin vueltas",
+      "contenido": "¿Sigue en pie lo de mañana? Yo puedo estar a las seis en el café de la esquina.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-037-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-037-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "tip",
+      "titulo": "Confirmación sin vueltas",
+      "contenido": "Si están coordinando algo, pregunta por el dato pendiente. Una cadena de «hola» añade pasos.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-037-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-038-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "escenario",
+      "titulo": "El meme que sí entendieron",
+      "contenido": "Si lo mandas, alude a la escena con una línea. Si se ríe con reacción, el mensaje ya funcionó como chiste.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "El día anterior ambos se rieron de una escena y ves un meme que la recuerda.",
+      "relacionados": [
+        "nova-mvp01-038-fra",
+        "nova-mvp01-038-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-038-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "frase",
+      "titulo": "El meme que sí entendieron",
+      "contenido": "Nosotros tratando de pedir la cuenta ayer.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-038-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-038-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "tip",
+      "titulo": "El meme que sí entendieron",
+      "contenido": "Una referencia compartida funciona porque ambos la entienden. La respuesta puede ser solo una risa.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-038-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-039-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "escenario",
+      "titulo": "Dos fechas que sí puedes",
+      "contenido": "Ofrece una fecha; si no le queda, menciona la segunda. Si las dos fallan, espera a que proponga.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "La plática estuvo a gusto y quieres invitarla. Únicamente tienes libres dos tardes.",
+      "relacionados": [
+        "nova-mvp01-039-fra",
+        "nova-mvp01-039-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-039-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "frase",
+      "titulo": "Dos fechas que sí puedes",
+      "contenido": "Me dio gusto platicar. ¿Te late un café el jueves?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-039-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-039-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "tip",
+      "titulo": "Dos fechas que sí puedes",
+      "contenido": "Una alternativa sirve cuando de verdad puedes hacerla. Dar demasiadas fechas antes de que responda hace más complicado decidir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-039-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-040-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "escenario",
+      "titulo": "El plan se cayó",
+      "contenido": "Di cuál es la alternativa y deja abierta la posibilidad de irse.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Habían quedado de ir a un lugar y al llegar está cerrado. Tienes una opción cerca.",
+      "relacionados": [
+        "nova-mvp01-040-fra",
+        "nova-mvp01-040-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-040-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "frase",
+      "titulo": "El plan se cayó",
+      "contenido": "Cerró. Hay otro a una cuadra. ¿Caminamos o lo dejamos para otro día?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-040-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-040-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "tip",
+      "titulo": "El plan se cayó",
+      "contenido": "Si cambió el sitio después de que la persona aceptó, vuelve a ofrecer el plan con la información nueva.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-040-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-041-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "escenario",
+      "titulo": "Quiere incluir a sus amigas",
+      "contenido": "Si querías plan de grupo, dilo. Si buscabas una cita, pueden quedarse en grupo hoy y plantear otra ocasión.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Propusiste pasar por otra terraza y ella pregunta si pueden ir sus amigas.",
+      "relacionados": [
+        "nova-mvp01-041-fra",
+        "nova-mvp01-041-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-041-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "frase",
+      "titulo": "Quiere incluir a sus amigas",
+      "contenido": "Hoy podemos ir todos. Otro día sí me gustaría que fuéramos tú y yo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-041-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-041-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "tip",
+      "titulo": "Quiere incluir a sus amigas",
+      "contenido": "Aclarar una intención evita que el otro tenga que adivinar si la invitación era para la mesa entera.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-041-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-042-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "escenario",
+      "titulo": "Intercambiar contacto sin apuro",
+      "contenido": "Ofrece mandar el cartel y deja que elija el canal. Si prefiere buscarlo, dale el nombre.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Hablaron de un evento y ambos dijeron que quieren ver el cartel. La plática está llegando al cierre.",
+      "relacionados": [
+        "nova-mvp01-042-fra",
+        "nova-mvp01-042-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-042-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "frase",
+      "titulo": "Intercambiar contacto sin apuro",
+      "contenido": "¿Te paso el cartel por Insta o te digo cómo se llama?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-042-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-042-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "tip",
+      "titulo": "Intercambiar contacto sin apuro",
+      "contenido": "Pedir contacto tiene más sentido si ya hay algo que los dos quieren continuar.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-042-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-043-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "escenario",
+      "titulo": "Acompañar hasta el coche",
+      "contenido": "Ofrece acompañar una vez. Si prefiere esperar sola, despídete.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Termina la reunión y la otra persona pide un coche. Tú también vas de salida.",
+      "relacionados": [
+        "nova-mvp01-043-fra",
+        "nova-mvp01-043-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-043-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "frase",
+      "titulo": "Acompañar hasta el coche",
+      "contenido": "¿Quieres que te acompañe a esperar o nos vemos aquí?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-043-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-043-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "tip",
+      "titulo": "Acompañar hasta el coche",
+      "contenido": "Una oferta concreta con una salida fácil reduce el trabajo de tener que decir que no.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-043-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-044-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "escenario",
+      "titulo": "El no claro",
+      "contenido": "Recibe la respuesta con calma. Retoma una conversación normal si a ambos les sale.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Dices que te gustaría invitarla a un café y ella dice que prefiere que se queden como amigos.",
+      "relacionados": [
+        "nova-mvp01-044-fra",
+        "nova-mvp01-044-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-044-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "frase",
+      "titulo": "El no claro",
+      "contenido": "Va, gracias por decírmelo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-044-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-044-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "tip",
+      "titulo": "El no claro",
+      "contenido": "La frase de salida cumple cuando deja de pedir algo. Ya no hace falta explicar por qué te animaste a invitar.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-044-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-045-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "escenario",
+      "titulo": "La respuesta a medias",
+      "contenido": "Deja ahí la invitación. Pueden seguir con el nuevo tema si la conversación sigue a gusto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Dices que te gustaría verla el viernes. Responde «ando con mil cosas» y cambia de tema.",
+      "relacionados": [
+        "nova-mvp01-045-fra",
+        "nova-mvp01-045-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-045-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "frase",
+      "titulo": "La respuesta a medias",
+      "contenido": "Va. ¿Me estabas contando de tu viaje?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-045-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-045-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "tip",
+      "titulo": "La respuesta a medias",
+      "contenido": "Si la otra persona quiere recuperar el plan, ya sabe qué propusiste. Una pausa deja que también tome iniciativa.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-045-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-046-esc",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "escenario",
+      "titulo": "Tú quieres irte",
+      "contenido": "Di que te vas y expresa gusto en una sola frase. Si quieres seguir, haz una propuesta concreta cuando haya espacio.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "La salida sigue, pero mañana madrugas. Te gustó conocerla y te toca despedirte.",
+      "relacionados": [
+        "nova-mvp01-046-fra",
+        "nova-mvp01-046-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-046-fra",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "frase",
+      "titulo": "Tú quieres irte",
+      "contenido": "Yo ya me voy porque mañana madrugo. Me dio gusto conocerte.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-046-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-046-tip",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "tip",
+      "titulo": "Tú quieres irte",
+      "contenido": "Despedirte a tiempo deja una señal clara de por qué se acaba la plática y evita quedarte esperando un cierre perfecto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-046-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-047-esc",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "escenario",
+      "titulo": "Una buena salida y mucha imaginación",
+      "contenido": "Si quieres repetir, invita a una segunda ocasión concreta. Deja que lo que ocurra después amplíe lo que sabes.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Después de una buena cita ya te imaginas haciendo varios planes juntos. Solo acordaron que la pasaron bien.",
+      "relacionados": [
+        "nova-mvp01-047-fra",
+        "nova-mvp01-047-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-047-fra",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "frase",
+      "titulo": "Una buena salida y mucha imaginación",
+      "contenido": "Me quedé con ganas de seguir platicando. ¿Te late comer el domingo?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-047-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-047-tip",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "tip",
+      "titulo": "Una buena salida y mucha imaginación",
+      "contenido": "Antes de interpretar una señal, anota qué dijo literalmente y qué parte le pusiste tú.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-047-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-048-esc",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "escenario",
+      "titulo": "Aclarar qué están buscando",
+      "contenido": "Escoge un momento tranquilo. Expresa tu intención y escucha la respuesta entera.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Se han visto varias veces. A ti te interesa intentar algo serio y no sabes qué espera ella.",
+      "relacionados": [
+        "nova-mvp01-048-fra",
+        "nova-mvp01-048-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-048-fra",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "frase",
+      "titulo": "Aclarar qué están buscando",
+      "contenido": "Yo sí quiero ver si esto va para algo serio. ¿Tú cómo lo estás viendo?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-048-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-048-tip",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "tip",
+      "titulo": "Aclarar qué están buscando",
+      "contenido": "Explicar lo que quieres con tus palabras deja espacio para que la otra persona comparta un ritmo o una intención distinta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-048-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-049-esc",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "escenario",
+      "titulo": "Ritmos distintos",
+      "contenido": "Acuerden un modo que les funcione para confirmar planes. Observa cómo se sienten después de probarlo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "Quieren seguir saliendo. Tú disfrutas escribir diario y ella te dice que casi no usa el teléfono.",
+      "relacionados": [
+        "nova-mvp01-049-fra",
+        "nova-mvp01-049-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-049-fra",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "frase",
+      "titulo": "Ritmos distintos",
+      "contenido": "¿Te late que por aquí confirmemos cuándo vernos y lo demás lo platiquemos en persona?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-049-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-049-tip",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "tip",
+      "titulo": "Ritmos distintos",
+      "contenido": "Antes de convertir un hábito de mensajes en una lectura sobre el cariño, pregunta qué usa cada quien para mantenerse en contacto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-049-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-050-esc",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "escenario",
+      "titulo": "Una diferencia que sí importa",
+      "contenido": "Di qué acuerdo sí podrías aceptar. Si no coinciden, date tiempo para decidir si quieres seguir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "escena": "A ambos les encanta verse, pero tienen ideas distintas sobre exclusividad.",
+      "relacionados": [
+        "nova-mvp01-050-fra",
+        "nova-mvp01-050-tip"
+      ]
+    },
+    {
+      "id": "nova-mvp01-050-fra",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "frase",
+      "titulo": "Una diferencia que sí importa",
+      "contenido": "Para mí sí importa saber si estamos saliendo con más gente. ¿Qué acuerdo te haría sentido?",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-050-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-050-tip",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "tip",
+      "titulo": "Una diferencia que sí importa",
+      "contenido": "Un acuerdo concreto describe qué hará cada persona. La palabra «exclusivo» puede significar cosas distintas hasta que lo platican.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-050-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-nega-001",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Le acabas de poner cinco estrellas a un banco de parque",
+      "contenido": "Le acabas de poner cinco estrellas a un banco de parque.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se sienta y bromea calificando lo cómodo que está.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-002",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Esa taza te queda de plato",
+      "contenido": "Esa taza te queda de plato.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Sostiene una taza especialmente ancha que le dio risa al elegirla.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-003",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Le hiciste la ola a un camión que sí se paró",
+      "contenido": "Le hiciste la ola a un camión que sí se paró.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Celebra que se detenga el transporte que llevaba un rato esperando.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-004",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "El pastel todavía ni llega y ya sacaste la cámara",
+      "contenido": "El pastel todavía ni llega y ya sacaste la cámara.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se prepara para fotografiar un postre que están por servir.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-005",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Esa caja la abriste como si adentro hubiera otro regalo",
+      "contenido": "Esa caja la abriste como si adentro hubiera otro regalo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Abre con cuidado un empaque de algo que ya sabe qué contiene.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-006",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Ya le pediste perdón al sillón",
+      "contenido": "Ya le pediste perdón al sillón.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se disculpa en broma con un mueble después de chocarlo.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-007",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Dices que está pegajosa y tú ya le pusiste segunda voz",
+      "contenido": "Dices que está pegajosa y tú ya le pusiste segunda voz.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se suma cantando una armonía a una canción que trae pegada.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-008",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Te aprendiste el mapa por dónde venden nieve",
+      "contenido": "Te aprendiste el mapa por dónde venden nieve.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Ubica los caminos de un lugar usando su nevería favorita.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-009",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Tu cámara tiene más fotos de nubes que de nosotros",
+      "contenido": "Tu cámara tiene más fotos de nubes que de nosotros.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Ella misma muestra que su galería de un paseo quedó llena de nubes.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-010",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Cuánta fe le tienes a esa servilleta",
+      "contenido": "Cuánta fe le tienes a esa servilleta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Usa una servilleta minúscula para detener un derrame pequeño y ambos lo ven.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-011",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Esa bolsa de regalo te gustó más que el regalo",
+      "contenido": "Esa bolsa de regalo te gustó más que el regalo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Comenta entre risas que quiere quedarse con el empaque.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-012",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Te acabas de echar porras tú sola",
+      "contenido": "Te acabas de echar porras tú sola.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se anima en voz alta justo antes de intentar algo sencillo.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-013",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Te salió el «uy» antes de saber si ganabas",
+      "contenido": "Te salió el «uy» antes de saber si ganabas.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Reacciona de emoción antes de conocer el resultado de un juego.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-014",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Con esa cara ya sé que vas a pedir la receta",
+      "contenido": "Con esa cara ya sé que vas a pedir la receta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se ilumina al probar algo y abre el tema de cómo lo hicieron.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-015",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Me diste la dirección con panaderías",
+      "contenido": "Me diste la dirección con panaderías.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Explica una ruta usando panaderías como referencias.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-016",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Tú sí traes abrigo para el café",
+      "contenido": "Tú sí traes abrigo para el café.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Envuelve con mucho cuidado su vaso para mantenerlo caliente.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-017",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "A ese calcetín sí le buscaste pareja más que a nadie",
+      "contenido": "A ese calcetín sí le buscaste pareja más que a nadie.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Bromea sobre el tiempo que pasó buscando el otro calcetín.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-018",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Me saludaste en el video y yo estaba aquí al lado",
+      "contenido": "Me saludaste en el video y yo estaba aquí al lado.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Le manda un saludo a la cámara aunque tú estás presente.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-019",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Ni está lloviendo y tú ya escogiste dónde brincar los charcos",
+      "contenido": "Ni está lloviendo y tú ya escogiste dónde brincar los charcos.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Se entusiasma al ver charcos que quedaron en el camino.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-nega-020",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "nega",
+      "titulo": "Se acabó el partido y tú todavía le estás explicando al árbitro",
+      "contenido": "Se acabó el partido y tú todavía le estás explicando al árbitro.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "que_observar": "Sigue comentando una jugada en broma después de que terminó el partido.",
+      "relacionados": []
+    },
+    {
+      "id": "nova-mvp01-ej-001",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "ejercicio",
+      "titulo": "Aprende un nombre",
+      "contenido": "Hoy elige un saludo de grupo. Al terminar, escribe un nombre que sí recuerdes y qué te ayudó a retenerlo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-001-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-002",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "ejercicio",
+      "titulo": "Saluda sin el celular",
+      "contenido": "Antes de entrar, guarda el celular. Saluda a alguien y recuerda qué tenías enfrente mientras te contestaba.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-001-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-003",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "llegar",
+      "tipo": "ejercicio",
+      "titulo": "Presenta en una frase",
+      "contenido": "Practica presentar a dos personas con un gusto en común. Usa un dato que cada quien pudiera compartir sin incomodidad.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-001-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-004",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "ejercicio",
+      "titulo": "Encuentra tres detalles",
+      "contenido": "Cuando llegues a un lugar, busca tres cosas sobre las que sí tendrías curiosidad. Escoge una y escribe la pregunta más corta posible.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-009-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-005",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "ejercicio",
+      "titulo": "Quita el discurso",
+      "contenido": "Graba una apertura. Si le pusiste una explicación de por qué estás preguntando, vuelve a grabar con solo lo que necesitas decir.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-009-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-006",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "ejercicio",
+      "titulo": "Una respuesta basta",
+      "contenido": "Haz una pregunta práctica en un contexto natural. Agradece la respuesta aunque el intercambio termine ahí. Fíjate en qué sentiste al dejarlo corto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-009-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-007",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "abrir",
+      "tipo": "ejercicio",
+      "titulo": "Separa ayuda e interés",
+      "contenido": "Piensa en una ocasión en que alguien te ayudó. Escribe qué hizo para ayudarte y qué, si acaso, mostró que también quería seguir conversando.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-009-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-008",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "ejercicio",
+      "titulo": "Escucha hasta el final",
+      "contenido": "En una plática, elige un solo turno en el que vas a dejar terminar. Después pregunta por una palabra que sí haya dicho.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-009",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "ejercicio",
+      "titulo": "Una historia en dos frases",
+      "contenido": "Cuenta algo que te pasó usando una frase para lo que ocurrió y otra para lo raro. Deja que la otra persona haga la siguiente pregunta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-010",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "ejercicio",
+      "titulo": "Comparte algo tuyo",
+      "contenido": "Si ya hiciste dos preguntas seguidas, comparte un detalle propio que tenga que ver con la respuesta. Espera a ver qué parte retoma.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-011",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "ejercicio",
+      "titulo": "Recupera un tema",
+      "contenido": "Después de una interrupción, escribe de memoria dónde se quedó la conversación. En la próxima ocasión, prueba recuperar solo ese punto.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-012",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "hablar",
+      "tipo": "ejercicio",
+      "titulo": "Prueba una pausa",
+      "contenido": "Haz una pregunta que sí te interese. Cuando respondan, date un segundo antes de contestar y observa si añaden algo.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-017-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-013",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "ejercicio",
+      "titulo": "Dilo de pasada",
+      "contenido": "Escoge una nega del catálogo. Léela en voz alta como si siguieras platicando. Si pides atención para explicar el chiste, quita palabras.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-014",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "ejercicio",
+      "titulo": "Elige el blanco",
+      "contenido": "Escribe una broma sobre una actividad compartida y otra sobre tu propio error. Elige la que podrías decir a una persona que apenas conoces.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-015",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "ejercicio",
+      "titulo": "Detecta el momento",
+      "contenido": "Recuerda un intercambio que te hizo reír. Anota quién soltó la primera broma y cómo la otra persona mostró que quería seguir el juego.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-016",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "ejercicio",
+      "titulo": "Deja caer el chiste",
+      "contenido": "En un ensayo con una amistad, hagan una broma y contesten con una pregunta seria. Practiquen volver al tema sin insistir en el remate.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-017",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "humor",
+      "tipo": "ejercicio",
+      "titulo": "Cambia de tono",
+      "contenido": "Di la misma observación una vez en voz seca y otra con una sonrisa. Pregunta cuál sonó a juego y qué cambió.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-025-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-018",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "ejercicio",
+      "titulo": "Mira si hay tema",
+      "contenido": "Elige tres historias públicas. Escribe qué preguntarías por curiosidad verdadera en cada una. Deja en blanco las que solo contestarías para llamar la atención.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-033-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-019",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "ejercicio",
+      "titulo": "Recorta un mensaje",
+      "contenido": "Escribe una respuesta a una historia en dos frases. Conserva el detalle que observaste y una pregunta. Borra cualquier explicación repetida.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-033-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-020",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "ejercicio",
+      "titulo": "Lee el retorno",
+      "contenido": "Ensaya qué harías ante un emoji, una respuesta con detalle y una pregunta de vuelta. Escribe solo qué información te dio cada respuesta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-033-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-021",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "redes",
+      "tipo": "ejercicio",
+      "titulo": "Una hora y un lugar",
+      "contenido": "Convierte «hay que vernos» en un mensaje con día y lugar. Léelo y comprueba si se puede contestar en una sola respuesta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-033-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-022",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "ejercicio",
+      "titulo": "Prueba decir qué quieres",
+      "contenido": "Ensaya una invitación de grupo y una cita para dos. Si al leerlas suenan iguales, aclara a quién va dirigida cada una.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-039-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-023",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "ejercicio",
+      "titulo": "Ten una opción real",
+      "contenido": "Escribe dos planes cortos a los que sí irías. Elige uno que le interese a la persona por algo que ya te contó.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-039-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-024",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "invitar",
+      "tipo": "ejercicio",
+      "titulo": "Deja espacio al sí",
+      "contenido": "Practica hacer la invitación y quedarte callado hasta que tu amistad responda. Fíjate si te dan ganas de ofrecer otra cosa antes de oírla.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-039-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-025",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "ejercicio",
+      "titulo": "Despídete en una frase",
+      "contenido": "Prueba dos despedidas en voz alta, una cuando vas de prisa y otra cuando apenas se están conociendo. Escoge palabras que sí usarías.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-043-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-026",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "ejercicio",
+      "titulo": "Escucha el no",
+      "contenido": "En un ensayo, pide a una amistad que diga que no a un plan. Dale las gracias y deja pasar tres segundos sin intentar arreglar la respuesta.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-043-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-027",
+      "idioma": "es-MX",
+      "ruta": "principal",
+      "modulo": "cerrar",
+      "tipo": "ejercicio",
+      "titulo": "Cierra una noche que salió bien",
+      "contenido": "Escribe un cierre breve donde agradeces la conversación. Después escribe una invitación aparte y decide si de verdad quieres hacerla.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-043-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-028",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "ejercicio",
+      "titulo": "Recuerda los hechos",
+      "contenido": "Después de una cita, apunta dos cosas que sí ocurrieron y una que estás imaginando. Si quieres saber algo más, formula una pregunta que se pueda responder.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-047-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-029",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "ejercicio",
+      "titulo": "Un acuerdo con palabras tuyas",
+      "contenido": "Escribe qué significa para ti verse con frecuencia. Piensa qué parte podrías ajustar y qué parte necesitas decir desde el principio.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-047-esc"
+      ]
+    },
+    {
+      "id": "nova-mvp01-ej-030",
+      "idioma": "es-MX",
+      "ruta": "cuando_buscas_algo_mas_serio",
+      "modulo": "serio",
+      "tipo": "ejercicio",
+      "titulo": "Escucha un ritmo diferente",
+      "contenido": "Ensaya una conversación donde la otra persona prefiere hablar menos por chat. Propón un acuerdo para confirmar planes y pregunta cómo lo ve.",
+      "estado": "borrador",
+      "procedencia": "ejemplo_editorial_original",
+      "relacionados": [
+        "nova-mvp01-047-esc"
+      ]
+    }
+  ]
+}

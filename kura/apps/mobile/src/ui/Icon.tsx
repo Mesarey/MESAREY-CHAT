@@ -102,7 +102,117 @@ const icons: Record<string, Draw> = {
   lapiz: line('M5 19l1-4L16 5l3 3L9 18l-4 1Z'),
   cerrar: line('M6 6l12 12M18 6L6 18'),
   ajustes: line('M4 7h10M18 7h2M4 17h2M10 17h10M16 4.5v5M8 14.5v5'),
+  /* ---- Mundo NOVA ---- */
+  nova: (c) => (
+    <>
+      <Path d="M5 4.5h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-6.2L8.5 21v-4H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2Z" stroke={c} />
+      <Path d="M12 6.8c.3 2.2 1.6 3.5 3.8 3.9c-2.2.4-3.5 1.7-3.8 3.9c-.3-2.2-1.6-3.5-3.8-3.9c2.2-.4 3.5-1.7 3.8-3.9Z" fill={c} stroke="none" />
+    </>
+  ),
+  mapa: line('M3.5 6.5l5.5-2 6 2 5.5-2v13l-5.5 2-6-2-5.5 2v-13ZM9 4.5v13M15 6.5v13'),
+  escenarios: (c) => (
+    <>
+      <Rect x={3.5} y={6.5} width={10.5} height={13} rx={2} stroke={c} transform="rotate(-8 8.75 13)" />
+      <Rect x={10} y={4.5} width={10.5} height={13} rx={2} stroke={c} fill="rgba(7,22,43,0.9)" />
+      <Path d="M13 9h4.5M13 12.5h3" stroke={c} />
+    </>
+  ),
+  nega: line('M13.2 3L5.5 13.4h5.3L9.8 21l8.2-11h-5.6L13.2 3Z'),
+  reglas: (c) => (
+    <>
+      <Path d="M12 3l7 2.5v5.6c0 4.4-2.9 7.9-7 9.4c-4.1-1.5-7-5-7-9.4V5.5L12 3Z" stroke={c} />
+      <Path d="M12 7.6c.25 1.9 1.3 3 3.2 3.3c-1.9.3-2.95 1.4-3.2 3.3c-.25-1.9-1.3-3-3.2-3.3c1.9-.3 2.95-1.4 3.2-3.3Z" fill={c} stroke="none" />
+    </>
+  ),
+  repaso: line('M4.5 12a7.5 7.5 0 0 1 12.9-5.2L19.5 9M19.5 4.5V9H15M19.5 12a7.5 7.5 0 0 1-12.9 5.2L4.5 15M4.5 19.5V15H9'),
+  premios: (c) => (
+    <>
+      <Circle cx={12} cy={14.5} r={5.6} stroke={c} />
+      <Path d="M8.6 3.5h6.8M8.6 3.5l1.9 5.6M15.4 3.5l-1.9 5.6" stroke={c} />
+      <Path d="M12 11.6c.2 1.5 1 2.4 2.5 2.9c-1.5.5-2.3 1.4-2.5 2.9c-.2-1.5-1-2.4-2.5-2.9c1.5-.5 2.3-1.4 2.5-2.9Z" fill={c} stroke="none" />
+    </>
+  ),
+  corona: line('M4.2 17l-1.2-9 5 4.2L12 5l4 7.2L21 8l-1.2 9H4.2ZM4.5 20.3h15'),
+  serio: (c) => (
+    <>
+      <Circle cx={9} cy={12} r={5.6} stroke={c} />
+      <Circle cx={15} cy={12} r={5.6} stroke={c} />
+    </>
+  ),
+  catalogo: (c) => (
+    <>
+      <Rect x={4.5} y={8.5} width={15} height={11.5} rx={2} stroke={c} />
+      <Path d="M7 5.8h10M9.5 3.2h5" stroke={c} />
+    </>
+  ),
+  presencia: (c) => (
+    <>
+      <Circle cx={12} cy={7} r={2.7} stroke={c} />
+      <Path d="M7 20.5V17a5 5 0 0 1 10 0v3.5M4 13.5a8.4 8.4 0 0 1 2-6M20 13.5a8.4 8.4 0 0 0-2-6" stroke={c} />
+    </>
+  ),
+  abrir: (c) => (
+    <>
+      <Path d="M5 4.5h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-6.2L8.5 21v-4H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2Z" stroke={c} />
+      <Circle cx={8.3} cy={10.8} r={0.9} fill={c} stroke="none" />
+      <Circle cx={12} cy={10.8} r={0.9} fill={c} stroke="none" />
+      <Circle cx={15.7} cy={10.8} r={0.9} fill={c} stroke="none" />
+    </>
+  ),
+  sostener: line('M3.5 4.5h9A1.5 1.5 0 0 1 14 6v5a1.5 1.5 0 0 1-1.5 1.5H8L5.2 15v-2.5H3.5A1.5 1.5 0 0 1 2 11V6a1.5 1.5 0 0 1 1.5-1.5ZM17 9.5h3.5A1.5 1.5 0 0 1 22 11v5a1.5 1.5 0 0 1-1.5 1.5h-1.7V20L16 17.5h-4.5A1.5 1.5 0 0 1 10 16v-.5'),
+  intencion: line('M4 12l16-7-6 16-3-6.5L4 12ZM11 14.5L20 5'),
+  ojo: (c) => (
+    <>
+      <Path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke={c} />
+      <Circle cx={12} cy={12} r={3} stroke={c} />
+    </>
+  ),
+  cierre: line('M12.5 4H6.5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h6M10.5 12h10M17 8.5l3.5 3.5-3.5 3.5'),
+  insta: (c) => (
+    <>
+      <Rect x={4} y={4} width={16} height={16} rx={4.6} stroke={c} />
+      <Circle cx={12} cy={12} r={3.6} stroke={c} />
+      <Circle cx={16.6} cy={7.4} r={1} fill={c} stroke="none" />
+    </>
+  ),
+  calma: line('M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0'),
+  frente: (c) => (
+    <>
+      <Circle cx={16.5} cy={7.5} r={2.5} stroke={c} />
+      <Path d="M12.5 19.5V16a4 4 0 0 1 8 0v3.5M3 13h6M6.5 10l3 3-3 3" stroke={c} />
+    </>
+  ),
+  grupo: (c) => (
+    <>
+      <Circle cx={8.5} cy={8.5} r={2.7} stroke={c} />
+      <Circle cx={16.3} cy={9.6} r={2.2} stroke={c} />
+      <Path d="M3.5 19.5V18a5 5 0 0 1 10 0v1.5M15 14.3a4 4 0 0 1 5.5 3.7v1.5" stroke={c} />
+    </>
+  ),
+  vaso: line('M6.5 4h11l-1.3 15.1a1 1 0 0 1-1 .9H8.8a1 1 0 0 1-1-.9L6.5 4ZM7 9.5h10'),
+  silla: line('M7.5 3.5v9.5h9V3.5M7.5 8h9M7.5 13v7.5M16.5 13v7.5M5.5 13h13'),
+  truco: (c) => (
+    <>
+      <Path d="M4 20L14.5 9.5M12.5 7.5l4 4" stroke={c} />
+      <Path d="M18.5 3c.2 1.5 1 2.3 2.5 2.5c-1.5.2-2.3 1-2.5 2.5c-.2-1.5-1-2.3-2.5-2.5c1.5-.2 2.3-1 2.5-2.5Z" fill={c} stroke="none" />
+    </>
+  ),
+  disculpa: line('M9 5.5L4.5 10 9 14.5M4.5 10H14a4.5 4.5 0 0 1 0 9h-3'),
+  chispa: line('M12 3c.7 5.3 3.7 8.3 9 9c-5.3.7-8.3 3.7-9 9c-.7-5.3-3.7-8.3-9-9c5.3-.7 8.3-3.7 9-9Z'),
+  widget: (c) => (
+    <>
+      <Rect x={3.5} y={5} width={17} height={14} rx={3.2} stroke={c} />
+      <Path d="M7.5 10h9M7.5 14h5.5" stroke={c} />
+    </>
+  ),
+  candado: (c) => (
+    <>
+      <Rect x={5.5} y={10.5} width={13} height={9.5} rx={2} stroke={c} />
+      <Path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" stroke={c} />
+    </>
+  ),
 };
+
 
 export type IconName = keyof typeof icons;
 

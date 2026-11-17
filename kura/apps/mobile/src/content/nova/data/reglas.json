@@ -1,0 +1,110 @@
+{
+ "version": 1,
+ "fuente": "Reglas de Oro, redacción editorial de Mitsuo",
+ "reglas": [
+  {
+   "id": "R-01",
+   "icono": "calma",
+   "estado": "revisado",
+   "titulo": "Mantente chill",
+   "corta": "Respira, habla con calma y sal sin drama.",
+   "texto": "Mantente chill. Respira, habla con calma y sonríe si te nace. Puedes salir de la interacción sin hacer un drama."
+  },
+  {
+   "id": "R-02",
+   "icono": "ojo",
+   "estado": "revisado",
+   "titulo": "Una respuesta seca tiene muchas causas",
+   "corta": "Comentario ligero y vuelves a lo tuyo. Si retoma, sigues.",
+   "texto": "Una respuesta seca puede tener muchas causas. Puedes hacer un comentario ligero y volver a lo tuyo. Si la otra persona retoma, sigue por ahí. Si sigue en lo suyo, deja la plática ahí."
+  },
+  {
+   "id": "R-03",
+   "icono": "frente",
+   "estado": "revisado",
+   "titulo": "Nunca por la espalda",
+   "corta": "Llega por el frente o un costado donde te vean.",
+   "texto": "Nunca te acerques por la espalda. Busca el frente o un costado desde el que te puedan ver llegar. Si no hay espacio, espera."
+  },
+  {
+   "id": "R-04",
+   "icono": "reloj",
+   "estado": "revisado",
+   "titulo": "Espera una pausa real",
+   "corta": "Si cuentan algo o están pidiendo, dales tiempo.",
+   "texto": "Espera una pausa real. Si están contando algo, haciendo un pedido o en una conversación privada, dales tiempo."
+  },
+  {
+   "id": "R-05",
+   "icono": "abrir",
+   "estado": "revisado",
+   "titulo": "Abre con lo que está pasando",
+   "corta": "Un comentario sobre lo que todos ven le gana a una entrevista.",
+   "texto": "Abre con lo que está pasando. Un comentario sobre algo que todos pueden ver funciona mejor que empezar una entrevista."
+  },
+  {
+   "id": "R-06",
+   "icono": "grupo",
+   "estado": "revisado",
+   "titulo": "Incluye a quienes están presentes",
+   "corta": "Si son dos amigas, saluda a las dos.",
+   "texto": "Incluye a quienes están presentes. Si hay dos amigas, saluda a las dos y conversa siguiendo lo que cada una aporta. El interés se puede dirigir cuando hay intercambio; la conversación no se reparte con cronómetro."
+  },
+  {
+   "id": "R-07",
+   "icono": "vaso",
+   "estado": "revisado",
+   "titulo": "La bebida pide confianza",
+   "corta": "Para abrir, pide lo tuyo.",
+   "texto": "Invitar una bebida requiere confianza y contexto. Para abrir, pide lo tuyo. Si sale una broma sobre el agua, puedes ofrecer pedirla al personal."
+  },
+  {
+   "id": "R-08",
+   "icono": "silla",
+   "estado": "revisado",
+   "titulo": "Un minuto es un minuto",
+   "corta": "Quédate solo si te hacen espacio y la plática sigue.",
+   "texto": "Si dices «¿me puedo sentar un minuto?», que sea un minuto de verdad. Quédate únicamente si te hacen espacio y la plática sigue."
+  },
+  {
+   "id": "R-09",
+   "icono": "truco",
+   "estado": "revisado",
+   "titulo": "El truco se ofrece",
+   "corta": "Pregunta si les late verlo. Una historia breve también aporta.",
+   "texto": "Si quieres hacer un truco de magia, pregunta si les late verlo. Con una historia breve también tienes cómo aportar a la plática."
+  },
+  {
+   "id": "R-10",
+   "icono": "nega",
+   "estado": "revisado",
+   "titulo": "La nega va con calidez",
+   "corta": "Remate juguetón sobre algo que ambos vieron. Si suena a crítica, déjala pasar.",
+   "texto": "Una nega es un remate juguetón sobre un detalle observable y compartido. Dila con calidez. Si suena a crítica, si el momento está tenso o si apenas hay confianza, puedes dejarla pasar."
+  },
+  {
+   "id": "R-11",
+   "icono": "disculpa",
+   "estado": "revisado",
+   "titulo": "Si una broma incomoda, suéltala",
+   "corta": "«Uy, sonó más pesado de lo que quería». Y sueltas el chiste.",
+   "texto": "Si una broma incomoda, toma en serio lo que te dicen. «Uy, sonó más pesado de lo que quería» y suelta el chiste."
+  },
+  {
+   "id": "R-12",
+   "icono": "intencion",
+   "estado": "revisado",
+   "titulo": "Di tu intención y deja elegir",
+   "corta": "«Me gustó platicar contigo». Para pedir contacto, deja espacio.",
+   "texto": "Mostrar intención puede ser tan simple como «Me gustó platicar contigo». Para pedir contacto o invitar a salir, deja espacio para que la persona elija."
+  },
+  {
+   "id": "R-13",
+   "icono": "cierre",
+   "estado": "revisado",
+   "titulo": "Acepta un no",
+   "corta": "Despedirte bien también cuenta como una buena jugada.",
+   "texto": "Acepta un no y cualquier petición de espacio. Despedirte bien también cuenta como una buena jugada."
+  }
+ ]
+}

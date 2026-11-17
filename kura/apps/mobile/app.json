@@ -27,7 +27,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "./plugins/withNovaWidget"
     ],
     "scheme": "kura",
     "backgroundColor": "#15143C"

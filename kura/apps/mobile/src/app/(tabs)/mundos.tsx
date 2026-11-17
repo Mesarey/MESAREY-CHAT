@@ -2,6 +2,8 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { worlds } from '@/content/worlds';
 import { levelInfo } from '@/domain/progression';
+import { nivelNova } from '@/domain/nova';
+import { useNova } from '@/state/nova';
 import { useKura } from '@/state/store';
 import { color } from '@/theme/tokens';
 import { Icon } from '@/ui/Icon';
@@ -10,6 +12,8 @@ import { Body, Display, Divider, Rise, Screen, Tap, Wordmark } from '@/ui/kit';
 export default function Mundos() {
   const router = useRouter();
   const xp = useKura((s) => s.player.xp);
+  const novaXp = useNova((s) => s.xp);
+  const nivel = (id: string) => (id === 'nova' ? nivelNova(novaXp).nivel : levelInfo(xp).level);
   return (
     <Screen moon="right">
       <Wordmark />
@@ -22,7 +26,7 @@ export default function Mundos() {
         {worlds.map((w, i) => (
           <Rise key={w.id} order={i + 1} style={s.cell}>
             <Tap
-              onPress={() => router.navigate('/')}
+              onPress={() => (w.id === 'nova' ? router.push('/nova') : router.navigate('/'))}
               disabled={!w.available}
               accessibilityLabel={w.available ? `Entrar al mundo de ${w.name}` : `${w.name}, próximamente`}
               testID={`mundo-${w.id}`}>
@@ -35,7 +39,7 @@ export default function Mundos() {
                   <Body bold size={13}>{w.role}</Body>
                   <Body muted size={13} style={{ marginTop: 4 }}>{w.pitch}</Body>
                   <Body size={12} style={[s.state, { color: w.available ? color.ink : w.accent, backgroundColor: w.available ? w.accent : 'transparent', borderColor: w.accent }]}>
-                    {w.available ? `Nivel ${levelInfo(xp).level} · Entrar` : 'Próximamente'}
+                    {w.available ? `Nivel ${nivel(w.id)} · Entrar` : 'Próximamente'}
                   </Body>
                 </View>
               </View>

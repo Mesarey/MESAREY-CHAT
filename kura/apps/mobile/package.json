@@ -39,7 +39,10 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "nova:importar": "node scripts/nova-import.mjs",
+    "nova:validar": "vitest run src/domain/nova.test.ts",
+    "android:apk": "expo prebuild -p android --no-install && cd android && ./gradlew assembleRelease"
   },
   "private": true
 }
