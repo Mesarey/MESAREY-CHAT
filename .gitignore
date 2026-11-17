@@ -16,3 +16,4 @@ STOP
 # python
 __pycache__/
 *.pyc
+entrega/*.apk
