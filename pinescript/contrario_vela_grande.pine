@@ -1,0 +1,136 @@
+//@version=6
+// Polymarket 5m Up/Down: apuesta FIJA al color CONTRARIO de la vela anterior,
+// solo cuando la vela anterior fue "grande" (cuerpo >= umbral). Sin martingala.
+// Usar en BTCUSD, temporalidad 5 minutos.
+indicator("Contrario tras vela grande · Polymarket 5m", overlay = true, max_labels_count = 500)
+
+// ───── Entradas ─────
+tz         = input.string("America/Mexico_City", "Zona horaria")
+startDate  = input.time(timestamp("2026-11-01T00:00:00"), "Backtest desde")
+capital0   = input.float(1500.0, "Capital inicial ($)", minval = 1)
+stakeIn    = input.float(1.0, "Apuesta fija ($)", minval = 0.01)
+buyPrice   = input.float(0.50, "Precio del token (0.50 = paga 2x)", minval = 0.01, maxval = 0.99, step = 0.01)
+feePct     = input.float(0.0, "Comisión % sobre la apuesta", minval = 0)
+thrMode    = input.string("Fijo", "Tipo de umbral de vela grande", options = ["Fijo", "Percentil móvil"])
+thrBps     = input.float(15.0, "Fijo: cuerpo mínimo en puntos básicos (15 = 0.15%)", minval = 0, step = 0.5)
+pctRank    = input.float(80, "Percentil móvil: percentil (80 = top 20%)", minval = 1, maxval = 99)
+pctLen     = input.int(2016, "Percentil móvil: velas de historia (2016 = 7 días)", minval = 50, maxval = 4999)
+skipHrsStr = input.string("", "Horas a NO operar (0-23, separadas por coma, vacío = todas)")
+showMarks  = input.bool(true, "Mostrar marcas")
+
+// ───── Cálculos ─────
+bodyBps = open > 0 ? math.abs(close - open) / open * 10000 : 0.0
+pctThr  = ta.percentile_nearest_rank(bodyBps, pctLen, pctRank)
+thr     = thrMode == "Fijo" ? thrBps : pctThr[1]   // percentil con datos previos (sin ver el futuro)
+isBig   = bodyBps >= thr
+isGreen = close >= open                             // Polymarket: "Up" gana si cierre >= apertura
+inRange = time >= startDate
+
+var array<bool> skipH = array.new<bool>(24, false)
+if barstate.isfirst and str.length(skipHrsStr) > 0
+    for tok in str.split(skipHrsStr, ",")
+        hv = math.round(str.tonumber(str.trim(tok)))
+        if not na(hv) and hv >= 0 and hv <= 23
+            skipH.set(int(hv), true)
+
+// ───── Estado ─────
+var int   betDir = 0      // 1 = Up, -1 = Down
+var float betStake = 0.0
+var bool  ruined = false
+var float balance = capital0
+var float peak = capital0
+var float minBal = capital0
+var float maxDD = 0.0
+var int   wins = 0
+var int   losses = 0
+var int   curW = 0
+var int   curL = 0
+var int   maxW = 0
+var int   maxL = 0
+var float totalWagered = 0.0
+var int   winsUp = 0
+var int   betsUp = 0
+var int   winsDn = 0
+var int   betsDn = 0
+
+bool won  = false
+bool lost = false
+
+// 1) Resolver la apuesta de ESTA vela
+if betDir != 0 and barstate.isconfirmed
+    fee = betStake * feePct / 100
+    totalWagered += betStake
+    ok = (betDir == 1 and isGreen) or (betDir == -1 and not isGreen)
+    if betDir == 1
+        betsUp += 1
+        winsUp += ok ? 1 : 0
+    else
+        betsDn += 1
+        winsDn += ok ? 1 : 0
+    if ok
+        won := true
+        balance += betStake * (1 / buyPrice - 1) - fee
+        wins += 1
+        curW += 1
+        curL := 0
+    else
+        lost := true
+        balance -= betStake + fee
+        losses += 1
+        curL += 1
+        curW := 0
+    maxW   := math.max(maxW, curW)
+    maxL   := math.max(maxL, curL)
+    peak   := math.max(peak, balance)
+    minBal := math.min(minBal, balance)
+    maxDD  := math.max(maxDD, peak - balance)
+    betDir := 0
+    if balance < stakeIn * (1 + feePct / 100)
+        ruined := true
+
+// 2) Si esta vela fue grande → apostar al color CONTRARIO en la siguiente
+signal = inRange and not ruined and barstate.isconfirmed and isBig and not skipH.get(hour(time_close, tz))
+if signal
+    betDir   := isGreen ? -1 : 1
+    betStake := math.min(stakeIn, balance)
+
+// ───── Visual ─────
+barcolor(inRange and isBig ? (isGreen ? color.new(color.aqua, 0) : color.new(color.fuchsia, 0)) : na, title = "Vela grande")
+plotshape(showMarks and signal and betDir == 1,  "Señal UP",   shape.triangleup,   location.belowbar, color.new(color.lime, 0), size = size.tiny)
+plotshape(showMarks and signal and betDir == -1, "Señal DOWN", shape.triangledown, location.abovebar, color.new(color.red, 0),  size = size.tiny)
+plotshape(showMarks and won,  "Ganada",  shape.circle, location.abovebar, color.new(color.lime, 0), size = size.tiny)
+plotshape(showMarks and lost, "Perdida", shape.xcross, location.belowbar, color.new(color.red, 0),  size = size.tiny)
+
+// ───── Tabla ─────
+var table t = table.new(position.top_right, 2, 22, bgcolor = color.new(color.black, 15), border_width = 1)
+f(r, k, v, c) =>
+    table.cell(t, 0, r, k, text_color = color.white, text_size = size.small, text_halign = text.align_left)
+    table.cell(t, 1, r, v, text_color = c, text_size = size.small, text_halign = text.align_right)
+
+if barstate.islast
+    total = wins + losses
+    wr    = total > 0 ? 100.0 * wins / total : 0.0
+    pnl   = balance - capital0
+    be    = 100 * buyPrice * (1 + feePct / 100)   // win rate de equilibrio
+    days  = (time - math.max(startDate, time[bar_index])) / 86400000.0
+    f(0,  "Capital inicial ($)", str.tostring(capital0, "#,###.##"), color.white)
+    f(1,  "Balance final ($)", str.tostring(balance, "#,###.##"), balance >= capital0 ? color.lime : color.red)
+    f(2,  "PnL neto ($)", str.tostring(pnl, "#,###.##"), pnl >= 0 ? color.lime : color.red)
+    f(3,  "Retorno sobre capital", str.tostring(100 * pnl / capital0, "#.##") + "%", pnl >= 0 ? color.lime : color.red)
+    f(4,  "Estado", ruined ? "QUEBRADA" : "Activa", ruined ? color.red : color.lime)
+    f(5,  "Apuestas totales", str.tostring(total), color.white)
+    f(6,  "Apuestas por día (aprox.)", days > 0 ? str.tostring(total / days, "#.#") : "-", color.white)
+    f(7,  "Ganadas", str.tostring(wins), color.lime)
+    f(8,  "Perdidas", str.tostring(losses), color.red)
+    f(9,  "Win rate", str.tostring(wr, "#.##") + "%", wr > be ? color.lime : color.red)
+    f(10, "Win rate necesario (equilibrio)", str.tostring(be, "#.##") + "%", color.yellow)
+    f(11, "Win rate apuestas UP", betsUp > 0 ? str.tostring(100.0 * winsUp / betsUp, "#.##") + "% (" + str.tostring(betsUp) + ")" : "-", color.silver)
+    f(12, "Win rate apuestas DOWN", betsDn > 0 ? str.tostring(100.0 * winsDn / betsDn, "#.##") + "% (" + str.tostring(betsDn) + ")" : "-", color.silver)
+    f(13, "Máx. ganadas seguidas", str.tostring(maxW), color.lime)
+    f(14, "Máx. perdidas seguidas", str.tostring(maxL), color.red)
+    f(15, "Racha actual", curW > 0 ? str.tostring(curW) + " W" : str.tostring(curL) + " L", curW > 0 ? color.lime : color.red)
+    f(16, "Total apostado ($)", str.tostring(totalWagered, "#,###.##"), color.white)
+    f(17, "Balance mínimo ($)", str.tostring(minBal, "#,###.##"), color.orange)
+    f(18, "Máx. drawdown ($)", str.tostring(maxDD, "#,###.##"), color.orange)
+    f(19, "Umbral vela grande actual", str.tostring(thr, "#.#") + " pb (" + str.tostring(thr / 100, "#.###") + "%)", color.aqua)
+    f(20, "Siguiente apuesta", betDir == 1 ? "UP $" + str.tostring(betStake, "#.##") : betDir == -1 ? "DOWN $" + str.tostring(betStake, "#.##") : "Esperando vela grande", betDir == 1 ? color.lime : betDir == -1 ? color.red : color.gray)
