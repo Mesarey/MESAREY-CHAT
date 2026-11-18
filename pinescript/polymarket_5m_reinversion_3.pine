@@ -16,6 +16,13 @@ feePct     = input.float(0.0, "Comisión % sobre la apuesta", minval = 0)
 resetDaily = input.bool(true, "Reiniciar ciclo al empezar cada día")
 showMarks  = input.bool(true, "Mostrar marcas de ganada/perdida")
 
+// ───── Filtro de horas planas (baja volatilidad) ─────
+filterMode = input.string("Automático", "Filtro de horas", options = ["Ninguno", "Automático", "Manual"], group = "Filtro de horas")
+nSkip      = input.int(6, "Automático: no operar en las N horas menos volátiles", minval = 0, maxval = 23, group = "Filtro de horas")
+minSample  = input.int(5, "Automático: mín. días de historia por hora antes de filtrar", minval = 1, group = "Filtro de horas")
+manualHrs  = input.string("1,2,3,4,5,6", "Manual: horas a NO operar (0-23, separadas por coma)", group = "Filtro de horas")
+showHours  = input.bool(true, "Mostrar tabla por hora", group = "Filtro de horas")
+
 // ───── Estado ─────
 var bool  active   = false
 var bool  ruined   = false
@@ -41,6 +48,38 @@ var float maxStakeUsed = 0.0
 var float totalWagered = 0.0
 var array<int> lostAtStep = array.new<int>(21, 0)   // en qué paso del ciclo se perdió
 
+// Volatilidad por hora (rango % de cada vela de 5m), acumulada SOLO con datos pasados
+var array<float> volSum = array.new<float>(24, 0.0)
+var array<int>   volCnt = array.new<int>(24, 0)
+var array<int>   betsH  = array.new<int>(24, 0)
+var array<int>   winsH  = array.new<int>(24, 0)
+var array<bool>  manualSkip = array.new<bool>(24, false)
+var int skipped = 0
+if barstate.isfirst
+    for tok in str.split(manualHrs, ",")
+        hv = math.round(str.tonumber(str.trim(tok)))
+        if not na(hv) and hv >= 0 and hv <= 23
+            manualSkip.set(int(hv), true)
+
+avgVol(h) => volCnt.get(h) > 0 ? volSum.get(h) / volCnt.get(h) : na
+
+isFlatHour(h) =>
+    bool res = false
+    if filterMode == "Manual"
+        res := manualSkip.get(h)
+    else if filterMode == "Automático" and nSkip > 0
+        bool ready = true
+        for i = 0 to 23
+            if volCnt.get(i) < minSample * 12
+                ready := false
+        if ready
+            int rank = 0
+            for i = 0 to 23
+                if avgVol(i) < avgVol(h)
+                    rank += 1
+            res := rank < nSkip
+    res
+
 inRange = time >= startDate
 newDay  = dayofmonth(time, tz) != dayofmonth(time[1], tz)
 isGreen = close >= open   // Polymarket: "Up" gana si cierre >= apertura
@@ -61,7 +100,10 @@ bool cobro = false
 if active and not ruined and betDir != 0 and barstate.isconfirmed
     fee = betStake * feePct / 100
     totalWagered += betStake
+    hb = hour(time, tz)
+    betsH.set(hb, betsH.get(hb) + 1)
     if (betDir == 1 and isGreen) or (betDir == -1 and not isGreen)
+        winsH.set(hb, winsH.get(hb) + 1)
         won := true
         profit = betStake * (1 / buyPrice - 1)
         balance += profit - fee
@@ -96,8 +138,18 @@ if active and not ruined and betDir != 0 and barstate.isconfirmed
         ruined   := true
         ruinTime := time
 
+// Registrar volatilidad de esta vela (ya cerrada)
+if barstate.isconfirmed and open > 0
+    hv = hour(time, tz)
+    volSum.set(hv, volSum.get(hv) + 100 * (high - low) / open)
+    volCnt.set(hv, volCnt.get(hv) + 1)
+
 // 2) Colocar la apuesta para la SIGUIENTE vela = color de esta vela
-if active and not ruined and barstate.isconfirmed
+nextHour = hour(time_close, tz)
+skipNext = isFlatHour(nextHour)
+if active and not ruined and barstate.isconfirmed and skipNext
+    skipped += 1
+if active and not ruined and barstate.isconfirmed and not skipNext
     betDir   := isGreen ? 1 : -1
     betStake := math.min(stake, balance / (1 + feePct / 100))
     maxStakeUsed := math.max(maxStakeUsed, betStake)
@@ -106,6 +158,7 @@ plotshape(showMarks and won and not cobro, "Ganada", shape.circle, location.abov
 plotshape(showMarks and cobro, "Ciclo completo (cobro)", shape.diamond, location.abovebar, color.new(color.yellow, 0), size = size.small)
 plotshape(showMarks and lost, "Perdida", shape.xcross, location.belowbar, color.new(color.red, 0), size = size.tiny)
 bgcolor(newDay and inRange ? color.new(color.blue, 85) : na, title = "Inicio de día")
+bgcolor(inRange and isFlatHour(hour(time, tz)) ? color.new(color.gray, 85) : na, title = "Hora filtrada (plana)")
 bgcolor(ruined and not ruined[1] ? color.new(color.red, 40) : na, title = "Cuenta quebrada")
 
 // ───── Tabla de resultados ─────
@@ -127,7 +180,7 @@ if barstate.islast
     f(2,  "PnL neto ($)", str.tostring(pnl, "#,###.##"), pnl >= 0 ? color.lime : color.red)
     f(3,  "Retorno sobre capital", str.tostring(ret, "#.##") + "%", ret >= 0 ? color.lime : color.red)
     f(4,  "Estado", ruined ? "QUEBRADA " + str.format_time(ruinTime, "dd/MM HH:mm", tz) : "Activa", ruined ? color.red : color.lime)
-    f(5,  "Apuestas totales", str.tostring(total), color.white)
+    f(5,  "Apuestas totales (saltadas: " + str.tostring(skipped) + ")", str.tostring(total), color.white)
     f(6,  "Ganadas", str.tostring(wins), color.lime)
     f(7,  "Perdidas", str.tostring(losses), color.red)
     f(8,  "Win rate por vela", str.tostring(wr, "#.##") + "%", color.white)
@@ -150,3 +203,20 @@ if barstate.islast
         if row < 40
             f(row, "  Paso " + str.tostring(k), str.tostring(lostAtStep.get(k)) + "x", color.silver)
             row += 1
+
+// ───── Tabla por hora: volatilidad y win rate ─────
+var table th = table.new(position.bottom_left, 4, 25, bgcolor = color.new(color.black, 15), border_width = 1)
+if barstate.islast and showHours
+    table.cell(th, 0, 0, "Hora", text_color = color.yellow, text_size = size.tiny)
+    table.cell(th, 1, 0, "Volat. %", text_color = color.yellow, text_size = size.tiny)
+    table.cell(th, 2, 0, "Apuestas", text_color = color.yellow, text_size = size.tiny)
+    table.cell(th, 3, 0, "Win %", text_color = color.yellow, text_size = size.tiny)
+    for h = 0 to 23
+        flat = isFlatHour(h)
+        b  = betsH.get(h)
+        w  = b > 0 ? 100.0 * winsH.get(h) / b : na
+        tc = flat ? color.gray : color.white
+        table.cell(th, 0, h + 1, (h < 10 ? "0" : "") + str.tostring(h) + ":00" + (flat ? " ⛔" : ""), text_color = tc, text_size = size.tiny)
+        table.cell(th, 1, h + 1, str.tostring(avgVol(h), "#.###"), text_color = tc, text_size = size.tiny)
+        table.cell(th, 2, h + 1, str.tostring(b), text_color = tc, text_size = size.tiny)
+        table.cell(th, 3, h + 1, na(w) ? "-" : str.tostring(w, "#.#"), text_color = na(w) ? tc : w >= 50 ? color.lime : color.red, text_size = size.tiny)
