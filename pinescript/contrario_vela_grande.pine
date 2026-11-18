@@ -52,6 +52,7 @@ var int   winsUp = 0
 var int   betsUp = 0
 var int   winsDn = 0
 var int   betsDn = 0
+var int   firstT = na
 
 bool won  = false
 bool lost = false
@@ -89,6 +90,8 @@ if betDir != 0 and barstate.isconfirmed
         ruined := true
 
 // 2) Si esta vela fue grande → apostar al color CONTRARIO en la siguiente
+if inRange and na(firstT)
+    firstT := time
 signal = inRange and not ruined and barstate.isconfirmed and isBig and not skipH.get(hour(time_close, tz))
 if signal
     betDir   := isGreen ? -1 : 1
@@ -112,7 +115,7 @@ if barstate.islast
     wr    = total > 0 ? 100.0 * wins / total : 0.0
     pnl   = balance - capital0
     be    = 100 * buyPrice * (1 + feePct / 100)   // win rate de equilibrio
-    days  = (time - math.max(startDate, time[bar_index])) / 86400000.0
+    days  = na(firstT) ? 0.0 : (time - firstT) / 86400000.0
     f(0,  "Capital inicial ($)", str.tostring(capital0, "#,###.##"), color.white)
     f(1,  "Balance final ($)", str.tostring(balance, "#,###.##"), balance >= capital0 ? color.lime : color.red)
     f(2,  "PnL neto ($)", str.tostring(pnl, "#,###.##"), pnl >= 0 ? color.lime : color.red)
