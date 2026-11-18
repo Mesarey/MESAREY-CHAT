@@ -1,0 +1,126 @@
+//@version=6
+// Polymarket 5m Up/Down: apuesta al color de la vela anterior + martingala
+// Usar en BTCUSD (o BTCUSDT), temporalidad 5 minutos.
+indicator("Polymarket 5m · Color anterior + Martingala", overlay = true, max_labels_count = 500)
+
+// ───── Entradas ─────
+tz         = input.string("America/Mexico_City", "Zona horaria (inicio del día 00:00)")
+startDate  = input.time(timestamp("2026-01-01T00:00:00"), "Backtest desde")
+baseStake  = input.float(1.0, "Apuesta inicial ($)", minval = 0.01)
+mult       = input.float(2.0, "Multiplicador martingala", minval = 1.0)
+maxSteps   = input.int(10, "Máx. pasos de martingala (al pasarlo se reinicia = quiebre)", minval = 1)
+buyPrice   = input.float(0.50, "Precio del token (0.50 = paga 2x)", minval = 0.01, maxval = 0.99, step = 0.01)
+feePct     = input.float(0.0, "Comisión % sobre la apuesta", minval = 0)
+resetDaily = input.bool(true, "Reiniciar martingala al empezar cada día")
+showMarks  = input.bool(true, "Mostrar marcas de ganada/perdida")
+
+// ───── Estado ─────
+var bool  active    = false
+var int   betDir    = 0        // 1 = Up (verde), -1 = Down (roja), 0 = sin apuesta
+var float betStake  = 0.0
+var float stake     = baseStake
+var int   step      = 1
+
+var int   wins = 0, losses = 0
+var int   curW = 0, curL = 0, maxW = 0, maxL = 0
+var int   busts = 0
+var float pnl = 0.0, peak = 0.0, maxDD = 0.0
+var float maxStakeUsed = 0.0
+var float totalWagered = 0.0
+var map<int, int> lossStreaks = map.new<int, int>()   // longitud de racha perdedora -> veces
+
+inRange = time >= startDate
+newDay  = dayofmonth(time, tz) != dayofmonth(time[1], tz)
+isGreen = close >= open   // Polymarket: "Up" gana si cierre >= apertura
+
+// Nuevo día: arranca (o reinicia) la estrategia
+if newDay and inRange
+    if resetDaily or not active
+        if betDir != 0 and curL > 0
+            lossStreaks.put(curL, nz(lossStreaks.get(curL)) + 1)
+        betDir := 0
+        stake  := baseStake
+        step   := 1
+        curL   := 0
+        curW   := 0
+    active := true
+
+bool won  = false
+bool lost = false
+
+// 1) Resolver la apuesta hecha para ESTA vela
+if active and betDir != 0 and barstate.isconfirmed
+    fee = betStake * feePct / 100
+    totalWagered += betStake
+    if (betDir == 1 and isGreen) or (betDir == -1 and not isGreen)
+        won := true
+        pnl += betStake * (1 / buyPrice - 1) - fee
+        wins += 1
+        curW += 1
+        if curL > 0
+            lossStreaks.put(curL, nz(lossStreaks.get(curL)) + 1)
+        curL := 0
+        stake := baseStake
+        step  := 1
+    else
+        lost := true
+        pnl -= betStake + fee
+        losses += 1
+        curL += 1
+        curW := 0
+        step += 1
+        if step > maxSteps
+            busts += 1
+            lossStreaks.put(curL, nz(lossStreaks.get(curL)) + 1)
+            curL  := 0
+            stake := baseStake
+            step  := 1
+        else
+            stake := stake * mult
+    maxW  := math.max(maxW, curW)
+    maxL  := math.max(maxL, curL == 0 and lost ? maxSteps : curL)
+    peak  := math.max(peak, pnl)
+    maxDD := math.max(maxDD, peak - pnl)
+    betDir := 0
+
+// 2) Colocar la apuesta para la SIGUIENTE vela = color de esta vela
+if active and barstate.isconfirmed
+    betDir   := isGreen ? 1 : -1
+    betStake := stake
+    maxStakeUsed := math.max(maxStakeUsed, stake)
+
+plotshape(showMarks and won,  "Ganada",  shape.circle, location.abovebar, color.new(color.lime, 0), size = size.tiny)
+plotshape(showMarks and lost, "Perdida", shape.xcross, location.belowbar, color.new(color.red, 0),  size = size.tiny)
+bgcolor(newDay and inRange ? color.new(color.blue, 85) : na, title = "Inicio de día")
+
+// ───── Tabla de resultados ─────
+var table t = table.new(position.top_right, 2, 24, bgcolor = color.new(color.black, 15), border_width = 1)
+f(r, k, v, c) =>
+    table.cell(t, 0, r, k, text_color = color.white, text_size = size.small, text_halign = text.align_left)
+    table.cell(t, 1, r, v, text_color = c, text_size = size.small, text_halign = text.align_right)
+
+if barstate.islast
+    total = wins + losses
+    wr    = total > 0 ? 100.0 * wins / total : 0.0
+    roi   = totalWagered > 0 ? 100.0 * pnl / totalWagered : 0.0
+    f(0,  "Apuestas totales", str.tostring(total), color.white)
+    f(1,  "Ganadas", str.tostring(wins), color.lime)
+    f(2,  "Perdidas", str.tostring(losses), color.red)
+    f(3,  "Win rate", str.tostring(wr, "#.##") + "%", color.white)
+    f(4,  "Máx. ganadas seguidas", str.tostring(maxW), color.lime)
+    f(5,  "Máx. perdidas seguidas", str.tostring(maxL), color.red)
+    f(6,  "Racha actual", curW > 0 ? str.tostring(curW) + " W" : str.tostring(curL) + " L", curW > 0 ? color.lime : color.red)
+    f(7,  "Quiebres (pasó máx. pasos)", str.tostring(busts), busts > 0 ? color.red : color.white)
+    f(8,  "PnL neto ($)", str.tostring(pnl, "#.##"), pnl >= 0 ? color.lime : color.red)
+    f(9,  "Total apostado ($)", str.tostring(totalWagered, "#.##"), color.white)
+    f(10, "ROI sobre apostado", str.tostring(roi, "#.##") + "%", roi >= 0 ? color.lime : color.red)
+    f(11, "Máx. drawdown ($)", str.tostring(maxDD, "#.##"), color.orange)
+    f(12, "Apuesta máx. usada ($)", str.tostring(maxStakeUsed, "#.##"), color.orange)
+    f(13, "Siguiente apuesta", betDir == 1 ? "UP $" + str.tostring(betStake, "#.##") : betDir == -1 ? "DOWN $" + str.tostring(betStake, "#.##") : "-", betDir == 1 ? color.lime : color.red)
+    table.cell(t, 0, 14, "Rachas perdedoras (largo: veces)", text_color = color.yellow, text_size = size.small)
+    table.cell(t, 1, 14, "", text_size = size.small)
+    row = 15
+    for k = 1 to maxSteps
+        if lossStreaks.contains(k) and row < 24
+            f(row, "  " + str.tostring(k) + " seguidas", str.tostring(lossStreaks.get(k)) + "x", color.silver)
+            row += 1
