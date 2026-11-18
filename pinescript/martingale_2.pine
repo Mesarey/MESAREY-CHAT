@@ -1,7 +1,7 @@
 //@version=6
 // Polymarket 5m Up/Down: apuesta al color de la vela anterior + martingala
 // Usar en BTCUSD (o BTCUSDT), temporalidad 5 minutos.
-indicator("Polymarket 5m · Color anterior + Martingala", overlay = true, max_labels_count = 500)
+indicator("Martingale 2 · Polymarket 5m", overlay = true, max_labels_count = 500)
 
 // ───── Entradas ─────
 tz         = input.string("America/Mexico_City", "Zona horaria (inicio del día 00:00)")

@@ -1,0 +1,152 @@
+//@version=6
+// Polymarket 5m Up/Down: apuesta al color de la vela anterior
+// SIN martingala: si gana, reinvierte todo (apuesta + ganancia) hasta N ganadas seguidas,
+// luego cobra y reinicia el ciclo. Si pierde, reinicia con la apuesta inicial.
+// Usar en BTCUSD (o BTCUSDT), temporalidad 5 minutos.
+indicator("Reinversión 3 · Polymarket 5m", overlay = true, max_labels_count = 500)
+
+// ───── Entradas ─────
+tz         = input.string("America/Mexico_City", "Zona horaria (inicio del día 00:00)")
+startDate  = input.time(timestamp("2026-11-01T00:00:00"), "Backtest desde")
+capital0   = input.float(1500.0, "Capital inicial ($)", minval = 1)
+baseStake  = input.float(1.0, "Apuesta inicial / mínima ($)", minval = 0.01)
+targetWins = input.int(3, "Ganadas seguidas para cerrar el ciclo", minval = 1, maxval = 20)
+buyPrice   = input.float(0.50, "Precio del token (0.50 = paga 2x)", minval = 0.01, maxval = 0.99, step = 0.01)
+feePct     = input.float(0.0, "Comisión % sobre la apuesta", minval = 0)
+resetDaily = input.bool(true, "Reiniciar ciclo al empezar cada día")
+showMarks  = input.bool(true, "Mostrar marcas de ganada/perdida")
+
+// ───── Estado ─────
+var bool  active   = false
+var bool  ruined   = false
+var int   ruinTime = 0
+var int   betDir   = 0        // 1 = Up, -1 = Down, 0 = sin apuesta
+var float betStake = 0.0
+var float stake    = baseStake
+var int   cycleW   = 0        // ganadas dentro del ciclo actual
+
+var int   wins   = 0
+var int   losses = 0
+var int   curW   = 0
+var int   curL   = 0
+var int   maxW   = 0
+var int   maxL   = 0
+var int   cyclesDone = 0
+var float balance  = capital0
+var float peak     = capital0
+var float minBal   = capital0
+var float maxDD    = 0.0
+var float maxDDpct = 0.0
+var float maxStakeUsed = 0.0
+var float totalWagered = 0.0
+var array<int> lostAtStep = array.new<int>(21, 0)   // en qué paso del ciclo se perdió
+
+inRange = time >= startDate
+newDay  = dayofmonth(time, tz) != dayofmonth(time[1], tz)
+isGreen = close >= open   // Polymarket: "Up" gana si cierre >= apertura
+
+// Nuevo día: arranca (o reinicia) el ciclo
+if newDay and inRange and not ruined
+    if resetDaily or not active
+        betDir := 0
+        stake  := baseStake
+        cycleW := 0
+    active := true
+
+bool won   = false
+bool lost  = false
+bool cobro = false
+
+// 1) Resolver la apuesta hecha para ESTA vela
+if active and not ruined and betDir != 0 and barstate.isconfirmed
+    fee = betStake * feePct / 100
+    totalWagered += betStake
+    if (betDir == 1 and isGreen) or (betDir == -1 and not isGreen)
+        won := true
+        profit = betStake * (1 / buyPrice - 1)
+        balance += profit - fee
+        wins += 1
+        curW += 1
+        curL := 0
+        cycleW += 1
+        if cycleW >= targetWins
+            cobro := true
+            cyclesDone += 1
+            cycleW := 0
+            stake  := baseStake
+        else
+            stake := betStake + profit - fee   // reinvierte todo
+    else
+        lost := true
+        balance -= betStake + fee
+        losses += 1
+        curL += 1
+        curW := 0
+        lostAtStep.set(cycleW + 1, lostAtStep.get(cycleW + 1) + 1)
+        cycleW := 0
+        stake  := baseStake
+    maxW     := math.max(maxW, curW)
+    maxL     := math.max(maxL, curL)
+    peak     := math.max(peak, balance)
+    minBal   := math.min(minBal, balance)
+    maxDD    := math.max(maxDD, peak - balance)
+    maxDDpct := math.max(maxDDpct, peak > 0 ? 100 * (peak - balance) / peak : 0)
+    betDir := 0
+    if balance < baseStake * (1 + feePct / 100)
+        ruined   := true
+        ruinTime := time
+
+// 2) Colocar la apuesta para la SIGUIENTE vela = color de esta vela
+if active and not ruined and barstate.isconfirmed
+    betDir   := isGreen ? 1 : -1
+    betStake := math.min(stake, balance / (1 + feePct / 100))
+    maxStakeUsed := math.max(maxStakeUsed, betStake)
+
+plotshape(showMarks and won and not cobro, "Ganada", shape.circle, location.abovebar, color.new(color.lime, 0), size = size.tiny)
+plotshape(showMarks and cobro, "Ciclo completo (cobro)", shape.diamond, location.abovebar, color.new(color.yellow, 0), size = size.small)
+plotshape(showMarks and lost, "Perdida", shape.xcross, location.belowbar, color.new(color.red, 0), size = size.tiny)
+bgcolor(newDay and inRange ? color.new(color.blue, 85) : na, title = "Inicio de día")
+bgcolor(ruined and not ruined[1] ? color.new(color.red, 40) : na, title = "Cuenta quebrada")
+
+// ───── Tabla de resultados ─────
+var table t = table.new(position.top_right, 2, 40, bgcolor = color.new(color.black, 15), border_width = 1)
+f(r, k, v, c) =>
+    table.cell(t, 0, r, k, text_color = color.white, text_size = size.small, text_halign = text.align_left)
+    table.cell(t, 1, r, v, text_color = c, text_size = size.small, text_halign = text.align_right)
+
+if barstate.islast
+    total = wins + losses
+    wr    = total > 0 ? 100.0 * wins / total : 0.0
+    pnl   = balance - capital0
+    ret   = 100.0 * pnl / capital0
+    cyclesLost = losses
+    cycleRate  = cyclesDone + cyclesLost > 0 ? 100.0 * cyclesDone / (cyclesDone + cyclesLost) : 0.0
+    cyclePay   = baseStake * (math.pow(1 / buyPrice, targetWins) - 1)
+    f(0,  "Capital inicial ($)", str.tostring(capital0, "#,###.##"), color.white)
+    f(1,  "Balance final ($)", str.tostring(balance, "#,###.##"), balance >= capital0 ? color.lime : color.red)
+    f(2,  "PnL neto ($)", str.tostring(pnl, "#,###.##"), pnl >= 0 ? color.lime : color.red)
+    f(3,  "Retorno sobre capital", str.tostring(ret, "#.##") + "%", ret >= 0 ? color.lime : color.red)
+    f(4,  "Estado", ruined ? "QUEBRADA " + str.format_time(ruinTime, "dd/MM HH:mm", tz) : "Activa", ruined ? color.red : color.lime)
+    f(5,  "Apuestas totales", str.tostring(total), color.white)
+    f(6,  "Ganadas", str.tostring(wins), color.lime)
+    f(7,  "Perdidas", str.tostring(losses), color.red)
+    f(8,  "Win rate por vela", str.tostring(wr, "#.##") + "%", color.white)
+    f(9,  "Ciclos completos (" + str.tostring(targetWins) + " seguidas)", str.tostring(cyclesDone), color.yellow)
+    f(10, "Ciclos perdidos", str.tostring(cyclesLost), color.red)
+    f(11, "% ciclos completados", str.tostring(cycleRate, "#.##") + "%", color.yellow)
+    f(12, "Ganancia por ciclo completo ($)", str.tostring(cyclePay, "#.##"), color.lime)
+    f(13, "Máx. ganadas seguidas", str.tostring(maxW), color.lime)
+    f(14, "Máx. perdidas seguidas", str.tostring(maxL), color.red)
+    f(15, "Racha actual", curW > 0 ? str.tostring(curW) + " W" : str.tostring(curL) + " L", curW > 0 ? color.lime : color.red)
+    f(16, "Total apostado ($)", str.tostring(totalWagered, "#,###.##"), color.white)
+    f(17, "Balance mínimo ($)", str.tostring(minBal, "#,###.##"), color.orange)
+    f(18, "Máx. drawdown", str.tostring(maxDD, "#,###.##") + " (" + str.tostring(maxDDpct, "#.#") + "%)", color.orange)
+    f(19, "Apuesta máx. usada ($)", str.tostring(maxStakeUsed, "#,###.##"), color.orange)
+    f(20, "Siguiente apuesta", ruined ? "-" : betDir == 1 ? "UP $" + str.tostring(betStake, "#.##") : betDir == -1 ? "DOWN $" + str.tostring(betStake, "#.##") : "-", betDir == 1 ? color.lime : color.red)
+    table.cell(t, 0, 21, "Ciclo perdido en el paso:", text_color = color.yellow, text_size = size.small)
+    table.cell(t, 1, 21, "", text_size = size.small)
+    row = 22
+    for k = 1 to targetWins
+        if row < 40
+            f(row, "  Paso " + str.tostring(k), str.tostring(lostAtStep.get(k)) + "x", color.silver)
+            row += 1
