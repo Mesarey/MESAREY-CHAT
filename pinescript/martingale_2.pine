@@ -16,10 +16,10 @@ resetDaily = input.bool(true, "Reiniciar martingala al empezar cada día")
 showMarks  = input.bool(true, "Mostrar marcas de ganada/perdida")
 
 // ───── Filtro de horas planas (baja volatilidad) ─────
-filterMode = input.string("Automático", "Filtro de horas", options = ["Ninguno", "Automático", "Manual"], group = "Filtro de horas")
+filterMode = input.string("Manual", "Filtro de horas", options = ["Ninguno", "Automático", "Manual"], group = "Filtro de horas")
 nSkip      = input.int(6, "Automático: no operar en las N horas menos volátiles", minval = 0, maxval = 23, group = "Filtro de horas")
 minSample  = input.int(5, "Automático: mín. días de historia por hora antes de filtrar", minval = 1, group = "Filtro de horas")
-manualHrs  = input.string("1,2,3,4,5,6", "Manual: horas a NO operar (0-23, separadas por coma)", group = "Filtro de horas")
+manualHrs  = input.string("15,16,17", "Manual: horas a NO operar (0-23, separadas por coma)", group = "Filtro de horas")
 showHours  = input.bool(true, "Mostrar tabla por hora", group = "Filtro de horas")
 
 // ───── Estado ─────
