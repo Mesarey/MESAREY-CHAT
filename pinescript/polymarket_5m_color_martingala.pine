@@ -21,10 +21,16 @@ var float betStake  = 0.0
 var float stake     = baseStake
 var int   step      = 1
 
-var int   wins = 0, losses = 0
-var int   curW = 0, curL = 0, maxW = 0, maxL = 0
-var int   busts = 0
-var float pnl = 0.0, peak = 0.0, maxDD = 0.0
+var int   wins   = 0
+var int   losses = 0
+var int   curW   = 0
+var int   curL   = 0
+var int   maxW   = 0
+var int   maxL   = 0
+var int   busts  = 0
+var float pnl    = 0.0
+var float peak   = 0.0
+var float maxDD  = 0.0
 var float maxStakeUsed = 0.0
 var float totalWagered = 0.0
 var map<int, int> lossStreaks = map.new<int, int>()   // longitud de racha perdedora -> veces
