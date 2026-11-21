@@ -19,8 +19,8 @@ npx serve kura/a01
 |---|---|
 | `js/config.js` | Todos los parámetros ajustables (estrellas, nubes, luces, bordes, audio, rendimiento) |
 | `js/scene.js` | SceneBackground, CloudLayers, AmbientLighting y paralaje leve |
-| `js/starfield.js` | StarField y chispas al tocar (una sola instancia de WebGLRenderer) |
-| `js/border.js` | LuminousBorder (botón principal y HUD) |
+| `js/starfield.js` | StarField, destellos ópticos del cristal y chispas al tocar (una sola instancia de WebGLRenderer) |
+| `js/border.js` | LuminousBorder: luz que recorre el botón principal; contorno fijo del cristal |
 | `styles.css` | GlassHUD, campos, tipografía y estados |
 | `js/form.js` | LoginForm (validación, error, enfoque, carga, mostrar contraseña, teclado) |
 | `js/auth.js` | Puntos de integración de autenticación (hoy responden «demo») |
@@ -43,12 +43,11 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 
 - `audio/ambiente.mp3` suena en bucle tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
 - Para la transición al mundo de Alaira ya existe `audio.fadeOutMusic(segundos)`.
-- **Efectos de sonido** sintetizados en el navegador: invitación del botón (cada 9 s, mientras no se escribe), toque de «Iniciar sesión», toques discretos en botones y enlaces, enfoque de campos, alternar y error.
+- **Efectos de sonido** sintetizados en el navegador (provisionales hasta elegir los definitivos): toque de «Iniciar sesión», toques discretos en botones y enlaces, enfoque de campos, alternar y error. La invitación del botón es solo visual, sin sonido.
 - Para reemplazarlos por sonidos propios basta con poner archivos en `audio/sfx/` con estos nombres; se usan automáticamente:
 
 | Archivo | Momento | Idea para ElevenLabs (Sound Effects) |
 |---|---|---|
-| `invitacion.mp3` | Invitación en bucle del botón | «soft magical shimmer rising, crystal chimes ascending arpeggio, airy sparkle tail, fantasy game UI, 1.5 seconds» |
 | `iniciar-sesion.mp3` | Tocar «Iniciar sesión» | «fantasy game confirm button, soft whoosh into bright crystal chord, gentle low thump, elegant, 1.2 seconds» |
 | `toque.mp3` | Botones y enlaces | «tiny glass tap, soft high crystal pluck, quiet UI click, 0.3 seconds» |
 | `enfoque.mp3` | Enfocar un campo | «very soft airy glass tick, quiet, 0.2 seconds» |
@@ -60,7 +59,8 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 Todo está en `js/config.js`; el panel de desarrollo (Mayús + D) permite probar en vivo y copiar la configuración resultante.
 
 - Estrellas: `stars.intensity`, `stars.twinkleSpeed`, `stars.countMobile/Desktop`.
-- Bordes: `button.border`, `button.loop` (6–9 s), `button.inviteEvery`, `hud.border`, `hud.loop` (14–22 s).
+- Bordes: `button.border`, `button.loop` (6–9 s), `button.inviteEvery`, `hud.border`.
+- Destellos ópticos del cristal: `hud.flares` (cantidad, tamaño, intensidad, velocidad, vida).
 - Nubes: `clouds.*.opacity / blur / drift / duration`.
 - Luces: `lights.*` y `lights.breathe`.
 

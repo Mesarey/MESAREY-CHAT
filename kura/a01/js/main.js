@@ -76,8 +76,8 @@ const hud = luminousBorder($('panel'), {
   intensity: config.hud.border,
   loop: config.hud.loop,
   breathe: 6,
-  segments: [{ length: 80, strength: .7, delay: .1 }, { length: 50, strength: .38, delay: .63 }],
-  sparkles: [{ at: .13, every: [7, 14], size: 12 }, { at: .41, every: [9, 16], size: 9 }, { at: .62, every: [8, 15], size: 12 }, { at: .9, every: [10, 18], size: 9 }],
+  segments: [],   // sin líneas que viajan: la luz del cristal son destellos ópticos (Three.js)
+  sparkles: [],
   colors: { core: '#fff6ee', glow: '#c99bff', base1: '#d6b4f2', base2: '#f4dcc0' },
   widths: { base: 1.1, near: 4, wide: 18 },
 });
@@ -93,7 +93,19 @@ cta.addEventListener('blur', () => brighten(false));
 
 /* ---------- Estrellas y chispas ---------- */
 let stars = null;
-createStarField({ canvas: $('fx'), stage, motion, isMobile }).then((s) => { stars = s; devPanel({ stars, button, hud }); });
+createStarField({ canvas: $('fx'), stage, motion, isMobile }).then((s) => {
+  stars = s;
+  if (!s) return devPanel({ stars, button, hud });
+  // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
+  const panel = $('panel');
+  const sync = () => {
+    const u = unit(), sr = stage.getBoundingClientRect(), pr = panel.getBoundingClientRect();
+    s.setPanel({ x: (pr.left - sr.left) / u, y: (pr.top - sr.top) / u, w: pr.width / u, h: pr.height / u, r: 70 });
+  };
+  new ResizeObserver(sync).observe(panel); new ResizeObserver(sync).observe(stage); sync();
+  setTimeout(sync, 2600); // tras la animación de entrada
+  devPanel({ stars, button, hud });
+});
 
 /* ---------- Mensajes breves ---------- */
 const toastEl = $('toast');
@@ -165,13 +177,12 @@ $('lang').addEventListener('click', () => { audio.sfx('tap'); applyLanguage(curr
 $('fx-toggle').addEventListener('click', () => { audio.sfx('toggle'); motion.set(!motion.reduced); });
 $('fx-toggle').setAttribute('aria-pressed', String(motion.reduced));
 
-/* ---------- Invitación del botón principal (con sonido) ---------- */
+/* ---------- Invitación del botón principal (solo visual) ---------- */
 let typing = false, typingTimer = 0;
 document.getElementById('form').addEventListener('input', () => { typing = true; clearTimeout(typingTimer); typingTimer = setTimeout(() => (typing = false), 4000); });
 function invite() {
   if (!motion.reduced && !document.hidden && !typing && cta.getAttribute('aria-busy') !== 'true') {
-    button.invite();
-    audio.sfx('invite');
+    button.invite(); // solo visual: sin sonido
   }
   setTimeout(invite, config.button.inviteEvery * 1000);
 }

@@ -107,13 +107,6 @@ function noiseSweep(at, dur, from, to, gain, dest, q = 1.2) {
 const NOTE = (n) => 440 * 2 ** ((n - 69) / 12);
 
 const SYNTH = {
-  // Invitación del botón principal: destello mágico ascendente con cola larga.
-  invite(t) {
-    const d = out(.9, 1.1);
-    noiseSweep(t, 1.1, 1800, 9000, .018, d, .7);
-    [74, 78, 81, 86, 90, 93].forEach((n, i) => bell(NOTE(n), t + .05 + i * .055, { gain: .022, decay: 1.6, dest: d }));
-    bell(NOTE(98), t + .42, { gain: .012, decay: 2.2, dest: d });
-  },
   // Toque en «Iniciar sesión»: golpe suave, barrido de aire y acorde cristalino.
   primary(t) {
     const d = out(1, .9);

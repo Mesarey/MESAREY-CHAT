@@ -12,8 +12,13 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion }) {
   const cta = document.getElementById('cta'), eye = document.getElementById('eye');
   const coarse = matchMedia('(pointer: coarse)').matches;
 
-  const say = (text, kind = 'error') => { msg.textContent = text; msg.classList.add('is-on'); msg.classList.toggle('is-info', kind === 'info'); };
-  const clear = () => { msg.classList.remove('is-on'); msg.textContent = ''; fEmail.classList.remove('is-error'); fPass.classList.remove('is-error'); email.removeAttribute('aria-invalid'); pass.removeAttribute('aria-invalid'); };
+  let msgKey = null;
+  const say = (key, kind = 'error') => { msgKey = key; msg.textContent = t(key); msg.classList.add('is-on'); msg.classList.toggle('is-info', kind === 'info'); };
+  document.addEventListener('kura:lang', () => {
+    if (msgKey) msg.textContent = t(msgKey);
+    if (cta.getAttribute('aria-busy') === 'true') cta.setAttribute('aria-label', t('loading'));
+  });
+  const clear = () => { msgKey = null; msg.classList.remove('is-on'); msg.textContent = ''; fEmail.classList.remove('is-error'); fPass.classList.remove('is-error'); email.removeAttribute('aria-invalid'); pass.removeAttribute('aria-invalid'); };
   const shake = (el) => { if (!motion.reduced) el.animate([{ translate: '0' }, { translate: '-8px' }, { translate: '7px' }, { translate: '-5px' }, { translate: '3px' }, { translate: '0' }], { duration: 450, easing: 'ease-out' }); };
   [email, pass].forEach((i) => i.addEventListener('input', clear));
 
@@ -26,7 +31,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion }) {
       sfx('error');
       if (badEmail) { fEmail.classList.add('is-error'); email.setAttribute('aria-invalid', 'true'); shake(fEmail); }
       if (badPass) { fPass.classList.add('is-error'); pass.setAttribute('aria-invalid', 'true'); shake(fPass); }
-      say(t(badEmail && badPass ? 'errBoth' : badEmail ? 'errEmail' : 'errPass'));
+      say(badEmail && badPass ? 'errBoth' : badEmail ? 'errEmail' : 'errPass');
       (badEmail ? email : pass).focus();
       return;
     }
@@ -36,7 +41,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion }) {
     cta.removeAttribute('aria-busy');
     cta.removeAttribute('aria-label');
     if (res.ok) return; // aquí se navegaría a A05 / Hoy
-    say(t('demoSignIn'), 'info');
+    say('demoSignIn', 'info');
   });
 
   cta.addEventListener('click', (e) => { if (cta.getAttribute('aria-busy') !== 'true') onPrimary(e); });

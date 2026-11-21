@@ -14,6 +14,7 @@ export function devPanel({ stars, button, hud }) {
     ['Bordes luminosos', [
       ['Botón principal', 0, 1.5, .05, () => config.button.border, (v) => { config.button.border = v; button.setIntensity(v); }],
       ['HUD de cristal', 0, 1.5, .05, () => config.hud.border, (v) => { config.hud.border = v; hud.setIntensity(v); }],
+      ['Destellos ópticos', 0, 2, .05, () => config.hud.flares.intensity, (v) => { config.hud.flares.intensity = v; stars && (stars.flareUniform.value = v); }],
     ]],
     ['Luces', [
       ['Aura violeta', 0, 1, .01, () => config.lights.violet, (v) => { config.lights.violet = v; applySceneConfig(); }],

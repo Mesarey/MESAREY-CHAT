@@ -7,12 +7,12 @@ export const config = {
   stars: {
     countMobile: 90,
     countDesktop: 120,
-    flareEvery: 11,          // una de cada N estrellas lleva destello de cuatro puntas
-    intensity: 1.0,          // brillo general
+    flareEvery: 8,           // una de cada N estrellas lleva destello de cuatro puntas
+    intensity: 1.25,          // brillo general
     twinkleSpeed: 1.0,       // multiplica la velocidad de titileo
     cycle: [3, 8],           // segundos por ciclo de titileo
-    size: [1.2, 3.2],        // tamaño en px de referencia
-    flareSize: [9, 14],
+    size: [2.2, 4.6],        // tamaño en px de referencia
+    flareSize: [18, 28],
   },
   burst: {
     particles: 70,           // chispas finas por toque
@@ -39,11 +39,13 @@ export const config = {
     border: 1.0,             // intensidad del borde luminoso del botón principal
     loop: 7.5,               // segundos que tarda el segmento principal en dar la vuelta
     breathe: 4,              // respiración de intensidad
-    inviteEvery: 9,          // segundos entre animaciones de invitación (con sonido)
+    inviteEvery: 9,          // segundos entre destellos de invitación (sin sonido)
   },
   hud: {
-    border: 0.85,            // más tenue que el botón
+    border: 0.7,             // contorno fijo del cristal, más tenue que el botón
     loop: 18,
+    // Destellos ópticos (lens flare) que se deslizan despacio por el borde del cristal, con un reflejo de lente tenue hacia el centro.
+    flares: { count: 3, size: 380, intensity: 1.0, speed: [0.004, 0.009], life: [7, 12] },
   },
   audio: {
     music: 'audio/ambiente.mp3',
@@ -54,7 +56,6 @@ export const config = {
     // Si existen estos archivos (por ejemplo, generados con ElevenLabs) se usan en lugar
     // de los sonidos sintetizados. Si no existen, se sintetizan sin error.
     sfxFiles: {
-      invite: 'audio/sfx/invitacion.mp3',
       primary: 'audio/sfx/iniciar-sesion.mp3',
       tap: 'audio/sfx/toque.mp3',
       focus: 'audio/sfx/enfoque.mp3',
