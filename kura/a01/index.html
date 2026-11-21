@@ -18,7 +18,11 @@
     <div class="scene" id="scene" aria-hidden="true"></div>
 
     <!-- 8: logo y audio -->
-    <h1 class="logo"><img src="assets/img/logo.png" alt="KURA" width="776" height="641" /></h1>
+    <h1 class="logo">
+      <span class="sr">KURA</span>
+      <img class="logo-part logo-symbol" src="assets/img/logo-simbolo.png" alt="" width="776" height="486" />
+      <img class="logo-part logo-word" src="assets/img/logo-texto.png" alt="" width="776" height="155" />
+    </h1>
     <button class="sound" id="sound" type="button" aria-pressed="true" data-i18n-attr="aria-label:soundOn">
       <svg class="ico ico-on" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 19h9l11-9v28L14 29H5Z" class="fill" /><path d="M31 16q8 8 0 16 M36 10q14 14 0 28" /></svg>
       <svg class="ico ico-off" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 19h9l11-9v28L14 29H5Z" /><path d="m31 17 12 14m0-14L31 31" /></svg>
@@ -57,7 +61,7 @@
           </div>
 
           <button class="cta" id="cta" type="submit">
-            <span class="cta-glass" aria-hidden="true"></span>
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
             <span class="cta-label"><span class="cta-text" data-i18n="signIn">Iniciar sesión</span>
               <svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg>
             </span>

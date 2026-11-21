@@ -179,12 +179,21 @@ $('lang').addEventListener('click', () => { audio.sfx('tap'); applyLanguage(curr
 $('fx-toggle').addEventListener('click', () => { audio.sfx('toggle'); motion.set(!motion.reduced); });
 $('fx-toggle').setAttribute('aria-pressed', String(motion.reduced));
 
-/* ---------- Invitación del botón principal (solo visual) ---------- */
-let typing = false, typingTimer = 0;
-document.getElementById('form').addEventListener('input', () => { typing = true; clearTimeout(typingTimer); typingTimer = setTimeout(() => (typing = false), 4000); });
+/* ---------- Invitación del botón principal (solo visual, en reposo) ---------- */
+// Si nadie toca ni mueve nada por unos segundos, un reflejo cruza el botón, el halo se
+// enciende un poco y la flecha da dos pasos hacia la derecha: «aquí está».
+let lastActivity = performance.now();
+for (const ev of ['pointermove', 'pointerdown', 'keydown', 'input', 'scroll', 'focusin']) addEventListener(ev, () => { lastActivity = performance.now(); }, { passive: true, capture: true });
+const sheen = cta.querySelector('.cta-sheen'), arrow = cta.querySelector('.cta-arrow');
 function invite() {
-  if (!motion.reduced && !document.hidden && !typing && cta.getAttribute('aria-busy') !== 'true') {
-    button.invite(); // solo visual: sin sonido
+  const idle = performance.now() - lastActivity > config.button.idleAfter * 1000;
+  if (idle && !motion.reduced && !document.hidden && cta.getAttribute('aria-busy') !== 'true' && document.activeElement !== cta) {
+    button.invite();
+    sheen.animate([{ translate: '-130% 0' }, { translate: '330% 0' }], { duration: 1800, easing: 'cubic-bezier(.45,.05,.25,1)' });
+    arrow.animate(
+      [{ transform: 'translateX(0)' }, { transform: 'translateX(45%)', offset: .2 }, { transform: 'translateX(0)', offset: .4 }, { transform: 'translateX(45%)', offset: .6 }, { transform: 'translateX(0)', offset: .85 }, { transform: 'translateX(0)' }],
+      { duration: 1300, delay: 900, easing: 'ease-in-out' },
+    );
   }
   setTimeout(invite, config.button.inviteEvery * 1000);
 }

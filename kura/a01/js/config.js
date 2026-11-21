@@ -39,7 +39,8 @@ export const config = {
     border: 1.0,             // intensidad del borde luminoso del botón principal
     loop: 7.5,               // segundos que tarda el segmento principal en dar la vuelta
     breathe: 4,              // respiración de intensidad
-    inviteEvery: 9,          // segundos entre destellos de invitación (sin sonido)
+    inviteEvery: 7,          // segundos entre invitaciones mientras la página está en reposo (sin sonido)
+    idleAfter: 4,            // segundos sin tocar ni mover para considerar reposo
   },
   hud: {
     border: 0.7,             // contorno fijo del cristal, más tenue que el botón
@@ -49,8 +50,8 @@ export const config = {
   // van y vienen de un lado a otro y se encienden y apagan con suavidad.
   // Nunca entran al interior del panel, donde va el texto.
   flares: {
-    hud:    { count: 2, size: 210, intensity: 0.8, speed: [7, 14], life: [9, 15] },   // speed en px de referencia por segundo
-    button: { count: 2, size: 150, intensity: 0.75, speed: [6, 12], life: [8, 13] },
+    hud:    { count: 2, size: 280, intensity: 0.8, speed: [7, 14], life: [9, 15] },   // speed en px de referencia por segundo
+    button: { count: 2, size: 200, intensity: 0.75, speed: [6, 12], life: [8, 13] },
   },
   audio: {
     music: 'audio/ambiente.mp3',

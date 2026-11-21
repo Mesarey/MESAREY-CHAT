@@ -94,8 +94,17 @@ button, input { font: inherit; color: inherit; }
 }
 
 /* ---------- 8 · Logo y audio ---------- */
-.logo { position: absolute; z-index: 3; left: calc(76 * var(--u)); top: calc(22 * var(--u) + var(--safe-top)); width: calc(139 * var(--u)); margin: 0; filter: drop-shadow(0 0 calc(8 * var(--u)) rgba(255, 240, 215, .3)); }
-.logo img { display: block; width: 100%; height: auto; }
+.logo { position: absolute; z-index: 3; left: calc(76 * var(--u)); top: calc(22 * var(--u) + var(--safe-top)); width: calc(139 * var(--u)); margin: 0; }
+.logo-part { display: block; width: 100%; height: auto; }
+/* Logo vivo: el trazo blanco se enciende y se apaga muy despacio, como un neón tenue.
+   Las semilunas y la palabra KURA respiran a destiempo. */
+.logo-symbol { animation: neon 7s ease-in-out infinite; }
+.logo-word { animation: neon 9s ease-in-out -3.5s infinite; }
+@keyframes neon {
+  0%, 100% { filter: drop-shadow(0 0 calc(2 * var(--u)) rgba(255, 244, 228, .18)) drop-shadow(0 0 calc(7 * var(--u)) rgba(225, 190, 255, .10)); }
+  50% { filter: drop-shadow(0 0 calc(2.5 * var(--u)) rgba(255, 248, 236, .95)) drop-shadow(0 0 calc(9 * var(--u)) rgba(255, 236, 214, .55)) drop-shadow(0 0 calc(18 * var(--u)) rgba(214, 170, 255, .4)); }
+}
+.reduce-motion .logo-symbol, .reduce-motion .logo-word { animation: none; filter: drop-shadow(0 0 calc(3 * var(--u)) rgba(255, 244, 228, .35)); }
 .sound {
   position: absolute; z-index: 3; right: calc(44 * var(--u)); top: calc(34 * var(--u) + var(--safe-top));
   width: max(var(--tap), calc(69 * var(--u))); height: max(var(--tap), calc(42 * var(--u)));
@@ -227,6 +236,11 @@ button, input { font: inherit; color: inherit; }
   box-shadow: inset 0 0 calc(20 * var(--u)) rgba(255, 225, 255, .18), inset 0 calc(1.5 * var(--u)) calc(3 * var(--u)) rgba(255, 240, 255, .28);
   backdrop-filter: blur(calc(4 * var(--u))); -webkit-backdrop-filter: blur(calc(4 * var(--u)));
 }
+/* Reflejo que cruza el botón como un brillo sobre cristal (lo anima js/main.js). */
+.cta-glass { overflow: hidden; }
+.cta-sheen { position: absolute; top: -30%; bottom: -30%; left: 0; width: 34%; translate: -130% 0; pointer-events: none;
+  background: linear-gradient(100deg, rgba(255, 245, 255, 0) 0%, rgba(240, 215, 255, .16) 26%, rgba(255, 250, 255, .55) 46%, rgba(255, 255, 255, .7) 50%, rgba(255, 250, 255, .55) 54%, rgba(240, 215, 255, .16) 74%, rgba(255, 245, 255, 0) 100%);
+  transform: skewX(-20deg); }
 .cta-label {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: calc(20 * var(--u));
   font-style: italic; font-weight: 400; font-size: max(20px, calc(45 * var(--u))); letter-spacing: calc(-.2 * var(--u)); line-height: 1;

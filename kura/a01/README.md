@@ -37,7 +37,8 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 - **Estrellas.** Posiciones precalculadas solo en cielo oscuro visible (`data/estrellas.json`), lejos de rostros, logo, planetas y audio. 90 en móvil y 120 en escritorio; una de cada 11 lleva destello de cuatro puntas. No se usa bloom.
 - **Tipografía.** Playfair Display Italic (local, OFL): fue la más parecida a la referencia en la comparación. Campos y textos pequeños usan la misma familia porque así lo muestra la referencia; los tamaños tienen mínimos legibles en móvil (16 px en campos para que iOS no haga zoom).
 - **Áreas táctiles.** Mínimo 44 px. En teléfonos pequeños esto hace el formulario un poco más alto que en la referencia y la página se desplaza.
-- **Logo.** El oficial, con su fondo azul quitado conservando el dibujo.
+- **Logo.** El oficial, con su fondo azul quitado conservando el dibujo, separado en símbolo y palabra para que cada parte respire con un brillo de neón tenue a destiempo.
+- **Invitación del botón.** Tras unos segundos sin actividad, un reflejo cruza el botón, el halo se enciende y la flecha da dos pasos a la derecha. Se repite cada 7 s mientras la página sigue en reposo; sin sonido.
 
 ## Audio
 
@@ -59,7 +60,9 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 Todo está en `js/config.js`; el panel de desarrollo (Mayús + D) permite probar en vivo y copiar la configuración resultante.
 
 - Estrellas: `stars.intensity`, `stars.twinkleSpeed`, `stars.countMobile/Desktop`.
-- Bordes: `button.border`, `button.inviteEvery` (brillo lento del halo), `hud.border`.
+- Bordes: `button.border`, `hud.border`.
+- Invitación en reposo: `button.idleAfter` (segundos sin actividad) y `button.inviteEvery` (cada cuánto se repite).
+- Brillo del logo: `@keyframes neon` en `styles.css` (7 s el símbolo, 9 s la palabra).
 - Destellos ópticos: `flares.hud` y `flares.button` (cantidad, tamaño, intensidad, velocidad, vida). Solo recorren las orillas superior e inferior, nunca el interior.
 - Nubes: `clouds.*.opacity / blur / drift / duration`.
 - Luces: `lights.*` y `lights.breathe`.
