@@ -300,6 +300,18 @@ button, input { font: inherit; color: inherit; }
 /* Teclado abierto: el formulario sube sobre la ilustración. */
 .stage.is-typing .layer-family { filter: blur(3px) brightness(.6); transition: filter .5s; }
 
+/* Pantallas anchas (escritorio, tableta horizontal): se muestra como un teléfono. */
+@media (min-width: 700px) and (min-aspect-ratio: 3/4) {
+  :root { --u: min(calc(430px / 899), calc((100svh - 48px) / 1750)); }
+  body { min-height: 100svh; display: grid; place-items: center; }
+  .stage {
+    min-height: calc(1750 * var(--u)); height: calc(1750 * var(--u)); margin: 24px auto;
+    border-radius: calc(96 * var(--u));
+    outline: 1px solid rgba(255, 240, 215, .22);
+    box-shadow: 0 0 0 10px rgba(12, 8, 30, .85), 0 0 0 11px rgba(255, 240, 215, .14), 0 40px 120px rgba(0, 0, 0, .7), 0 0 80px rgba(143, 69, 248, .25);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .panel-sweep, .cta-halo, .cta-sheen::before, .cta-flare { animation: none; }
 }
