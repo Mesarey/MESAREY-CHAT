@@ -62,7 +62,6 @@ export const config = {
     // Si existen estos archivos (por ejemplo, generados con ElevenLabs) se usan en lugar
     // de los sonidos sintetizados. Si no existen, se sintetizan sin error.
     sfxFiles: {
-      primary: 'audio/sfx/iniciar-sesion.mp3',
       tap: 'audio/sfx/toque.mp3',
       focus: 'audio/sfx/enfoque.mp3',
       toggle: 'audio/sfx/alternar.mp3',

@@ -12,7 +12,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
   const cta = document.getElementById('cta'), eye = document.getElementById('eye');
   const coarse = matchMedia('(pointer: coarse)').matches;
 
-  let msgKey = null;
+  let msgKey = null, quietFocus = false;
   const say = (key, kind = 'error') => { msgKey = key; msg.textContent = t(key); msg.classList.add('is-on'); msg.classList.toggle('is-info', kind === 'info'); };
   document.addEventListener('kura:lang', () => {
     if (msgKey) msg.textContent = t(msgKey);
@@ -32,7 +32,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
       if (badEmail) { fEmail.classList.add('is-error'); email.setAttribute('aria-invalid', 'true'); shake(fEmail); }
       if (badPass) { fPass.classList.add('is-error'); pass.setAttribute('aria-invalid', 'true'); shake(fPass); }
       say(badEmail && badPass ? 'errBoth' : badEmail ? 'errEmail' : 'errPass');
-      (badEmail ? email : pass).focus();
+      quietFocus = true; (badEmail ? email : pass).focus(); quietFocus = false; // sin sonido de enfoque encima del de error
       return;
     }
     cta.setAttribute('aria-busy', 'true');
@@ -53,7 +53,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
     eye.setAttribute('aria-pressed', String(show));
     eye.setAttribute('aria-label', t(show ? 'hidePass' : 'showPass'));
     sfx('focus'); // mismo sonido que al tocar los campos
-    pass.focus({ preventScroll: true });
+    quietFocus = true; pass.focus({ preventScroll: true }); quietFocus = false;
   });
 
   document.getElementById('google').addEventListener('click', async () => {
@@ -63,7 +63,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
     if (r.reason === 'demo') toast(t('soonGoogle')); else { sfx('error'); say('errLogin'); }
   });
 
-  [email, pass].forEach((i) => i.addEventListener('focus', () => sfx('focus')));
+  [email, pass].forEach((i) => i.addEventListener('focus', () => { if (!quietFocus) sfx('focus'); }));
 
   // Teclado virtual: centrar el campo y atenuar la ilustración.
   form.addEventListener('focusin', (e) => {

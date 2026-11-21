@@ -6,6 +6,7 @@
 import { config } from './config.js';
 
 let ctx = null, master, musicGain, sfxGain, reverb, el = null, musicOk = true;
+let lastSfx = '';
 let wanted = true;          // el usuario quiere sonido (estado del botón)
 let started = false;        // ya hubo un gesto que permitió iniciar el audio
 const samples = {};
@@ -77,7 +78,7 @@ export const audio = {
   fadeOutMusic(seconds = 4) { if (ctx) ramp(musicGain.gain, 0, seconds); },
   sfx: (name) => playSfx(name),
   /** Estado para pruebas y depuración. */
-  debug: () => ({ started, wanted, musicOk, playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples) }),
+  debug: () => ({ started, wanted, musicOk, playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx }),
 };
 
 /* ---------- Sonidos de interfaz ---------- */
@@ -107,26 +108,16 @@ function noiseSweep(at, dur, from, to, gain, dest, q = 1.2) {
 const NOTE = (n) => 440 * 2 ** ((n - 69) / 12);
 
 const SYNTH = {
-  // Toque en «Iniciar sesión»: golpe suave, barrido de aire y acorde cristalino.
-  primary(t) {
-    const d = out(1, .9);
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = 'sine'; o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(55, t + .25);
-    g.gain.setValueAtTime(.08, t); g.gain.exponentialRampToValueAtTime(.0001, t + .3); o.connect(g); g.connect(d); o.start(t); o.stop(t + .32);
-    noiseSweep(t, .45, 400, 5200, .03, d);
-    [62, 69, 74, 78, 81].forEach((n, i) => bell(NOTE(n), t + .02 + i * .028, { gain: .03, decay: 1.4, dest: d }));
-  },
   // Botones y enlaces secundarios: pulsación de cristal, breve y discreta.
   tap(t) { const d = out(1, .35); bell(NOTE(91), t, { gain: .028, decay: .35, dest: d }); bell(NOTE(98), t + .012, { gain: .012, decay: .25, dest: d }); },
   focus(t) { const d = out(1, .3); bell(NOTE(86), t, { gain: .014, decay: .3, dest: d, partials: [1, 2.01] }); },
   toggle(t) { const d = out(1, .3); bell(NOTE(84), t, { gain: .02, decay: .22, dest: d }); bell(NOTE(91), t + .06, { gain: .02, decay: .3, dest: d }); },
-  granted(t) { const d = out(1, .9); [62, 66, 69, 74, 78].forEach((n, i) => bell(NOTE(n), t + i * .06, { gain: .03, decay: 1.6, dest: d })); },
-  error(t) { const d = out(1, .4); bell(NOTE(64), t, { gain: .03, decay: .5, type: 'triangle', partials: [1, 2], dest: d }); bell(NOTE(63), t + .11, { gain: .03, decay: .6, type: 'triangle', partials: [1, 2], dest: d }); },
 };
 
 function playSfx(name) {
   if (!ctx || !started || !wanted || ctx.state !== 'running') return;
   const t = ctx.currentTime + .005;
+  lastSfx = samples[name] ? `${name}:archivo` : SYNTH[name] ? `${name}:sintetizado` : `${name}:sin-sonido`;
   if (samples[name]) { const s = ctx.createBufferSource(); s.buffer = samples[name]; s.connect(out(1, 0)); s.start(t); return; }
-  SYNTH[name]?.(t);
+  SYNTH[name]?.(t); // «acceso concedido» y «acceso fallido» solo suenan con sus archivos
 }

@@ -124,7 +124,7 @@ loginForm({
   stage, motion, toast,
   sfx: (n) => audio.sfx(n),
   onPrimary: (e) => {
-    audio.sfx('primary');
+    // Sin sonido propio: suena «acceso fallido» si faltan datos y «acceso concedido» al entrar.
     button.pulse();
     const r = cta.getBoundingClientRect();
     stars?.burst(e.clientX || r.left + r.width / 2, e.clientY || r.top + r.height / 2, 1.3);
