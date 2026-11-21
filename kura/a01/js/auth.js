@@ -10,4 +10,9 @@ export const auth = {
     return { ok: false, reason: 'demo' };
   },
   async signInWithGoogle() { return { ok: false, reason: 'demo' }; },
+  /** Registro con correo (A02). Al responder ok se abriría la bienvenida con Alaira (A06). */
+  async signUpWithEmail(_email, _password) {
+    await new Promise((r) => setTimeout(r, 1300));
+    return { ok: false, reason: 'demo' };
+  },
 };

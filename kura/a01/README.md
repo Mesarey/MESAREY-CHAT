@@ -1,4 +1,4 @@
-# A01 · Inicio de sesión (Observatorio)
+# A01 · Inicio de sesión y A02 · Crear cuenta (Observatorio)
 
 Pantalla de entrada de KURA en español e inglés, recreada a partir de la referencia aprobada (`../diseno/A01/referencia-observatorio.webp`) y del kit «KURA A01 Observatorio · Separación avanzada».
 
@@ -10,6 +10,7 @@ HTML, CSS y JavaScript sin compilación. Se abre con un servidor local:
 npx serve kura/a01
 ```
 
+- A02 (Crear cuenta): `http://localhost:3000/#a02`, o «Crear cuenta» desde A01. El escenario no cambia: solo el contenido del HUD, con transición suave; el botón «atrás» del teléfono regresa a A01.
 - Español: `http://localhost:3000/#es` · Inglés: `http://localhost:3000/#en` (también desde el botón «English / Español» bajo el panel).
 - Panel de ajustes de desarrollo: **Mayús + D**, o `#dev` en la dirección.
 
@@ -22,7 +23,8 @@ npx serve kura/a01
 | `js/starfield.js` | StarField (sigue el paralaje), destellos ópticos del botón y del cristal, chispas al tocar (una sola instancia de WebGLRenderer) |
 | `js/border.js` | LuminousBorder: contorno y halo del botón y del cristal |
 | `styles.css` | GlassHUD, campos, tipografía y estados |
-| `js/form.js` | LoginForm (validación, error, enfoque, carga, mostrar contraseña, teclado) |
+| `js/form.js` | LoginForm (A01: validación, error, enfoque, carga, mostrar contraseña, teclado) |
+| `js/signup.js` | SignupForm (A02: correo, contraseña de 8+ caracteres, confirmación, ventana de términos con casilla sin marcar) |
 | `js/auth.js` | Puntos de integración de autenticación (hoy responden «demo») |
 | `js/audio.js` | AudioControl y efectos de sonido |
 | `js/motion.js` | MotionSettings (sistema + «Reducir efectos») |
