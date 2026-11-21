@@ -8,6 +8,7 @@ import { luminousBorder } from './border.js';
 import { loginForm } from './form.js';
 import { audio } from './audio.js';
 import { devPanel } from './devpanel.js';
+import { legalDialog } from './legal.js';
 
 const gsap = window.gsap;
 gsap?.ticker.lagSmoothing(0);
@@ -135,7 +136,7 @@ loginForm({
 });
 document.querySelectorAll('[data-soon]').forEach((a) => a.addEventListener('click', (e) => {
   e.preventDefault();
-  audio.sfx('tap');
+  audio.sfx(a.dataset.sfx || 'tap');
   toast(`${a.textContent}: ${t('soon').toLowerCase()}`);
 }));
 
@@ -146,40 +147,44 @@ stage.addEventListener('pointerdown', (e) => {
   stars?.burst(e.clientX, e.clientY, .45);
 });
 
-/* ---------- Audio ---------- */
-const soundBtn = $('sound');
+/* ---------- Audio: selector de música y efectos ---------- */
+const soundBtn = $('sound'), soundMenu = $('sound-menu'), swMusic = $('sw-music'), swSfx = $('sw-sfx');
 function updateSoundButton() {
-  soundBtn.setAttribute('aria-pressed', String(audio.on));
-  soundBtn.setAttribute('aria-label', t(audio.on ? 'soundOn' : 'soundOff'));
+  soundBtn.dataset.on = String(audio.on);
+  swMusic.checked = audio.musicEnabled; swSfx.checked = audio.sfxEnabled;
 }
 let unlocked = false;
-const firstGesture = (e) => {
-  if (e.target.closest?.('#sound')) return;
+const unlock = () => {
+  if (unlocked) return;
   unlocked = true;
   removeEventListener('pointerdown', firstGesture, true);
   removeEventListener('keydown', firstGesture, true);
   audio.unlock();
 };
+const firstGesture = () => unlock();
 addEventListener('pointerdown', firstGesture, true);
 addEventListener('keydown', firstGesture, true);
-soundBtn.addEventListener('click', () => {
-  if (!unlocked) { // primer toque en el botón: se interpreta como «quiero escuchar»
-    unlocked = true;
-    removeEventListener('pointerdown', firstGesture, true);
-    removeEventListener('keydown', firstGesture, true);
-    audio.unlock();
-  } else {
-    audio.toggle();
-  }
-  updateSoundButton();
-  audio.sfx('toggle');
-});
+const setMenu = (open) => {
+  soundMenu.hidden = !open;
+  soundBtn.setAttribute('aria-expanded', String(open));
+  if (open && gsap && !motion.reduced) gsap.fromTo(soundMenu, { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: .35, ease: 'power2.out' });
+};
+soundBtn.addEventListener('click', () => { unlock(); audio.sfx('toggle'); setMenu(soundMenu.hidden); });
+swMusic.addEventListener('change', () => { audio.setMusic(swMusic.checked); audio.sfx('toggle'); });
+swSfx.addEventListener('change', () => { audio.setSfx(swSfx.checked); if (swSfx.checked) setTimeout(() => audio.sfx('toggle'), 250); });
+addEventListener('pointerdown', (e) => { if (!soundMenu.hidden && !e.target.closest('#sound-menu, #sound')) setMenu(false); });
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && !soundMenu.hidden) { setMenu(false); soundBtn.focus(); } });
 audio.onChange(updateSoundButton);
+updateSoundButton();
 window.__kura = { audio };
+
+/* ---------- Términos y privacidad ---------- */
+const legal = legalDialog({ t, sfx: (n) => audio.sfx(n) });
+document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal); }));
 
 /* ---------- Preferencias ---------- */
 $('lang').addEventListener('click', () => { audio.sfx('tap'); applyLanguage(currentLang() === 'es' ? 'en' : 'es'); });
-$('fx-toggle').addEventListener('click', () => { audio.sfx('toggle'); motion.set(!motion.reduced); });
+$('fx-toggle').addEventListener('click', () => { audio.sfx('effects'); motion.set(!motion.reduced); });
 $('fx-toggle').setAttribute('aria-pressed', String(motion.reduced));
 
 /* ---------- Invitación del botón principal (solo visual, en reposo) ---------- */

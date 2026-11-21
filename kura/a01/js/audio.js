@@ -1,5 +1,7 @@
 // AudioControl · SFX
-// Música: la pista sigue sonando aunque se silencie (solo baja su volumen poco a poco),
+// Música y efectos se controlan por separado.
+// Música: lista de canciones que se encadenan (al acabar una empieza la siguiente).
+// La pista sigue sonando aunque se silencie (solo baja su volumen poco a poco),
 // así que al volver a activarla continúa donde va, como si nunca se hubiera detenido.
 // Sonidos de interfaz: sintetizados con Web Audio. Si existen archivos en audio/sfx/
 // (por ejemplo, generados con ElevenLabs) se usan en su lugar.
@@ -7,7 +9,13 @@ import { config } from './config.js';
 
 let ctx = null, master, musicGain, sfxGain, reverb, el = null, musicOk = true;
 let lastSfx = '';
-let wanted = true;          // el usuario quiere sonido (estado del botón)
+const history = [];
+const PREFS_KEY = 'kura.audio';
+let musicOn = true, sfxOn = true;   // preferencias del usuario (selector del botón de sonido)
+try { const p = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); if (typeof p.music === 'boolean') musicOn = p.music; if (typeof p.sfx === 'boolean') sfxOn = p.sfx; } catch {}
+const savePrefs = () => { try { localStorage.setItem(PREFS_KEY, JSON.stringify({ music: musicOn, sfx: sfxOn })); } catch {} };
+let track = 0;
+const badTracks = new Set();
 let started = false;        // ya hubo un gesto que permitió iniciar el audio
 const samples = {};
 const listeners = new Set();
@@ -29,14 +37,31 @@ function ensureContext() {
   reverb = makeReverb(); const wet = ctx.createGain(); wet.gain.value = .35; reverb.connect(wet); wet.connect(sfxGain);
   // Música
   el = new Audio();
-  el.src = config.audio.music; el.loop = true; el.preload = 'auto'; el.crossOrigin = 'anonymous';
-  el.addEventListener('error', () => { musicOk = false; emit(); }); // sin archivo: no hay excepción sin capturar
+  el.preload = 'auto'; el.crossOrigin = 'anonymous';
+  loadTrack(0);
+  // Al terminar una canción empieza la siguiente; la lista se repite.
+  el.addEventListener('ended', () => nextTrack());
+  // Si una canción falta o no carga, se salta sin errores; si ninguna carga, no hay música.
+  el.addEventListener('error', () => { badTracks.add(track); if (badTracks.size >= config.audio.playlist.length) { musicOk = false; emit(); } else nextTrack(); });
   try { ctx.createMediaElementSource(el).connect(musicGain); } catch { musicOk = false; }
   // Archivos opcionales de SFX
   for (const [name, url] of Object.entries(config.audio.sfxFiles)) {
     fetch(url).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => b && ctx.decodeAudioData(b)).then((buf) => { if (buf) samples[name] = buf; }).catch(() => {});
   }
   return true;
+}
+
+function loadTrack(i) {
+  track = i;
+  el.src = config.audio.playlist[i];
+  el.loop = config.audio.playlist.length - badTracks.size <= 1; // con una sola canción, se repite sola
+}
+function nextTrack() {
+  const n = config.audio.playlist.length;
+  for (let k = 1; k <= n; k++) {
+    const i = (track + k) % n;
+    if (!badTracks.has(i)) { loadTrack(i); if (started) el.play().catch(() => {}); return; }
+  }
 }
 
 function ramp(param, to, seconds) {
@@ -56,11 +81,11 @@ async function start() {
 
 function apply() {
   if (!ctx) return;
-  ramp(musicGain.gain, wanted ? config.audio.musicVolume : 0, wanted ? config.audio.fadeIn : config.audio.fadeOut);
-  ramp(sfxGain.gain, wanted ? config.audio.sfxVolume : 0, .2);
+  ramp(musicGain.gain, musicOn ? config.audio.musicVolume : 0, musicOn ? config.audio.fadeIn : config.audio.fadeOut);
+  ramp(sfxGain.gain, sfxOn ? config.audio.sfxVolume : 0, .2);
   emit();
 }
-const emit = () => listeners.forEach((fn) => fn({ on: wanted, music: musicOk }));
+const emit = () => listeners.forEach((fn) => fn({ music: musicOn, sfx: sfxOn, musicAvailable: musicOk }));
 
 // Pestaña oculta: se pausa todo; al volver, sigue desde el mismo punto.
 document.addEventListener('visibilitychange', () => {
@@ -71,14 +96,17 @@ document.addEventListener('visibilitychange', () => {
 export const audio = {
   /** Llamar en el primer gesto del usuario (toque o tecla). */
   unlock() { if (!started) start(); },
-  toggle() { wanted = !wanted; if (!started) start(); else apply(); return wanted; },
-  get on() { return wanted; },
+  setMusic(on) { musicOn = on; savePrefs(); if (!started) start(); else apply(); },
+  setSfx(on) { sfxOn = on; savePrefs(); if (!started) start(); else apply(); },
+  get musicEnabled() { return musicOn; },
+  get sfxEnabled() { return sfxOn; },
+  get on() { return musicOn || sfxOn; },
   onChange(fn) { listeners.add(fn); },
   /** Para la transición al mundo de Alaira: desvanece y detiene la música de A01. */
   fadeOutMusic(seconds = 4) { if (ctx) ramp(musicGain.gain, 0, seconds); },
   sfx: (name) => playSfx(name),
   /** Estado para pruebas y depuración. */
-  debug: () => ({ started, wanted, musicOk, playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx }),
+  debug: () => ({ started, musicOn, sfxOn, musicOk, track, src: el?.src ?? '', playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx, history: [...history] }),
 };
 
 /* ---------- Sonidos de interfaz ---------- */
@@ -115,9 +143,10 @@ const SYNTH = {
 };
 
 function playSfx(name) {
-  if (!ctx || !started || !wanted || ctx.state !== 'running') return;
+  if (!ctx || !started || !sfxOn || ctx.state !== 'running') return;
   const t = ctx.currentTime + .005;
   lastSfx = samples[name] ? `${name}:archivo` : SYNTH[name] ? `${name}:sintetizado` : `${name}:sin-sonido`;
+  history.push(lastSfx); if (history.length > 12) history.shift();
   if (samples[name]) { const s = ctx.createBufferSource(); s.buffer = samples[name]; s.connect(out(1, 0)); s.start(t); return; }
   SYNTH[name]?.(t); // «acceso concedido» y «acceso fallido» solo suenan con sus archivos
 }

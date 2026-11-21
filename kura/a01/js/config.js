@@ -64,19 +64,20 @@ export const config = {
     button: { count: 2, size: 200, intensity: 0.75, speed: [6, 12], life: [8, 13] },
   },
   audio: {
-    music: 'audio/ambiente.mp3',
+    // Canciones en orden; al acabar una empieza la siguiente y la lista se repite.
+    // Para agregar «Shadow Protocol»: poner el archivo en audio/ y añadir su ruta aquí.
+    playlist: ['audio/ambiente.mp3'],
     musicVolume: 0.55,
     sfxVolume: 0.8,
     fadeOut: 2.6,            // segundos al silenciar
     fadeIn: 2.0,
-    // Si existen estos archivos (por ejemplo, generados con ElevenLabs) se usan en lugar
-    // de los sonidos sintetizados. Si no existen, se sintetizan sin error.
+    // Sonidos con archivo propio. Los que no están aquí (toque, enfoque, alternar) se sintetizan.
     sfxFiles: {
-      tap: 'audio/sfx/toque.mp3',
-      focus: 'audio/sfx/enfoque.mp3',
-      toggle: 'audio/sfx/alternar.mp3',
-      error: 'audio/sfx/acceso-fallido.mp3',     // inicio de sesión incorrecto
-      granted: 'audio/sfx/acceso-concedido.mp3', // acceso concedido (correo, Google u otro proveedor)
+      error: 'audio/sfx/acceso-fallido.mp3',       // inicio de sesión incorrecto
+      granted: 'audio/sfx/acceso-concedido.mp3',   // acceso concedido (correo, Google u otro proveedor)
+      legal: 'audio/sfx/abrir-aviso.wav',          // abrir Términos o Privacidad
+      effects: 'audio/sfx/efectos.wav',            // botón «Reducir / Efectos completos»
+      createAccount: 'audio/sfx/crear-cuenta.wav', // «Crear cuenta»
     },
   },
   performance: {

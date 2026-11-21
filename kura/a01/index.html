@@ -8,6 +8,13 @@
   <link rel="preload" href="assets/img/escena.webp" as="image" fetchpriority="high" />
   <link rel="preload" href="assets/fonts/playfair-display-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    // iOS hace zoom al enfocar un campo con letra menor a 16 px. Como el diseño escala con la
+    // pantalla, en iOS se fija la escala inicial (el usuario todavía puede ampliar con dos dedos).
+    if (/iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+      document.querySelector('meta[name=viewport]').content += ', maximum-scale=1';
+    }
+  </script>
   <script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
 </head>
 <body>
@@ -23,10 +30,15 @@
       <img class="logo-part logo-symbol" src="assets/img/logo-simbolo.png" alt="" width="776" height="486" />
       <img class="logo-part logo-word" src="assets/img/logo-texto.png" alt="" width="776" height="155" />
     </h1>
-    <button class="sound" id="sound" type="button" aria-pressed="true" data-i18n-attr="aria-label:soundOn">
+    <button class="sound" id="sound" type="button" data-on="true" aria-haspopup="true" aria-expanded="false" aria-controls="sound-menu" data-i18n-attr="aria-label:soundMenu">
       <svg class="ico ico-on" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 19h9l11-9v28L14 29H5Z" class="fill" /><path d="M31 16q8 8 0 16 M36 10q14 14 0 28" /></svg>
       <svg class="ico ico-off" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 19h9l11-9v28L14 29H5Z" /><path d="m31 17 12 14m0-14L31 31" /></svg>
     </button>
+    <div class="sound-menu" id="sound-menu" role="group" aria-labelledby="sound-menu-title" hidden>
+      <p class="sound-menu-title" id="sound-menu-title" data-i18n="soundMenu">Sonido</p>
+      <label class="switch"><span data-i18n="music">Música</span><input type="checkbox" role="switch" id="sw-music" checked /><i aria-hidden="true"></i></label>
+      <label class="switch"><span data-i18n="effects">Efectos de sonido</span><input type="checkbox" role="switch" id="sw-sfx" checked /><i aria-hidden="true"></i></label>
+    </div>
 
     <!-- 9–11: título, cristal, bordes y controles -->
     <div class="content">
@@ -80,8 +92,8 @@
             <span data-i18n="google">Continuar con Google</span>
           </button>
 
-          <p class="first"><span data-i18n="firstTime">¿Primera vez aquí?</span> <a class="link" href="#a02" data-soon data-i18n="createAccount">Crear cuenta</a></p>
-          <p class="legal"><a href="#terminos" data-soon data-i18n="terms">Términos</a><span aria-hidden="true">•</span><a href="#privacidad" data-soon data-i18n="privacy">Privacidad</a></p>
+          <p class="first"><span data-i18n="firstTime">¿Primera vez aquí?</span> <a class="link" href="#a02" data-soon data-sfx="createAccount" data-i18n="createAccount">Crear cuenta</a></p>
+          <p class="legal"><a href="#terminos" data-legal="terms" data-i18n="terms">Términos</a><span aria-hidden="true">•</span><a href="#privacidad" data-legal="privacy" data-i18n="privacy">Privacidad</a></p>
         </form>
       </section>
 
@@ -95,6 +107,16 @@
     <!-- Estrellas y chispas (Three.js). Solo decorativo. -->
     <canvas class="fx" id="fx" aria-hidden="true"></canvas>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="legal-dialog" id="legal-dialog" aria-labelledby="legal-title">
+      <div class="legal-head">
+        <h2 id="legal-title">Términos y condiciones</h2>
+        <button type="button" class="legal-close" data-i18n-attr="aria-label:close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+      </div>
+      <p class="legal-note" data-i18n="legalNote">Documentos en preparación. No introduzcas datos personales reales.</p>
+      <div class="legal-body" tabindex="0"></div>
+      <div class="legal-foot"><button type="button" class="legal-other">Ver aviso de privacidad</button></div>
+    </dialog>
   </main>
 
   <script src="vendor/gsap.min.js"></script>

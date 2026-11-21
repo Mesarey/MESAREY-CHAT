@@ -27,6 +27,7 @@ npx serve kura/a01
 | `js/audio.js` | AudioControl y efectos de sonido |
 | `js/motion.js` | MotionSettings (sistema + «Reducir efectos») |
 | `js/i18n.js` | Textos en español e inglés |
+| `js/legal.js` | Términos y aviso de privacidad (textos de prototipo) y su ventana |
 | `js/devpanel.js` | Panel de ajustes de desarrollo |
 
 Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma intermedia enmascarada → nubes delanteras e inferiores → luces → logo y audio → cristal → bordes luminosos → textos y controles → estrellas y chispas (lienzo sin eventos de puntero).
@@ -36,13 +37,16 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 - **Escena unificada.** El fondo y el grupo separados del kit no coinciden en escala con la escena unificada, así que se usa la unificada. La silueta del grupo (`assets/masks/detras-del-grupo.png`) se obtuvo comparando la escena con el fondo vacío; sirve para que las nubes posteriores queden detrás de los personajes. No hay separación individual de personajes ni se animan sus cuerpos.
 - **Estrellas.** Posiciones precalculadas solo en cielo oscuro visible (`data/estrellas.json`), lejos de rostros, logo, planetas y audio. 90 en móvil y 120 en escritorio; una de cada 11 lleva destello de cuatro puntas. No se usa bloom.
 - **Tipografía.** Playfair Display Italic (local, OFL): fue la más parecida a la referencia en la comparación. Campos y textos pequeños usan la misma familia porque así lo muestra la referencia; los tamaños tienen mínimos legibles en móvil (16 px en campos para que iOS no haga zoom).
-- **Áreas táctiles.** Mínimo 44 px. En teléfonos pequeños esto hace el formulario un poco más alto que en la referencia y la página se desplaza.
+- **Escala.** Todo el texto y los controles escalan con el ancho de la pantalla, igual que la referencia. Las áreas táctiles de 44 px se amplían con pseudo-elementos invisibles. En iOS se fija la escala inicial para que enfocar un campo no haga zoom.
+- **Términos y privacidad.** Ventana con texto en Arial y desplazamiento; textos de prototipo con los campos del responsable en blanco y la nota «Documentos en preparación». En inglés se avisa que por ahora están solo en español.
 - **Logo.** El oficial, con su fondo azul quitado conservando el dibujo, separado en símbolo y palabra para que cada parte respire con un brillo de neón tenue a destiempo.
 - **Invitación del botón.** Tras unos segundos sin actividad, un reflejo cruza el botón, el halo se enciende y la flecha da dos pasos a la derecha. Se repite cada 7 s mientras la página sigue en reposo; sin sonido.
 
 ## Audio
 
-- `audio/ambiente.mp3` suena en bucle tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
+- El botón de sonido abre un selector con dos interruptores, **Música** y **Efectos de sonido**; la elección se recuerda.
+- Lista de canciones en `config.audio.playlist`: al terminar una empieza la siguiente y la lista se repite. Hoy solo tiene `audio/ambiente.mp3`; para sumar «Shadow Protocol», poner el archivo en `audio/` y añadir su ruta.
+- `audio/ambiente.mp3` suena tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
 - Para la transición al mundo de Alaira ya existe `audio.fadeOutMusic(segundos)`.
 - «Acceso concedido» suena cuando `js/auth.js` responde `{ ok: true }` (correo, Google u otro proveedor); «acceso fallido», con datos inválidos o cuando responde `{ ok: false, reason: 'invalid' | 'network' }`. Mientras no haya servidor, el panel de desarrollo (Mayús + D) tiene botones para escuchar ambos.
 - **Efectos de sonido**: «Iniciar sesión» no tiene sonido propio; suena `acceso-fallido.mp3` si faltan o fallan los datos y `acceso-concedido.mp3` al entrar (solo con sus archivos, sin sustituto sintetizado). Toques de botones y enlaces, enfoque de campos (también mostrar contraseña) y alternar se sintetizan en el navegador. La invitación del botón es solo visual.
@@ -55,6 +59,9 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 | `alternar.mp3` | Botón de sonido e idioma (mostrar contraseña usa el de enfoque) | «two soft crystal notes rising, quiet toggle, 0.3 seconds» |
 | `acceso-fallido.mp3` | Datos inválidos o inicio de sesión rechazado | **Incluido** (elegido por ti) |
 | `acceso-concedido.mp3` | Acceso concedido con correo, Google u otro proveedor | **Incluido** (elegido por ti) |
+| `abrir-aviso.wav` | Abrir Términos o Privacidad | **Incluido** (elegido por ti) |
+| `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |
+| `crear-cuenta.wav` | «Crear cuenta» | **Incluido** (elegido por ti) |
 
 ## Cómo ajustar los efectos
 
