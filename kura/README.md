@@ -4,4 +4,4 @@ Rediseño completo, pantalla por pantalla, a partir del inventario de pantallas 
 
 | Código | Pantalla | Estado |
 |---|---|---|
-| A01 | Inicio de sesión | Hecha: `a01/` |
+| A01 | Inicio de sesión (Observatorio, ES/EN) | Hecha: `a01/` |
