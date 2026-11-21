@@ -16,9 +16,11 @@ const LIGHTS = [
 export function buildScene(root) {
   const html = [];
   html.push('<div class="layer scene-art" data-depth="1"><img src="assets/img/escena.webp" alt="" decoding="async" fetchpriority="high" /></div>');
-  for (const name of ['back', 'mist', 'front', 'bottom']) {
-    const masked = name === 'back' ? 'mask-behind' : name === 'mist' ? 'mask-mist' : '';
-    html.push(`<div class="cloud-wrap ${masked}" data-cloud="${name}"><div class="cloud" data-depth="${name === 'back' ? 1.4 : name === 'mist' ? 1.8 : 2.4}"></div></div>`);
+  // Nubes de atrás con viento: detrás del grupo gracias a su silueta como máscara.
+  html.push('<div class="cloud-wrap mask-wind wind" data-depth="1"></div>');
+  for (const name of ['mist', 'front', 'bottom']) {
+    const masked = name === 'mist' ? 'mask-mist' : '';
+    html.push(`<div class="cloud-wrap ${masked}" data-cloud="${name}"><div class="cloud" data-depth="${name === 'mist' ? 1.8 : 2.4}"></div></div>`);
   }
   html.push('<div class="lights">');
   for (const [name, , rgb, cx, cy, rx, ry] of LIGHTS) {
@@ -27,6 +29,44 @@ export function buildScene(root) {
   html.push('</div>');
   root.insertAdjacentHTML('afterbegin', html.join(''));
   applySceneConfig();
+}
+
+/* ---------- Viento (nubes de atrás) ---------- */
+let windAnims = [];
+export function mountWind(root, motion) {
+  const wrap = root.querySelector('.wind');
+  const build = () => {
+    windAnims.forEach((a) => a.cancel()); windAnims = []; wrap.textContent = '';
+    for (const [name, p] of Object.entries(config.wind.layers)) {
+      for (let i = 0; i < p.count; i++) {
+        const img = document.createElement('img');
+        img.src = 'assets/img/nube.webp'; img.alt = ''; img.decoding = 'async'; img.draggable = false;
+        img.className = `wind-sprite wind-${name}`;
+        const mirror = i % 2 ? -1 : 1;
+        const lift = (i % 3) * 14 - 14;               // cada trozo a una altura un poco distinta
+        const scale = 1 + ((i * 37) % 10) / 60;      // y con un tamaño ligeramente distinto
+        img.style.cssText = `top:calc(${p.y + lift} * var(--u));height:calc(${p.h * scale} * var(--u));width:calc(${p.width * scale} * var(--u));filter:blur(calc(${p.blur} * var(--u)));opacity:0`;
+        wrap.appendChild(img);
+        if (motion.reduced) { img.style.opacity = p.opacity; img.style.transform = `translateX(${(i - 1) * 30 - 30}%) scaleX(${mirror})`; continue; }
+        const a = img.animate([
+          { transform: `translateX(-105%) scaleX(${mirror})`, opacity: 0, offset: 0 },
+          { transform: `translateX(-80%) scaleX(${mirror})`, opacity: p.opacity, offset: .12 },
+          { transform: `translateX(45%) scaleX(${mirror})`, opacity: p.opacity, offset: .86 },
+          { transform: `translateX(75%) scaleX(${mirror})`, opacity: 0, offset: 1 },
+        ], { duration: p.duration * 1000, iterations: Infinity, easing: 'linear', fill: 'both' });
+        a.currentTime = (p.duration * 1000 * (i / p.count + (name === 'near' ? .5 / p.count : .17))) % (p.duration * 1000);
+        a.playbackRate = config.wind.speed;
+        windAnims.push(a);
+      }
+    }
+  };
+  build();
+  document.addEventListener('visibilitychange', () => windAnims.forEach((a) => (document.hidden ? a.pause() : a.play())));
+  motion.onChange(build);
+  return {
+    setSpeed(v) { config.wind.speed = v; windAnims.forEach((a) => a.updatePlaybackRate(v)); },
+    setOpacity(name, v) { config.wind.layers[name].opacity = v; build(); },
+  };
 }
 
 /** Lleva los valores de config a variables CSS. Se llama otra vez desde el panel de ajustes. */

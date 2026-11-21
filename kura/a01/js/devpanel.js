@@ -5,7 +5,7 @@ import { applySceneConfig } from './scene.js';
 import { motion } from './motion.js';
 import { audio } from './audio.js';
 
-export function devPanel({ stars, button, hud }) {
+export function devPanel({ stars, button, hud, wind }) {
   let panel = null;
   const rows = [
     ['Estrellas', [
@@ -24,6 +24,11 @@ export function devPanel({ stars, button, hud }) {
       ['Dorada derecha', 0, 1, .01, () => config.lights.goldRight, (v) => { config.lights.goldRight = v; applySceneConfig(); }],
       ['Azul superior', 0, 1, .01, () => config.lights.blueTop, (v) => { config.lights.blueTop = v; applySceneConfig(); }],
       ['Resplandor del HUD', 0, 1, .01, () => config.lights.hudGlow, (v) => { config.lights.hudGlow = v; applySceneConfig(); }],
+    ]],
+    ['Viento (nubes de atrás)', [
+      ['Velocidad', .1, 3, .05, () => config.wind.speed, (v) => wind.setSpeed(v)],
+      ['Lejanas · opacidad', 0, 1, .01, () => config.wind.layers.far.opacity, (v) => wind.setOpacity('far', v)],
+      ['Cercanas · opacidad', 0, 1, .01, () => config.wind.layers.near.opacity, (v) => wind.setOpacity('near', v)],
     ]],
     ['Nubes', Object.entries(config.clouds).flatMap(([name, c]) => [
       [`${name} · opacidad`, 0, 1, .01, () => c.opacity, (v) => { c.opacity = v; applySceneConfig(); }],

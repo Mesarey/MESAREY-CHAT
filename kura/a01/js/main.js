@@ -2,7 +2,7 @@
 import { CANVAS, config } from './config.js';
 import { applyLanguage, currentLang, t } from './i18n.js';
 import { motion } from './motion.js';
-import { buildScene, parallax } from './scene.js';
+import { buildScene, mountWind, parallax } from './scene.js';
 import { createStarField } from './starfield.js';
 import { luminousBorder } from './border.js';
 import { loginForm } from './form.js';
@@ -18,6 +18,7 @@ const isMobile = matchMedia('(pointer: coarse)').matches || innerWidth < 600;
 
 /* ---------- Escena ---------- */
 buildScene($('scene'));
+const wind = mountWind($('scene'), motion);
 let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
 const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06 };
@@ -97,7 +98,7 @@ cta.addEventListener('blur', () => brighten(false));
 /* ---------- Estrellas y chispas ---------- */
 createStarField({ canvas: $('fx'), stage, motion, isMobile, reveal }).then((s) => {
   stars = s;
-  if (!s) return devPanel({ stars, button, hud });
+  if (!s) return devPanel({ stars, button, hud, wind });
   // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
   const panel = $('panel');
   const sync = () => {
@@ -108,7 +109,7 @@ createStarField({ canvas: $('fx'), stage, motion, isMobile, reveal }).then((s) =
   };
   new ResizeObserver(sync).observe(panel); new ResizeObserver(sync).observe(stage); sync();
   setTimeout(sync, 2600); // tras la animación de entrada
-  devPanel({ stars, button, hud });
+  devPanel({ stars, button, hud, wind });
 });
 
 /* ---------- Mensajes breves ---------- */

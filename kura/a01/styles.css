@@ -50,9 +50,12 @@ button, input { font: inherit; color: inherit; }
 .scene-art img { display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
 
 .cloud-wrap { position: absolute; left: 0; right: 0; top: 0; height: calc(1750 * var(--u)); }
+.wind { overflow: hidden; }
+.wind-sprite { position: absolute; left: 0; max-width: none; pointer-events: none; user-select: none; will-change: transform, opacity; }
 .cloud-wrap[data-cloud='bottom'] { top: auto; bottom: 0; height: calc(300 * var(--u)); z-index: 1; }
 [data-cloud='bottom'] .cloud { top: 0 !important; }
 .mask-behind { -webkit-mask: url(assets/masks/detras-del-grupo.png) 0 0 / 100% 100% no-repeat; mask: url(assets/masks/detras-del-grupo.png) 0 0 / 100% 100% no-repeat; }
+.mask-wind { -webkit-mask: url(assets/masks/viento.png) 0 0 / 100% 100% no-repeat; mask: url(assets/masks/viento.png) 0 0 / 100% 100% no-repeat; } /* solo el mar de nubes: ni personajes ni arquitectura */
 .mask-mist { -webkit-mask: url(assets/masks/bruma-intermedia.png) 0 0 / 100% 100% no-repeat; mask: url(assets/masks/bruma-intermedia.png) 0 0 / 100% 100% no-repeat; }
 .cloud {
   position: absolute; left: calc(-80 * var(--u)); width: calc(1059 * var(--u));
@@ -62,7 +65,6 @@ button, input { font: inherit; color: inherit; }
 }
 @keyframes drift { from { translate: calc(var(--d) * var(--u) * -1) 0; } to { translate: calc(var(--d) * var(--u)) 0; } }
 [data-cloud] .cloud { top: calc(var(--y) * var(--u)); height: calc(var(--h) * var(--u)); opacity: var(--o); scale: var(--flip) 1; filter: blur(calc(var(--blur) * var(--u))); }
-[data-cloud='back'] .cloud { --y: var(--cloud-back-y); --h: var(--cloud-back-h); --o: var(--cloud-back-o); --flip: var(--cloud-back-flip); --blur: var(--cloud-back-blur); --d: var(--cloud-back-drift); --dur: var(--cloud-back-dur); }
 [data-cloud='mist'] .cloud { --y: var(--cloud-mist-y); --h: var(--cloud-mist-h); --o: var(--cloud-mist-o); --flip: var(--cloud-mist-flip); --blur: var(--cloud-mist-blur); --d: var(--cloud-mist-drift); --dur: var(--cloud-mist-dur); animation-delay: -9s; }
 [data-cloud='front'] .cloud { --y: var(--cloud-front-y); --h: var(--cloud-front-h); --o: var(--cloud-front-o); --flip: var(--cloud-front-flip); --blur: var(--cloud-front-blur); --d: var(--cloud-front-drift); --dur: var(--cloud-front-dur); animation-delay: -17s; }
 [data-cloud='bottom'] .cloud { --y: var(--cloud-bottom-y); --h: var(--cloud-bottom-h); --o: var(--cloud-bottom-o); --flip: var(--cloud-bottom-flip); --blur: var(--cloud-bottom-blur); --d: var(--cloud-bottom-drift); --dur: var(--cloud-bottom-dur); animation-delay: -5s; }

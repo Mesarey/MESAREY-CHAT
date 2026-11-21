@@ -18,7 +18,7 @@ npx serve kura/a01
 | Archivo | Módulo |
 |---|---|
 | `js/config.js` | Todos los parámetros ajustables (estrellas, nubes, luces, bordes, audio, rendimiento) |
-| `js/scene.js` | SceneBackground, CloudLayers, AmbientLighting y paralaje leve |
+| `js/scene.js` | SceneBackground, CloudLayers (con viento en las nubes de atrás), AmbientLighting y paralaje leve |
 | `js/starfield.js` | StarField (sigue el paralaje), destellos ópticos del botón y del cristal, chispas al tocar (una sola instancia de WebGLRenderer) |
 | `js/border.js` | LuminousBorder: contorno y halo del botón y del cristal |
 | `styles.css` | GlassHUD, campos, tipografía y estados |
@@ -65,7 +65,8 @@ Todo está en `js/config.js`; el panel de desarrollo (Mayús + D) permite probar
 - Invitación en reposo: `button.idleAfter` (segundos sin actividad) y `button.inviteEvery` (cada cuánto se repite).
 - Brillo del logo: `@keyframes neon` en `styles.css` (7 s el símbolo, 9 s la palabra).
 - Destellos ópticos: `flares.hud` y `flares.button` (cantidad, tamaño, intensidad, velocidad, vida). Solo recorren las orillas superior e inferior, nunca el interior.
-- Nubes: `clouds.*.opacity / blur / drift / duration`.
+- Viento en las nubes de atrás: `wind.speed` y `wind.layers.far/near` (altura, opacidad, desenfoque, duración del cruce, cantidad). La máscara `assets/masks/viento.png` limita el viento al mar de nubes, detrás de personajes y arquitectura.
+- Resto de nubes: `clouds.*.opacity / blur / drift / duration`.
 - Luces: `lights.*` y `lights.breathe`.
 
 ## Verificado

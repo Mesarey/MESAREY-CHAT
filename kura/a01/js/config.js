@@ -22,10 +22,20 @@ export const config = {
   },
   clouds: {
     // y, alto, opacidad, espejo, desenfoque (px), deriva (px de referencia), duración (s)
-    back:   { y: 260,  h: 230, opacity: 0.45, flip: false, blur: 1.5, drift: 26, duration: 46 },
     mist:   { y: 690,  h: 200, opacity: 0.16, flip: true,  blur: 3,   drift: 20, duration: 38 },
     front:  { y: 1040, h: 260, opacity: 0.22, flip: false, blur: 1.5,   drift: 34, duration: 30 },
     bottom: { y: 1450, h: 300, opacity: 0.50, flip: true,  blur: 0,   drift: 28, duration: 42 },
+  },
+  // Viento en las nubes de atrás (el mar de nubes del mirador, detrás de los personajes).
+  // Varios trozos de la misma textura cruzan de izquierda a derecha, muy despacio, y aparecen
+  // y desaparecen con suavidad; las fases escalonadas evitan uniones y reinicios visibles.
+  // Coordenadas en px de referencia; duration = segundos por cruce completo.
+  wind: {
+    speed: 1,
+    layers: {
+      far:  { y: 190, h: 300, width: 1350, opacity: 0.30, blur: 1.5, duration: 90, count: 3 },
+      near: { y: 330, h: 290, width: 1260, opacity: 0.22, blur: 3,   duration: 72, count: 3 },
+    },
   },
   lights: {
     violet: 0.08,            // ambiente violeta
