@@ -3,6 +3,7 @@
 // Para conectar, reemplazar el cuerpo por el proveedor real (Supabase, Firebase, etc.).
 export const auth = {
   connected: false,
+  // Respuestas: { ok: true } → suena «acceso concedido»; { ok: false, reason: 'invalid' | 'network' } → «acceso fallido».
   /** @returns {Promise<{ ok: boolean, reason?: 'demo' | 'invalid' | 'network' }>} */
   async signInWithEmail(_email, _password) {
     await new Promise((r) => setTimeout(r, 1300));

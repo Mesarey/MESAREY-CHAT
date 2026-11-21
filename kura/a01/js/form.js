@@ -4,7 +4,7 @@ import { t } from './i18n.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export function loginForm({ stage, sfx, onPrimary, toast, motion }) {
+export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
   const form = document.getElementById('form');
   const email = document.getElementById('email'), pass = document.getElementById('pass');
   const fEmail = document.getElementById('field-email'), fPass = document.getElementById('field-pass');
@@ -40,8 +40,9 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion }) {
     const res = await auth.signInWithEmail(email.value.trim(), pass.value);
     cta.removeAttribute('aria-busy');
     cta.removeAttribute('aria-label');
-    if (res.ok) return; // aquí se navegaría a A05 / Hoy
-    say('demoSignIn', 'info');
+    if (res.ok) { sfx('granted'); onGranted?.('email'); return; } // aquí se navegaría a A05 / Hoy
+    if (res.reason === 'demo') { say('demoSignIn', 'info'); return; }
+    sfx('error'); say('errLogin');
   });
 
   cta.addEventListener('click', (e) => { if (cta.getAttribute('aria-busy') !== 'true') onPrimary(e); });
@@ -51,14 +52,15 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion }) {
     pass.type = show ? 'text' : 'password';
     eye.setAttribute('aria-pressed', String(show));
     eye.setAttribute('aria-label', t(show ? 'hidePass' : 'showPass'));
-    sfx('toggle');
+    sfx('focus'); // mismo sonido que al tocar los campos
     pass.focus({ preventScroll: true });
   });
 
   document.getElementById('google').addEventListener('click', async () => {
     sfx('tap');
     const r = await auth.signInWithGoogle();
-    if (!r.ok) toast(t('soonGoogle'));
+    if (r.ok) { sfx('granted'); onGranted?.('google'); return; }
+    if (r.reason === 'demo') toast(t('soonGoogle')); else { sfx('error'); say('errLogin'); }
   });
 
   [email, pass].forEach((i) => i.addEventListener('focus', () => sfx('focus')));

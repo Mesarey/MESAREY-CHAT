@@ -66,7 +66,8 @@ export const config = {
       tap: 'audio/sfx/toque.mp3',
       focus: 'audio/sfx/enfoque.mp3',
       toggle: 'audio/sfx/alternar.mp3',
-      error: 'audio/sfx/error.mp3',
+      error: 'audio/sfx/acceso-fallido.mp3',     // inicio de sesión incorrecto
+      granted: 'audio/sfx/acceso-concedido.mp3', // acceso concedido (correo, Google u otro proveedor)
     },
   },
   performance: {

@@ -3,6 +3,7 @@
 import { config } from './config.js';
 import { applySceneConfig } from './scene.js';
 import { motion } from './motion.js';
+import { audio } from './audio.js';
 
 export function devPanel({ stars, button, hud }) {
   let panel = null;
@@ -44,7 +45,9 @@ export function devPanel({ stars, button, hud }) {
       }
     }
     panel.insertAdjacentHTML('beforeend', `<h3>Movimiento</h3><label><span>Movimiento reducido</span><input type="checkbox" ${motion.reduced ? 'checked' : ''}><output></output></label>
+      <h3>Sonidos</h3><div class="row"><button type="button" data-sfx="granted">Acceso concedido</button><button type="button" data-sfx="error">Acceso fallido</button></div>
       <div class="row"><button type="button" data-copy>Copiar config</button><button type="button" data-close>Cerrar</button></div>`);
+    panel.querySelectorAll('[data-sfx]').forEach((b) => b.addEventListener('click', () => { audio.unlock(); setTimeout(() => audio.sfx(b.dataset.sfx), 150); }));
     panel.querySelector('input[type=checkbox]').addEventListener('change', (e) => motion.set(e.target.checked));
     panel.querySelector('[data-close]').addEventListener('click', open);
     panel.querySelector('[data-copy]').addEventListener('click', () => navigator.clipboard?.writeText(JSON.stringify(config, null, 2)).catch(() => {}));

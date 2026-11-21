@@ -44,6 +44,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 
 - `audio/ambiente.mp3` suena en bucle tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
 - Para la transición al mundo de Alaira ya existe `audio.fadeOutMusic(segundos)`.
+- «Acceso concedido» suena cuando `js/auth.js` responde `{ ok: true }` (correo, Google u otro proveedor); «acceso fallido», con datos inválidos o cuando responde `{ ok: false, reason: 'invalid' | 'network' }`. Mientras no haya servidor, el panel de desarrollo (Mayús + D) tiene botones para escuchar ambos.
 - **Efectos de sonido** sintetizados en el navegador (provisionales hasta elegir los definitivos): toque de «Iniciar sesión», toques discretos en botones y enlaces, enfoque de campos, alternar y error. La invitación del botón es solo visual, sin sonido.
 - Para reemplazarlos por sonidos propios basta con poner archivos en `audio/sfx/` con estos nombres; se usan automáticamente:
 
@@ -52,8 +53,9 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 | `iniciar-sesion.mp3` | Tocar «Iniciar sesión» | «fantasy game confirm button, soft whoosh into bright crystal chord, gentle low thump, elegant, 1.2 seconds» |
 | `toque.mp3` | Botones y enlaces | «tiny glass tap, soft high crystal pluck, quiet UI click, 0.3 seconds» |
 | `enfoque.mp3` | Enfocar un campo | «very soft airy glass tick, quiet, 0.2 seconds» |
-| `alternar.mp3` | Mostrar contraseña, sonido, idioma | «two soft crystal notes rising, quiet toggle, 0.3 seconds» |
-| `error.mp3` | Error del formulario | «gentle low two-note descending chime, soft, not harsh, 0.5 seconds» |
+| `alternar.mp3` | Botón de sonido e idioma (mostrar contraseña usa el de enfoque) | «two soft crystal notes rising, quiet toggle, 0.3 seconds» |
+| `acceso-fallido.mp3` | Datos inválidos o inicio de sesión rechazado | **Incluido** (elegido por ti) |
+| `acceso-concedido.mp3` | Acceso concedido con correo, Google u otro proveedor | **Incluido** (elegido por ti) |
 
 ## Cómo ajustar los efectos
 

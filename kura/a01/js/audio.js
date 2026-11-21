@@ -77,7 +77,7 @@ export const audio = {
   fadeOutMusic(seconds = 4) { if (ctx) ramp(musicGain.gain, 0, seconds); },
   sfx: (name) => playSfx(name),
   /** Estado para pruebas y depuración. */
-  debug: () => ({ started, wanted, musicOk, playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state }),
+  debug: () => ({ started, wanted, musicOk, playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples) }),
 };
 
 /* ---------- Sonidos de interfaz ---------- */
@@ -120,6 +120,7 @@ const SYNTH = {
   tap(t) { const d = out(1, .35); bell(NOTE(91), t, { gain: .028, decay: .35, dest: d }); bell(NOTE(98), t + .012, { gain: .012, decay: .25, dest: d }); },
   focus(t) { const d = out(1, .3); bell(NOTE(86), t, { gain: .014, decay: .3, dest: d, partials: [1, 2.01] }); },
   toggle(t) { const d = out(1, .3); bell(NOTE(84), t, { gain: .02, decay: .22, dest: d }); bell(NOTE(91), t + .06, { gain: .02, decay: .3, dest: d }); },
+  granted(t) { const d = out(1, .9); [62, 66, 69, 74, 78].forEach((n, i) => bell(NOTE(n), t + i * .06, { gain: .03, decay: 1.6, dest: d })); },
   error(t) { const d = out(1, .4); bell(NOTE(64), t, { gain: .03, decay: .5, type: 'triangle', partials: [1, 2], dest: d }); bell(NOTE(63), t + .11, { gain: .03, decay: .6, type: 'triangle', partials: [1, 2], dest: d }); },
 };
 
