@@ -44,8 +44,13 @@ export const config = {
   hud: {
     border: 0.7,             // contorno fijo del cristal, más tenue que el botón
     loop: 18,
-    // Destellos ópticos (lens flare) que se deslizan despacio por el borde del cristal, con un reflejo de lente tenue hacia el centro.
-    flares: { count: 3, size: 380, intensity: 1.0, speed: [0.004, 0.009], life: [7, 12] },
+  },
+  // Destellos ópticos horizontales: siguen muy despacio las orillas superior e inferior,
+  // van y vienen de un lado a otro y se encienden y apagan con suavidad.
+  // Nunca entran al interior del panel, donde va el texto.
+  flares: {
+    hud:    { count: 2, size: 210, intensity: 0.8, speed: [7, 14], life: [9, 15] },   // speed en px de referencia por segundo
+    button: { count: 2, size: 150, intensity: 0.75, speed: [6, 12], life: [8, 13] },
   },
   audio: {
     music: 'audio/ambiente.mp3',

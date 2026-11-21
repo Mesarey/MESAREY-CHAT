@@ -108,19 +108,10 @@ export function luminousBorder(host, o) {
       if (reduced) return;
       halo.animate([{ opacity: 1 }, { opacity: 1.8, filter: 'brightness(1.6)' }, { opacity: 1 }], { duration: 520, easing: 'ease-out' });
     },
-    /** Invitación: un destello recorre el borde rápido y se encienden los puntos de luz. */
-    invite(duration = 1700) {
+    /** Invitación: el halo se enciende despacio y vuelve a su brillo normal. Sin líneas que viajan. */
+    invite(duration = 2600) {
       if (reduced) return;
-      const g = el('g', {}, all);
-      const mk = (attrs) => shape({ ...attrs, x: P, y: P, width: W, height: H, rx: o.radius(W, H), ry: o.radius(W, H) }, g);
-      const dash = '160 840';
-      const gl = mk({ stroke: o.colors.glow, 'stroke-width': o.widths.near * 1.8, 'stroke-dasharray': dash, 'stroke-linecap': 'round', filter: fSeg });
-      const co = mk({ stroke: '#fffaf3', 'stroke-width': o.widths.base * 1.8, 'stroke-dasharray': dash, 'stroke-linecap': 'round' });
-      const kf = [{ strokeDashoffset: 0, opacity: 0 }, { opacity: 1, offset: .15 }, { opacity: 1, offset: .75 }, { strokeDashoffset: -1000, opacity: 0 }];
-      gl.animate(kf, { duration, easing: 'cubic-bezier(.45,.05,.3,1)' });
-      co.animate(kf, { duration, easing: 'cubic-bezier(.45,.05,.3,1)' }).onfinish = () => g.remove();
-      halo.animate([{ opacity: 1 }, { opacity: 1.6, offset: .5 }, { opacity: 1 }], { duration, easing: 'ease-in-out' });
-      sparkles.forEach((s, i) => s.node.animate([{ opacity: 0 }, { opacity: 1, offset: .5 }, { opacity: 0 }], { duration: 900, delay: 200 + i * 180, easing: 'ease-in-out' }));
+      halo.animate([{ opacity: 1 }, { opacity: 1.7, offset: .5 }, { opacity: 1 }], { duration, easing: 'ease-in-out' });
     },
     dispose() { ro.disconnect(); timers.forEach(clearTimeout); svg.remove(); },
   };

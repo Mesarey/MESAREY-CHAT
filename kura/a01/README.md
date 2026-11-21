@@ -19,8 +19,8 @@ npx serve kura/a01
 |---|---|
 | `js/config.js` | Todos los parámetros ajustables (estrellas, nubes, luces, bordes, audio, rendimiento) |
 | `js/scene.js` | SceneBackground, CloudLayers, AmbientLighting y paralaje leve |
-| `js/starfield.js` | StarField, destellos ópticos del cristal y chispas al tocar (una sola instancia de WebGLRenderer) |
-| `js/border.js` | LuminousBorder: luz que recorre el botón principal; contorno fijo del cristal |
+| `js/starfield.js` | StarField (sigue el paralaje), destellos ópticos del botón y del cristal, chispas al tocar (una sola instancia de WebGLRenderer) |
+| `js/border.js` | LuminousBorder: contorno y halo del botón y del cristal |
 | `styles.css` | GlassHUD, campos, tipografía y estados |
 | `js/form.js` | LoginForm (validación, error, enfoque, carga, mostrar contraseña, teclado) |
 | `js/auth.js` | Puntos de integración de autenticación (hoy responden «demo») |
@@ -59,8 +59,8 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 Todo está en `js/config.js`; el panel de desarrollo (Mayús + D) permite probar en vivo y copiar la configuración resultante.
 
 - Estrellas: `stars.intensity`, `stars.twinkleSpeed`, `stars.countMobile/Desktop`.
-- Bordes: `button.border`, `button.loop` (6–9 s), `button.inviteEvery`, `hud.border`.
-- Destellos ópticos del cristal: `hud.flares` (cantidad, tamaño, intensidad, velocidad, vida).
+- Bordes: `button.border`, `button.inviteEvery` (brillo lento del halo), `hud.border`.
+- Destellos ópticos: `flares.hud` y `flares.button` (cantidad, tamaño, intensidad, velocidad, vida). Solo recorren las orillas superior e inferior, nunca el interior.
 - Nubes: `clouds.*.opacity / blur / drift / duration`.
 - Luces: `lights.*` y `lights.breathe`.
 

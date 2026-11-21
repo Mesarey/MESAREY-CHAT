@@ -46,13 +46,14 @@ export function applySceneConfig() {
 }
 
 /** Paralaje leve con el cursor. La escena es una sola ilustración: se mueve completa, sin deformar personajes. */
-export function parallax(stage, motion, unit) {
+export function parallax(stage, motion, unit, onShift = () => {}) {
   const layers = [...stage.querySelectorAll('[data-depth]')];
   let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
   const step = () => {
     x += (tx - x) * 0.06; y += (ty - y) * 0.06;
     const u = unit();
     for (const el of layers) el.style.translate = `${(-x * config.parallax * +el.dataset.depth * u).toFixed(2)}px ${(-y * config.parallax * +el.dataset.depth * u).toFixed(2)}px`;
+    onShift(-x * config.parallax * u, -y * config.parallax * u); // misma profundidad que la ilustración
     raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.001 ? requestAnimationFrame(step) : 0;
   };
   const kick = () => { if (!raf) raf = requestAnimationFrame(step); };

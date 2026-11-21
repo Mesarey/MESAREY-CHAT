@@ -18,7 +18,8 @@ const isMobile = matchMedia('(pointer: coarse)').matches || innerWidth < 600;
 
 /* ---------- Escena ---------- */
 buildScene($('scene'));
-parallax(stage, motion, unit);
+let stars = null;
+parallax(stage, motion, unit, (x, y) => stars?.shift(x, y));
 
 /* ---------- Idioma y título ---------- */
 let chars = [];
@@ -66,8 +67,8 @@ const button = luminousBorder(cta, {
   intensity: config.button.border,
   loop: config.button.loop,
   breathe: config.button.breathe,
-  segments: [{ length: 110, strength: 1, delay: 0 }, { length: 60, strength: .42, delay: .52 }],
-  sparkles: [{ at: .06, every: [4, 9], size: 10 }, { at: .31, every: [5, 11], size: 7 }, { at: .56, every: [4, 10], size: 10 }, { at: .82, every: [6, 12], size: 7 }],
+  segments: [],   // sin líneas que giran: la luz del botón son destellos ópticos lentos (Three.js)
+  sparkles: [],
   colors: COLORS,
   widths: { base: 1.5, near: 7, wide: 22 },
 });
@@ -92,15 +93,16 @@ cta.addEventListener('focus', () => brighten(true));
 cta.addEventListener('blur', () => brighten(false));
 
 /* ---------- Estrellas y chispas ---------- */
-let stars = null;
 createStarField({ canvas: $('fx'), stage, motion, isMobile }).then((s) => {
   stars = s;
   if (!s) return devPanel({ stars, button, hud });
   // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
   const panel = $('panel');
   const sync = () => {
-    const u = unit(), sr = stage.getBoundingClientRect(), pr = panel.getBoundingClientRect();
-    s.setPanel({ x: (pr.left - sr.left) / u, y: (pr.top - sr.top) / u, w: pr.width / u, h: pr.height / u, r: 70 });
+    const u = unit(), sr = stage.getBoundingClientRect();
+    const rect = (el, r) => { const b = el.getBoundingClientRect(); return { x: (b.left - sr.left) / u, y: (b.top - sr.top) / u, w: b.width / u, h: b.height / u, r }; };
+    s.setRect('hud', rect(panel, 70));
+    const c = rect(cta, 0); c.r = c.h / 2; s.setRect('button', c);
   };
   new ResizeObserver(sync).observe(panel); new ResizeObserver(sync).observe(stage); sync();
   setTimeout(sync, 2600); // tras la animación de entrada
