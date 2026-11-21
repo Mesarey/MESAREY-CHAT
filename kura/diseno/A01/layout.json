@@ -1,0 +1,62 @@
+{
+  "canvas": [
+    899,
+    1750
+  ],
+  "units": "px",
+  "layers_back_to_front": [
+    "Fondo_reconstruido",
+    "Familia_transparente",
+    "Logo_oficial_original",
+    "Panel_cristal",
+    "Iluminacion_panel",
+    "controles",
+    "textos",
+    "destellos"
+  ],
+  "reference_boxes": {
+    "logo": [
+      78,
+      22,
+      139,
+      140
+    ],
+    "sound": [
+      786,
+      33,
+      67,
+      44
+    ],
+    "panel": [
+      51,
+      927,
+      794,
+      790
+    ],
+    "email": [
+      130,
+      1144,
+      640,
+      64
+    ],
+    "password": [
+      130,
+      1228,
+      640,
+      64
+    ],
+    "primary": [
+      142,
+      1361,
+      614,
+      78
+    ],
+    "google": [
+      130,
+      1501,
+      640,
+      64
+    ]
+  },
+  "note": "Bounding boxes approximate. Generated art reconstructed, not original source layers. SVG font requires installed font; typography proposed, not identified."
+}
