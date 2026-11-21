@@ -19,6 +19,8 @@ const isMobile = matchMedia('(pointer: coarse)').matches || innerWidth < 600;
 /* ---------- Escena ---------- */
 buildScene($('scene'));
 let stars = null;
+// Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
+const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06 };
 parallax(stage, motion, unit, (x, y) => stars?.shift(x, y));
 
 /* ---------- Idioma y título ---------- */
@@ -93,7 +95,7 @@ cta.addEventListener('focus', () => brighten(true));
 cta.addEventListener('blur', () => brighten(false));
 
 /* ---------- Estrellas y chispas ---------- */
-createStarField({ canvas: $('fx'), stage, motion, isMobile }).then((s) => {
+createStarField({ canvas: $('fx'), stage, motion, isMobile, reveal }).then((s) => {
   stars = s;
   if (!s) return devPanel({ stars, button, hud });
   // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
@@ -201,9 +203,12 @@ function invite() {
 /* ---------- Entrada ---------- */
 function intro() {
   const u = unit();
-  if (!gsap || motion.reduced) { setTimeout(invite, 3500); return; }
+  if (!gsap || motion.reduced) { Object.assign(reveal, { stars: 1, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from('.scene-art', { opacity: 0, scale: 1.06, duration: 2.4, ease: 'power2.out' }, 0)
+    // las estrellas siguen la misma escala que el cielo y se encienden una a una mientras aparece
+    .to(reveal, { zoom: 1, duration: 2.4, ease: 'power2.out' }, 0)
+    .to(reveal, { stars: 1, duration: 3.2, ease: 'sine.inOut' }, .5)
     .from('.cloud-wrap', { opacity: 0, duration: 2.4, stagger: .2 }, .3)
     .from('.lights', { opacity: 0, duration: 2.6 }, .6)
     .from('.logo', { opacity: 0, scale: .9, filter: 'blur(8px)', duration: 1.6 }, .7)
@@ -212,6 +217,7 @@ function intro() {
     .from('.welcome .rule', { scaleX: 0, duration: 1.4, ease: 'power3.inOut' }, 1.5)
     .from('.welcome-text', { opacity: 0, duration: 1.4 }, 1.6)
     .from('.panel', { opacity: 0, y: 60 * u, duration: 1.5 }, 1.4)
+    .to(reveal, { flares: 1, duration: 2.2, ease: 'sine.inOut' }, 2.4)  // los destellos del cristal llegan al final
     .from('.field, .row-msg, .cta, .or, .google, .first, .legal, .prefs', { opacity: 0, y: 14 * u, stagger: .07, duration: 1 }, 1.8)
     .add(() => setTimeout(invite, 1200), 2.6);
   gsap.timeline({ repeat: -1, repeatDelay: 7, delay: 3.2 }).fromTo(shine, { p: 0 }, { p: 1, duration: 2.8, ease: 'sine.inOut', onUpdate: paintShine });
