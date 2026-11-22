@@ -1,4 +1,4 @@
-# A01 · Inicio de sesión y A02 · Crear cuenta (Observatorio)
+# A01–A05 · Entrada a KURA (Observatorio)
 
 Pantalla de entrada de KURA en español e inglés, recreada a partir de la referencia aprobada (`../diseno/A01/referencia-observatorio.webp`) y del kit «KURA A01 Observatorio · Separación avanzada».
 
@@ -10,6 +10,8 @@ HTML, CSS y JavaScript sin compilación. Se abre con un servidor local:
 npx serve kura/a01
 ```
 
+- A05 (Restaurando sesión) aparece al abrir la app mientras carga y comprueba la sesión; luego da paso a A01. Para revisarlo quieto: `#a05` (se queda hasta tocar la pantalla).
+- A03 (Recuperar contraseña): `#a03` o «Olvidé mi contraseña». A04 (Enlace enviado): tras enviar, o `#a04`.
 - A02 (Crear cuenta): `http://localhost:3000/#a02`, o «Crear cuenta» desde A01. El escenario no cambia: solo el contenido del HUD, con transición suave; el botón «atrás» del teléfono regresa a A01.
 - Español: `http://localhost:3000/#es` · Inglés: `http://localhost:3000/#en` (también desde el botón «English / Español» bajo el panel).
 - Panel de ajustes de desarrollo: **Mayús + D**, o `#dev` en la dirección.
@@ -24,6 +26,7 @@ npx serve kura/a01
 | `js/border.js` | LuminousBorder: contorno y halo del botón y del cristal |
 | `styles.css` | GlassHUD, campos, tipografía y estados |
 | `js/form.js` | LoginForm (A01: validación, error, enfoque, carga, mostrar contraseña, teclado) |
+| `js/recover.js` | RecoverForm (A03: correo y «Enviar enlace»; abre A04 con respuesta neutra) |
 | `js/signup.js` | SignupForm (A02: correo, contraseña de 8+ caracteres, confirmación, ventana de términos con casilla sin marcar) |
 | `js/auth.js` | Puntos de integración de autenticación (hoy responden «demo») |
 | `js/audio.js` | AudioControl y efectos de sonido |
@@ -64,6 +67,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 | `abrir-aviso.wav` | Abrir Términos o Privacidad | **Incluido** (elegido por ti) |
 | `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |
 | `crear-cuenta.wav` | «Crear cuenta» | **Incluido** (elegido por ti) |
+| `icono-audio.wav` | Tocar el icono de audio | **Incluido** (elegido por ti) |
 
 ## Cómo ajustar los efectos
 

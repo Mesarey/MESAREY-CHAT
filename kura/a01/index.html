@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="theme-color" content="#120f33" />
   <title>KURA · Iniciar sesión</title>
-  <link rel="preload" href="assets/img/escena.webp" as="image" fetchpriority="high" />
+  <link rel="preload" href="assets/a05/fondo.webp" as="image" fetchpriority="high" />
+  <link rel="preload" href="assets/img/escena.webp" as="image" />
   <link rel="preload" href="assets/fonts/playfair-display-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
   <script>
@@ -20,7 +21,7 @@
 <body>
   <div class="backdrop" aria-hidden="true"></div>
 
-  <main class="stage" id="stage">
+  <main class="stage booting" id="stage">
     <!-- 1–7: cielo y arquitectura, nubes, grupo, bruma y luces (se construyen en js/scene.js) -->
     <div class="scene" id="scene" aria-hidden="true"></div>
 
@@ -71,7 +72,7 @@
 
           <div class="row-msg">
             <p class="msg" id="form-msg" role="status" aria-live="polite"></p>
-            <a class="link forgot" href="#a03" data-soon data-i18n="forgot">Olvidé mi contraseña</a>
+            <a class="link forgot" href="#a03" data-go="a03" data-i18n="forgot">Olvidé mi contraseña</a>
           </div>
 
           <button class="cta" id="cta" type="submit">
@@ -146,6 +147,54 @@
       </section>
       </div>
 
+      <!-- A03 · Recuperar contraseña -->
+      <div class="view" id="view-a03" data-view="a03" hidden>
+      <header class="heading heading-one heading-a03">
+        <h2 class="title" id="titulo-a03"><span class="title-line" data-split data-i18n="forgotTitle">Recuperar contraseña</span></h2>
+        <p class="welcome"><span class="rule"></span><span class="welcome-text" data-i18n="forgotSubtitle">Te enviaremos un enlace para restablecerla.</span><span class="rule"></span></p>
+      </header>
+      <section class="panel" id="panel-a03" aria-labelledby="titulo-a03">
+        <div class="panel-glass" aria-hidden="true"></div>
+        <form class="form form-a03" id="form-a03" novalidate>
+          <label class="field" id="rc-field-email">
+            <svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="10" width="38" height="28" rx="3" /><path d="m6 12 18 15 18-15" /></svg>
+            <span class="sr" data-i18n="email">Correo electrónico</span>
+            <input id="rc-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" data-i18n-attr="placeholder:email" placeholder="Correo electrónico" aria-describedby="rc-msg" />
+          </label>
+          <div class="row-msg row-msg-a03"><p class="msg" id="rc-msg" role="status" aria-live="polite"></p></div>
+          <button class="cta cta-a02" id="cta-a03" type="submit">
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
+            <span class="cta-label"><span class="cta-text" data-i18n="sendLink">Enviar enlace</span><svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg></span>
+            <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+          <p class="back-link"><a class="link" href="#a01" data-go="a01"><svg class="back-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M30 16H3m9-9-9 9 9 9" /></svg><span data-i18n="backToSignIn">Volver a iniciar sesión</span></a></p>
+        </form>
+      </section>
+      </div>
+
+      <!-- A04 · Enlace enviado -->
+      <div class="view" id="view-a04" data-view="a04" hidden>
+      <header class="heading heading-a04">
+        <h2 class="title title-ruled" id="titulo-a04"><span class="rule" aria-hidden="true"></span><span class="title-line" data-split data-i18n="sentTitle">Enlace enviado</span><span class="rule" aria-hidden="true"></span></h2>
+      </header>
+      <section class="panel" id="panel-a04" aria-labelledby="titulo-a04">
+        <div class="panel-glass" aria-hidden="true"></div>
+        <div class="form sent">
+          <div class="sent-icon" aria-hidden="true">
+            <svg class="sent-envelope" viewBox="0 0 88 62"><g fill="none" stroke="#f5ce91" stroke-width="3.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5.5" y="5.5" width="77" height="51" rx="4" /><path d="m8 8 36 27L80 8" /></g></svg>
+            <svg class="sent-check" viewBox="0 0 42 42"><defs><linearGradient id="sent-violeta" x2="0" y2="1"><stop stop-color="#845db0" /><stop offset="1" stop-color="#644588" /></linearGradient></defs><circle cx="21" cy="21" r="18.5" fill="url(#sent-violeta)" stroke="#c184df" stroke-width="2" /><path class="sent-tick" d="m12.8 21.2 5.5 5.5 10.9-12" fill="none" stroke="#fff5ec" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+          <p class="sent-text" data-i18n="sentText">Si el correo está asociado a una cuenta, recibirás un enlace para restablecer tu contraseña.</p>
+          <p class="sent-demo" id="sent-demo" data-i18n="sentDemo" hidden>Demo: todavía no se envía ningún correo.</p>
+          <button class="cta cta-a02 cta-back" id="cta-a04" type="button" data-go="a01">
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
+            <span class="cta-label"><svg class="cta-arrow cta-arrow-back" viewBox="0 0 48 48" aria-hidden="true"><path d="M43 24H7 M19 11 6 24l13 13" /></svg><span class="cta-text" data-i18n="backToSignIn">Volver a iniciar sesión</span></span>
+            <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+        </div>
+      </section>
+      </div>
+
       <nav class="prefs" aria-label="Preferencias">
         <button type="button" id="lang" class="pref" data-i18n="otherLang">English</button>
         <span aria-hidden="true">·</span>
@@ -155,6 +204,18 @@
         <span aria-hidden="true">·</span>
         <a href="#privacidad" class="pref" data-legal="privacy" data-i18n="privacy">Privacidad</a>
       </nav>
+    </div>
+
+    <!-- A05 · Restaurando sesión -->
+    <div class="boot" id="boot" role="status" aria-live="polite">
+      <img class="boot-bg" src="assets/a05/fondo.webp" alt="" decoding="async" fetchpriority="high" />
+      <div class="boot-halo" aria-hidden="true"></div>
+      <div class="boot-logo" aria-hidden="true">
+        <img class="logo-part logo-symbol" src="assets/img/logo-simbolo.png" alt="" />
+        <img class="logo-part logo-word" src="assets/img/logo-texto.png" alt="" />
+      </div>
+      <div class="boot-orbit" aria-hidden="true"><img src="assets/a05/orbita.svg" alt="" /><i></i><i></i><i></i></div>
+      <p class="boot-text" data-i18n="restoring">Restaurando sesión…</p>
     </div>
 
     <!-- Estrellas y chispas (Three.js). Solo decorativo. -->

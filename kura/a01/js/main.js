@@ -10,6 +10,8 @@ import { audio } from './audio.js';
 import { devPanel } from './devpanel.js';
 import { legalDialog } from './legal.js';
 import { signupForm } from './signup.js';
+import { recoverForm } from './recover.js';
+import { auth } from './auth.js';
 
 const gsap = window.gsap;
 gsap?.ticker.lagSmoothing(0);
@@ -76,11 +78,11 @@ const makeHud = (el) => luminousBorder(el, {
   widths: { base: 1.1, near: 4, wide: 18 },
 });
 const VIEWS = {};
-for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02']]) {
+for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04']]) {
   const el = $(`view-${name}`), panel = $(panelId), c = $(ctaId);
   VIEWS[name] = { name, el, panel, cta: c, button: makeButton(c), hud: makeHud(panel) };
 }
-let view = VIEWS[location.hash === '#a02' ? 'a02' : 'a01'];
+let view = VIEWS[location.hash.slice(1)] || VIEWS.a01;
 const cta = VIEWS.a01.cta, button = VIEWS.a01.button, hud = VIEWS.a01.hud; // panel de ajustes
 const setReduced = (r) => Object.values(VIEWS).forEach((v) => { v.button.setReduced(r); v.hud.setReduced(r); });
 setReduced(motion.reduced);
@@ -95,7 +97,8 @@ for (const v of Object.values(VIEWS)) {
 
 /* ---------- Estrellas y chispas ---------- */
 let syncFlares = () => {};
-createStarField({ canvas: $('fx'), stage, motion, isMobile, reveal }).then((s) => {
+// Se crea al terminar el arranque (A05): compilar WebGL no compite con la animación de carga.
+const startStars = () => createStarField({ canvas: $('fx'), stage, motion, isMobile, reveal }).then((s) => {
   stars = s;
   if (!s) return devPanel({ stars, button, hud, wind });
   // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
@@ -169,7 +172,7 @@ const setMenu = (open) => {
   soundBtn.setAttribute('aria-expanded', String(open));
   if (open && gsap && !motion.reduced) gsap.fromTo(soundMenu, { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: .35, ease: 'power2.out' });
 };
-soundBtn.addEventListener('click', () => { unlock(); audio.sfx('toggle'); setMenu(soundMenu.hidden); });
+soundBtn.addEventListener('click', () => { unlock(); audio.sfx('soundIcon'); setMenu(soundMenu.hidden); });
 swMusic.addEventListener('change', () => { audio.setMusic(swMusic.checked); audio.sfx('toggle'); });
 swSfx.addEventListener('change', () => { audio.setSfx(swSfx.checked); if (swSfx.checked) setTimeout(() => audio.sfx('toggle'), 250); });
 addEventListener('pointerdown', (e) => { if (!soundMenu.hidden && !e.target.closest('#sound-menu, #sound')) setMenu(false); });
@@ -191,7 +194,7 @@ function showView(name, { animate = true } = {}) {
   const swap = () => {
     prev.el.hidden = true; prev.el.classList.remove('is-active');
     next.el.hidden = false; next.el.classList.add('is-active');
-    if (name === 'a01') signup.reset();
+    if (name === 'a01') { signup.reset(); recover.reset(); }
     layoutShine(); syncFlares();
   };
   if (!animate || !gsap || motion.reduced) { swap(); return; }
@@ -205,16 +208,23 @@ function showView(name, { animate = true } = {}) {
     .fromTo(next.el.querySelectorAll('.ch'), { opacity: 0, yPercent: 40, filter: 'blur(6px)' }, { opacity: 1, yPercent: 0, filter: 'blur(0px)', stagger: .025, duration: .9, ease: 'expo.out', clearProps: 'filter' })
     .fromTo(next.el.querySelector('.welcome'), { opacity: 0 }, { opacity: 1, duration: .8 }, '<')
     .fromTo(next.el.querySelector('.panel'), { opacity: 0, y: 26 * u }, { opacity: 1, y: 0, duration: .8, ease: 'expo.out' }, '<.1')
-    .fromTo(next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first'), { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .05, duration: .6, ease: 'expo.out' }, '<.15')
+    .fromTo(next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden])'), { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .05, duration: .6, ease: 'expo.out' }, '<.15')
     .add(syncFlares)
     .to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' });
 }
+const go = (name) => {
+  if (location.hash !== `#${name}`) location.hash = name; // el botón «atrás» del teléfono regresa
+  showView(name);
+};
 document.querySelectorAll('[data-go]').forEach((a) => a.addEventListener('click', (e) => {
   e.preventDefault();
   audio.sfx(a.dataset.go === 'a02' ? 'createAccount' : 'tap');
-  if (location.hash !== `#${a.dataset.go}`) location.hash = a.dataset.go; // el botón «atrás» del teléfono regresa
-  showView(a.dataset.go);
+  go(a.dataset.go);
 }));
+const recover = recoverForm({
+  stage, motion, sfx: (n) => audio.sfx(n), onPrimary: (e) => primaryFx(VIEWS.a03, e),
+  onSent: ({ demo }) => { $('sent-demo').hidden = !demo; go('a04'); },
+});
 addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIEWS[n]) showView(n); });
 // Vista inicial según la dirección (#a02 abre directamente Crear cuenta).
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
@@ -267,5 +277,46 @@ function intro() {
   gsap.timeline({ repeat: -1, repeatDelay: 7, delay: 3.2 }).fromTo(shine, { p: 0 }, { p: 1, duration: 2.8, ease: 'sine.inOut', onUpdate: paintShine });
 }
 
-document.fonts.ready.then(() => { splitTitle(); intro(); });
+/* ---------- A05 · Restaurando sesión ---------- */
+// Cubre la escena mientras carga y comprueba si hay una sesión guardada.
+// Con sesión se abriría Hoy en el mundo predeterminado (aún no existe); sin ella, inicio de sesión.
+const boot = $('boot');
+const lights = [...boot.querySelectorAll('.boot-orbit i')];
+let orbitRaf = 0;
+function orbit(t0 = performance.now()) {
+  const PERIOD = 1650, PHASES = [-90, 30, 150].map((d) => (d * Math.PI) / 180);
+  const step = (now) => {
+    const a = ((now - t0) / PERIOD) * Math.PI * 2;
+    lights.forEach((el, i) => {
+      const th = a + PHASES[i], x = Math.cos(th), y = Math.sin(th);
+      const front = (y + 1) / 2; // abajo = delante
+      const u = unit();
+      el.style.transform = `translate(${(x * 83 * u).toFixed(2)}px, ${(y * 35 * u).toFixed(2)}px) scale(${(0.75 + front * 0.4).toFixed(3)})`;
+      el.style.opacity = (0.45 + front * 0.55).toFixed(3);
+    });
+    orbitRaf = requestAnimationFrame(step);
+  };
+  orbitRaf = requestAnimationFrame(step);
+}
+const imageReady = (src) => new Promise((res) => { const im = new Image(); im.onload = im.onerror = () => res(); im.src = src; });
+async function runBoot() {
+  const keep = location.hash === '#a05'; // para revisar A05: se queda hasta tocar la pantalla
+  if (!motion.reduced) orbit();
+  if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .12, duration: 1, ease: 'power2.out' });
+  const [{ session }] = await Promise.all([
+    auth.restoreSession(),
+    imageReady('assets/img/escena.webp'),
+    new Promise((r) => setTimeout(r, motion.reduced ? 600 : 1800)),
+  ]);
+  if (keep) await new Promise((r) => boot.addEventListener('pointerdown', r, { once: true }));
+  if (session) { /* aquí se abriría Hoy (L01) en el mundo predeterminado */ }
+  if (keep) history.replaceState(null, '', '#a01');
+}
+// El arranque se desvanece mientras la escena aparece: un solo movimiento continuo.
+function hideBoot() {
+  const done = () => { cancelAnimationFrame(orbitRaf); boot.hidden = true; };
+  if (!gsap || motion.reduced) { done(); return; }
+  gsap.to(boot, { opacity: 0, duration: 1.1, ease: 'power2.inOut', onComplete: done });
+}
+document.fonts.ready.then(async () => { splitTitle(); await runBoot(); stage.classList.remove('booting'); startStars(); intro(); hideBoot(); });
 addEventListener('resize', layoutShine);

@@ -78,6 +78,7 @@ export const config = {
       legal: 'audio/sfx/abrir-aviso.wav',          // abrir Términos o Privacidad
       effects: 'audio/sfx/efectos.wav',            // botón «Reducir / Efectos completos»
       createAccount: 'audio/sfx/crear-cuenta.wav', // «Crear cuenta»
+      soundIcon: 'audio/sfx/icono-audio.wav',     // tocar el icono de audio
     },
   },
   performance: {

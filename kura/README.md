@@ -6,3 +6,6 @@ Rediseño completo, pantalla por pantalla, a partir del inventario de pantallas 
 |---|---|---|
 | A01 | Inicio de sesión (Observatorio, ES/EN) | Hecha: `a01/` |
 | A02 | Crear cuenta | Hecha: `a01/#a02` (mismo escenario) |
+| A03 | Recuperar contraseña | Hecha: `a01/#a03` |
+| A04 | Enlace enviado | Hecha: `a01/#a04` |
+| A05 | Restaurando sesión | Hecha: arranque de `a01/` (`#a05` para verla quieta) |
