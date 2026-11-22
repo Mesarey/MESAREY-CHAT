@@ -40,8 +40,8 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
     const res = await auth.signInWithEmail(email.value.trim(), pass.value);
     cta.removeAttribute('aria-busy');
     cta.removeAttribute('aria-label');
-    if (res.ok) { sfx('granted'); onGranted?.('email'); return; } // aquí se navegaría a A05 / Hoy
-    if (res.reason === 'demo') { say('demoSignIn', 'info'); return; }
+    // Acceso concedido → entra a A06 · Bienvenida con Alaira. En la demo (sin servidor) suena igual y lo avisa.
+    if (res.ok || res.reason === 'demo') { sfx('granted'); if (!res.ok) say('demoSignIn', 'info'); onGranted?.('email'); return; }
     sfx('error'); say('errLogin');
   });
 

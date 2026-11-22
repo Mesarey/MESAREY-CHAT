@@ -73,7 +73,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delan
 - `audio/ambiente.mp3` suena tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
 - Para la transición al mundo de Alaira ya existe `audio.fadeOutMusic(segundos)`.
 - «Acceso concedido» suena cuando `js/auth.js` responde `{ ok: true }` (correo, Google u otro proveedor); «acceso fallido», con datos inválidos o cuando responde `{ ok: false, reason: 'invalid' | 'network' }`. Mientras no haya servidor, el panel de desarrollo (Mayús + D) tiene botones para escuchar ambos.
-- **Efectos de sonido**: «Iniciar sesión» no tiene sonido propio; suena `acceso-fallido.mp3` si faltan o fallan los datos y `acceso-concedido.mp3` al entrar (solo con sus archivos, sin sustituto sintetizado). Toques de botones y enlaces, enfoque de campos (también mostrar contraseña) y alternar se sintetizan en el navegador. La invitación del botón es solo visual.
+- **Efectos de sonido**: «Iniciar sesión» no tiene sonido propio; suena `acceso-fallido.mp3` si faltan o fallan los datos y `acceso-concedido.wav` al entrar a A06 (también al crear cuenta; en la demo suena igual con un aviso) (solo con sus archivos, sin sustituto sintetizado). Toques de botones y enlaces, enfoque de campos (también mostrar contraseña) y alternar se sintetizan en el navegador. La invitación del botón es solo visual.
 - Para reemplazarlos por sonidos propios basta con poner archivos en `audio/sfx/` con estos nombres; se usan automáticamente:
 
 | Archivo | Momento | Idea para ElevenLabs (Sound Effects) |
@@ -82,7 +82,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delan
 | `enfoque.mp3` | Enfocar un campo | «very soft airy glass tick, quiet, 0.2 seconds» |
 | `alternar.mp3` | Botón de sonido e idioma (mostrar contraseña usa el de enfoque) | «two soft crystal notes rising, quiet toggle, 0.3 seconds» |
 | `acceso-fallido.mp3` | Datos inválidos o inicio de sesión rechazado | **Incluido** (elegido por ti) |
-| `acceso-concedido.mp3` | Acceso concedido con correo, Google u otro proveedor | **Incluido** (elegido por ti) |
+| `acceso-concedido.wav` | Acceso concedido: entrar a A06 con correo, Google, otro proveedor o cuenta nueva | **Incluido** (elegido por ti) |
 | `abrir-aviso.wav` | Abrir Términos o Privacidad | **Incluido** (elegido por ti) |
 | `cerrar-aviso.wav` | Cerrar Términos o Privacidad (X, tocar fuera o Escape; al aceptar no suena) | **Incluido** (elegido por ti) |
 | `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |

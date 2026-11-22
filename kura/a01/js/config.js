@@ -78,10 +78,10 @@ export const config = {
     // Sonidos con archivo propio. Los que no están aquí (toque, enfoque, alternar) se sintetizan.
     // Auditoría de volumen: ajuste en dB por sonido para que todos lleguen al mismo nivel
     // (pico de corto plazo ≈ −24 dBFS medido dentro de la app). Medido con audio._measure(nombre).
-    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: 6, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8 },
+    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: -10, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8 },
     sfxFiles: {
       error: 'audio/sfx/acceso-fallido.mp3',       // inicio de sesión incorrecto
-      granted: 'audio/sfx/acceso-concedido.mp3',   // acceso concedido (correo, Google u otro proveedor)
+      granted: 'audio/sfx/acceso-concedido.wav',   // acceso concedido: entra a A06 (correo, Google, otro proveedor o cuenta nueva)
       legal: 'audio/sfx/abrir-aviso.wav',          // abrir Términos o Privacidad
       effects: 'audio/sfx/efectos.wav',            // botón «Reducir / Efectos completos»
       createAccount: 'audio/sfx/crear-cuenta.wav', // «Crear cuenta»

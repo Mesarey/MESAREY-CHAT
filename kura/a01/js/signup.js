@@ -45,8 +45,8 @@ export function signupForm({ stage, sfx, motion, legal, onPrimary, onGranted }) 
     const res = await auth.signUpWithEmail(email.value.trim(), pass.value);
     cta.removeAttribute('aria-busy');
     cta.removeAttribute('aria-label');
-    if (res.ok) { sfx('granted'); onGranted?.('signup'); return; } // aquí se abriría A06 · Bienvenida con Alaira
-    if (res.reason === 'demo') { say('demoSignUp', 'info'); return; }
+    // Cuenta creada → entra a A06 · Bienvenida con Alaira (mismo sonido que al iniciar sesión).
+    if (res.ok || res.reason === 'demo') { sfx('granted'); if (!res.ok) say('demoSignUp', 'info'); onGranted?.('signup'); return; }
     sfx('error'); say('errSignUp');
   });
 
