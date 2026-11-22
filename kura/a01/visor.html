@@ -123,7 +123,7 @@
     <label class="file primary">Elegir carpeta de audio<input type="file" id="pick-folder" webkitdirectory multiple /></label>
     <label class="file">Elegir archivos de audio<input type="file" id="pick-files" accept="audio/*,.mp3,.wav" multiple /></label>
     <ul class="files" id="files"></ul>
-    <p class="note" id="audio-note">Los audios se leen desde tu dispositivo: no se suben a ningún lado. Elige la carpeta <b>audio</b> del ZIP, o tus archivos originales (Login_Failed, Login-Granted, los WAV y la canción). Un archivo con «shadow» en el nombre se agrega como segunda canción.</p>
+    <p class="note" id="audio-note">Los audios se leen desde tu dispositivo: no se suben a ningún lado. Elige la carpeta <b>audio</b> del ZIP, o tus archivos originales (Login_Failed, Login-Granted, los WAV y la canción). Reconoce las tres canciones en su orden (1, Start Shadow Protocol y Second Shadow Protocol).</p>
     <p class="note">La música empieza con tu primer toque dentro del teléfono.</p>
   </aside>
 
@@ -174,7 +174,9 @@
     /* ---------- Audios desde el dispositivo ---------- */
     // Nombres que usa la app y nombres originales que también se reconocen.
     const EXPECTED = [
-      ['ambiente.mp3', 'Música', /^(ambiente|_+)\.mp3$/i],
+      ['ambiente.mp3', 'Canción 1', /^(1-)?(ambiente|_+)\.mp3$/i],
+      ['musica-2-shadow-protocol-inicio.mp3', 'Canción 2 · Start Shadow Protocol', /start[_ -]?shadow|musica-2/i],
+      ['musica-3-shadow-protocol-segunda.mp3', 'Canción 3 · Second Shadow Protocol', /second[_ -]?shadow|musica-3/i],
       ['acceso-fallido.mp3', 'Acceso fallido', /login[_ -]?failed|acceso-fallido/i],
       ['acceso-concedido.mp3', 'Acceso concedido', /login[_ -]?granted|acceso-concedido/i],
       ['abrir-aviso.wav', 'Términos / Privacidad', /abrir[_ -]?(popup|aviso)|abrir-aviso/i],
@@ -193,7 +195,6 @@
       if (!audio.length) return;
       for (const file of audio) {
         const url = URL.createObjectURL(file);
-        if (/shadow/i.test(file.name)) { window.__kuraAudio.extraTracks.push(url); continue; }
         const hit = EXPECTED.find(([name, , re]) => re.test(file.name) || file.name === name);
         if (hit) window.__kuraAudio.files[hit[0]] = url;
         else if (/\.mp3$/i.test(file.name) && file.size > 1e6 && !window.__kuraAudio.files['ambiente.mp3']) window.__kuraAudio.files['ambiente.mp3'] = url; // canción con otro nombre

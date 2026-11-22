@@ -61,7 +61,8 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 ## Audio
 
 - El botón de sonido abre un selector con dos interruptores, **Música** y **Efectos de sonido**; la elección se recuerda.
-- Lista de canciones en `config.audio.playlist`: al terminar una empieza la siguiente y la lista se repite. Hoy solo tiene `audio/ambiente.mp3`; para sumar «Shadow Protocol», poner el archivo en `audio/` y añadir su ruta.
+- Tres canciones para toda la sección inicial, en orden y en bucle: 1 (`ambiente.mp3`), 2 · Start Shadow Protocol y 3 · Second Shadow Protocol (`config.audio.playlist`).
+- La música sigue donde se quedó: la canción y el segundo se guardan, así que al recargar o volver a A05 no empieza de cero.
 - `audio/ambiente.mp3` suena tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
 - Para la transición al mundo de Alaira ya existe `audio.fadeOutMusic(segundos)`.
 - «Acceso concedido» suena cuando `js/auth.js` responde `{ ok: true }` (correo, Google u otro proveedor); «acceso fallido», con datos inválidos o cuando responde `{ ok: false, reason: 'invalid' | 'network' }`. Mientras no haya servidor, el panel de desarrollo (Mayús + D) tiene botones para escuchar ambos.

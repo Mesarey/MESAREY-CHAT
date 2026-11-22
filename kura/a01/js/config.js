@@ -64,9 +64,13 @@ export const config = {
     button: { count: 2, size: 200, intensity: 0.75, speed: [6, 12], life: [8, 13] },
   },
   audio: {
-    // Canciones en orden; al acabar una empieza la siguiente y la lista se repite.
-    // Para agregar «Shadow Protocol»: poner el archivo en audio/ y añadir su ruta aquí.
-    playlist: ['audio/ambiente.mp3'],
+    // Canciones de toda la sección inicial (A01–A05 y el test), en orden; al acabar una
+    // empieza la siguiente y al terminar la 3 vuelve a la 1. Se desvanecen al entrar al mundo de Alaira.
+    playlist: [
+      'audio/ambiente.mp3',                          // 1
+      'audio/musica-2-shadow-protocol-inicio.mp3',   // 2 · Start Shadow Protocol
+      'audio/musica-3-shadow-protocol-segunda.mp3',  // 3 · Second Shadow Protocol
+    ],
     musicVolume: 0.55,
     sfxVolume: 0.8,
     fadeOut: 2.6,            // segundos al silenciar

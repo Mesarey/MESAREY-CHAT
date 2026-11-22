@@ -460,12 +460,13 @@ html:has(.booting) { overflow: hidden; }
 .boot-orbit img { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 0 calc(4 * var(--bu)) rgba(190, 140, 255, .8)); }
 /* Luces de la órbita: núcleo blanco con halo violeta y estela de chispas que las sigue. */
 .boot-orbit i { position: absolute; left: 50%; top: 50%; border-radius: 50%; pointer-events: none; will-change: transform, opacity; }
-.boot-orbit .orb { width: calc(15 * var(--bu)); height: calc(15 * var(--bu)); margin: calc(-7.5 * var(--bu));
-  background: radial-gradient(circle, #fff 0 35%, #f3dcff 55%, rgba(220, 170, 255, 0) 72%);
-  box-shadow: 0 0 calc(8 * var(--bu)) 2px #fff, 0 0 calc(22 * var(--bu)) rgba(224, 175, 255, 1), 0 0 calc(44 * var(--bu)) rgba(170, 105, 255, .85), 0 0 calc(80 * var(--bu)) rgba(140, 80, 255, .45); }
-.boot-orbit .trail { width: calc(9 * var(--bu)); height: calc(9 * var(--bu)); margin: calc(-4.5 * var(--bu)); background: #f6e6ff; box-shadow: 0 0 calc(12 * var(--bu)) rgba(210, 160, 255, 1), 0 0 calc(24 * var(--bu)) rgba(160, 100, 255, .5); }
+/* Luces moradas fosforescentes: núcleo pequeño lila claro y resplandor violeta intenso. */
+.boot-orbit .orb { width: calc(9 * var(--bu)); height: calc(9 * var(--bu)); margin: calc(-4.5 * var(--bu));
+  background: radial-gradient(circle, #f6e8ff 0 28%, #c77dff 52%, rgba(160, 80, 255, 0) 74%);
+  box-shadow: 0 0 calc(5 * var(--bu)) 1px #d690ff, 0 0 calc(14 * var(--bu)) rgba(176, 82, 255, 1), 0 0 calc(28 * var(--bu)) rgba(150, 60, 255, .85), 0 0 calc(48 * var(--bu)) rgba(130, 50, 255, .45); }
+.boot-orbit .trail { width: calc(5 * var(--bu)); height: calc(5 * var(--bu)); margin: calc(-2.5 * var(--bu)); background: #c27bff; box-shadow: 0 0 calc(7 * var(--bu)) rgba(176, 82, 255, 1), 0 0 calc(14 * var(--bu)) rgba(140, 60, 255, .55); }
 .boot-dust { position: absolute; inset: 0; pointer-events: none; }
-.boot-dust i { position: absolute; width: calc(4 * var(--bu)); height: calc(4 * var(--bu)); border-radius: 50%; background: #fff4ff; box-shadow: 0 0 calc(8 * var(--bu)) rgba(210, 170, 255, .9);
+.boot-dust i { position: absolute; width: calc(3.5 * var(--bu)); height: calc(3.5 * var(--bu)); border-radius: 50%; background: #c98bff; box-shadow: 0 0 calc(6 * var(--bu)) rgba(180, 90, 255, 1), 0 0 calc(12 * var(--bu)) rgba(150, 60, 255, .6);
   opacity: 0; animation: dust var(--d) ease-in-out var(--w) infinite; }
 @keyframes dust { 0% { opacity: 0; transform: translate(0, 0) scale(.6); } 30% { opacity: .85; } 70% { opacity: .6; } 100% { opacity: 0; transform: translate(var(--dx), calc(-120 * var(--bu))) scale(1); } }
 .boot-text { position: absolute; left: 0; right: 0; top: calc(1126 * var(--bu)); margin: 0; text-align: center; font-style: italic; font-size: calc(50 * var(--bu)); color: #f7ecdf; letter-spacing: calc(.4 * var(--bu)); text-shadow: 0 0 calc(14 * var(--bu)) rgba(200, 160, 255, .5); animation: breathe-text 3.2s ease-in-out infinite; }

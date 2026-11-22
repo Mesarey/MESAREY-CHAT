@@ -38,7 +38,12 @@ function ensureContext() {
   // Música
   el = new Audio();
   el.preload = 'auto'; el.crossOrigin = 'anonymous';
-  loadTrack(0);
+  // La música sigue donde se quedó: al recargar o volver a A05 no empieza de cero.
+  const saved = readPosition();
+  loadTrack(saved?.track ?? 0);
+  if (saved?.time > 1) el.addEventListener('loadedmetadata', () => { if (saved.time < el.duration - 2) el.currentTime = saved.time; }, { once: true });
+  setInterval(savePosition, 2000);
+  addEventListener('pagehide', savePosition);
   // Al terminar una canción empieza la siguiente; la lista se repite.
   el.addEventListener('ended', () => nextTrack());
   // Si una canción falta o no carga, se salta sin errores; si ninguna carga, no hay música.
@@ -61,6 +66,18 @@ function playlist() { return [...config.audio.playlist, ...(viewerAudio()?.extra
 // primero que suene ya esté listo.
 const rawSfx = Object.fromEntries(Object.entries(config.audio.sfxFiles).map(([name, url]) =>
   [name, fetch(resolve(url)).then((r) => (r.ok ? r.arrayBuffer() : null)).catch(() => null)]));
+
+const POS_KEY = 'kura.music';
+function readPosition() {
+  try {
+    const p = JSON.parse(localStorage.getItem(POS_KEY) || 'null');
+    return p && p.track < playlist().length ? p : null;
+  } catch { return null; }
+}
+function savePosition() {
+  if (!el || !started || el.paused || !el.currentTime) return;
+  try { localStorage.setItem(POS_KEY, JSON.stringify({ track, time: Math.floor(el.currentTime) })); } catch {}
+}
 
 function loadTrack(i) {
   track = i;
@@ -121,6 +138,10 @@ export const audio = {
   /** Para la transición al mundo de Alaira: desvanece y detiene la música de A01. */
   fadeOutMusic(seconds = 4) { if (ctx) ramp(musicGain.gain, 0, seconds); },
   sfx: (name) => playSfx(name),
+  /** Siguiente canción de la lista (para el futuro panel de música, M06). */
+  next() { if (el) nextTrack(); },
+  /** Solo para pruebas: simula que la canción actual terminó. */
+  _ended() { el?.dispatchEvent(new Event('ended')); },
   /** Estado para pruebas y depuración. */
   debug: () => ({ started, musicOn, sfxOn, musicOk, track, src: el?.src ?? '', playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx, history: [...history] }),
 };
