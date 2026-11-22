@@ -26,7 +26,7 @@ const wind = mountWind($('scene'), motion);
 let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
 const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06 };
-const tilt = parallax(stage, motion, unit, (x, y) => stars?.shift(x, y));
+const tilt = parallax(stage, motion, unit, (o) => stars?.shift(o));
 // En teléfono, el primer toque activa el giroscopio (en iPhone el sistema pide permiso).
 if (matchMedia('(pointer: coarse)').matches) addEventListener('click', () => tilt.enableGyro(), { once: true, capture: true });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) tilt.recenter(); });
@@ -336,21 +336,19 @@ const imageReady = (src) => new Promise((res) => { const im = new Image(); im.on
 async function runBoot() {
   const keep = location.hash === '#a05'; // para revisar A05: se queda hasta tocar la pantalla
   if (!motion.reduced) orbit();
-  if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .12, duration: 1, ease: 'power2.out' });
-  const [{ session }] = await Promise.all([
-    auth.restoreSession(),
-    imageReady('assets/img/escena.webp'),
-    new Promise((r) => setTimeout(r, motion.reduced ? 600 : 1800)),
-  ]);
-  if (keep) await new Promise((r) => boot.addEventListener('pointerdown', r, { once: true }));
+  if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .06, duration: .5, ease: 'power2.out' });
+  // Sin tiempo mínimo: A05 solo dura lo que tarden la escena y la sesión. En un teléfono
+  // rápido apenas se ve; si algo se traba, la animación de carga queda a la vista.
+  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady('assets/img/escena.webp')]);
+  if (keep) await new Promise((r) => { boot.addEventListener('pointerdown', r, { once: true }); addEventListener('hashchange', r, { once: true }); });
   if (session) { /* aquí se abriría Hoy (L01) en el mundo predeterminado */ }
-  if (keep) history.replaceState(null, '', '#a01');
+  if (keep && location.hash === '#a05') history.replaceState(null, '', '#a01');
 }
 // El arranque se desvanece mientras la escena aparece: un solo movimiento continuo.
 function hideBoot() {
   const done = () => { cancelAnimationFrame(orbitRaf); boot.hidden = true; };
   if (!gsap || motion.reduced) { done(); return; }
-  gsap.to(boot, { opacity: 0, duration: 1.1, ease: 'power2.inOut', onComplete: done });
+  gsap.to(boot, { opacity: 0, duration: .6, ease: 'power2.inOut', onComplete: done });
 }
 document.fonts.ready.then(async () => { splitTitle(); await runBoot(); stage.classList.remove('booting'); startStars(); intro(); hideBoot(); });
 addEventListener('resize', layoutShine);

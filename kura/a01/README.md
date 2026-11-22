@@ -10,7 +10,7 @@ HTML, CSS y JavaScript sin compilación. Se abre con un servidor local:
 npx serve kura/a01
 ```
 
-- A05 (Restaurando sesión) aparece al abrir la app mientras carga y comprueba la sesión; luego da paso a A01. Para revisarlo quieto: `#a05` (se queda hasta tocar la pantalla).
+- A05 (Restaurando sesión) solo dura lo que tarde la carga: en un teléfono rápido apenas se ve; si algo se traba, queda la animación de carga. Para revisarlo quieto: `#a05` (se queda hasta tocar la pantalla).
 - A03 (Recuperar contraseña): `#a03` o «Olvidé mi contraseña». A04 (Enlace enviado): tras enviar, o `#a04`.
 - A02 (Crear cuenta): `http://localhost:3000/#a02`, o «Crear cuenta» desde A01. El escenario no cambia: solo el contenido del HUD, con transición suave; el botón «atrás» del teléfono regresa a A01.
 - Español: `http://localhost:3000/#es` · Inglés: `http://localhost:3000/#en` (también desde el botón «English / Español» bajo el panel).
@@ -20,9 +20,9 @@ npx serve kura/a01
 
 `visor.html` muestra la app dentro de un teléfono (iPhone 17, 17 Pro Max, Air, 16/15, Plus, 14/13, mini, SE; Galaxy S25 Ultra, S25/S24, A55; Pixel 9 Pro; Xiaomi; Motorola, o una medida personalizada) a su resolución real, con botones para saltar a A01–A05 y ver la entrada de nuevo. «Elegir carpeta de audio» o «Elegir archivos de audio» carga la música y los sonidos desde el dispositivo (no se suben a ningún lado); reconoce los nombres del ZIP y tus nombres originales, y un archivo con «shadow» en el nombre se agrega como segunda canción. Abierto en un teléfono, la app ocupa toda la pantalla y los controles quedan en un botón.
 
-## Giroscopio
+## Paralaje y giroscopio
 
-En el visor, el cuadro «Giroscopio» simula la inclinación: arrastrar inclina el teléfono en 3D y la escena se mueve igual que con el sensor real.
+El mundo se mueve por capas (GSAP `quickTo`): cielo, nubes lejanas y cercanas, estrellas y el HUD en sentido contrario, cada uno a su profundidad (`config.depth`). En PC lo mueve el cursor; en teléfono, el giroscopio. En el visor, el cuadro «Giroscopio» simula la inclinación sin girar el teléfono: el movimiento ocurre dentro de la pantalla.
 
 
 En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la escena (y las estrellas) se mueven como con el cursor en PC. En iPhone el sistema pide permiso la primera vez. Necesita HTTPS (Netlify, GitHub Pages) y no funciona dentro de la web app de Claude, que bloquea los sensores.
@@ -59,6 +59,8 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 - **Invitación del botón.** Tras unos segundos sin actividad, un reflejo cruza el botón, el halo se enciende y la flecha da dos pasos a la derecha. Se repite cada 7 s mientras la página sigue en reposo; sin sonido.
 
 ## Audio
+
+- **Volumen auditado:** todos los efectos llegan al mismo nivel (pico de corto plazo ≈ −22 dBFS, diferencia < 1 dB) con `config.audio.sfxLevels`; las tres canciones ya miden ≈ −13.5 LUFS entre sí. Para medir un sonido: `__kura.audio._measure('nombre')`.
 
 - El botón de sonido abre un selector con dos interruptores, **Música** y **Efectos de sonido**; la elección se recuerda.
 - Tres canciones para toda la sección inicial, en orden y en bucle: 1 (`ambiente.mp3`), 2 · Start Shadow Protocol y 3 · Second Shadow Protocol (`config.audio.playlist`).

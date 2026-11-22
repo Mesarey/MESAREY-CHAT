@@ -71,11 +71,14 @@ export const config = {
       'audio/musica-2-shadow-protocol-inicio.mp3',   // 2 · Start Shadow Protocol
       'audio/musica-3-shadow-protocol-segunda.mp3',  // 3 · Second Shadow Protocol
     ],
-    musicVolume: 0.55,
-    sfxVolume: 0.8,
+    musicVolume: 0.5,        // las tres canciones miden ≈ −13.5 LUFS (diferencia < 1 dB): mismo volumen para todas
+    sfxVolume: 1.0,          // efectos un poco por encima de la música, todos al mismo nivel (ver sfxLevels)
     fadeOut: 2.6,            // segundos al silenciar
     fadeIn: 2.0,
     // Sonidos con archivo propio. Los que no están aquí (toque, enfoque, alternar) se sintetizan.
+    // Auditoría de volumen: ajuste en dB por sonido para que todos lleguen al mismo nivel
+    // (pico de corto plazo ≈ −24 dBFS medido dentro de la app). Medido con audio._measure(nombre).
+    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: 6, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4 },
     sfxFiles: {
       error: 'audio/sfx/acceso-fallido.mp3',       // inicio de sesión incorrecto
       granted: 'audio/sfx/acceso-concedido.mp3',   // acceso concedido (correo, Google u otro proveedor)
@@ -90,6 +93,8 @@ export const config = {
     maxPixelRatioDesktop: 2,
     slowFrameMs: 26,         // si la media supera esto, se reduce la calidad
   },
-  parallax: 6,
-  gyroParallax: 16,         // con el giroscopio el movimiento es mayor: se nota al inclinar el teléfono               // px de referencia que se mueve la escena con el cursor
+  parallax: 6,              // px de referencia por unidad de profundidad, con el cursor
+  gyroParallax: 7,          // con el giroscopio (el cielo nunca se mueve más que su margen de 8 px)
+  // Profundidad de cada capa: positiva = se aleja al mover, negativa = flota delante (HUD).
+  depth: { scene: 1, wind: 1.4, mist: 2, front: 3, bottom: 2.4, stars: 0.75, hud: -1.7, logo: -0.8 },
 };

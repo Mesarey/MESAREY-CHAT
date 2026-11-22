@@ -85,28 +85,49 @@ export function applySceneConfig() {
   s.setProperty('--light-breathe', `${config.lights.breathe}s`);
 }
 
-/** Paralaje leve con el cursor. La escena es una sola ilustración: se mueve completa, sin deformar personajes. */
+/**
+ * Paralaje por capas (cursor en PC, giroscopio en teléfono), suavizado con GSAP.
+ * Cada capa se mueve según su profundidad: el cielo poco, las nubes cercanas más, y el HUD
+ * en sentido contrario, como si estuviera flotando delante del mundo. Así, al mover el
+ * cursor o inclinar el teléfono, las capas se separan y la escena se siente en 3D.
+ * La ilustración es una sola imagen: se desplaza completa, sin deformar a los personajes.
+ */
 export function parallax(stage, motion, unit, onShift = () => {}) {
-  const layers = [...stage.querySelectorAll('[data-depth]')];
-  let tx = 0, ty = 0, x = 0, y = 0, raf = 0, amp = config.parallax;
-  const step = () => {
-    x += (tx - x) * 0.06; y += (ty - y) * 0.06;
-    const u = unit();
-    for (const el of layers) el.style.translate = `${(-x * amp * +el.dataset.depth * u).toFixed(2)}px ${(-y * amp * +el.dataset.depth * u).toFixed(2)}px`;
-    onShift(-x * amp * u, -y * amp * u); // misma profundidad que la ilustración
-    raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.001 ? requestAnimationFrame(step) : 0;
+  const gsap = window.gsap;
+  const D = config.depth;
+  const groups = [
+    [stage.querySelectorAll('.scene-art'), D.scene],
+    [stage.querySelectorAll('.wind'), D.wind],
+    // las nubes ya usan «translate» para su deriva: el paralaje va en «transform»
+    [stage.querySelectorAll('[data-cloud="mist"] .cloud'), D.mist, 'transform'],
+    [stage.querySelectorAll('[data-cloud="front"] .cloud'), D.front, 'transform'],
+    [stage.querySelectorAll('[data-cloud="bottom"] .cloud'), D.bottom, 'transform'],
+    [stage.querySelectorAll('.lights'), D.scene],
+    [stage.querySelectorAll('.content'), D.hud],
+    [stage.querySelectorAll('.logo, .sound, .sound-menu'), D.logo],
+  ].map(([els, depth, prop = 'translate']) => ({ els: [...els], depth, prop })); // «translate» no choca con las animaciones de GSAP
+  const st = { x: 0, y: 0 };
+  let amp = config.parallax;
+  const apply = () => {
+    const u = unit(), k = amp * u;
+    for (const g of groups) {
+      const dx = (-st.x * k * g.depth).toFixed(2), dy = (-st.y * k * g.depth).toFixed(2);
+      const v = g.prop === 'transform' ? `translate3d(${dx}px, ${dy}px, 0)` : `${dx}px ${dy}px`;
+      for (const el of g.els) el.style[g.prop] = v;
+    }
+    onShift({ sky: [-st.x * k * D.stars, -st.y * k * D.stars], hud: [-st.x * k * D.hud, -st.y * k * D.hud] });
   };
-  const kick = () => { if (!raf) raf = requestAnimationFrame(step); };
+  // quickTo: cada nueva lectura reorienta la animación sin cortes (mismo suavizado que el cursor).
+  const qx = gsap ? gsap.quickTo(st, 'x', { duration: 1.1, ease: 'power3.out', onUpdate: apply }) : (v) => { st.x = v; apply(); };
+  const qy = gsap ? gsap.quickTo(st, 'y', { duration: 1.1, ease: 'power3.out', onUpdate: apply }) : (v) => { st.y = v; apply(); };
+  const aim = (nx, ny, a) => { amp = a; qx(nx); qy(ny); };
   stage.addEventListener('pointermove', (e) => {
     if (motion.reduced || e.pointerType === 'touch') return;
     const r = stage.getBoundingClientRect();
-    amp = config.parallax;
-    tx = ((e.clientX - r.left) / r.width) * 2 - 1;
-    ty = ((e.clientY - r.top) / r.height) * 2 - 1;
-    kick();
+    aim(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1, config.parallax);
   });
-  stage.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
-  motion.onChange((reduced) => { if (reduced) { tx = ty = 0; kick(); } });
+  stage.addEventListener('pointerleave', () => aim(0, 0, amp));
+  motion.onChange((reduced) => { if (reduced) aim(0, 0, amp); });
 
   // Giroscopio (teléfono): inclinar el teléfono mueve la escena igual que el cursor en PC.
   // La primera lectura es la posición neutra; si el teléfono se queda en otra posición,
@@ -118,10 +139,7 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
     if (motion.reduced || e.gamma == null || e.beta == null) return;
     if (!base) base = { g: e.gamma, b: e.beta };
     base.g += (e.gamma - base.g) * 0.004; base.b += (e.beta - base.b) * 0.004;
-    amp = config.gyroParallax;
-    tx = clamp((e.gamma - base.g) / RANGE);
-    ty = clamp((e.beta - base.b) / RANGE);
-    kick();
+    aim(clamp((e.gamma - base.g) / RANGE), clamp((e.beta - base.b) / RANGE), config.gyroParallax);
   };
   return {
     /** Llamar desde un toque del usuario (iOS pide permiso para leer el giroscopio). */

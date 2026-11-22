@@ -17,8 +17,7 @@ export const auth = {
   },
   /** A05: comprobar si hay una sesión guardada. Con sesión se abriría Hoy en el mundo predeterminado. */
   async restoreSession() {
-    await new Promise((r) => setTimeout(r, 400));
-    return { session: null };
+    return { session: null }; // sin servidor: responde al instante
   },
   /** Registro con correo (A02). Al responder ok se abriría la bienvenida con Alaira (A06). */
   async signUpWithEmail(_email, _password) {

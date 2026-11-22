@@ -140,6 +140,17 @@ export const audio = {
   sfx: (name) => playSfx(name),
   /** Siguiente canción de la lista (para el futuro panel de música, M06). */
   next() { if (el) nextTrack(); },
+  /** Auditoría de volumen: reproduce un sonido y devuelve su nivel máximo de corto plazo (dBFS, ventanas de ~43 ms). */
+  async _measure(name) {
+    if (!ctx) return null;
+    const an = ctx.createAnalyser(); an.fftSize = 2048; sfxGain.connect(an);
+    const buf = new Float32Array(an.fftSize); let peak = 0;
+    playSfx(name);
+    const t0 = performance.now();
+    await new Promise((res) => { const tick = () => { an.getFloatTimeDomainData(buf); let s = 0; for (const v of buf) s += v * v; peak = Math.max(peak, Math.sqrt(s / buf.length)); if (performance.now() - t0 < 1800) setTimeout(tick, 15); else res(); }; tick(); });
+    sfxGain.disconnect(an);
+    return peak ? 20 * Math.log10(peak) : -Infinity;
+  },
   /** Solo para pruebas: simula que la canción actual terminó. */
   _ended() { el?.dispatchEvent(new Event('ended')); },
   /** Estado para pruebas y depuración. */
@@ -147,8 +158,9 @@ export const audio = {
 };
 
 /* ---------- Sonidos de interfaz ---------- */
+let level = 1; // nivel del sonido en curso (auditoría de volumen)
 function out(dry = 1, wet = .6) {
-  const g = ctx.createGain(); g.gain.value = dry; g.connect(sfxGain);
+  const g = ctx.createGain(); g.gain.value = dry * level; g.connect(sfxGain);
   if (wet) { const w = ctx.createGain(); w.gain.value = wet; g.connect(w); w.connect(reverb); }
   return g;
 }
@@ -184,6 +196,7 @@ function playSfx(name) {
   const t = ctx.currentTime + .005;
   lastSfx = samples[name] ? `${name}:archivo` : SYNTH[name] ? `${name}:sintetizado` : `${name}:sin-sonido`;
   history.push(lastSfx); if (history.length > 12) history.shift();
+  level = 10 ** ((config.audio.sfxLevels?.[name] ?? 0) / 20);
   if (samples[name]) { const s = ctx.createBufferSource(); s.buffer = samples[name]; s.connect(out(1, 0)); s.start(t); return; }
   SYNTH[name]?.(t); // «acceso concedido» y «acceso fallido» solo suenan con sus archivos
 }

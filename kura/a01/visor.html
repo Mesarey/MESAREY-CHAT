@@ -41,7 +41,8 @@
 
     /* Teléfono */
     main { position: relative; display: grid; place-items: center; overflow: hidden; }
-    .phone { position: relative; transform-origin: center; transition: transform .4s cubic-bezier(.2, .9, .3, 1); }
+    /* Centrado absoluto y escalado: el teléfono completo siempre cabe en la ventana. */
+    .phone { position: absolute; left: 50%; top: 50%; transform-origin: center; transition: transform .4s cubic-bezier(.2, .9, .3, 1); }
     .body { position: relative; padding: 14px; border-radius: 62px; background: linear-gradient(145deg, #3a3550, #17141f 40%, #2a2638); box-shadow: 0 0 0 2px #4b4560, 0 40px 120px rgba(0, 0, 0, .75), 0 0 90px rgba(143, 69, 248, .28); }
     .body::before, .body::after { content: ''; position: absolute; width: 4px; border-radius: 3px; background: #3b3650; }
     .body::before { left: -5px; top: 150px; height: 64px; box-shadow: 0 84px 0 #3b3650; }
@@ -63,7 +64,7 @@
       aside { position: fixed; inset: auto 0 0 0; max-height: 75svh; z-index: 5; border: 0; border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; translate: 0 105%; transition: translate .35s; }
       body.open aside { translate: 0 0; }
       main { position: fixed; inset: 0; }
-      .phone { transform: none !important; }
+      .phone { position: static; transform: none !important; }
       .body { padding: 0; border-radius: 0; box-shadow: none; background: none; } .body::before, .body::after, .island, .home, .label { display: none !important; }
       .screen { border-radius: 0; }
       .screen iframe { width: 100vw !important; height: 100svh !important; }
@@ -117,7 +118,7 @@
 
     <h2>Giroscopio</h2>
     <div class="pad" id="pad" aria-label="Inclinar el teléfono"><i id="pad-dot"></i></div>
-    <p class="note">Arrastra dentro del cuadro para inclinar el teléfono: la escena se mueve como en un teléfono real. Al soltar, regresa al centro.</p>
+    <p class="note">Arrastra dentro del cuadro como si inclinaras el teléfono: el mundo se mueve por capas dentro de la pantalla (cielo, nubes y HUD a distinta profundidad), igual que con el giroscopio real. Al soltar, regresa al centro.</p>
 
     <h2>Música y sonidos</h2>
     <label class="file primary">Elegir carpeta de audio<input type="file" id="pick-folder" webkitdirectory multiple /></label>
@@ -151,10 +152,10 @@
       phone.className = `phone ${kind}`;
       app.style.width = `${w}px`; app.style.height = `${h}px`;
       $('label').textContent = `${w} × ${h} px · escala ${Math.round(scale() * 100)} %`;
-      phone.style.transform = `scale(${scale()})`;
+      phone.style.transform = `translate(-50%, calc(-50% - 12px)) scale(${scale()})`;
       function scale() {
         const r = document.querySelector('main').getBoundingClientRect();
-        const pw = w + 28 + 20, ph = h + (kind === 'se' ? 140 : 28) + 70;
+        const pw = w + 28 + 40, ph = h + (kind === 'se' ? 140 : 28) + 90;
         return Math.min(1, r.width / pw, r.height / ph);
       }
     }
@@ -226,7 +227,6 @@
       const nx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
       const ny = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
       dot.style.transform = `translate(${nx * (r.width / 2 - 14)}px, ${ny * (r.height / 2 - 14)}px)`;
-      tiltEl.style.transform = `rotateY(${nx * 18}deg) rotateX(${-ny * 14}deg)`;
       send(nx * 20, 45 + ny * 20);
     };
     pad.addEventListener('pointerdown', (e) => {
@@ -238,7 +238,7 @@
     const release = () => {
       if (!dragging) return;
       dragging = false; pad.classList.remove('dragging');
-      dot.style.transform = ''; tiltEl.style.transform = '';
+      dot.style.transform = '';
       send(0, 45);
     };
     pad.addEventListener('pointerup', release); pad.addEventListener('pointercancel', release);

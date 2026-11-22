@@ -156,17 +156,18 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
   fGeo.setAttribute('position', aFPos); fGeo.setAttribute('aAlpha', aFAlpha); fGeo.setAttribute('aSize', new THREE.BufferAttribute(fSize, 1));
   fGeo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1e6);
   { let k = 0; for (const g of groups) for (let i = 0; i < g.c.count; i++) fSize[k++] = g.c.size; }
-  const flareU = { ...shared, uFlare: { value: 1 }, uFlareReveal: { value: reveal.flares } };
+  const flareU = { ...shared, uFlare: { value: 1 }, uFlareReveal: { value: reveal.flares }, uHud: { value: new THREE.Vector2() } };
   const flareMat = new THREE.ShaderMaterial({
     uniforms: flareU, transparent: true, depthWrite: false, ...ADD,
     vertexShader: /* glsl */`
       attribute float aAlpha, aSize;
-      uniform float uUnit, uDpr, uFlare, uFlareReveal;
+      uniform float uUnit, uDpr, uFlare, uFlareReveal; uniform vec2 uHud;
       varying float vAlpha;
       void main() {
         vAlpha = aAlpha * uFlare * uFlareReveal;
         gl_PointSize = aSize * uUnit * uDpr;
-        gl_Position = projectionMatrix * vec4(position.x * uUnit, -position.y * uUnit, 0.0, 1.0);
+        vec2 q = position.xy * uUnit + uHud; // los destellos se mueven con el HUD
+        gl_Position = projectionMatrix * vec4(q.x, -q.y, 0.0, 1.0);
       }`,
     fragmentShader: /* glsl */`
       varying float vAlpha;
@@ -241,7 +242,7 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
     /** Rectángulo de un elemento con destellos (hud | button), en coordenadas de referencia: { x, y, w, h, r }. */
     setRect(name, rect) { const g = groups.find((x) => x.name === name); if (g) g.rect = rect; },
     /** Desplazamiento de paralaje en px CSS: las estrellas se mueven con la ilustración. */
-    shift(x, y) { shared.uShift.value.set(x, y); },
+    shift({ sky, hud }) { shared.uShift.value.set(...sky); flareU.uHud.value.set(...hud); },
     /** Chispas finas en un punto de la pantalla (coordenadas de cliente). */
     burst(clientX, clientY, scale = 1) {
       if (motion.reduced) return;
