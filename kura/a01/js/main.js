@@ -105,16 +105,43 @@ const startStars = () => createStarField({ canvas: $('fx'), stage, motion, isMob
   stars = s;
   if (!s) return devPanel({ stars, button, hud, wind });
   // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
+  // El destello se coloca con la posición del panel SIN el paralaje (el shader ya lo suma con uHud) y
+  // solo cuando nada entre el panel y el HUD está animado (entradas, salidas, hover del botón).
+  // Antes se medía en cualquier momento: si el HUD estaba desplazado o a media transición, el
+  // destello quedaba corrido. Si en ese instante algo se mueve, se espera a la siguiente medición.
+  const content = document.querySelector('.content');
+  const moved = (e) => {
+    const cs = getComputedStyle(e);
+    const still = cs.transform === 'none' || new DOMMatrixReadOnly(cs.transform).isIdentity; // GSAP puede dejar translate(0,0)
+    return !still || !/^(none|0px( 0px)?)$/.test(cs.translate) || !/^(none|1( 1)?)$/.test(cs.scale);
+  };
+  const xy = (v) => (v === 'none' ? [0, 0] : [...v.split(' ').map(parseFloat), 0].slice(0, 2));
+  const rectOf = (el, r) => {
+    if (!el.offsetWidth) return null; // vista oculta
+    for (let n = el; n && n !== content; n = n.parentElement) if (moved(n)) return null;
+    const u = unit(), sr = stage.getBoundingClientRect(), b = el.getBoundingClientRect();
+    const [tx, ty] = xy(getComputedStyle(content).translate);
+    return { x: (b.left - sr.left - tx) / u, y: (b.top - sr.top - ty) / u, w: b.width / u, h: b.height / u, r };
+  };
+  let lastKey = '';
   syncFlares = () => {
-    const u = unit(), sr = stage.getBoundingClientRect();
-    const rect = (el, r) => { const b = el.getBoundingClientRect(); return { x: (b.left - sr.left) / u, y: (b.top - sr.top) / u, w: b.width / u, h: b.height / u, r }; };
-    s.setRect('hud', rect(view.panel, 70));
-    const c = rect(view.cta, 0); c.r = c.h / 2; s.setRect('button', c);
+    if (switchTl) return; // a media transición: se mide al terminar
+    const hudR = rectOf(view.panel, 70), btnR = rectOf(view.cta, 0);
+    if (!hudR || !btnR) return;
+    btnR.r = btnR.h / 2;
+    const key = JSON.stringify([hudR, btnR], (k, v) => (typeof v === 'number' ? +v.toFixed(2) : v));
+    if (key === lastKey) return;
+    lastKey = key;
+    s.setRect('hud', hudR); s.setRect('button', btnR);
   };
   const sync = () => syncFlares();
   for (const v of Object.values(VIEWS)) new ResizeObserver(sync).observe(v.panel);
-  new ResizeObserver(sync).observe(stage); sync();
-  setTimeout(sync, 2600); // tras la animación de entrada
+  new ResizeObserver(sync).observe(stage);
+  new ResizeObserver(sync).observe(document.querySelector('.content')); // si algo arriba del panel cambia de alto
+  document.fonts?.ready.then(sync);
+  sync();
+  // Red de seguridad: dos veces por segundo se confirma que el destello sigue al panel (barato: solo lee medidas).
+  setInterval(() => { if (!document.hidden) sync(); }, 500);
   devPanel({ stars, button, hud, wind });
 });
 
@@ -179,7 +206,7 @@ addEventListener('pointerdown', (e) => { if (!soundMenu.hidden && !e.target.clos
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && !soundMenu.hidden) { setMenu(false); soundBtn.focus(); } });
 audio.onChange(updateSoundButton);
 updateSoundButton();
-window.__kura = { audio, view: () => view.name, tilt };
+window.__kura = { audio, view: () => view.name, tilt, flares: () => stars?.rects?.() };
 
 /* ---------- Términos y privacidad ---------- */
 const legal = legalDialog({ t, sfx: (n) => audio.sfx(n), lang: currentLang });

@@ -116,9 +116,11 @@ export function legalDialog({ t, sfx, lang }) {
     body.scrollTop = 0;
   }
   const render = () => (current === 'accept' ? renderAccept() : renderDoc(current));
-  const finish = (ok) => { const r = resolver; resolver = null; if (dlg.open) dlg.close(); r?.(ok); };
-  dlg.querySelector('.legal-close').addEventListener('click', () => { sfx('tap'); finish(false); });
-  dlg.addEventListener('close', () => { if (resolver) finish(false); });
+  let accepted = false;
+  const finish = (ok) => { accepted = ok; const r = resolver; resolver = null; if (dlg.open) dlg.close(); r?.(ok); };
+  dlg.querySelector('.legal-close').addEventListener('click', () => finish(false));
+  // Cerrar (X, tocar fuera o Escape) suena siempre igual; aceptar no, porque sigue el sonido de la cuenta.
+  dlg.addEventListener('close', () => { if (resolver) finish(false); if (!accepted) sfx('closeLegal'); accepted = false; });
   other.addEventListener('click', () => { sfx('legal'); renderDoc(current === 'terms' ? 'privacy' : 'terms'); });
   dlg.addEventListener('click', (e) => { if (e.target === dlg) finish(false); }); // tocar fuera cierra
   check.addEventListener('change', () => { cont.disabled = !check.checked; sfx('focus'); });

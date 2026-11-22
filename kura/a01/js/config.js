@@ -22,7 +22,6 @@ export const config = {
   },
   clouds: {
     // y, alto, opacidad, espejo, desenfoque (px), deriva (px de referencia), duración (s)
-    mist:   { y: 690,  h: 200, opacity: 0.16, flip: true,  blur: 3,   drift: 20, duration: 38 },
     front:  { y: 1040, h: 260, opacity: 0.22, flip: false, blur: 1.5,   drift: 34, duration: 30 },
     bottom: { y: 1450, h: 300, opacity: 0.50, flip: true,  blur: 0,   drift: 28, duration: 42 },
   },
@@ -65,20 +64,21 @@ export const config = {
   },
   audio: {
     // Canciones de toda la sección inicial (A01–A05 y el test), en orden; al acabar una
-    // empieza la siguiente y al terminar la 3 vuelve a la 1. Se desvanecen al entrar al mundo de Alaira.
+    // empieza la siguiente y al terminar la 4 vuelve a la 1. Se desvanecen al entrar al mundo de Alaira.
     playlist: [
       'audio/ambiente.mp3',                          // 1
       'audio/musica-2-shadow-protocol-inicio.mp3',   // 2 · Start Shadow Protocol
       'audio/musica-3-shadow-protocol-segunda.mp3',  // 3 · Second Shadow Protocol
+      'audio/musica-4-shadows-of-the-void.mp3',      // 4 · Shadows of the Void
     ],
-    musicVolume: 0.5,        // las tres canciones miden ≈ −13.5 LUFS (diferencia < 1 dB): mismo volumen para todas
+    musicVolume: 0.5,        // las cuatro canciones miden ≈ −13.5 LUFS (diferencia < 1 dB): mismo volumen para todas
     sfxVolume: 1.0,          // efectos un poco por encima de la música, todos al mismo nivel (ver sfxLevels)
     fadeOut: 2.6,            // segundos al silenciar
     fadeIn: 2.0,
     // Sonidos con archivo propio. Los que no están aquí (toque, enfoque, alternar) se sintetizan.
     // Auditoría de volumen: ajuste en dB por sonido para que todos lleguen al mismo nivel
     // (pico de corto plazo ≈ −24 dBFS medido dentro de la app). Medido con audio._measure(nombre).
-    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: 6, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4 },
+    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: 6, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8 },
     sfxFiles: {
       error: 'audio/sfx/acceso-fallido.mp3',       // inicio de sesión incorrecto
       granted: 'audio/sfx/acceso-concedido.mp3',   // acceso concedido (correo, Google u otro proveedor)
@@ -86,6 +86,7 @@ export const config = {
       effects: 'audio/sfx/efectos.wav',            // botón «Reducir / Efectos completos»
       createAccount: 'audio/sfx/crear-cuenta.wav', // «Crear cuenta»
       soundIcon: 'audio/sfx/icono-audio.wav',     // tocar el icono de audio
+      closeLegal: 'audio/sfx/cerrar-aviso.wav',    // cerrar Términos / Privacidad (X, tocar fuera o Escape)
     },
   },
   performance: {
@@ -94,7 +95,7 @@ export const config = {
     slowFrameMs: 26,         // si la media supera esto, se reduce la calidad
   },
   parallax: 6,              // px de referencia por unidad de profundidad, con el cursor
-  gyroParallax: 7,          // con el giroscopio (el cielo nunca se mueve más que su margen de 8 px)
+  gyroParallax: 10,          // con el giroscopio (el cielo nunca se mueve más que su margen de 12 px)
   // Profundidad de cada capa: positiva = se aleja al mover, negativa = flota delante (HUD).
-  depth: { scene: 1, wind: 1.4, mist: 2, front: 3, bottom: 2.4, stars: 0.75, hud: -1.7, logo: -0.8 },
+  depth: { scene: 1, wind: 1.4, front: 3, bottom: 2.4, stars: 0.75, hud: -1.7, logo: -0.8 },
 };

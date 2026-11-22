@@ -241,6 +241,8 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
     flareUniform: flareU.uFlare,
     /** Rectángulo de un elemento con destellos (hud | button), en coordenadas de referencia: { x, y, w, h, r }. */
     setRect(name, rect) { const g = groups.find((x) => x.name === name); if (g) g.rect = rect; },
+    /** Pruebas: rectángulos actuales de los destellos (px de referencia, relativos al escenario). */
+    rects: () => Object.fromEntries(groups.map((g) => [g.name, g.rect])),
     /** Desplazamiento de paralaje en px CSS: las estrellas se mueven con la ilustración. */
     shift({ sky, hud }) { shared.uShift.value.set(...sky); flareU.uHud.value.set(...hud); },
     /** Chispas finas en un punto de la pantalla (coordenadas de cliente). */

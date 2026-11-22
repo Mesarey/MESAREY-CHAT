@@ -178,12 +178,14 @@
       ['ambiente.mp3', 'Canción 1', /^(1-)?(ambiente|_+)\.mp3$/i],
       ['musica-2-shadow-protocol-inicio.mp3', 'Canción 2 · Start Shadow Protocol', /start[_ -]?shadow|musica-2/i],
       ['musica-3-shadow-protocol-segunda.mp3', 'Canción 3 · Second Shadow Protocol', /second[_ -]?shadow|musica-3/i],
+      ['musica-4-shadows-of-the-void.mp3', 'Canción 4 · Shadows of the Void', /shadows[_ -]?of[_ -]?the[_ -]?void|musica-4/i],
       ['acceso-fallido.mp3', 'Acceso fallido', /login[_ -]?failed|acceso-fallido/i],
       ['acceso-concedido.mp3', 'Acceso concedido', /login[_ -]?granted|acceso-concedido/i],
       ['abrir-aviso.wav', 'Términos / Privacidad', /abrir[_ -]?(popup|aviso)|abrir-aviso/i],
       ['efectos.wav', 'Efectos completos', /efectos[_ -]?completos|^efectos\.wav$/i],
       ['crear-cuenta.wav', 'Crear cuenta', /crear[_ -]?(una[_ -]?)?cuenta/i],
       ['icono-audio.wav', 'Icono de audio', /icono[_ -]?(de[_ -]?)?audio/i],
+      ['cerrar-aviso.wav', 'Cerrar Términos / Privacidad', /cerrar[_ -]?(popup|aviso)|cerrar-aviso/i],
     ];
     window.__kuraAudio = { files: {}, extraTracks: [] };
     function renderList() {
@@ -216,7 +218,8 @@
     const send = (gamma, beta) => {
       const w = app.contentWindow;
       try {
-        w.__kura?.tilt?.enableGyro();
+        // Directo a la app: no depende del permiso de orientación del navegador (Safari/Chrome de escritorio).
+        if (w.__kura?.tilt?.simulate) { w.__kura.tilt.simulate(gamma, beta); return; }
         const e = new w.Event('deviceorientation'); e.gamma = gamma; e.beta = beta; e.alpha = 0;
         w.dispatchEvent(e);
       } catch { /* la app todavía está cargando */ }

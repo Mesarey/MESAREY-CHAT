@@ -18,9 +18,9 @@ export function buildScene(root) {
   html.push('<div class="layer scene-art" data-depth="1"><img src="assets/img/escena.webp" alt="" decoding="async" fetchpriority="high" /></div>');
   // Nubes de atrás con viento: detrás del grupo gracias a su silueta como máscara.
   html.push('<div class="cloud-wrap mask-wind wind" data-depth="1"></div>');
-  for (const name of ['mist', 'front', 'bottom']) {
-    const masked = name === 'mist' ? 'mask-mist' : '';
-    html.push(`<div class="cloud-wrap ${masked}" data-cloud="${name}"><div class="cloud" data-depth="${name === 'mist' ? 1.8 : 2.4}"></div></div>`);
+  // (La bruma intermedia sobre los personajes se quitó: velaba la ilustración.)
+  for (const name of Object.keys(config.clouds)) {
+    html.push(`<div class="cloud-wrap" data-cloud="${name}"><div class="cloud" data-depth="2.4"></div></div>`);
   }
   html.push('<div class="lights">');
   for (const [name, , rgb, cx, cy, rx, ry] of LIGHTS) {
@@ -99,7 +99,6 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
     [stage.querySelectorAll('.scene-art'), D.scene],
     [stage.querySelectorAll('.wind'), D.wind],
     // las nubes ya usan «translate» para su deriva: el paralaje va en «transform»
-    [stage.querySelectorAll('[data-cloud="mist"] .cloud'), D.mist, 'transform'],
     [stage.querySelectorAll('[data-cloud="front"] .cloud'), D.front, 'transform'],
     [stage.querySelectorAll('[data-cloud="bottom"] .cloud'), D.bottom, 'transform'],
     [stage.querySelectorAll('.lights'), D.scene],
@@ -132,15 +131,19 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
   // Giroscopio (teléfono): inclinar el teléfono mueve la escena igual que el cursor en PC.
   // La primera lectura es la posición neutra; si el teléfono se queda en otra posición,
   // el centro se reajusta poco a poco para que la escena no quede descentrada.
-  let base = null, gyroOn = false;
-  const RANGE = 18; // grados de inclinación para llegar al borde del movimiento
+  let base = null, gyroOn = false, last = 0;
+  const RANGE = 18;   // grados de inclinación para llegar al borde del movimiento
+  const RECENTER = 7; // segundos que tarda en reajustarse el centro si el teléfono se queda inclinado
   const clamp = (v) => Math.max(-1, Math.min(1, v));
-  const onTilt = (e) => {
-    if (motion.reduced || e.gamma == null || e.beta == null) return;
-    if (!base) base = { g: e.gamma, b: e.beta };
-    base.g += (e.gamma - base.g) * 0.004; base.b += (e.beta - base.b) * 0.004;
-    aim(clamp((e.gamma - base.g) / RANGE), clamp((e.beta - base.b) / RANGE), config.gyroParallax);
+  const tiltTo = (gamma, beta) => {
+    if (motion.reduced || gamma == null || beta == null) return;
+    const now = performance.now();
+    if (!base || now - last > 1500) base = { g: gamma, b: beta }; // primera lectura (o tras una pausa larga): posición neutra
+    const k = 1 - Math.exp(-Math.min(0.1, (now - last) / 1000) / RECENTER); last = now; // por tiempo, no por evento
+    base.g += (gamma - base.g) * k; base.b += (beta - base.b) * k;
+    aim(clamp((gamma - base.g) / RANGE), clamp((beta - base.b) / RANGE), config.gyroParallax);
   };
+  const onTilt = (e) => tiltTo(e.gamma, e.beta);
   return {
     /** Llamar desde un toque del usuario (iOS pide permiso para leer el giroscopio). */
     async enableGyro() {
@@ -156,5 +159,7 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
       return true;
     },
     recenter() { base = null; },
+    /** Visor: inclinación simulada (mismas lecturas que el giroscopio, sin pedir permiso al navegador). */
+    simulate(gamma, beta) { tiltTo(gamma, beta); },
   };
 }

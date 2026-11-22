@@ -25,7 +25,9 @@ npx serve kura/a01
 
 ## Paralaje y giroscopio
 
-El mundo se mueve por capas (GSAP `quickTo`): cielo, nubes lejanas y cercanas, estrellas y el HUD en sentido contrario, cada uno a su profundidad (`config.depth`). En PC lo mueve el cursor; en teléfono, el giroscopio. En el visor, el cuadro «Giroscopio» simula la inclinación sin girar el teléfono: el movimiento ocurre dentro de la pantalla.
+El mundo se mueve por capas (GSAP `quickTo`): cielo, nubes lejanas y cercanas, estrellas y el HUD en sentido contrario, cada uno a su profundidad (`config.depth`). En PC lo mueve el cursor; en teléfono, el giroscopio. En el visor, el cuadro «Giroscopio» simula la inclinación sin girar el teléfono: el movimiento ocurre dentro de la pantalla. El visor le pasa la inclinación directo a la app (`__kura.tilt.simulate`), así funciona en cualquier navegador aunque no dé permiso de sensores.
+
+Los destellos ópticos se colocan con la posición del panel sin el paralaje (el shader lo suma aparte) y solo cuando nada del HUD está animado; dos veces por segundo se confirma que siguen en su lugar. Así no se desfasan al mover el cursor/teléfono ni al cambiar rápido de pantalla.
 
 
 En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la escena (y las estrellas) se mueven como con el cursor en PC. En iPhone el sistema pide permiso la primera vez. Necesita HTTPS (Netlify, GitHub Pages) y no funciona dentro de la web app de Claude, que bloquea los sensores.
@@ -49,7 +51,7 @@ En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la 
 | `js/legal.js` | Términos y aviso de privacidad (textos de prototipo) y su ventana |
 | `js/devpanel.js` | Panel de ajustes de desarrollo |
 
-Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma intermedia enmascarada → nubes delanteras e inferiores → luces → logo y audio → cristal → bordes luminosos → textos y controles → estrellas y chispas (lienzo sin eventos de puntero).
+Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delanteras e inferiores → luces → logo y audio → cristal → bordes luminosos → textos y controles → estrellas y chispas (lienzo sin eventos de puntero).
 
 ## Decisiones
 
@@ -63,10 +65,10 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 
 ## Audio
 
-- **Volumen auditado:** todos los efectos llegan al mismo nivel (pico de corto plazo ≈ −22 dBFS, diferencia < 1 dB) con `config.audio.sfxLevels`; las tres canciones ya miden ≈ −13.5 LUFS entre sí. Para medir un sonido: `__kura.audio._measure('nombre')`.
+- **Volumen auditado:** todos los efectos llegan al mismo nivel (pico de corto plazo ≈ −22 dBFS, diferencia < 1 dB) con `config.audio.sfxLevels`; las cuatro canciones miden ≈ −13 a −13.5 LUFS entre sí. Para medir un sonido: `__kura.audio._measure('nombre')`.
 
 - El botón de sonido abre un selector con dos interruptores, **Música** y **Efectos de sonido**; la elección se recuerda.
-- Tres canciones para toda la sección inicial, en orden y en bucle: 1 (`ambiente.mp3`), 2 · Start Shadow Protocol y 3 · Second Shadow Protocol (`config.audio.playlist`).
+- Cuatro canciones para toda la sección inicial, en orden y en bucle: 1 (`ambiente.mp3`), 2 · Start Shadow Protocol, 3 · Second Shadow Protocol y 4 · Shadows of the Void (`config.audio.playlist`).
 - La música sigue donde se quedó: la canción y el segundo se guardan, así que al recargar o volver a A05 no empieza de cero.
 - `audio/ambiente.mp3` suena tras el primer toque. Silenciar baja el volumen en 2.6 s, pero la canción sigue avanzando: al volver a activarla continúa donde iba. Si falta el archivo, no hay errores.
 - Para la transición al mundo de Alaira ya existe `audio.fadeOutMusic(segundos)`.
@@ -82,6 +84,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → bruma inter
 | `acceso-fallido.mp3` | Datos inválidos o inicio de sesión rechazado | **Incluido** (elegido por ti) |
 | `acceso-concedido.mp3` | Acceso concedido con correo, Google u otro proveedor | **Incluido** (elegido por ti) |
 | `abrir-aviso.wav` | Abrir Términos o Privacidad | **Incluido** (elegido por ti) |
+| `cerrar-aviso.wav` | Cerrar Términos o Privacidad (X, tocar fuera o Escape; al aceptar no suena) | **Incluido** (elegido por ti) |
 | `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |
 | `crear-cuenta.wav` | «Crear cuenta» | **Incluido** (elegido por ti) |
 | `icono-audio.wav` | Tocar el icono de audio | **Incluido** (elegido por ti) |
