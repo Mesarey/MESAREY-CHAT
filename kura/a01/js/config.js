@@ -86,5 +86,6 @@ export const config = {
     maxPixelRatioDesktop: 2,
     slowFrameMs: 26,         // si la media supera esto, se reduce la calidad
   },
-  parallax: 6,               // px de referencia que se mueve la escena con el cursor
+  parallax: 6,
+  gyroParallax: 16,         // con el giroscopio el movimiento es mayor: se nota al inclinar el teléfono               // px de referencia que se mueve la escena con el cursor
 };

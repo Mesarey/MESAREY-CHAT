@@ -441,19 +441,37 @@ button, input { font: inherit; color: inherit; }
 .cta-arrow-back { order: -1; }
 .cta-back:hover .cta-arrow, .cta-back:focus-visible .cta-arrow { translate: calc(-7 * var(--u)) calc(-1 * var(--u)); }
 
-/* ---------- A05 · Restaurando sesión (arranque) ---------- */
-.boot { position: absolute; inset: 0; z-index: 20; overflow: hidden; background: #241d55; }
+/* ---------- A05 · Restaurando sesión (arranque) ----------
+   La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:
+   --bu es la escala que la hace llenar el ancho y el alto, sin franjas ni bordes. */
+.boot { position: fixed; inset: 0; z-index: 20; overflow: hidden; background: #2a2160; --bu: max(calc(100vw / 899), calc(100svh / 1750)); }
 .boot[hidden] { display: none; }
 /* Mientras el arranque cubre la pantalla, la escena no se pinta (ahorra trabajo en teléfonos). */
 .booting > :not(.boot):not(.backdrop) { visibility: hidden; }
-.boot-bg { position: absolute; left: 0; top: 0; width: 100%; height: calc(1750 * var(--u)); object-fit: cover; }
-.boot-halo { position: absolute; left: calc(197 * var(--u)); top: calc(485 * var(--u)); width: calc(504 * var(--u)); height: calc(476 * var(--u)); border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(157, 100, 241, .32), rgba(131, 78, 224, .16) 57%, rgba(123, 81, 197, 0)); animation: aura 6s ease-in-out infinite alternate; }
-.boot-logo { position: absolute; left: calc(209 * var(--u)); top: calc(533 * var(--u)); width: calc(480 * var(--u)); }
-.boot-orbit { position: absolute; left: calc((450 - 94) * var(--u)); top: calc((1055 - 47) * var(--u)); width: calc(188 * var(--u)); height: calc(94 * var(--u)); }
-.boot-orbit img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.boot-orbit i { position: absolute; left: calc(50% - 4.5 * var(--u)); top: calc(50% - 4.5 * var(--u)); width: calc(9 * var(--u)); height: calc(9 * var(--u)); border-radius: 50%;
-  background: #f4e6ff; box-shadow: 0 0 calc(6 * var(--u)) #e7c6ff, 0 0 calc(16 * var(--u)) rgba(178, 120, 255, .9), 0 0 calc(30 * var(--u)) rgba(150, 90, 255, .5); }
-/* posiciones fijas (movimiento reducido): las de la referencia */
-.boot-orbit i:nth-of-type(1) { transform: translate(0, calc(-35 * var(--u))); } .boot-orbit i:nth-of-type(2) { transform: translate(calc(72 * var(--u)), calc(17 * var(--u))); } .boot-orbit i:nth-of-type(3) { transform: translate(calc(-72 * var(--u)), calc(17 * var(--u))); }
-.boot-text { position: absolute; left: 0; right: 0; top: calc(1126 * var(--u)); margin: 0; text-align: center; font-style: italic; font-size: calc(50 * var(--u)); color: #f7ecdf; letter-spacing: calc(.4 * var(--u)); text-shadow: 0 0 calc(14 * var(--u)) rgba(200, 160, 255, .45); }
+html:has(.booting) { overflow: hidden; }
+.boot-stage { position: absolute; left: 50%; top: 50%; width: calc(899 * var(--bu)); height: calc(1750 * var(--bu)); translate: -50% -50%; }
+.boot-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Viñeta suave: funde las orillas con el cielo, sin ninguna silueta recta. */
+.boot-stage::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 75% at 50% 48%, transparent 55%, rgba(18, 12, 48, .45) 100%); }
+.boot-halo { position: absolute; left: calc(150 * var(--bu)); top: calc(430 * var(--bu)); width: calc(600 * var(--bu)); height: calc(580 * var(--bu)); border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(170, 120, 255, .30), rgba(131, 78, 224, .14) 55%, rgba(123, 81, 197, 0)); animation: aura 6s ease-in-out infinite alternate; }
+.boot-logo { position: absolute; left: calc(209 * var(--bu)); top: calc(533 * var(--bu)); width: calc(480 * var(--bu)); }
+.boot-orbit { position: absolute; left: calc((450 - 94) * var(--bu)); top: calc((1055 - 47) * var(--bu)); width: calc(188 * var(--bu)); height: calc(94 * var(--bu)); }
+.boot-orbit img { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 0 calc(4 * var(--bu)) rgba(190, 140, 255, .8)); }
+/* Luces de la órbita: núcleo blanco con halo violeta y estela de chispas que las sigue. */
+.boot-orbit i { position: absolute; left: 50%; top: 50%; border-radius: 50%; pointer-events: none; will-change: transform, opacity; }
+.boot-orbit .orb { width: calc(15 * var(--bu)); height: calc(15 * var(--bu)); margin: calc(-7.5 * var(--bu));
+  background: radial-gradient(circle, #fff 0 35%, #f3dcff 55%, rgba(220, 170, 255, 0) 72%);
+  box-shadow: 0 0 calc(8 * var(--bu)) 2px #fff, 0 0 calc(22 * var(--bu)) rgba(224, 175, 255, 1), 0 0 calc(44 * var(--bu)) rgba(170, 105, 255, .85), 0 0 calc(80 * var(--bu)) rgba(140, 80, 255, .45); }
+.boot-orbit .trail { width: calc(9 * var(--bu)); height: calc(9 * var(--bu)); margin: calc(-4.5 * var(--bu)); background: #f6e6ff; box-shadow: 0 0 calc(12 * var(--bu)) rgba(210, 160, 255, 1), 0 0 calc(24 * var(--bu)) rgba(160, 100, 255, .5); }
+.boot-dust { position: absolute; inset: 0; pointer-events: none; }
+.boot-dust i { position: absolute; width: calc(4 * var(--bu)); height: calc(4 * var(--bu)); border-radius: 50%; background: #fff4ff; box-shadow: 0 0 calc(8 * var(--bu)) rgba(210, 170, 255, .9);
+  opacity: 0; animation: dust var(--d) ease-in-out var(--w) infinite; }
+@keyframes dust { 0% { opacity: 0; transform: translate(0, 0) scale(.6); } 30% { opacity: .85; } 70% { opacity: .6; } 100% { opacity: 0; transform: translate(var(--dx), calc(-120 * var(--bu))) scale(1); } }
+.boot-text { position: absolute; left: 0; right: 0; top: calc(1126 * var(--bu)); margin: 0; text-align: center; font-style: italic; font-size: calc(50 * var(--bu)); color: #f7ecdf; letter-spacing: calc(.4 * var(--bu)); text-shadow: 0 0 calc(14 * var(--bu)) rgba(200, 160, 255, .5); animation: breathe-text 3.2s ease-in-out infinite; }
+@keyframes breathe-text { 50% { opacity: .78; } }
+.reduce-motion .boot-dust i, .reduce-motion .boot-text, .reduce-motion .boot-halo { animation: none; }
+.reduce-motion .boot-dust { display: none; }
+
+/* Pantallas anchas: el arranque ocupa el marco del teléfono, no toda la ventana. */
+@media (min-width: 700px) and (min-aspect-ratio: 3/4) { .boot { position: absolute; --bu: var(--u); } }

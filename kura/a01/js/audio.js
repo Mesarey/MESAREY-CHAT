@@ -44,9 +44,9 @@ function ensureContext() {
   // Si una canción falta o no carga, se salta sin errores; si ninguna carga, no hay música.
   el.addEventListener('error', () => { badTracks.add(track); if (badTracks.size >= playlist().length) { musicOk = false; emit(); } else nextTrack(); });
   try { ctx.createMediaElementSource(el).connect(musicGain); } catch { musicOk = false; }
-  // Archivos opcionales de SFX
-  for (const [name, url] of Object.entries(config.audio.sfxFiles)) {
-    fetch(resolve(url)).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => b && ctx.decodeAudioData(b)).then((buf) => { if (buf) samples[name] = buf; }).catch(() => {});
+  // Sonidos: ya se descargaron al abrir la página; aquí solo se decodifican.
+  for (const [name, pending] of Object.entries(rawSfx)) {
+    pending.then((b) => b && ctx.decodeAudioData(b.slice(0))).then((buf) => { if (buf) samples[name] = buf; }).catch(() => {});
   }
   return true;
 }
@@ -56,6 +56,11 @@ function ensureContext() {
 function viewerAudio() { try { return window.parent !== window ? window.parent.__kuraAudio || null : null; } catch { return null; } }
 const resolve = (url) => viewerAudio()?.files?.[url.split('/').pop()] || url;
 function playlist() { return [...config.audio.playlist, ...(viewerAudio()?.extraTracks || [])]; }
+
+// Los sonidos se descargan desde el inicio (sin esperar el primer toque) para que el
+// primero que suene ya esté listo.
+const rawSfx = Object.fromEntries(Object.entries(config.audio.sfxFiles).map(([name, url]) =>
+  [name, fetch(resolve(url)).then((r) => (r.ok ? r.arrayBuffer() : null)).catch(() => null)]));
 
 function loadTrack(i) {
   track = i;
@@ -77,13 +82,16 @@ function ramp(param, to, seconds) {
   param.linearRampToValueAtTime(to, t + seconds);
 }
 
+// Se llama en cada gesto hasta que el audio quede realmente activo: algunos navegadores
+// (iPhone) solo permiten reproducir al soltar el dedo, no al tocar.
 async function start() {
   if (!ensureContext()) return;
   started = true;
-  try { await ctx.resume(); } catch {}
-  if (musicOk && el.paused) { try { await el.play(); } catch { /* el navegador puede negarse: se reintenta en el siguiente gesto */ started = false; } }
+  try { if (ctx.state !== 'running') await ctx.resume(); } catch {}
+  if (musicOk && musicOn && el.paused) { try { await el.play(); } catch { /* se reintenta en el siguiente gesto */ } }
   apply();
 }
+const isReady = () => !!ctx && ctx.state === 'running' && (!musicOn || !musicOk || !el.paused);
 
 function apply() {
   if (!ctx) return;
@@ -101,8 +109,10 @@ document.addEventListener('visibilitychange', () => {
 
 export const audio = {
   /** Llamar en el primer gesto del usuario (toque o tecla). */
-  unlock() { if (!started) start(); },
-  setMusic(on) { musicOn = on; savePrefs(); if (!started) start(); else apply(); },
+  unlock() { if (!isReady()) start(); },
+  /** true cuando el contexto de audio corre y la música (si está activa) ya suena. */
+  get ready() { return isReady(); },
+  setMusic(on) { musicOn = on; savePrefs(); if (!isReady()) start(); else apply(); },
   setSfx(on) { sfxOn = on; savePrefs(); if (!started) start(); else apply(); },
   get musicEnabled() { return musicOn; },
   get sfxEnabled() { return sfxOn; },

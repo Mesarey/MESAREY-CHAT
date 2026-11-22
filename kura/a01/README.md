@@ -18,9 +18,12 @@ npx serve kura/a01
 
 ## Visor de teléfono
 
-`visor.html` muestra la app dentro de un teléfono (iPhone 15, 15 Pro Max, SE, Pixel 8, Galaxy S24) a su resolución real, con botones para saltar a A01–A05 y ver la entrada de nuevo. «Elegir carpeta de audio» o «Elegir archivos de audio» carga la música y los sonidos desde el dispositivo (no se suben a ningún lado); reconoce los nombres del ZIP y tus nombres originales, y un archivo con «shadow» en el nombre se agrega como segunda canción. Abierto en un teléfono, la app ocupa toda la pantalla y los controles quedan en un botón.
+`visor.html` muestra la app dentro de un teléfono (iPhone 17, 17 Pro Max, Air, 16/15, Plus, 14/13, mini, SE; Galaxy S25 Ultra, S25/S24, A55; Pixel 9 Pro; Xiaomi; Motorola, o una medida personalizada) a su resolución real, con botones para saltar a A01–A05 y ver la entrada de nuevo. «Elegir carpeta de audio» o «Elegir archivos de audio» carga la música y los sonidos desde el dispositivo (no se suben a ningún lado); reconoce los nombres del ZIP y tus nombres originales, y un archivo con «shadow» en el nombre se agrega como segunda canción. Abierto en un teléfono, la app ocupa toda la pantalla y los controles quedan en un botón.
 
 ## Giroscopio
+
+En el visor, el cuadro «Giroscopio» simula la inclinación: arrastrar inclina el teléfono en 3D y la escena se mueve igual que con el sensor real.
+
 
 En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la escena (y las estrellas) se mueven como con el cursor en PC. En iPhone el sistema pide permiso la primera vez. Necesita HTTPS (Netlify, GitHub Pages) y no funciona dentro de la web app de Claude, que bloquea los sensores.
 

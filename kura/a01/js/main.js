@@ -159,17 +159,14 @@ function updateSoundButton() {
   soundBtn.dataset.on = String(audio.on);
   swMusic.checked = audio.musicEnabled; swSfx.checked = audio.sfxEnabled;
 }
-let unlocked = false;
+// El audio se intenta activar en cada gesto (tocar, soltar, clic, tecla) hasta que de verdad
+// suene; así nunca hace falta apagar y prender el sonido para que empiece.
+const GESTURES = ['pointerdown', 'pointerup', 'click', 'touchend', 'keydown'];
 const unlock = () => {
-  if (unlocked) return;
-  unlocked = true;
-  removeEventListener('pointerdown', firstGesture, true);
-  removeEventListener('keydown', firstGesture, true);
   audio.unlock();
+  setTimeout(() => { if (audio.ready) GESTURES.forEach((g) => removeEventListener(g, unlock, true)); }, 300);
 };
-const firstGesture = () => unlock();
-addEventListener('pointerdown', firstGesture, true);
-addEventListener('keydown', firstGesture, true);
+GESTURES.forEach((g) => addEventListener(g, unlock, true));
 const setMenu = (open) => {
   soundMenu.hidden = !open;
   soundBtn.setAttribute('aria-expanded', String(open));
@@ -290,23 +287,51 @@ function intro() {
 // Cubre la escena mientras carga y comprueba si hay una sesión guardada.
 // Con sesión se abriría Hoy en el mundo predeterminado (aún no existe); sin ella, inicio de sesión.
 const boot = $('boot');
-const lights = [...boot.querySelectorAll('.boot-orbit i')];
+const bootStage = boot.querySelector('.boot-stage'), orbitEl = boot.querySelector('.boot-orbit');
+const bu = () => bootStage.clientWidth / CANVAS.width;
+// Tres luces brillantes, cada una con una estela de chispas que se desvanece detrás.
+const TRAIL = 7, PHASES = [-90, 30, 150].map((d) => (d * Math.PI) / 180);
+const orbs = PHASES.map(() => {
+  const core = document.createElement('i'); core.className = 'orb';
+  const trail = Array.from({ length: TRAIL }, () => { const t = document.createElement('i'); t.className = 'trail'; orbitEl.appendChild(t); return t; });
+  orbitEl.appendChild(core);
+  return { core, trail };
+});
+// Polvo de luz que sube despacio alrededor del logo.
+{
+  const dust = boot.querySelector('.boot-dust');
+  let seed = 11; const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('i');
+    p.style.left = `${18 + rnd() * 64}%`; p.style.top = `${36 + rnd() * 34}%`;
+    p.style.setProperty('--d', `${4 + rnd() * 4}s`); p.style.setProperty('--w', `${-rnd() * 6}s`);
+    p.style.setProperty('--dx', `${(rnd() - .5) * 40}px`);
+    p.style.scale = String(.5 + rnd() * .9);
+    dust.appendChild(p);
+  }
+}
+const placeOrbs = (a) => {
+  const u = bu();
+  orbs.forEach(({ core, trail }, i) => {
+    const pos = (th) => { const x = Math.cos(th), y = Math.sin(th); return [x * 83 * u, y * 35 * u, (y + 1) / 2]; };
+    const [x, y, front] = pos(a + PHASES[i]);
+    core.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${(0.8 + front * 0.55).toFixed(3)})`;
+    core.style.opacity = (0.55 + front * 0.45).toFixed(3);
+    trail.forEach((t, k) => {
+      const [tx, ty, tf] = pos(a + PHASES[i] - (k + 1) * 0.085);
+      const fade = 1 - (k + 1) / (TRAIL + 1);
+      t.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${(fade * (0.6 + tf * 0.5)).toFixed(3)})`;
+      t.style.opacity = (fade * 0.7 * (0.5 + tf * 0.5)).toFixed(3);
+    });
+  });
+};
 let orbitRaf = 0;
 function orbit(t0 = performance.now()) {
-  const PERIOD = 1650, PHASES = [-90, 30, 150].map((d) => (d * Math.PI) / 180);
-  const step = (now) => {
-    const a = ((now - t0) / PERIOD) * Math.PI * 2;
-    lights.forEach((el, i) => {
-      const th = a + PHASES[i], x = Math.cos(th), y = Math.sin(th);
-      const front = (y + 1) / 2; // abajo = delante
-      const u = unit();
-      el.style.transform = `translate(${(x * 83 * u).toFixed(2)}px, ${(y * 35 * u).toFixed(2)}px) scale(${(0.75 + front * 0.4).toFixed(3)})`;
-      el.style.opacity = (0.45 + front * 0.55).toFixed(3);
-    });
-    orbitRaf = requestAnimationFrame(step);
-  };
+  const PERIOD = 1650;
+  const step = (now) => { placeOrbs(((now - t0) / PERIOD) * Math.PI * 2); orbitRaf = requestAnimationFrame(step); };
   orbitRaf = requestAnimationFrame(step);
 }
+placeOrbs(0); // posición inicial (y fija con movimiento reducido)
 const imageReady = (src) => new Promise((res) => { const im = new Image(); im.onload = im.onerror = () => res(); im.src = src; });
 async function runBoot() {
   const keep = location.hash === '#a05'; // para revisar A05: se queda hasta tocar la pantalla

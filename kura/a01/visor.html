@@ -16,6 +16,14 @@
     h1 { margin: 0 0 2px; font: italic 400 26px/1.2 'Playfair Display', Georgia, serif; letter-spacing: .5px; }
     .sub { margin: 0 0 18px; font-size: 12.5px; color: #c9bde3; }
     h2 { margin: 20px 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #cdb6ff; }
+    .pad { position: relative; height: 150px; border-radius: 14px; border: 1px solid var(--line); background: radial-gradient(circle at 50% 50%, rgba(190, 140, 255, .18), transparent 60%), repeating-linear-gradient(0deg, transparent 0 24px, rgba(255, 255, 255, .05) 24px 25px), repeating-linear-gradient(90deg, transparent 0 24px, rgba(255, 255, 255, .05) 24px 25px); cursor: grab; touch-action: none; }
+    .pad:active { cursor: grabbing; }
+    .pad i { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px; border-radius: 50%; background: #f4e6ff; box-shadow: 0 0 14px rgba(200, 150, 255, .9); pointer-events: none; transition: transform .35s cubic-bezier(.2, .9, .3, 1); }
+    .pad.dragging i { transition: none; }
+    input[type=number] { width: 100%; min-height: 38px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); color: inherit; font: 14px var(--ui); padding: 0 10px; }
+    .row[hidden] { display: none; }
+    .phone-tilt { transition: transform .35s cubic-bezier(.2, .9, .3, 1); transform-style: preserve-3d; }
+    main { perspective: 1400px; }
     select, button, .file { width: 100%; min-height: 38px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); color: inherit; font: 14px var(--ui); padding: 0 12px; cursor: pointer; }
     select option { color: #111; }
     button:hover, .file:hover { border-color: rgba(240, 218, 255, .5); background: rgba(255, 255, 255, .1); }
@@ -74,12 +82,28 @@
 
     <h2>Teléfono</h2>
     <select id="device" aria-label="Modelo de teléfono">
-      <option value="393x852|iphone">iPhone 15 · 393 × 852</option>
-      <option value="430x932|iphone">iPhone 15 Pro Max · 430 × 932</option>
-      <option value="375x667|se">iPhone SE · 375 × 667</option>
-      <option value="412x915|android">Pixel 8 · 412 × 915</option>
-      <option value="360x780|android">Galaxy S24 · 360 × 780</option>
+      <optgroup label="iPhone">
+        <option value="402x874|iphone">iPhone 17 / 17 Pro · 402 × 874</option>
+        <option value="440x956|iphone">iPhone 17 Pro Max · 440 × 956</option>
+        <option value="420x912|iphone">iPhone Air · 420 × 912</option>
+        <option value="393x852|iphone">iPhone 16 / 15 · 393 × 852</option>
+        <option value="430x932|iphone">iPhone 16 Plus / 15 Plus · 430 × 932</option>
+        <option value="390x844|iphone">iPhone 14 / 13 · 390 × 844</option>
+        <option value="375x812|iphone">iPhone 13 mini · 375 × 812</option>
+        <option value="375x667|se">iPhone SE · 375 × 667</option>
+      </optgroup>
+      <optgroup label="Android">
+        <option value="412x891|android">Galaxy S25 Ultra ≈ 412 × 891</option>
+        <option value="384x832|android">Galaxy S25 / S24 ≈ 384 × 832</option>
+        <option value="360x780|android">Galaxy A55 / A35 ≈ 360 × 780</option>
+        <option value="412x915|android">Pixel 9 Pro / 8 ≈ 412 × 915</option>
+        <option value="393x873|android">Xiaomi 14 / Redmi Note ≈ 393 × 873</option>
+        <option value="412x919|android">Motorola Edge ≈ 412 × 919</option>
+      </optgroup>
+      <option value="custom|iphone">Medida personalizada…</option>
     </select>
+    <div class="row" id="custom" hidden><input id="cw" type="number" min="300" max="600" value="412" aria-label="Ancho" /><input id="ch" type="number" min="560" max="1100" value="915" aria-label="Alto" /></div>
+    <p class="note">Medidas en px CSS (lo que ve la app). Las de Android son aproximadas: varían con la escala de pantalla del teléfono.</p>
 
     <h2>Pantalla</h2>
     <div class="grid">
@@ -91,6 +115,10 @@
     </div>
     <div class="row"><button type="button" id="reload">↻ Ver la entrada de nuevo</button></div>
 
+    <h2>Giroscopio</h2>
+    <div class="pad" id="pad" aria-label="Inclinar el teléfono"><i id="pad-dot"></i></div>
+    <p class="note">Arrastra dentro del cuadro para inclinar el teléfono: la escena se mueve como en un teléfono real. Al soltar, regresa al centro.</p>
+
     <h2>Música y sonidos</h2>
     <label class="file primary">Elegir carpeta de audio<input type="file" id="pick-folder" webkitdirectory multiple /></label>
     <label class="file">Elegir archivos de audio<input type="file" id="pick-files" accept="audio/*,.mp3,.wav" multiple /></label>
@@ -100,13 +128,13 @@
   </aside>
 
   <main>
-    <div class="phone iphone" id="phone">
+    <div class="phone iphone" id="phone"><div class="phone-tilt" id="tilt">
       <div class="body">
         <div class="island" aria-hidden="true"></div>
         <div class="screen"><iframe id="app" title="KURA" src="index.html" allow="autoplay; gyroscope; accelerometer"></iframe></div>
         <div class="home" aria-hidden="true"></div>
       </div>
-      <p class="label" id="label"></p>
+      </div><p class="label" id="label"></p>
     </div>
   </main>
   <button type="button" class="fab" id="fab">Controles</button>
@@ -118,7 +146,8 @@
     /* ---------- Teléfono: tamaño real del modelo, escalado para caber en la ventana ---------- */
     function layout() {
       const [size, kind] = $('device').value.split('|');
-      const [w, h] = size.split('x').map(Number);
+      $('custom').hidden = size !== 'custom';
+      const [w, h] = size === 'custom' ? [+$('cw').value || 412, +$('ch').value || 915] : size.split('x').map(Number);
       phone.className = `phone ${kind}`;
       app.style.width = `${w}px`; app.style.height = `${h}px`;
       $('label').textContent = `${w} × ${h} px · escala ${Math.round(scale() * 100)} %`;
@@ -130,6 +159,7 @@
       }
     }
     $('device').addEventListener('change', () => { layout(); app.contentWindow.location.reload(); });
+    ['cw', 'ch'].forEach((id) => $(id).addEventListener('change', () => { layout(); app.contentWindow.location.reload(); }));
     addEventListener('resize', layout);
     layout();
 
@@ -176,6 +206,42 @@
     renderList();
 
     $('fab').addEventListener('click', () => document.body.classList.toggle('open'));
+
+    /* ---------- Simulador de giroscopio ---------- */
+    // Arrastrar en el cuadro inclina el teléfono (también en 3D) y envía a la app las mismas
+    // lecturas que daría el giroscopio real (gamma: izquierda-derecha, beta: adelante-atrás).
+    const pad = $('pad'), dot = $('pad-dot'), tiltEl = $('tilt');
+    const send = (gamma, beta) => {
+      const w = app.contentWindow;
+      try {
+        w.__kura?.tilt?.enableGyro();
+        const e = new w.Event('deviceorientation'); e.gamma = gamma; e.beta = beta; e.alpha = 0;
+        w.dispatchEvent(e);
+      } catch { /* la app todavía está cargando */ }
+    };
+    let dragging = false, neutralSent = false;
+    const move = (e) => {
+      const r = pad.getBoundingClientRect();
+      const nx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+      const ny = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+      dot.style.transform = `translate(${nx * (r.width / 2 - 14)}px, ${ny * (r.height / 2 - 14)}px)`;
+      tiltEl.style.transform = `rotateY(${nx * 18}deg) rotateX(${-ny * 14}deg)`;
+      send(nx * 20, 45 + ny * 20);
+    };
+    pad.addEventListener('pointerdown', (e) => {
+      dragging = true; pad.classList.add('dragging'); pad.setPointerCapture(e.pointerId);
+      if (!neutralSent) { send(0, 45); neutralSent = true; } // posición neutra de referencia
+      move(e);
+    });
+    pad.addEventListener('pointermove', (e) => { if (dragging) move(e); });
+    const release = () => {
+      if (!dragging) return;
+      dragging = false; pad.classList.remove('dragging');
+      dot.style.transform = ''; tiltEl.style.transform = '';
+      send(0, 45);
+    };
+    pad.addEventListener('pointerup', release); pad.addEventListener('pointercancel', release);
+    app.addEventListener('load', () => { neutralSent = false; });
   </script>
 </body>
 </html>

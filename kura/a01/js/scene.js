@@ -88,18 +88,19 @@ export function applySceneConfig() {
 /** Paralaje leve con el cursor. La escena es una sola ilustración: se mueve completa, sin deformar personajes. */
 export function parallax(stage, motion, unit, onShift = () => {}) {
   const layers = [...stage.querySelectorAll('[data-depth]')];
-  let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+  let tx = 0, ty = 0, x = 0, y = 0, raf = 0, amp = config.parallax;
   const step = () => {
     x += (tx - x) * 0.06; y += (ty - y) * 0.06;
     const u = unit();
-    for (const el of layers) el.style.translate = `${(-x * config.parallax * +el.dataset.depth * u).toFixed(2)}px ${(-y * config.parallax * +el.dataset.depth * u).toFixed(2)}px`;
-    onShift(-x * config.parallax * u, -y * config.parallax * u); // misma profundidad que la ilustración
+    for (const el of layers) el.style.translate = `${(-x * amp * +el.dataset.depth * u).toFixed(2)}px ${(-y * amp * +el.dataset.depth * u).toFixed(2)}px`;
+    onShift(-x * amp * u, -y * amp * u); // misma profundidad que la ilustración
     raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.001 ? requestAnimationFrame(step) : 0;
   };
   const kick = () => { if (!raf) raf = requestAnimationFrame(step); };
   stage.addEventListener('pointermove', (e) => {
     if (motion.reduced || e.pointerType === 'touch') return;
     const r = stage.getBoundingClientRect();
+    amp = config.parallax;
     tx = ((e.clientX - r.left) / r.width) * 2 - 1;
     ty = ((e.clientY - r.top) / r.height) * 2 - 1;
     kick();
@@ -117,6 +118,7 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
     if (motion.reduced || e.gamma == null || e.beta == null) return;
     if (!base) base = { g: e.gamma, b: e.beta };
     base.g += (e.gamma - base.g) * 0.004; base.b += (e.beta - base.b) * 0.004;
+    amp = config.gyroParallax;
     tx = clamp((e.gamma - base.g) / RANGE);
     ty = clamp((e.beta - base.b) / RANGE);
     kick();
