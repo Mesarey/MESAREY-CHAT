@@ -16,6 +16,14 @@ npx serve kura/a01
 - Español: `http://localhost:3000/#es` · Inglés: `http://localhost:3000/#en` (también desde el botón «English / Español» bajo el panel).
 - Panel de ajustes de desarrollo: **Mayús + D**, o `#dev` en la dirección.
 
+## Visor de teléfono
+
+`visor.html` muestra la app dentro de un teléfono (iPhone 15, 15 Pro Max, SE, Pixel 8, Galaxy S24) a su resolución real, con botones para saltar a A01–A05 y ver la entrada de nuevo. «Elegir carpeta de audio» o «Elegir archivos de audio» carga la música y los sonidos desde el dispositivo (no se suben a ningún lado); reconoce los nombres del ZIP y tus nombres originales, y un archivo con «shadow» en el nombre se agrega como segunda canción. Abierto en un teléfono, la app ocupa toda la pantalla y los controles quedan en un botón.
+
+## Giroscopio
+
+En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la escena (y las estrellas) se mueven como con el cursor en PC. En iPhone el sistema pide permiso la primera vez. Necesita HTTPS (Netlify, GitHub Pages) y no funciona dentro de la web app de Claude, que bloquea los sensores.
+
 ## Estructura
 
 | Archivo | Módulo |

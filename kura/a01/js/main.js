@@ -26,7 +26,10 @@ const wind = mountWind($('scene'), motion);
 let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
 const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06 };
-parallax(stage, motion, unit, (x, y) => stars?.shift(x, y));
+const tilt = parallax(stage, motion, unit, (x, y) => stars?.shift(x, y));
+// En teléfono, el primer toque activa el giroscopio (en iPhone el sistema pide permiso).
+if (matchMedia('(pointer: coarse)').matches) addEventListener('click', () => tilt.enableGyro(), { once: true, capture: true });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) tilt.recenter(); });
 
 /* ---------- Idioma y título ---------- */
 let chars = [];
@@ -179,16 +182,22 @@ addEventListener('pointerdown', (e) => { if (!soundMenu.hidden && !e.target.clos
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && !soundMenu.hidden) { setMenu(false); soundBtn.focus(); } });
 audio.onChange(updateSoundButton);
 updateSoundButton();
-window.__kura = { audio, view: () => view.name };
+window.__kura = { audio, view: () => view.name, tilt };
 
 /* ---------- Términos y privacidad ---------- */
 const legal = legalDialog({ t, sfx: (n) => audio.sfx(n), lang: currentLang });
 const signup = signupForm({ stage, motion, legal, sfx: (n) => audio.sfx(n), onPrimary: (e) => primaryFx(VIEWS.a02, e) });
 
 /* ---------- Cambio de vista A01 ⇄ A02: el escenario no cambia, solo el contenido del HUD ---------- */
+// Una sola transición a la vez: si se toca otro botón a mitad del cambio, la anterior se
+// completa al instante y empieza la nueva. Los destellos se apagan durante el cambio y solo
+// vuelven cuando el panel nuevo está quieto en su lugar.
+let switchTl = null;
 function showView(name, { animate = true } = {}) {
   const next = VIEWS[name];
   if (!next || next === view) return;
+  if (switchTl) { switchTl.progress(1).kill(); switchTl = null; }
+  gsap?.killTweensOf(reveal, 'flares');
   const prev = view;
   view = next;
   const swap = () => {
@@ -197,20 +206,20 @@ function showView(name, { animate = true } = {}) {
     if (name === 'a01') { signup.reset(); recover.reset(); }
     layoutShine(); syncFlares();
   };
-  if (!animate || !gsap || motion.reduced) { swap(); return; }
+  if (!animate || !gsap || motion.reduced) { swap(); reveal.flares = 1; return; }
   const u = unit();
-  gsap.killTweensOf([prev.el, next.el]);
-  gsap.timeline()
-    .to(reveal, { flares: 0, duration: .35, ease: 'sine.in' }, 0)
-    .to(prev.el, { opacity: 0, y: -14 * u, filter: 'blur(6px)', duration: .45, ease: 'power2.in' }, 0)
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden])');
+  reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
+  switchTl = gsap.timeline({
+    onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
+  })
+    .to(prev.el, { opacity: 0, y: -14 * u, filter: 'blur(6px)', duration: .4, ease: 'power2.in' }, 0)
     .add(swap)
     .set(prev.el, { clearProps: 'opacity,transform,filter' })
     .fromTo(next.el.querySelectorAll('.ch'), { opacity: 0, yPercent: 40, filter: 'blur(6px)' }, { opacity: 1, yPercent: 0, filter: 'blur(0px)', stagger: .025, duration: .9, ease: 'expo.out', clearProps: 'filter' })
-    .fromTo(next.el.querySelector('.welcome'), { opacity: 0 }, { opacity: 1, duration: .8 }, '<')
-    .fromTo(next.el.querySelector('.panel'), { opacity: 0, y: 26 * u }, { opacity: 1, y: 0, duration: .8, ease: 'expo.out' }, '<.1')
-    .fromTo(next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden])'), { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .05, duration: .6, ease: 'expo.out' }, '<.15')
-    .add(syncFlares)
-    .to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' });
+    .fromTo(next.el.querySelector('.welcome') || [], { opacity: 0 }, { opacity: 1, duration: .8 }, '<')
+    .fromTo(next.el.querySelector('.panel'), { opacity: 0, y: 26 * u }, { opacity: 1, y: 0, duration: .8, ease: 'expo.out', clearProps: 'transform' }, '<.1')
+    .fromTo(parts, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .05, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.15');
 }
 const go = (name) => {
   if (location.hash !== `#${name}`) location.hash = name; // el botón «atrás» del teléfono regresa

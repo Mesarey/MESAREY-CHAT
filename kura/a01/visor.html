@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KURA · Visor de teléfono</title>
+  <style>
+    :root { --ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; --gold: #e7c88c; --line: rgba(240, 218, 255, .22); }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #0d0a24; color: #f4effa; font-family: var(--ui); }
+    body { display: grid; grid-template-columns: 300px 1fr; overflow: hidden; }
+    .bg { position: fixed; inset: -6%; background: url(assets/img/escena.webp) center 25% / cover; filter: blur(38px) brightness(.38) saturate(1.2); z-index: -1; }
+
+    /* Panel de controles */
+    aside { padding: 22px 20px; border-right: 1px solid var(--line); background: rgba(16, 12, 40, .72); backdrop-filter: blur(10px); overflow-y: auto; }
+    h1 { margin: 0 0 2px; font: italic 400 26px/1.2 'Playfair Display', Georgia, serif; letter-spacing: .5px; }
+    .sub { margin: 0 0 18px; font-size: 12.5px; color: #c9bde3; }
+    h2 { margin: 20px 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #cdb6ff; }
+    select, button, .file { width: 100%; min-height: 38px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); color: inherit; font: 14px var(--ui); padding: 0 12px; cursor: pointer; }
+    select option { color: #111; }
+    button:hover, .file:hover { border-color: rgba(240, 218, 255, .5); background: rgba(255, 255, 255, .1); }
+    .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .grid button { padding: 0; font-weight: 600; }
+    .row { display: flex; gap: 8px; margin-top: 8px; }
+    .file { display: flex; align-items: center; justify-content: center; margin-top: 8px; position: relative; }
+    .file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .primary { background: linear-gradient(90deg, rgba(120, 78, 190, .85), rgba(150, 106, 214, .85)); border-color: #f0d6ff; font-weight: 600; }
+    .files { margin: 10px 0 0; padding: 0; list-style: none; font-size: 12.5px; }
+    .files li { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+    .ok { color: #9be6b4; } .no { color: #8e86a8; }
+    .note { margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: #c9bde3; }
+    .note b { color: var(--gold); font-weight: 600; }
+
+    /* Teléfono */
+    main { position: relative; display: grid; place-items: center; overflow: hidden; }
+    .phone { position: relative; transform-origin: center; transition: transform .4s cubic-bezier(.2, .9, .3, 1); }
+    .body { position: relative; padding: 14px; border-radius: 62px; background: linear-gradient(145deg, #3a3550, #17141f 40%, #2a2638); box-shadow: 0 0 0 2px #4b4560, 0 40px 120px rgba(0, 0, 0, .75), 0 0 90px rgba(143, 69, 248, .28); }
+    .body::before, .body::after { content: ''; position: absolute; width: 4px; border-radius: 3px; background: #3b3650; }
+    .body::before { left: -5px; top: 150px; height: 64px; box-shadow: 0 84px 0 #3b3650; }
+    .body::after { right: -5px; top: 200px; height: 96px; }
+    .screen { position: relative; overflow: hidden; border-radius: 48px; background: #000; }
+    .screen iframe { display: block; border: 0; background: #1d1846; }
+    .island { position: absolute; left: 50%; top: 11px; width: 120px; height: 34px; translate: -50% 0; border-radius: 20px; background: #000; z-index: 2; pointer-events: none; }
+    .android .body { border-radius: 40px; padding: 10px; } .android .screen { border-radius: 32px; }
+    .android .island { width: 14px; height: 14px; top: 12px; border-radius: 50%; }
+    .se .body { border-radius: 52px; padding: 64px 14px 74px; } .se .screen { border-radius: 4px; } .se .island { display: none; }
+    .se .body > .home { position: absolute; left: 50%; bottom: 14px; width: 52px; height: 52px; translate: -50% 0; border-radius: 50%; border: 2px solid #4b4560; }
+    .home { display: none; } .se .home { display: block; }
+    .label { position: absolute; left: 0; right: 0; bottom: -34px; text-align: center; font-size: 12.5px; color: #c9bde3; }
+
+    /* En un teléfono real: la app a pantalla completa y un botón pequeño para los controles */
+    .fab { display: none; }
+    @media (max-width: 700px) {
+      body { display: block; }
+      aside { position: fixed; inset: auto 0 0 0; max-height: 75svh; z-index: 5; border: 0; border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; translate: 0 105%; transition: translate .35s; }
+      body.open aside { translate: 0 0; }
+      main { position: fixed; inset: 0; }
+      .phone { transform: none !important; }
+      .body { padding: 0; border-radius: 0; box-shadow: none; background: none; } .body::before, .body::after, .island, .home, .label { display: none !important; }
+      .screen { border-radius: 0; }
+      .screen iframe { width: 100vw !important; height: 100svh !important; }
+      .fab { display: block; position: fixed; right: 12px; bottom: 12px; z-index: 6; width: auto; min-height: 40px; padding: 0 14px; border-radius: 20px; background: rgba(30, 20, 60, .85); backdrop-filter: blur(6px); }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <aside aria-label="Controles del visor">
+    <h1>KURA · Visor</h1>
+    <p class="sub">La app real a resolución de teléfono.</p>
+
+    <h2>Teléfono</h2>
+    <select id="device" aria-label="Modelo de teléfono">
+      <option value="393x852|iphone">iPhone 15 · 393 × 852</option>
+      <option value="430x932|iphone">iPhone 15 Pro Max · 430 × 932</option>
+      <option value="375x667|se">iPhone SE · 375 × 667</option>
+      <option value="412x915|android">Pixel 8 · 412 × 915</option>
+      <option value="360x780|android">Galaxy S24 · 360 × 780</option>
+    </select>
+
+    <h2>Pantalla</h2>
+    <div class="grid">
+      <button type="button" data-screen="a05" title="Restaurando sesión">A05</button>
+      <button type="button" data-screen="a01" title="Iniciar sesión">A01</button>
+      <button type="button" data-screen="a02" title="Crear cuenta">A02</button>
+      <button type="button" data-screen="a03" title="Recuperar contraseña">A03</button>
+      <button type="button" data-screen="a04" title="Enlace enviado">A04</button>
+    </div>
+    <div class="row"><button type="button" id="reload">↻ Ver la entrada de nuevo</button></div>
+
+    <h2>Música y sonidos</h2>
+    <label class="file primary">Elegir carpeta de audio<input type="file" id="pick-folder" webkitdirectory multiple /></label>
+    <label class="file">Elegir archivos de audio<input type="file" id="pick-files" accept="audio/*,.mp3,.wav" multiple /></label>
+    <ul class="files" id="files"></ul>
+    <p class="note" id="audio-note">Los audios se leen desde tu dispositivo: no se suben a ningún lado. Elige la carpeta <b>audio</b> del ZIP, o tus archivos originales (Login_Failed, Login-Granted, los WAV y la canción). Un archivo con «shadow» en el nombre se agrega como segunda canción.</p>
+    <p class="note">La música empieza con tu primer toque dentro del teléfono.</p>
+  </aside>
+
+  <main>
+    <div class="phone iphone" id="phone">
+      <div class="body">
+        <div class="island" aria-hidden="true"></div>
+        <div class="screen"><iframe id="app" title="KURA" src="index.html" allow="autoplay; gyroscope; accelerometer"></iframe></div>
+        <div class="home" aria-hidden="true"></div>
+      </div>
+      <p class="label" id="label"></p>
+    </div>
+  </main>
+  <button type="button" class="fab" id="fab">Controles</button>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const app = $('app'), phone = $('phone');
+
+    /* ---------- Teléfono: tamaño real del modelo, escalado para caber en la ventana ---------- */
+    function layout() {
+      const [size, kind] = $('device').value.split('|');
+      const [w, h] = size.split('x').map(Number);
+      phone.className = `phone ${kind}`;
+      app.style.width = `${w}px`; app.style.height = `${h}px`;
+      $('label').textContent = `${w} × ${h} px · escala ${Math.round(scale() * 100)} %`;
+      phone.style.transform = `scale(${scale()})`;
+      function scale() {
+        const r = document.querySelector('main').getBoundingClientRect();
+        const pw = w + 28 + 20, ph = h + (kind === 'se' ? 140 : 28) + 70;
+        return Math.min(1, r.width / pw, r.height / ph);
+      }
+    }
+    $('device').addEventListener('change', () => { layout(); app.contentWindow.location.reload(); });
+    addEventListener('resize', layout);
+    layout();
+
+    /* ---------- Saltar a una pantalla ---------- */
+    document.querySelectorAll('[data-screen]').forEach((b) => b.addEventListener('click', () => {
+      const s = b.dataset.screen;
+      if (s === 'a05') { app.src = 'index.html#a05'; app.contentWindow.location.reload(); return; }
+      app.contentWindow.location.hash = s;
+    }));
+    $('reload').addEventListener('click', () => { app.src = 'index.html#a01'; app.contentWindow.location.reload(); });
+
+    /* ---------- Audios desde el dispositivo ---------- */
+    // Nombres que usa la app y nombres originales que también se reconocen.
+    const EXPECTED = [
+      ['ambiente.mp3', 'Música', /^(ambiente|_+)\.mp3$/i],
+      ['acceso-fallido.mp3', 'Acceso fallido', /login[_ -]?failed|acceso-fallido/i],
+      ['acceso-concedido.mp3', 'Acceso concedido', /login[_ -]?granted|acceso-concedido/i],
+      ['abrir-aviso.wav', 'Términos / Privacidad', /abrir[_ -]?(popup|aviso)|abrir-aviso/i],
+      ['efectos.wav', 'Efectos completos', /efectos[_ -]?completos|^efectos\.wav$/i],
+      ['crear-cuenta.wav', 'Crear cuenta', /crear[_ -]?(una[_ -]?)?cuenta/i],
+      ['icono-audio.wav', 'Icono de audio', /icono[_ -]?(de[_ -]?)?audio/i],
+    ];
+    window.__kuraAudio = { files: {}, extraTracks: [] };
+    function renderList() {
+      const f = window.__kuraAudio.files;
+      $('files').innerHTML = EXPECTED.map(([name, label]) => `<li><span>${label}</span><span class="${f[name] ? 'ok' : 'no'}">${f[name] ? '✓ cargado' : '—'}</span></li>`).join('')
+        + window.__kuraAudio.extraTracks.map((_, i) => `<li><span>Canción ${i + 2}</span><span class="ok">✓ cargada</span></li>`).join('');
+    }
+    function load(list) {
+      const audio = [...list].filter((f) => /\.(mp3|wav|m4a|ogg)$/i.test(f.name));
+      if (!audio.length) return;
+      for (const file of audio) {
+        const url = URL.createObjectURL(file);
+        if (/shadow/i.test(file.name)) { window.__kuraAudio.extraTracks.push(url); continue; }
+        const hit = EXPECTED.find(([name, , re]) => re.test(file.name) || file.name === name);
+        if (hit) window.__kuraAudio.files[hit[0]] = url;
+        else if (/\.mp3$/i.test(file.name) && file.size > 1e6 && !window.__kuraAudio.files['ambiente.mp3']) window.__kuraAudio.files['ambiente.mp3'] = url; // canción con otro nombre
+      }
+      renderList();
+      app.contentWindow.location.reload(); // la app vuelve a cargar con los audios
+    }
+    $('pick-folder').addEventListener('change', (e) => load(e.target.files));
+    $('pick-files').addEventListener('change', (e) => load(e.target.files));
+    renderList();
+
+    $('fab').addEventListener('click', () => document.body.classList.toggle('open'));
+  </script>
+</body>
+</html>

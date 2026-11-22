@@ -90,7 +90,14 @@ export function luminousBorder(host, o) {
   };
   sparkles.forEach((s) => { s.node.style.transformBox = 'fill-box'; s.node.style.transformOrigin = 'center'; schedule(s); });
 
-  const setIntensity = (v, ms = 400) => { all.animate([{ opacity: all.getAttribute('opacity') ?? 1 }, { opacity: v }], { duration: ms, fill: 'forwards', easing: 'ease-out' }); all.setAttribute('opacity', v); };
+  // Una sola animación de intensidad a la vez (no se acumulan al pasar el cursor rápido).
+  let intensityAnim = null;
+  const setIntensity = (v, ms = 400) => {
+    const from = getComputedStyle(all).opacity;
+    intensityAnim?.cancel();
+    all.style.opacity = v;
+    intensityAnim = ms ? all.animate([{ opacity: from }, { opacity: v }], { duration: ms, easing: 'ease-out' }) : null;
+  };
   setIntensity(o.intensity, 0);
 
   return {
@@ -106,7 +113,8 @@ export function luminousBorder(host, o) {
     /** Pulso breve (al presionar). */
     pulse() {
       if (reduced) return;
-      halo.animate([{ opacity: 1 }, { opacity: 1.8, filter: 'brightness(1.6)' }, { opacity: 1 }], { duration: 520, easing: 'ease-out' });
+      halo.getAnimations().filter((x) => x.id === 'pulse').forEach((x) => x.cancel());
+      const a = halo.animate([{ opacity: 1 }, { opacity: 1.8, filter: 'brightness(1.6)' }, { opacity: 1 }], { duration: 520, easing: 'ease-out' }); a.id = 'pulse';
     },
     /** Invitación: el halo se enciende despacio y vuelve a su brillo normal. Sin líneas que viajan. */
     invite(duration = 2600) {

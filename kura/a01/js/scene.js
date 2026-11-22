@@ -106,4 +106,35 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
   });
   stage.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
   motion.onChange((reduced) => { if (reduced) { tx = ty = 0; kick(); } });
+
+  // Giroscopio (teléfono): inclinar el teléfono mueve la escena igual que el cursor en PC.
+  // La primera lectura es la posición neutra; si el teléfono se queda en otra posición,
+  // el centro se reajusta poco a poco para que la escena no quede descentrada.
+  let base = null, gyroOn = false;
+  const RANGE = 18; // grados de inclinación para llegar al borde del movimiento
+  const clamp = (v) => Math.max(-1, Math.min(1, v));
+  const onTilt = (e) => {
+    if (motion.reduced || e.gamma == null || e.beta == null) return;
+    if (!base) base = { g: e.gamma, b: e.beta };
+    base.g += (e.gamma - base.g) * 0.004; base.b += (e.beta - base.b) * 0.004;
+    tx = clamp((e.gamma - base.g) / RANGE);
+    ty = clamp((e.beta - base.b) / RANGE);
+    kick();
+  };
+  return {
+    /** Llamar desde un toque del usuario (iOS pide permiso para leer el giroscopio). */
+    async enableGyro() {
+      if (gyroOn || typeof DeviceOrientationEvent === 'undefined') return false;
+      try {
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+          // iPhone responde «granted» o «denied»; Chrome puede responder «prompt»: en ese caso se escucha igual.
+          if ((await DeviceOrientationEvent.requestPermission()) === 'denied') return false;
+        }
+      } catch { return false; }
+      gyroOn = true;
+      addEventListener('deviceorientation', onTilt);
+      return true;
+    },
+    recenter() { base = null; },
+  };
 }

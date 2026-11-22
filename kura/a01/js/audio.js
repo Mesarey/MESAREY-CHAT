@@ -42,22 +42,28 @@ function ensureContext() {
   // Al terminar una canción empieza la siguiente; la lista se repite.
   el.addEventListener('ended', () => nextTrack());
   // Si una canción falta o no carga, se salta sin errores; si ninguna carga, no hay música.
-  el.addEventListener('error', () => { badTracks.add(track); if (badTracks.size >= config.audio.playlist.length) { musicOk = false; emit(); } else nextTrack(); });
+  el.addEventListener('error', () => { badTracks.add(track); if (badTracks.size >= playlist().length) { musicOk = false; emit(); } else nextTrack(); });
   try { ctx.createMediaElementSource(el).connect(musicGain); } catch { musicOk = false; }
   // Archivos opcionales de SFX
   for (const [name, url] of Object.entries(config.audio.sfxFiles)) {
-    fetch(url).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => b && ctx.decodeAudioData(b)).then((buf) => { if (buf) samples[name] = buf; }).catch(() => {});
+    fetch(resolve(url)).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => b && ctx.decodeAudioData(b)).then((buf) => { if (buf) samples[name] = buf; }).catch(() => {});
   }
   return true;
 }
 
+// Visor: si la app corre dentro de visor.html y ahí se cargaron audios desde el dispositivo,
+// se usan esos archivos (mismo nombre) en lugar de los de la carpeta audio/.
+function viewerAudio() { try { return window.parent !== window ? window.parent.__kuraAudio || null : null; } catch { return null; } }
+const resolve = (url) => viewerAudio()?.files?.[url.split('/').pop()] || url;
+function playlist() { return [...config.audio.playlist, ...(viewerAudio()?.extraTracks || [])]; }
+
 function loadTrack(i) {
   track = i;
-  el.src = config.audio.playlist[i];
-  el.loop = config.audio.playlist.length - badTracks.size <= 1; // con una sola canción, se repite sola
+  el.src = resolve(playlist()[i]);
+  el.loop = playlist().length - badTracks.size <= 1; // con una sola canción, se repite sola
 }
 function nextTrack() {
-  const n = config.audio.playlist.length;
+  const n = playlist().length;
   for (let k = 1; k <= n; k++) {
     const i = (track + k) % n;
     if (!badTracks.has(i)) { loadTrack(i); if (started) el.play().catch(() => {}); return; }
