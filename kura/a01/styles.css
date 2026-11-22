@@ -17,6 +17,9 @@
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --tap: 44px; /* área táctil mínima */
+  /* Altura que sobra en teléfonos altos (la referencia es 899 × 1750). El HUD la reparte entre sus
+     botones para dar más espacio a los dedos; con tope para que no quede estirado. */
+  --g: clamp(0px, calc(100svh - 1750 * var(--u) - var(--safe-bottom)), 150px);
 }
 
 * { box-sizing: border-box; }
@@ -358,7 +361,8 @@ button, input { font: inherit; color: inherit; }
 .legal a { color: inherit; text-decoration: none; transition: color .3s; }
 .legal a:hover, .legal a:focus-visible { color: var(--ivory); }
 
-.prefs { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: calc(10 * var(--u)); font-size: calc(19 * var(--u)); font-style: italic; color: rgba(220, 205, 240, .6); }
+.prefs { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: calc(10 * var(--u)); font-size: calc(19 * var(--u)); font-style: italic; color: rgba(236, 224, 252, .82);
+  text-shadow: 0 0 calc(6 * var(--u)) rgba(30, 16, 70, .9), 0 0 calc(14 * var(--u)) rgba(30, 16, 70, .7); }
 .prefs a.pref { text-decoration: none; }
 .pref { position: relative; padding: calc(8 * var(--u)) calc(12 * var(--u)); border: 0; background: none; cursor: pointer; color: inherit; font-style: italic; letter-spacing: .5px; transition: color .3s; }
 .pref:hover, .pref:focus-visible { color: var(--ivory); }
@@ -382,7 +386,7 @@ button, input { font: inherit; color: inherit; }
 
 /* Pantallas anchas: se muestra en un marco del tamaño de un teléfono. */
 @media (min-width: 700px) and (min-aspect-ratio: 3/4) {
-  :root { --u: min(calc(430px / 899), calc((100svh - 48px) / 1750)); }
+  :root { --u: min(calc(430px / 899), calc((100svh - 48px) / 1750)); --g: 0px; }
   body { min-height: 100svh; display: grid; place-items: center; }
   .stage {
     margin: 24px auto; border-radius: calc(96 * var(--u));
@@ -440,6 +444,35 @@ button, input { font: inherit; color: inherit; }
 .cta-back .cta-label { font-size: calc(40 * var(--u)); }
 .cta-arrow-back { order: -1; }
 .cta-back:hover .cta-arrow, .cta-back:focus-visible .cta-arrow { translate: calc(-7 * var(--u)) calc(-1 * var(--u)); }
+
+/* ---------- Teléfonos altos: el HUD crece con la pantalla ----------
+   Cada medida suma una fracción de --g (0 en pantallas con la proporción de la referencia o más bajas),
+   así campos, botones y enlaces se separan y crecen en vez de dejar un hueco vacío abajo. */
+.panel { padding-top: calc(31 * var(--u) + var(--g) * .04); padding-bottom: calc(24 * var(--u) + var(--g) * .05); }
+.field { height: calc(62 * var(--u) + var(--g) * .05); }
+.field::before { height: calc(79 * var(--u) + var(--g) * .1); }
+#field-pass { margin-top: calc(17 * var(--u) + var(--g) * .06); }
+.row-msg { min-height: calc(55 * var(--u) + var(--g) * .07); }
+.cta { height: calc(75 * var(--u) + var(--g) * .06); }
+.or { height: calc(52 * var(--u) + var(--g) * .08); }
+.google { height: calc(56 * var(--u) + var(--g) * .05); }
+.first { margin-top: calc(16 * var(--u) + var(--g) * .06); }
+.prefs { margin-top: calc(10 * var(--u) + var(--g) * .08); gap: calc(6px + var(--g) * .04); }
+.pref { padding-block: calc(8 * var(--u) + var(--g) * .02); }
+/* A02 */
+#su-field-pass, #su-field-pass2 { margin-top: calc(17 * var(--u) + var(--g) * .06); }
+.row-msg-a02 { min-height: calc(35 * var(--u) + var(--g) * .07); }
+.cta-a02 { height: calc(82 * var(--u) + var(--g) * .06); }
+.first-a02 { margin-top: calc(28 * var(--u) + var(--g) * .09); }
+/* A03 */
+.form-a03 { padding-top: calc(18 * var(--u) + var(--g) * .06); }
+#view-a03 .field { height: calc(62 * var(--u) + var(--g) * .07); }
+.row-msg-a03 { min-height: calc(44 * var(--u) + var(--g) * .1); }
+.back-link { margin: calc(30 * var(--u) + var(--g) * .12) 0 calc(10 * var(--u) + var(--g) * .05); }
+/* A04 */
+.sent { padding-top: calc(10 * var(--u) + var(--g) * .06); }
+.sent-icon { margin-bottom: calc(26 * var(--u) + var(--g) * .08); }
+.sent .cta { margin-top: calc(34 * var(--u) + var(--g) * .14); margin-bottom: calc(10 * var(--u) + var(--g) * .08); height: calc(84 * var(--u) + var(--g) * .06); }
 
 /* ---------- A05 · Restaurando sesión (arranque) ----------
    La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:

@@ -234,10 +234,10 @@ const recover = recoverForm({
 addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIEWS[n]) showView(n); });
 // Vista inicial según la dirección (#a02 abre directamente Crear cuenta).
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
-document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal); }));
+document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 
 /* ---------- Preferencias ---------- */
-$('lang').addEventListener('click', () => { audio.sfx('tap'); applyLanguage(currentLang() === 'es' ? 'en' : 'es'); });
+$('lang').addEventListener('click', () => { audio.sfx('effects'); applyLanguage(currentLang() === 'es' ? 'en' : 'es', { manual: true }); });
 $('fx-toggle').addEventListener('click', () => { audio.sfx('effects'); motion.set(!motion.reduced); });
 $('fx-toggle').setAttribute('aria-pressed', String(motion.reduced));
 

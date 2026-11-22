@@ -73,7 +73,7 @@ const LEGAL_EN = {
 export const LEGAL = { es: LEGAL_ES, en: LEGAL_EN };
 
 /** Ventana emergente con los documentos legales (Arial para que se lea con claridad).
- *  open(kind): lectura de Términos o Privacidad.
+ *  open(kind, { sound }): lectura de Términos o Privacidad (sound: SFX al abrir).
  *  accept(): ventana «Términos y privacidad» con la casilla sin marcar; resuelve true al aceptar. */
 export function legalDialog({ t, sfx, lang }) {
   const dlg = document.getElementById('legal-dialog');
@@ -125,7 +125,7 @@ export function legalDialog({ t, sfx, lang }) {
   cont.addEventListener('click', () => { if (check.checked) finish(true); });
   document.addEventListener('kura:lang', () => { if (dlg.open) render(); });
   return {
-    open(kind) { mode = 'read'; acceptBox.hidden = true; renderDoc(kind); sfx('legal'); dlg.showModal(); body.focus({ preventScroll: true }); },
+    open(kind, { sound = 'legal' } = {}) { mode = 'read'; acceptBox.hidden = true; renderDoc(kind); sfx(sound); dlg.showModal(); body.focus({ preventScroll: true }); },
     accept() {
       mode = 'accept'; acceptBox.hidden = false; check.checked = false; cont.disabled = true; // sin marcar por defecto
       renderAccept(); sfx('legal'); dlg.showModal(); body.focus({ preventScroll: true });

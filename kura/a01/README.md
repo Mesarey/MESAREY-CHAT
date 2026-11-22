@@ -13,7 +13,10 @@ npx serve kura/a01
 - A05 (Restaurando sesión) solo dura lo que tarde la carga: en un teléfono rápido apenas se ve; si algo se traba, queda la animación de carga. Para revisarlo quieto: `#a05` (se queda hasta tocar la pantalla).
 - A03 (Recuperar contraseña): `#a03` o «Olvidé mi contraseña». A04 (Enlace enviado): tras enviar, o `#a04`.
 - A02 (Crear cuenta): `http://localhost:3000/#a02`, o «Crear cuenta» desde A01. El escenario no cambia: solo el contenido del HUD, con transición suave; el botón «atrás» del teléfono regresa a A01.
-- Español: `http://localhost:3000/#es` · Inglés: `http://localhost:3000/#en` (también desde el botón «English / Español» bajo el panel).
+- Idioma automático: KURA usa el idioma del teléfono. Español → español; inglés o cualquier otro idioma (italiano, francés…) → inglés.
+- El botón «English / Español» bajo el panel lo cambia mientras la app está abierta; al volver a abrirla, sigue al teléfono.
+- Para probar: `http://localhost:3000/#es` · `http://localhost:3000/#en`.
+- En teléfonos más altos que la referencia (899 × 1750) el HUD reparte la altura sobrante (`--g`) entre campos, botones y enlaces para dar más espacio a los dedos.
 - Panel de ajustes de desarrollo: **Mayús + D**, o `#dev` en la dirección.
 
 ## Visor de teléfono

@@ -64,11 +64,21 @@ const STRINGS = {
   },
 };
 
+/** Idioma del teléfono: español → español; inglés o cualquier otro (italiano, francés…) → inglés. */
+export const deviceLang = () => {
+  const list = navigator.languages?.length ? navigator.languages : [navigator.language || 'en'];
+  return String(list[0] || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
+};
+
 const pick = () => {
   if (location.hash === '#en') return 'en';
   if (location.hash === '#es') return 'es';
-  try { const saved = localStorage.getItem('kura.lang'); if (saved in STRINGS) return saved; } catch {}
-  return (navigator.language || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';
+  try {
+    localStorage.removeItem('kura.lang'); // versiones anteriores guardaban el idioma para siempre
+    const chosen = sessionStorage.getItem('kura.lang'); // cambio manual: dura mientras la app está abierta
+    if (chosen in STRINGS) return chosen;
+  } catch {}
+  return deviceLang();
 };
 
 let lang = pick();
@@ -76,9 +86,9 @@ export const t = (key) => STRINGS[lang][key] ?? STRINGS.es[key] ?? key;
 export const currentLang = () => lang;
 
 /** Pinta los textos de la página. Los elementos llevan data-i18n="clave" o data-i18n-attr="atributo:clave". */
-export function applyLanguage(next = lang) {
+export function applyLanguage(next = lang, { manual = false } = {}) {
   lang = next;
-  try { localStorage.setItem('kura.lang', lang); } catch {}
+  if (manual) { try { sessionStorage.setItem('kura.lang', lang); } catch {} }
   document.documentElement.lang = lang;
   document.title = t('pageTitle');
   document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
