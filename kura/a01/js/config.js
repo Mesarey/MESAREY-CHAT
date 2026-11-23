@@ -78,7 +78,7 @@ export const config = {
     // Sonidos con archivo propio. Los que no están aquí (toque, enfoque, alternar) se sintetizan.
     // Auditoría de volumen: ajuste en dB por sonido para que todos lleguen al mismo nivel
     // (pico de corto plazo ≈ −24 dBFS medido dentro de la app). Medido con audio._measure(nombre).
-    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: -10, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8, start: 14, starFloat: -1 },
+    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: -10, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8, start: 14, starFloat: -1, decline: 3 },
     // starFloat es un fondo muy sutil (≈ 23 dB por debajo de los demás sonidos), en bucle mientras se ve A06
     sfxFiles: {
       error: 'audio/sfx/acceso-fallido.mp3',       // inicio de sesión incorrecto
@@ -89,6 +89,7 @@ export const config = {
       soundIcon: 'audio/sfx/icono-audio.wav',     // tocar el icono de audio
       closeLegal: 'audio/sfx/cerrar-aviso.wav',    // cerrar Términos / Privacidad (X, tocar fuera o Escape)
       start: 'audio/sfx/empezar.wav',              // «Empezar» en A06
+      decline: 'audio/sfx/falta-dato.wav',         // formulario de la introducción (A07 en adelante): falta un dato para avanzar
       starFloat: 'audio/sfx/estrella-flotando.wav', // la estrella de la mano de Alaira (A06), en bucle y muy suave
     },
   },

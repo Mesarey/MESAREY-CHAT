@@ -109,6 +109,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delan
 | `abrir-aviso.wav` | Abrir Términos o Privacidad | **Incluido** (elegido por ti) |
 | `cerrar-aviso.wav` | Cerrar Términos o Privacidad (X, tocar fuera o Escape; al aceptar no suena) | **Incluido** (elegido por ti) |
 | `empezar.wav` | «Empezar» en A06 | **Incluido** (elegido por ti) |
+| `falta-dato.wav` | Formulario de la introducción (A07 y las siguientes): tocar para avanzar cuando falta un dato | **Incluido** (elegido por ti) |
 | `estrella-flotando.wav` | La estrella de Alaira en A06: bucle muy suave, ≈ 23 dB debajo de los efectos | **Incluido** (elegido por ti) |
 | `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |
 | `crear-cuenta.wav` | «Crear cuenta» | **Incluido** (elegido por ti) |

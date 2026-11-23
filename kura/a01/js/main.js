@@ -337,12 +337,13 @@ const savedName = () => { try { return localStorage.getItem(NAME_KEY) || null; }
 const nameInput = $('nombre'), nameField = $('field-name'), nameMsg = $('msg-a07');
 try { nameInput.value = savedName() ?? ''; } catch {}
 const nameError = (on) => { nameField.classList.toggle('is-error', on); nameMsg.textContent = on ? t('a07Empty') : ''; nameMsg.classList.toggle('is-on', on); nameInput.setAttribute('aria-invalid', String(on)); };
-nameInput.addEventListener('focus', () => audio.sfx('focus'));
+let quietFocus = false; // al volver al campo tras «falta un dato» no suena el enfoque encima
+nameInput.addEventListener('focus', () => { if (!quietFocus) audio.sfx('focus'); quietFocus = false; });
 nameInput.addEventListener('input', () => { if (nameInput.value.trim()) nameError(false); });
 $('form-a07').addEventListener('submit', (e) => {
   e.preventDefault();
   const nombre = nameInput.value.replace(/\s+/g, ' ').trim();
-  if (!nombre) { audio.sfx('error'); nameError(true); nameInput.focus(); return; }
+  if (!nombre) { audio.sfx('decline'); nameError(true); quietFocus = document.activeElement !== nameInput; nameInput.focus(); return; } // falta un dato: mismo sonido en A07 y las siguientes
   nameError(false);
   try { localStorage.setItem(NAME_KEY, nombre); } catch {}
   audio.sfx('tap'); primaryFx(VIEWS.a07, {});
