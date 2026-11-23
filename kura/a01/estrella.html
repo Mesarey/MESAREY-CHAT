@@ -9,11 +9,11 @@
   <style>
     html, body { margin: 0; height: 100%; background: #1d1636; color: #efe4ff; font-family: Georgia, 'Times New Roman', serif; overflow: hidden; }
     .wrap { position: fixed; inset: 0; display: grid; place-items: center; }
-    /* recorte del lienzo de A06 alrededor de la mano: x 41…281, y 444…734 */
-    .view { --s: calc(min(100vw - 24px, (100svh - 140px) * 240 / 290) / 240); position: relative; width: calc(240 * var(--s)); height: calc(290 * var(--s)); overflow: hidden; border-radius: 18px; box-shadow: 0 0 40px rgba(150, 110, 220, .35); background: #2b2347; }
+    /* recorte del lienzo de A06 alrededor de la mano: x 6…316, y 414…754 */
+    .view { --s: calc(min(100vw - 24px, (100svh - 140px) * 310 / 340) / 310); position: relative; width: calc(310 * var(--s)); height: calc(340 * var(--s)); overflow: hidden; border-radius: 18px; box-shadow: 0 0 40px rgba(150, 110, 220, .35); background: #2b2347; }
     .view img { position: absolute; max-width: none; }
-    .cielo { left: calc(-89 * var(--s)); top: calc(-492 * var(--s)); width: calc(1007 * var(--s)); }
-    .alaira { left: calc(-89 * var(--s)); top: calc(-367 * var(--s)); width: calc(1007 * var(--s)); }
+    .cielo { left: calc(-54 * var(--s)); top: calc(-462 * var(--s)); width: calc(1007 * var(--s)); }
+    .alaira { left: calc(-54 * var(--s)); top: calc(-337 * var(--s)); width: calc(1007 * var(--s)); }
     canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .cap { position: fixed; left: 0; right: 0; text-align: center; font-size: 14px; letter-spacing: .06em; opacity: .85; padding: 0 16px; margin: 0; }
     .top { top: max(18px, env(safe-area-inset-top)); font-style: italic; font-size: 17px; }
@@ -35,7 +35,7 @@
     const top = document.getElementById('top');
     try {
       const { createStar3D } = await import('./js/estrella3d.js');
-      const s = await createStar3D({ canvas: document.getElementById('c'), motion: { reduced: false }, centro: [161, 594], vista: [41, 444, 240, 290] });
+      const s = await createStar3D({ canvas: document.getElementById('c'), motion: { reduced: false }, centro: [161, 594], vista: [6, 414, 310, 340], escala: 1.3 });
       s.start();
       document.getElementById('view').addEventListener('pointerdown', () => s.shine());
     } catch (err) {

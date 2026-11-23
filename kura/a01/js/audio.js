@@ -51,7 +51,7 @@ function ensureContext() {
   try { ctx.createMediaElementSource(el).connect(musicGain); } catch { musicOk = false; }
   // Sonidos: ya se descargaron al abrir la página; aquí solo se decodifican.
   for (const [name, pending] of Object.entries(rawSfx)) {
-    pending.then((b) => b && ctx.decodeAudioData(b.slice(0))).then((buf) => { if (buf) samples[name] = buf; }).catch(() => {});
+    pending.then((b) => b && ctx.decodeAudioData(b.slice(0))).then((buf) => { if (buf) { samples[name] = buf; syncLoops(); } }).catch(() => {});
   }
   return true;
 }
@@ -107,6 +107,7 @@ async function start() {
   try { if (ctx.state !== 'running') await ctx.resume(); } catch {}
   if (musicOk && musicOn && el.paused) { try { await el.play(); } catch { /* se reintenta en el siguiente gesto */ } }
   apply();
+  syncLoops();
 }
 const isReady = () => !!ctx && ctx.state === 'running' && (!musicOn || !musicOk || !el.paused);
 
@@ -141,6 +142,8 @@ export const audio = {
   /** Para la transición al mundo de Alaira: desvanece y detiene la música de A01. */
   fadeOutMusic(seconds = 4) { if (ctx) ramp(musicGain.gain, 0, seconds); },
   sfx: (name) => playSfx(name),
+  /** Sonido de ambiente en bucle (p. ej. la estrella de A06): on = true lo enciende con un fundido, false lo apaga. */
+  loop(name, on) { wantLoops[name] = on; syncLoops(); },
   /** Siguiente canción de la lista (para el futuro panel de música, M06). */
   next() { if (el) nextTrack(); },
   /** Auditoría de volumen: reproduce un sonido y devuelve su nivel máximo de corto plazo (dBFS, ventanas de ~43 ms). */
@@ -157,8 +160,46 @@ export const audio = {
   /** Solo para pruebas: simula que la canción actual terminó. */
   _ended() { el?.dispatchEvent(new Event('ended')); },
   /** Estado para pruebas y depuración. */
-  debug: () => ({ started, musicOn, sfxOn, voiceOn, musicOk, track, src: el?.src ?? '', playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx, history: [...history] }),
+  debug: () => ({ started, musicOn, sfxOn, voiceOn, musicOk, track, src: el?.src ?? '', playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), loops: Object.keys(loops), lastSfx, history: [...history] }),
 };
+
+/* ---------- Sonidos en bucle (ambiente) ---------- */
+// Se repite con fundidos cruzados de 0.6 s entre copias: no se oye el corte aunque el archivo no sea un bucle perfecto.
+// Pasa por el canal de efectos: si los efectos están apagados, no suena.
+const wantLoops = {}, loops = {};
+const XF = .6;
+function syncLoops() {
+  if (!ctx || !started) return;
+  for (const [name, want] of Object.entries(wantLoops)) {
+    const L = loops[name];
+    if (want && !L && samples[name]) {
+      const g = ctx.createGain(); g.gain.value = 0; g.connect(sfxGain);
+      const lv = 10 ** ((config.audio.sfxLevels?.[name] ?? 0) / 20);
+      g.gain.setValueAtTime(0, ctx.currentTime); g.gain.linearRampToValueAtTime(lv, ctx.currentTime + 1.6);
+      const loop = { g, next: ctx.currentTime + .02, timer: 0, srcs: [] };
+      const buf = samples[name], period = Math.max(.5, buf.duration - XF);
+      const schedule = () => {
+        while (loop.next < ctx.currentTime + 2) {
+          const s = ctx.createBufferSource(), e = ctx.createGain(), t = loop.next;
+          s.buffer = buf; s.connect(e); e.connect(g);
+          e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(1, t + XF);
+          e.gain.setValueAtTime(1, t + buf.duration - XF); e.gain.linearRampToValueAtTime(0, t + buf.duration);
+          s.start(t); s.stop(t + buf.duration + .05);
+          loop.srcs.push(s); s.onended = () => { loop.srcs = loop.srcs.filter((x) => x !== s); };
+          loop.next += period;
+        }
+      };
+      schedule(); loop.timer = setInterval(schedule, 500);
+      loops[name] = loop;
+    } else if (!want && L) {
+      delete loops[name];
+      clearInterval(L.timer);
+      const t = ctx.currentTime;
+      L.g.gain.cancelScheduledValues(t); L.g.gain.setValueAtTime(L.g.gain.value, t); L.g.gain.linearRampToValueAtTime(0, t + .9);
+      setTimeout(() => { L.srcs.forEach((s) => { try { s.stop(); } catch {} }); L.g.disconnect(); }, 1000);
+    }
+  }
+}
 
 /* ---------- Sonidos de interfaz ---------- */
 let level = 1; // nivel del sonido en curso (auditoría de volumen)

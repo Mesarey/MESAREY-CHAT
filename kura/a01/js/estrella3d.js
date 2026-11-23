@@ -18,8 +18,12 @@ const PALMA = [63, 642, 198, 82];      // reflejo dorado en la palma
  * @param {{reduced: boolean}} o.motion  preferencia de movimiento reducido
  * @param {number[]} o.centro  centro de la estrella [x, y]
  * @param {number[]} o.vista  recorte del lienzo de A06 que cubre el canvas [x, y, ancho, alto]
+ * @param {number} [o.escala]  tamaño de la estrella, su órbita y su polvo respecto al diseño (1 = igual)
  */
-export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [vx, vy, vw, vh] }) {
+export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [vx, vy, vw, vh], escala: S = 1 }) {
+  // todo lo de la estrella crece desde su centro; el reflejo de la palma se queda en la mano
+  const at = ([x, y]) => [sx + (x - sx) * S, sy + (y - sy) * S];
+  const scaled = ([x, y, w, h]) => { const [cx, cy] = at([x + w / 2, y + h / 2]); return [cx - (w * S) / 2, cy - (h * S) / 2, w * S, h * S]; };
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, premultipliedAlpha: true });
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = THREE.NoToneMapping; // el oro conserva su saturación
@@ -45,33 +49,33 @@ export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [v
   };
 
   const palm = plane(tPalma, PALMA, 1);
-  const orbitBack = plane(tAtras, ORBITA, 2, [2.9, 2.1, 1.1]);   // la órbita brilla dorada como en la referencia
-  const halo = sprite(tHalo, 130, 4, .38);
-  const flare = sprite(tDestello, 150, 30, .6);                   // rayos largos y finos
-  const core = sprite(tChispa, 36, 31, .9);                       // núcleo encendido
-  const orbitFront = plane(tDelante, ORBITA, 32, [2.9, 2.1, 1.1]);
-  const glint1 = sprite(tDestello, 34, 33, 0, [240, 534]);
-  const glint2 = sprite(tDestello, 22, 33, 0, [104, 566]);
+  const orbitBack = plane(tAtras, scaled(ORBITA), 2, [2.9, 2.1, 1.1]);   // la órbita brilla dorada como en la referencia
+  const halo = sprite(tHalo, 130 * S, 4, .38);
+  const flare = sprite(tDestello, 150 * S, 30, .6);                   // rayos largos y finos
+  const core = sprite(tChispa, 36 * S, 31, .9);                       // núcleo encendido
+  const orbitFront = plane(tDelante, scaled(ORBITA), 32, [2.9, 2.1, 1.1]);
+  const glint1 = sprite(tDestello, 34 * S, 33, 0, at([240, 534]));
+  const glint2 = sprite(tDestello, 22 * S, 33, 0, at([104, 566]));
 
   // chispas que recorren la órbita: delante o detrás de la estrella según su ángulo
-  const [ox, oy] = [ORBITA[0] + ORBITA[2] / 2, ORBITA[1] + ORBITA[3] / 2];
+  const [ox, oy] = at([ORBITA[0] + ORBITA[2] / 2, ORBITA[1] + ORBITA[3] / 2]);
   const sparks = Array.from({ length: 22 }, (_, i) => ({
     s: sprite(tChispa, 10, 33, 0, [ox, oy]),
-    a: (i / 22) * Math.PI * 2 + rand(-.12, .12), speed: rand(.14, .26), size: rand(7, 15), tw: rand(0, 6), twf: rand(.8, 2.2),
+    a: (i / 22) * Math.PI * 2 + rand(-.12, .12), speed: rand(.14, .26), size: rand(7, 15) * S, tw: rand(0, 6), twf: rand(.8, 2.2),
   }));
 
   // polvo de oro: motas finas que nacen junto a la estrella, suben en espiral lenta, titilan y se apagan
   const DUST = 180;
   const seeds = new Float32Array(DUST * 4);
-  for (let i = 0; i < DUST; i++) seeds.set([Math.random(), rand(3.2, 6.5), rand(1.3, 4), Math.random()], i * 4);
+  for (let i = 0; i < DUST; i++) seeds.set([Math.random(), rand(3.2, 6.5), rand(1.3, 4) * Math.sqrt(S), Math.random()], i * 4);
   const dustGeo = new THREE.BufferGeometry();
   dustGeo.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(DUST * 3), 3));
   dustGeo.setAttribute('aSeed', new THREE.Float32BufferAttribute(seeds, 4));
   const dust = new THREE.Points(dustGeo, new THREE.ShaderMaterial({
-    uniforms: { uTime: { value: 0 }, uScale: { value: 1 }, uC: { value: new THREE.Vector2(sx, sy) }, uGlow: { value: 1 } },
+    uniforms: { uTime: { value: 0 }, uScale: { value: 1 }, uC: { value: new THREE.Vector2(sx, sy) }, uGlow: { value: 1 }, uS: { value: S } },
     vertexShader: /* glsl */`
       attribute vec4 aSeed; // fase, vida (s), tamaño (px), tipo
-      uniform float uTime, uScale; uniform vec2 uC;
+      uniform float uTime, uScale, uS; uniform vec2 uC;
       varying float vA; varying float vHot;
       void main() {
         float life = aSeed.y, age = fract(uTime / life + aSeed.x);
@@ -81,7 +85,7 @@ export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [v
         float r0 = mix(6., 74., h * h), dir = aSeed.w > .5 ? 1. : -1.;
         float ang = h2 * 6.2832 + age * dir * (.9 + aSeed.w * 1.4);
         float r = r0 * (.75 + age * .55);
-        vec2 p = uC + vec2(cos(ang) * r, sin(ang) * r * .42 - age * mix(26., 92., h2) + 8.);
+        vec2 p = uC + vec2(cos(ang) * r, sin(ang) * r * .42 - age * mix(26., 92., h2) + 8.) * uS;
         float tw = .55 + .45 * sin(uTime * (3. + aSeed.w * 5.) + aSeed.x * 40.);
         vA = smoothstep(0., .18, age) * (1. - smoothstep(.55, 1., age)) * tw;
         vHot = step(.86, aSeed.w);                                     // unas pocas, más brillantes
@@ -114,7 +118,7 @@ export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [v
   const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3());
   model.position.sub(box.getCenter(new THREE.Vector3()));
   const holder = new THREE.Group(); holder.add(model);
-  holder.scale.setScalar(72 / Math.max(size.x, size.y)); // alto de la estrella en px del lienzo, como en la referencia
+  holder.scale.setScalar((72 * S) / Math.max(size.x, size.y)); // alto de la estrella en px del lienzo
   const seen = new Set(); // los materiales se comparten entre piezas: se ajustan una sola vez
   model.traverse((o) => {
     if (!o.isMesh) return;
@@ -145,9 +149,9 @@ export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [v
     const glow = .82 + .18 * Math.sin(t * 1.7) + pulse;
     star.position.y = -sy + bob;
     halo.position.y = flare.position.y = core.position.y = -sy + bob;
-    halo.material.opacity = .3 * glow; halo.scale.setScalar(130 * (.96 + .06 * Math.sin(t * 1.7)) * (1 + pulse * .3));
+    halo.material.opacity = .3 * glow; halo.scale.setScalar(130 * S * (.96 + .06 * Math.sin(t * 1.7)) * (1 + pulse * .3));
     flare.material.opacity = .5 + .2 * Math.sin(t * 1.7) + pulse * .4;
-    flare.material.rotation = Math.sin(t * .4) * .05; flare.scale.setScalar(150 * (.94 + .08 * Math.sin(t * 1.7)) * (1 + pulse * .25));
+    flare.material.rotation = Math.sin(t * .4) * .05; flare.scale.setScalar(150 * S * (.94 + .08 * Math.sin(t * 1.7)) * (1 + pulse * .25));
     core.material.opacity = .75 + .25 * Math.sin(t * 2.1);
     glint1.material.opacity = Math.max(0, Math.sin(t * .9)) ** 3 * .9; glint1.material.rotation = t * .2;
     glint2.material.opacity = Math.max(0, Math.sin(t * .7 + 2)) ** 3 * .7;
@@ -157,7 +161,7 @@ export async function createStar3D({ canvas, motion, centro: [sx, sy], vista: [v
     for (const sp of sparks) {
       if (!still) sp.a += sp.speed * dt;
       const cx = Math.cos(sp.a), sn = Math.sin(sp.a);
-      sp.s.position.set(ox + cx * 66, -(oy + sn * 15) + bob * .5, 0);
+      sp.s.position.set(ox + cx * 66 * S, -(oy + sn * 15 * S) + bob * .5, 0);
       sp.s.renderOrder = sn > 0 ? 33 : 3; // abajo de la elipse = delante de la estrella
       const tw = .5 + .5 * Math.sin(t * sp.twf * 6.283 + sp.tw);
       sp.s.material.opacity = (sn > 0 ? .95 : .45) * tw * tw;

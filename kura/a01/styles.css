@@ -494,17 +494,8 @@ button, input { font: inherit; color: inherit; }
 .a6-planet > img { animation: a6-float 14s ease-in-out infinite alternate; }
 .a6-planet-s > img { animation-duration: 9s; animation-delay: -4s; }
 @keyframes a6-float { from { translate: 0 calc(-2 * var(--v)); } to { translate: 0 calc(2 * var(--v)); } }
-/* estrellas del cielo: titilan suave, algunas con destello en cruz */
-.a6-tw {
-  position: absolute; border-radius: 50%; mix-blend-mode: screen; opacity: 0;
-  background: radial-gradient(circle, #fff 0 9%, rgba(255, 248, 255, .8) 17%, var(--c) 36%, transparent 70%);
-  animation: a6-tw var(--d) ease-in-out var(--w) infinite;
-}
-.a6-tw.is-cross { background: radial-gradient(circle, #fff 0 5%, rgba(255, 248, 255, .7) 10%, var(--c) 22%, transparent 46%); }
-.a6-tw.is-cross::after { content: ''; position: absolute; inset: 0; background: url(assets/a06/fx/destello-marfil.webp) center / contain no-repeat; }
-@keyframes a6-tw { 0%, 100% { opacity: .05; scale: .5; } 35% { opacity: .3; scale: .7; } 52% { opacity: 1; scale: 1; } 68% { opacity: .45; scale: .82; } }
 /* Alaira: parpadeo con el atlas, fleco delante de los ojos, estrella 3D sobre la mano */
-.a6-eyes { position: absolute; background-repeat: no-repeat; }
+.a6-eye { position: absolute; background-repeat: no-repeat; }
 .a6-front { position: absolute; inset: 0; }
 .a6-star { pointer-events: none; }
 .scene6.star-3d .a6-star2d { visibility: hidden; }
@@ -515,7 +506,7 @@ button, input { font: inherit; color: inherit; }
 @keyframes a6-cloud { from { translate: calc(var(--tx) * var(--v) * -1) calc(var(--ty) * var(--v) * -1); } to { translate: calc(var(--tx) * var(--v)) calc(var(--ty) * var(--v)); } }
 /* niebla del pie: en teléfonos altos cubre hasta el borde */
 .a6-pie { position: absolute; left: calc(-70 * var(--v)); right: calc(-70 * var(--v)); bottom: calc(-60 * var(--v)); height: calc(260 * var(--v) + var(--g6)); pointer-events: none;
-  background: radial-gradient(55% 75% at 14% 100%, rgba(150, 112, 205, .45), transparent 72%), radial-gradient(55% 75% at 88% 100%, rgba(140, 104, 200, .4), transparent 72%), linear-gradient(to top, rgba(70, 54, 120, .55), transparent); }
+  background: radial-gradient(45% 60% at 8% 100%, rgba(168, 128, 222, .55), transparent 72%), radial-gradient(45% 60% at 92% 100%, rgba(160, 120, 216, .5), transparent 72%), linear-gradient(to top, rgba(86, 66, 140, .6), transparent); }
 /* HUD de A06: mismo cristal, bordes luminosos y botón que A01–A04 */
 .stage.in-a06 .content { padding-top: calc(1104 * var(--v)); }
 .stage.in-a06 .prefs { display: none; }
@@ -532,7 +523,8 @@ button, input { font: inherit; color: inherit; }
 }
 .a6-mist { position: absolute; inset: 0; pointer-events: none; }
 .a6-mist { overflow: hidden; border-radius: inherit; }
-.a6-mist-img { position: absolute; left: -22%; width: 144%; bottom: calc(-46 * var(--v)); opacity: .55; animation: a6-cloud 26s ease-in-out -9s infinite alternate; --tx: 20; --ty: 3; }
+.a6-mist-img { position: absolute; left: calc(-23 * var(--v)); width: calc(911 * var(--v)); height: calc(230 * var(--v)); bottom: calc(-39 * var(--v)); max-width: none; animation: a6-mist-breathe 9s ease-in-out infinite alternate; }
+@keyframes a6-mist-breathe { from { opacity: .82; } to { opacity: 1; } }
 .a06-body { align-items: center; text-align: center; }
 .a06-guide { margin: 0; font-style: normal; font-size: calc(35 * var(--v)); line-height: calc(52 * var(--v) + var(--g6) * .05); letter-spacing: calc(.8 * var(--v)); color: #f2e8ff; text-shadow: 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
 .a06-question { margin: 0; font-style: italic; font-size: calc(44 * var(--v)); line-height: calc(64 * var(--v) + var(--g6) * .05); letter-spacing: calc(.6 * var(--v)); color: #fbf4ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(210, 160, 255, .5); }

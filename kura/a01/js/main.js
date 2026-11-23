@@ -13,6 +13,7 @@ import { signupForm } from './signup.js';
 import { recoverForm } from './recover.js';
 import { auth } from './auth.js';
 import { mountA06 } from './a06.js';
+import { TWINKLES as A06_STARS } from './a06-estrellas.js';
 
 const gsap = window.gsap;
 gsap?.ticker.lagSmoothing(0);
@@ -27,7 +28,7 @@ buildScene($('scene'));
 const wind = mountWind($('scene'), motion);
 let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
-const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06 };
+const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06, sky6: 0 }; // sky6: estrellas del cielo de A06
 let a06 = null;
 const tilt = parallax(stage, motion, unit, (o) => { stars?.shift(o); a06?.look(o.n); });
 // A06 · Bienvenida con Alaira: su escenario se arma la primera vez que hace falta (o en segundo plano).
@@ -109,6 +110,7 @@ let syncFlares = () => {};
 const startStars = () => createStarField({ canvas: $('fx'), stage, motion, isMobile, reveal }).then((s) => {
   stars = s;
   if (!s) return devPanel({ stars, button, hud, wind });
+  s.setSky6(A06_STARS); // el cielo de A06 usa las mismas estrellas nítidas y destellantes que A01
   // El destello óptico sigue el contorno real del panel (se recalcula al cambiar de tamaño).
   // El destello se coloca con la posición del panel SIN el paralaje (el shader ya lo suma con uHud) y
   // solo cuando nada entre el panel y el HUD está animado (entradas, salidas, hover del botón).
@@ -264,17 +266,20 @@ function switchScene(toA06, animate = true) {
   gsap?.killTweensOf([a01Scene, reveal]);
   if (a06.el) gsap?.killTweensOf(a06.el);
   const soft = animate && gsap && !motion.reduced;
+  audio.loop('starFloat', toA06); // la estrella de Alaira suena muy suave mientras se ve A06
   if (toA06) {
     a06.enter();
-    if (!soft) { a01Scene.style.visibility = 'hidden'; a06.el.style.opacity = 1; reveal.stars = 0; return; }
+    if (!soft) { a01Scene.style.visibility = 'hidden'; a06.el.style.opacity = 1; reveal.stars = 0; reveal.sky6 = 1; return; }
     gsap.fromTo(a06.el, { opacity: 0, scale: 1.07 }, { opacity: 1, scale: 1.02, duration: 2, ease: 'power2.out' });
     gsap.to(reveal, { stars: 0, duration: .9, ease: 'sine.inOut' });
+    gsap.to(reveal, { sky6: 1, duration: 2.4, delay: .6, ease: 'sine.inOut' }); // se encienden una a una con el cielo de A06
     gsap.to(a01Scene, { opacity: 0, duration: 1.4, ease: 'sine.inOut', onComplete: () => { a01Scene.style.visibility = 'hidden'; } });
   } else {
     a01Scene.style.visibility = '';
-    if (!soft) { a01Scene.style.opacity = 1; reveal.stars = 1; if (a06.el) a06.el.style.opacity = 0; a06.leave(); return; }
+    if (!soft) { a01Scene.style.opacity = 1; reveal.stars = 1; reveal.sky6 = 0; if (a06.el) a06.el.style.opacity = 0; a06.leave(); return; }
     gsap.to(a01Scene, { opacity: 1, duration: 1.2, ease: 'sine.inOut' });
     gsap.to(reveal, { stars: 1, duration: 1.6, ease: 'sine.inOut' });
+    gsap.to(reveal, { sky6: 0, duration: .8, ease: 'sine.inOut' });
     gsap.to(a06.el, { opacity: 0, duration: 1.1, ease: 'sine.inOut', onComplete: () => a06.leave() });
   }
 }
@@ -303,7 +308,7 @@ for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList
 if (view.name === 'a06') { stage.classList.add('in-a06'); $('voice-row').hidden = false; switchScene(true, false); }
 
 /* ---------- A06: Empezar y Saltar por ahora ---------- */
-$('cta-a06').addEventListener('click', (e) => { audio.sfx('tap'); primaryFx(VIEWS.a06, e); toast(t('a06SoonQuiz')); });
+$('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); toast(t('a06SoonQuiz')); });
 $('skip-a06').addEventListener('click', (e) => { e.preventDefault(); audio.sfx('tap'); toast(t('a06SoonTour')); });
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 
@@ -337,7 +342,7 @@ function intro() {
   const starsTo = view.name === 'a06' ? 0 : 1;
   // Mientras se ve Iniciar sesión, la escena de A06 se prepara en segundo plano: al entrar ya está lista.
   if (view.name === 'a06') a06.prepare(); else setTimeout(() => a06.prefetch(), 4500);
-  if (!gsap || motion.reduced) { Object.assign(reveal, { stars: starsTo, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
+  if (!gsap || motion.reduced) { Object.assign(reveal, { stars: starsTo, sky6: 1 - starsTo, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
   if (view.name === 'a06') { introA06(); return; }
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from('.scene-art', { opacity: 0, scale: 1.06, duration: 2.4, ease: 'power2.out' }, 0)
@@ -368,6 +373,7 @@ function introA06() {
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
     .from(V.querySelector('.panel'), { opacity: 0, y: 60 * u, duration: 1.5 }, 1.2)
     .from(V.querySelectorAll('.a06-guide, .a06-question, .cta, .a06-skip'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
+    .to(reveal, { sky6: 1, duration: 3, ease: 'sine.inOut' }, .6)
     .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
     .add(() => setTimeout(invite, 1200), 2.6);
   gsap.timeline({ repeat: -1, repeatDelay: 7, delay: 3.2 }).fromTo(shine, { p: 0 }, { p: 1, duration: 2.8, ease: 'sine.inOut', onUpdate: paintShine });

@@ -20,9 +20,15 @@ export const ESCENA = [
 // Alaira con su estrella: la estrella pintada se quitó de la capa y se dibuja en 3D encima.
 export const ALAIRA = {
   src: 'assets/a06/alaira/alaira.webp', box: [-48, 77, 1007, 1070], d: PLANO,
-  // parpadeo: atlas 5 × 5 (celdas de 181 × 89 con 2 px de margen), cuadro 0 abierto → 24 cerrado
-  ojos: { src: 'assets/a06/alaira/ojos-atlas.webp', box: [320, 252, 181, 89], atlas: [925, 465], celda: [185, 93] },
-  parpadeoMs: { cerrar: 86, sostener: 25, abrir: 130 },
+  // parpadeo (parche del kit): cada ojo tiene 32 poses en un atlas de 8 × 4 baldosas de 140 × 51 px.
+  // El párpado baja sobre el iris; el ojo derecho cierra 5 ms después. Pose 0 = abierto (idéntico a la ilustración).
+  ojos: {
+    src: 'assets/a06/alaira/parpadeo-atlas.webp', atlas: [1120, 204], baldosa: [140, 51], columnas: 8, poses: 32,
+    ojos: [{ box: [333, 287, 71, 43], origen: [2, 2], retraso: 0 }, { box: [433, 271, 63, 46], origen: [75, 2], retraso: 5 }],
+  },
+  parpadeoMs: { cerrar: 76, sostener: 18, abrir: 136 },
+  // descansos entre parpadeos del parche (ciclo de 52.2 s, con uno doble): se ven naturales, nunca a ritmo fijo
+  ritmoMs: { ciclo: 52200, inicios: [3595, 8160, 12820, 17450, 20920, 26480, 31300, 37120, 40890, 41275, 47190] },
   // fleco y hebras van delante de los ojos (solo se muestran mientras parpadea; en reposo son idénticos a la capa)
   frente: [
     { src: 'assets/a06/alaira/fleco-delantero.webp', box: [255, 104, 296, 271] },
@@ -30,7 +36,7 @@ export const ALAIRA = {
     { src: 'assets/a06/alaira/mechita-centro.webp', box: [388, 257, 40, 53] },
     { src: 'assets/a06/alaira/mechita-derecha.webp', box: [468, 265, 38, 75] },
   ],
-  estrella: { centro: [161, 594], palma: [158, 676], vista: [41, 444, 240, 290], respaldo: { src: 'assets/a06/fx/estrella-2d.webp', box: [81, 531, 147, 112] } },
+  estrella: { centro: [161, 594], palma: [158, 676], escala: 1.3, vista: [6, 414, 310, 340], respaldo: { src: 'assets/a06/fx/estrella-2d.webp', box: [81, 531, 147, 112] } },
 };
 
 // Banco de nubes bajo el vestido y alrededor del título (transición del paquete, sin el título pintado).
@@ -40,5 +46,7 @@ export const BANCO = { src: 'assets/a06/nubes/banco-titulo.webp', box: [0, 970, 
 // Nubes limpias (sin partes del vestido): van encima y derivan aparte; nunca se ve su orilla.
 export const NUBES = [
   { id: 'nube-cercana', src: 'assets/a06/nubes/nube-cercana.webp', box: [-150, 1027, 1212, 104], d: [1.27, 0.55], o: 0.6, drift: [16, 3, 19] },
-  { id: 'bruma-inferior', src: 'assets/a06/nubes/bruma-inferior.webp', box: [-195, 1647, 1308, 156], d: [1.65, 0.63], o: 0.57, drift: [22, 4, 24] },
+  // la bruma del pie va pegada al borde inferior de la pantalla (abajo: px que sobresale), también en teléfonos altos
+  { id: 'bruma-inferior', src: 'assets/a06/nubes/bruma-inferior.webp', box: [-195, 1647, 1308, 156], abajo: -62, d: [1.65, 0.63], o: 1, drift: [22, 4, 24] },
+  { id: 'bruma-pie-2', src: 'assets/a06/nubes/nube-cercana.webp', box: [-150, 1650, 1212, 104], abajo: -30, d: [1.45, 0.6], o: 0.7, drift: [18, 3, 21] },
 ];

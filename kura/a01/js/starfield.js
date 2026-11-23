@@ -104,6 +104,37 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
   });
   scene.add(new THREE.Points(sGeo, starMat));
 
+  // ---------- Cielo de A06: las mismas estrellas nítidas y destellantes, en posiciones propias ----------
+  // Las posiciones vienen en px del lienzo de A06 (911 de ancho); la escena de A06 está escalada 1.02
+  // desde (50 %, 32 %). uReveal6 las enciende al entrar a A06 y las apaga al salir.
+  const sky6 = { uReveal6: { value: reveal.sky6 ?? 0 }, uShift6: { value: new THREE.Vector2() }, uOrigin6: { value: new THREE.Vector2() }, uV6: { value: 1 } };
+  let sky6Points = null;
+  function setSky6(list) {
+    if (sky6Points) { scene.remove(sky6Points); sky6Points.geometry.dispose(); }
+    const n = list.length, P = new Float32Array(n * 3), S = new Float32Array(n), Ph = new Float32Array(n), Sp = new Float32Array(n), In = new Float32Array(n), Fl = new Float32Array(n), Co = new Float32Array(n * 3);
+    list.forEach(([x, y, flare], i) => {
+      P.set([x, y, 0], i * 3);
+      S[i] = flare ? rand(...config.stars.flareSize) : rand(...config.stars.size);
+      Ph[i] = Math.random() * Math.PI * 2; Sp[i] = (Math.PI * 2) / rand(...config.stars.cycle);
+      In[i] = flare ? rand(0.75, 1) : rand(0.35, 0.9); Fl[i] = flare ? 1 : 0;
+      palette[Math.random() < 0.55 ? 0 : Math.random() < 0.6 ? 1 : 2].toArray(Co, i * 3);
+    });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(P, 3)); g.setAttribute('aSize', new THREE.BufferAttribute(S, 1));
+    g.setAttribute('aPhase', new THREE.BufferAttribute(Ph, 1)); g.setAttribute('aSpeed', new THREE.BufferAttribute(Sp, 1));
+    g.setAttribute('aIntensity', new THREE.BufferAttribute(In, 1)); g.setAttribute('aFlare', new THREE.BufferAttribute(Fl, 1));
+    g.setAttribute('aColor', new THREE.BufferAttribute(Co, 3));
+    g.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1e6);
+    const m = starMat.clone();
+    m.uniforms = { ...shared, ...sky6 };
+    m.vertexShader = starMat.vertexShader
+      .replace('uniform vec2 uShift;', 'uniform vec2 uShift; uniform float uReveal6, uV6; uniform vec2 uShift6, uOrigin6;')
+      .replace('smoothstep(order * 0.65, order * 0.65 + 0.35, uReveal)', 'smoothstep(order * 0.65, order * 0.65 + 0.35, uReveal6)')
+      .replace(/vec2 q = \(vec2\(-8\.0\)[\s\S]*?q = c \+ \(q - c\) \* uZoom \+ uShift;/, 'vec2 q = uOrigin6 + (position.xy * uV6 - uOrigin6) * 1.02 + uShift6;');
+    sky6Points = new THREE.Points(g, m); sky6Points.frustumCulled = false;
+    scene.add(sky6Points);
+  }
+
   // ---------- Chispas finas al tocar (búfer circular sin asignaciones por cuadro) ----------
   const POOL = 420;
   const bOrigin = new Float32Array(POOL * 3), bVel = new Float32Array(POOL * 2), bStart = new Float32Array(POOL).fill(-99),
@@ -215,6 +246,7 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
     renderer.setSize(w, h, false);
     camera.left = 0; camera.right = w; camera.top = 0; camera.bottom = -h; camera.updateProjectionMatrix();
     shared.uUnit.value = w / CANVAS.width;
+    sky6.uV6.value = w / 911; sky6.uOrigin6.value.set(455.5 * (w / 911), h * .32);
   };
   const ro = new ResizeObserver(resize); ro.observe(stage); resize();
 
@@ -224,7 +256,7 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
     if (!running) return;
     const dt = Math.min((now - last) / 1000, 0.05); last = now;
     shared.uTime.value += dt;
-    shared.uReveal.value = reveal.stars; shared.uZoom.value = reveal.zoom; flareU.uFlareReveal.value = reveal.flares;
+    shared.uReveal.value = reveal.stars; shared.uZoom.value = reveal.zoom; flareU.uFlareReveal.value = reveal.flares; sky6.uReveal6.value = reveal.sky6 ?? 0;
     updateFlares(dt);
     renderer.render(scene, camera);
     // Si el dispositivo va lento, se baja la resolución una sola vez.
@@ -244,7 +276,12 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
     /** Pruebas: rectángulos actuales de los destellos (px de referencia, relativos al escenario). */
     rects: () => Object.fromEntries(groups.map((g) => [g.name, g.rect])),
     /** Desplazamiento de paralaje en px CSS: las estrellas se mueven con la ilustración. */
-    shift({ sky, hud }) { shared.uShift.value.set(...sky); flareU.uHud.value.set(...hud); },
+    shift({ sky, hud, n }) {
+      shared.uShift.value.set(...sky); flareU.uHud.value.set(...hud);
+      if (n) { const v = sky6.uV6.value; sky6.uShift6.value.set(-n[0] * 18 * .07 * v, -n[1] * 11 * .05 * v); } // con el cielo de A06
+    },
+    /** Estrellas del cielo de A06: [[x, y, destello], …] en px de su lienzo. */
+    setSky6,
     /** Chispas finas en un punto de la pantalla (coordenadas de cliente). */
     burst(clientX, clientY, scale = 1) {
       if (motion.reduced) return;
