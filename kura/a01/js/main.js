@@ -242,7 +242,6 @@ function showView(name, { animate = true } = {}) {
     next.el.hidden = false; next.el.classList.add('is-active');
     stage.classList.toggle('in-a06', inAlaira(name)); // escenario y HUD de Alaira
     stage.classList.toggle('in-a07', name === 'a07');
-    a06.screen(name);                                  // A07 usa el banco de nubes de su diseño
     $('voice-row').hidden = !inAlaira(name); // la voz de Alaira solo aparece en la introducción
     if (name === 'a01') { signup.reset(); recover.reset(); }
     layoutShine(); syncFlares();
@@ -250,6 +249,19 @@ function showView(name, { animate = true } = {}) {
   if (sceneChange) switchScene(inAlaira(name), animate);
   if (!animate || !gsap || motion.reduced) { swap(); reveal.flares = 1; return; }
   const u = unit();
+  // A06 ⇄ A07: mismo marco (título, nube y panel en el mismo lugar): el panel se queda quieto y solo
+  // cambian el título y el contenido de adentro. Nada sale ni entra, así no se cruzan capas.
+  if (inAlaira(name) && inAlaira(prev.name)) {
+    const inner = (v) => [...v.el.querySelectorAll('.title .ch'), ...v.el.querySelectorAll('.form > *')];
+    const nextIn = next.el.querySelectorAll('.form > *');
+    reveal.flares = 0;
+    switchTl = gsap.timeline({ onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1, ease: 'sine.inOut' }); } })
+      .to(inner(prev), { opacity: 0, y: -6 * u, filter: 'blur(4px)', duration: .32, stagger: .008, ease: 'power2.in' }, 0)
+      .add(() => { swap(); gsap.set(inner(prev), { clearProps: 'opacity,transform,filter' }); })
+      .fromTo(next.el.querySelectorAll('.title .ch'), { opacity: 0, yPercent: 30, filter: 'blur(6px)' }, { opacity: 1, yPercent: 0, filter: 'blur(0px)', stagger: .022, duration: .8, ease: 'expo.out', clearProps: 'filter' })
+      .fromTo(nextIn, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .06, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.1');
+    return;
+  }
   const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a06-skip, .a07-info, .a07-field-wrap');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
@@ -310,7 +322,7 @@ const recover = recoverForm({
 addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIEWS[n]) showView(n); });
 // Vista inicial según la dirección (#a02 abre directamente Crear cuenta).
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
-if (inAlaira(view.name)) { stage.classList.add('in-a06'); stage.classList.toggle('in-a07', view.name === 'a07'); a06.screen(view.name); $('voice-row').hidden = false; switchScene(true, false); }
+if (inAlaira(view.name)) { stage.classList.add('in-a06'); stage.classList.toggle('in-a07', view.name === 'a07'); $('voice-row').hidden = false; switchScene(true, false); }
 
 /* ---------- A06: Empezar y Saltar por ahora ---------- */
 $('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); setTimeout(() => go('a07'), 420); });
@@ -318,7 +330,7 @@ $('skip-a06').addEventListener('click', (e) => { e.preventDefault(); audio.sfx('
 
 /* ---------- A07: ¿Cómo te llamo? ----------
    El nombre (o apodo) se guarda solo en este dispositivo y se usa en saludos y en las afirmaciones
-   que admiten personalización. Omitir deja el nombre vacío. */
+   que admiten personalización. */
 const NAME_KEY = 'kura.nombre';
 const savedName = () => { try { return localStorage.getItem(NAME_KEY) || null; } catch { return null; } };
 const nameInput = $('nombre'), nameField = $('field-name'), nameMsg = $('msg-a07');
@@ -336,11 +348,6 @@ $('form-a07').addEventListener('submit', (e) => {
   nameInput.blur();
   toast(t('a07Hello').replace('{nombre}', nombre));
   setTimeout(() => toast(t('a07Next')), 2900);
-});
-$('skip-a07').addEventListener('click', (e) => {
-  e.preventDefault(); audio.sfx('tap'); nameError(false);
-  try { localStorage.removeItem(NAME_KEY); } catch {}
-  toast(t('a07Next'));
 });
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 

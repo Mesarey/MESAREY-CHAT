@@ -41,17 +41,17 @@ Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); tambié
 - **Parpadeo** con el parche del kit (`alaira/parpadeo-atlas.webp`, 32 poses por ojo): el párpado baja sobre el iris (cerrar 76 ms, pausa 18 ms, abrir 136 ms, con suavizado), el ojo derecho 5 ms después, descansos variados con algún parpadeo doble. El fleco y las hebras van delante. Con los ojos abiertos es idéntica a la ilustración. Tocarla la hace parpadear.
 - **Estrella 3D** de la mano (`js/estrella3d.js`), 1.3 veces el tamaño del diseño para apreciar sus partículas: el GLB del kit gira 0° → 180° → 0° en 5.2 s, con órbita dorada, halo, rayos, chispas y polvo de oro. Suena «estrella flotando» en bucle muy suave (≈ 23 dB debajo de los efectos) mientras se ve A06. El modelo y sus destellos van dentro del código (`js/estrella-datos.js`): la web app no tiene que leer ningún archivo aparte. La estrella pintada se quitó de la capa de Alaira; si no hay WebGL se muestra la del diseño. Tocarla la hace brillar.
 - **Vista de cerca**: `estrella.html` (botón «★ Estrella 3D de cerca» en el visor). Si algo falla, lo dice en la propia pantalla.
-- **Nubes limpias** (sin partes del vestido): derivan, se apartan al paso del dedo y tienen margen de sobra: nunca se ve su orilla. El banco del título sale de la transición del paquete sin el título pintado.
+- **Nubes limpias** (sin partes del vestido): la bruma del pie deriva, se aparta al paso del dedo y tiene margen de sobra: nunca se ve su orilla. El banco del título sale de la transición del paquete sin el título pintado y se mueve con Alaira; no hay nube encima del título.
 - **HUD** en HTML con el mismo cristal, bordes luminosos y botón que A01–A04; «Empezar» suena `empezar.wav`. «Empezar» y «Saltar por ahora» muestran un aviso hasta que existan A07 y el recorrido.
 - **Pie**: la bruma va pegada al borde inferior de la pantalla y las nubes de las esquinas del panel (del HUD de referencia, sin la línea del borde) siguen el borde inferior del panel, también en teléfonos altos.
 - **Voz de Alaira**: interruptor en el menú de sonido, solo en la introducción.
 
 ## A07 · ¿Cómo te llamo?
 
-Se entra con «Empezar» en A06 (suena `empezar.wav`); también con `#a07`. Usa el mismo escenario de Alaira (paralaje, estrellas, parpadeo, estrella 3D y su sonido) con el banco de nubes del título de su diseño (`nubes/banco-titulo-a07.webp`, del paquete KURA_A07_HUD) y sin la nube cercana encima del texto.
+Se entra con «Empezar» en A06 (suena `empezar.wav`); también con `#a07`. Es casi igual a A06: mismo escenario de Alaira (paralaje, estrellas, parpadeo, estrella 3D y su sonido), misma nube del título y el mismo marco (título y panel en el mismo lugar y del mismo tamaño, con altura fija y contenido centrado). Al pasar de A06 a A07 el panel se queda quieto y solo cambian el título y el contenido de adentro: no se cruzan capas.
 
-- **HUD** en HTML con las medidas del diseño: título, explicación en dos líneas, campo «Tu nombre» (input real con `autocomplete="given-name"`), «Continuar →» y «Omitir». Mismo cristal, bordes luminosos y botón que A01–A06.
-- **Continuar** guarda el nombre o apodo sin espacios al inicio ni al final, **solo en este dispositivo** (`localStorage`, clave `kura.nombre`), y saluda: «¡Encantada, {nombre}!». Si el campo está vacío, el borde se marca y aparece «Escribe cómo quieres que te llame, o toca Omitir.». **Omitir** borra el nombre guardado. Las dos opciones muestran un aviso hasta que exista la siguiente pantalla.
+- **Panel**: explicación en dos líneas, campo «Tu nombre» (input real con `autocomplete="given-name"`) y «Continuar →». Sin «Omitir».
+- **Continuar** guarda el nombre o apodo sin espacios al inicio ni al final, **solo en este dispositivo** (`localStorage`, clave `kura.nombre`), y saluda: «¡Encantada, {nombre}!». Si el campo está vacío, el borde se marca y aparece «Escribe cómo quieres que te llame.». Después muestra un aviso hasta que exista la siguiente pantalla.
 - El nombre se usará en saludos y en las afirmaciones que admiten personalización.
 - Español e inglés («What should I call you?»).
 

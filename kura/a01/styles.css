@@ -488,11 +488,6 @@ button, input { font: inherit; color: inherit; }
   --cx: 0; --cy: 0; /* cámara (px del lienzo), la mueve el cursor o el giroscopio */
 }
 .scene6.is-on { visibility: visible; }
-/* A06 y A07 comparten escenario; cada una tiene su banco de nubes del título (A07 sin la nube cercana encima) */
-.a6-banco-a07 { opacity: 0; }
-.a6-banco-a06, .a6-banco-a07, .a6-cloud[data-id='nube-cercana'] { transition: opacity .9s ease; }
-.scene6.is-a07 .a6-banco-a06, .scene6.is-a07 .a6-cloud[data-id='nube-cercana'] { opacity: 0 !important; }
-.scene6.is-a07 .a6-banco-a07 { opacity: 1; }
 /* cada plano recibe su parte del recorrido de cámara según su profundidad (--dx, --dy) */
 .a6-layer { position: absolute; translate: calc(var(--cx) * var(--dx) * var(--v)) calc(var(--cy) * var(--dy) * var(--v)); will-change: translate; }
 .a6-layer img, .a6-layer canvas { position: absolute; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
@@ -540,12 +535,10 @@ button, input { font: inherit; color: inherit; }
 .skip-link { position: relative; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #efe4ff; text-decoration: none; transition: color .3s, text-shadow .3s; }
 .skip-link::after { content: ''; position: absolute; left: -12px; right: -12px; top: 50%; height: max(100%, var(--tap)); translate: 0 -50%; }
 .skip-link:hover, .skip-link:focus-visible { color: #fff; text-shadow: 0 0 calc(10 * var(--v)) rgba(220, 180, 255, .8); }
-/* HUD de A07 «¿Cómo te llamo?»: medidas del diseño (KURA_A07_HUD), mismo cristal y botón */
-.stage.in-a07 .content { padding-top: calc(1064 * var(--v)); }
-.heading-a07 { height: calc(134 * var(--v)); }
-.title-a07 { padding-top: calc(9 * var(--v)); font-size: calc(72 * var(--v)); line-height: calc(90 * var(--v)); }
-.panel-a07 { width: calc(848 * var(--v)); padding: calc(29 * var(--v) + var(--g6) * .14) calc(52 * var(--v)) calc(46 * var(--v) + var(--g6) * .12); }
-.panel-a07 .a6-mist-img { left: calc(-31 * var(--v)); }
+/* HUD de A07 «¿Cómo te llamo?»: el mismo marco que A06 (título, nube y panel en el mismo lugar y del
+   mismo tamaño); solo cambia el contenido del panel. Los dos paneles tienen la misma altura fija y su
+   contenido va centrado: al pasar de A06 a A07 el marco no se mueve. */
+.panel-a06 { display: flex; flex-direction: column; justify-content: center; height: calc(444 * var(--v) + var(--g6) * .75); }
 .a07-info { margin: 0 auto; max-width: calc(612 * var(--v)); font-size: calc(32 * var(--v)); line-height: calc(46 * var(--v)); letter-spacing: calc(.3 * var(--v)); color: rgba(236, 226, 250, .9); text-shadow: 0 0 calc(10 * var(--v)) rgba(30, 16, 70, .8); }
 .a07-field-wrap { position: relative; width: calc(741 * var(--v)); margin-top: calc(26 * var(--v) + var(--g6) * .1); }
 .field.field-a07 { height: calc(88 * var(--v)); padding: 0 calc(40 * var(--v)) 0 calc(44 * var(--v)); border-radius: calc(44 * var(--v)); border-color: rgba(236, 215, 255, .62); background: linear-gradient(180deg, rgba(110, 88, 150, .18), rgba(60, 46, 100, .16)); }
@@ -555,8 +548,6 @@ button, input { font: inherit; color: inherit; }
 .cta.cta-a07 { width: calc(728 * var(--v)); height: calc(90 * var(--v) + var(--g6) * .08); margin-top: calc(42 * var(--v) + var(--g6) * .2); }
 .cta-a07 .cta-label { font-size: calc(54 * var(--v)); gap: calc(24 * var(--v)); }
 .cta-a07 .cta-arrow { width: calc(52 * var(--v)); height: calc(52 * var(--v)); }
-.a07-skip { margin-top: calc(22 * var(--v) + var(--g6) * .16); }
-.a07-skip .skip-link { font-size: calc(36 * var(--v)); }
 @media (prefers-reduced-motion: reduce) { .scene6 *, .a6-mist * { animation: none !important; } }
 .reduce-motion .scene6 *, .reduce-motion .a6-mist * { animation: none !important; }
 

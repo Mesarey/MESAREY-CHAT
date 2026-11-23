@@ -40,14 +40,12 @@ export const ALAIRA = {
 };
 
 // Banco de nubes bajo el vestido y alrededor del título (transición del paquete, sin el título pintado).
-// Va a la misma profundidad que Alaira: el borde del vestido nunca se desfasa.
+// Va a la misma profundidad que Alaira: el borde del vestido nunca se desfasa. A06 y A07 usan el mismo:
+// al pasar de una a otra solo cambia el texto del HUD.
 export const BANCO = { src: 'assets/a06/nubes/banco-titulo.webp', box: [0, 970, 911, 270], d: PLANO };
-// A07 («¿Cómo te llamo?») tiene el título más arriba: su banco de nubes es el de su diseño (KURA_A07_HUD)
-export const BANCO_A07 = { src: 'assets/a06/nubes/banco-titulo-a07.webp', box: [0, 992, 911, 230], d: PLANO };
 
 // Nubes limpias (sin partes del vestido): van encima y derivan aparte; nunca se ve su orilla.
 export const NUBES = [
-  { id: 'nube-cercana', src: 'assets/a06/nubes/nube-cercana.webp', box: [-150, 1027, 1212, 104], d: [1.27, 0.55], o: 0.6, drift: [16, 3, 19] },
   // la bruma del pie va pegada al borde inferior de la pantalla (abajo: px que sobresale), también en teléfonos altos
   { id: 'bruma-inferior', src: 'assets/a06/nubes/bruma-inferior.webp', box: [-195, 1647, 1308, 156], abajo: -62, d: [1.65, 0.63], o: 1, drift: [22, 4, 24] },
   { id: 'bruma-pie-2', src: 'assets/a06/nubes/nube-cercana.webp', box: [-150, 1650, 1212, 104], abajo: -30, d: [1.45, 0.6], o: 0.7, drift: [18, 3, 21] },
