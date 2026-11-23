@@ -272,7 +272,8 @@ function showView(name, { animate = true } = {}) {
     .set(prev.el, { clearProps: 'opacity,transform,filter' })
     .fromTo(next.el.querySelectorAll('.ch'), { opacity: 0, yPercent: 40, filter: 'blur(6px)' }, { opacity: 1, yPercent: 0, filter: 'blur(0px)', stagger: .025, duration: .9, ease: 'expo.out', clearProps: 'filter' })
     .fromTo(next.el.querySelector('.welcome') || [], { opacity: 0 }, { opacity: 1, duration: .8 }, '<')
-    .fromTo(next.el.querySelector('.panel'), { opacity: 0, y: 26 * u }, { opacity: 1, y: 0, duration: .8, ease: 'expo.out', clearProps: 'transform' }, '<.1')
+    .fromTo(next.el.querySelector('.panel'), { y: 26 * u }, { y: 0, duration: .8, ease: 'expo.out', clearProps: 'transform' }, '<.1')
+    .fromTo(next.el.querySelector('.panel').children, { opacity: 0 }, { opacity: 1, duration: .8, ease: 'expo.out', clearProps: 'opacity' }, '<') // vidrio con su desenfoque desde el inicio
     .fromTo(parts, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .05, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.15');
 }
 /* ---------- Cambio de escenario: Observatorio (A01–A05) ⇄ Bienvenida con Alaira (A06) ---------- */
@@ -375,7 +376,10 @@ function invite() {
   setTimeout(invite, config.button.inviteEvery * 1000);
 }
 
-/* ---------- Entrada ---------- */
+/* ---------- Entrada ----------
+   El panel nunca se desvanece entero: con opacidad en el panel, el navegador apaga el desenfoque del
+   vidrio (backdrop-filter) hasta que termina la animación y luego aparece de golpe. Se desvanecen sus
+   piezas (vidrio, bordes, contenido) y el panel solo se desplaza: el vidrio llega ya desenfocado. */
 function intro() {
   const u = unit(), V = view.el;
   const starsTo = inAlaira(view.name) ? 0 : 1;
@@ -395,7 +399,8 @@ function intro() {
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, 1.0)
     .from(V.querySelectorAll('.welcome .rule'), { scaleX: 0, duration: 1.4, ease: 'power3.inOut' }, 1.5)
     .from(V.querySelector('.welcome-text'), { opacity: 0, duration: 1.4 }, 1.6)
-    .from(V.querySelector('.panel'), { opacity: 0, y: 60 * u, duration: 1.5 }, 1.4)
+    .from(V.querySelector('.panel'), { y: 60 * u, duration: 1.5 }, 1.4)
+    .from(V.querySelector('.panel').children, { opacity: 0, duration: 1.5 }, 1.4) // vidrio con su desenfoque desde el inicio
     .to(reveal, { flares: 1, duration: 2.2, ease: 'sine.inOut' }, 2.4)  // los destellos del cristal llegan al final
     .from([...V.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first'), document.querySelector('.prefs')], { opacity: 0, y: 14 * u, stagger: .07, duration: 1 }, 1.8)
     .add(() => setTimeout(invite, 1200), 2.6);
@@ -410,7 +415,8 @@ function introA06() {
     .from('.logo', { opacity: 0, scale: .9, filter: 'blur(8px)', duration: 1.6 }, .5)
     .from('.sound', { opacity: 0, duration: 1.2 }, .7)
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
-    .from(V.querySelector('.panel'), { opacity: 0, y: 60 * u, duration: 1.5 }, 1.2)
+    .from(V.querySelector('.panel'), { y: 60 * u, duration: 1.5 }, 1.2)
+    .from(V.querySelector('.panel').children, { opacity: 0, duration: 1.5 }, 1.2)
     .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .cta, .a06-skip'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
     .to(reveal, { sky6: 1, duration: 3, ease: 'sine.inOut' }, .6)
     .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
