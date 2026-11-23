@@ -187,7 +187,10 @@ button, input { font: inherit; color: inherit; }
 .legal-continue:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
 
 /* ---------- 9–11 · Contenido ---------- */
-.content { position: relative; z-index: 2; padding-top: calc(948 * var(--u)); padding-bottom: calc(18 * var(--u)); }
+.content { position: relative; z-index: 2; padding-top: calc(948 * var(--u)); padding-bottom: calc(8 * var(--u)); }
+/* versión de la app, hasta abajo en todas las pantallas */
+.build { margin: calc(6 * var(--u)) 0 0; text-align: center; font-size: max(9px, calc(15 * var(--u))); line-height: 1.4; letter-spacing: .14em; color: rgba(226, 212, 250, .5); text-shadow: 0 0 6px rgba(30, 16, 70, .9); user-select: none; }
+.stage.in-a06 .build { margin-top: calc(14 * var(--v) + var(--g6) * .1); }
 
 .view[hidden] { display: none; }
 .heading { position: relative; text-align: center; height: calc(214 * var(--u)); }
@@ -500,7 +503,7 @@ button, input { font: inherit; color: inherit; }
 }
 .a6-tw.is-cross { background: radial-gradient(circle, #fff 0 5%, rgba(255, 248, 255, .7) 10%, var(--c) 22%, transparent 46%); }
 .a6-tw.is-cross::after { content: ''; position: absolute; inset: 0; background: url(assets/a06/fx/destello-marfil.webp) center / contain no-repeat; }
-.a6-deck { position: absolute; left: calc(-20 * var(--v)); right: calc(-20 * var(--v)); bottom: calc(-40 * var(--v)); background: url(assets/a06/escena/violeta.webp) top / 100% max(100%, calc(666 * var(--v))) no-repeat, #2e264b; }
+.a6-deck { position: absolute; left: calc(-48 * var(--v)); right: calc(-48 * var(--v)); bottom: calc(-40 * var(--v)); background: url(assets/a06/escena/violeta.webp) top / 100% max(100%, calc(666 * var(--v))) no-repeat, #2e264b; }
 /* niebla del pie: pegada al borde inferior, nunca deja ver una orilla en teléfonos altos */
 .a6-pie { position: absolute; left: calc(-70 * var(--v)); right: calc(-70 * var(--v)); bottom: calc(-60 * var(--v)); height: calc(330 * var(--v) + var(--g6)); pointer-events: none; }
 .a6-pie i { position: absolute; inset: 0; }
@@ -512,7 +515,7 @@ button, input { font: inherit; color: inherit; }
   animation: a6-pie-a 17s ease-in-out infinite alternate;
 }
 .a6-pie-b {
-  background: url(assets/a06/nubes/07-frente-izq-ext.webp) left bottom / 64% auto no-repeat, url(assets/a06/nubes/08-frente-der-ext.webp) right bottom / 60% auto no-repeat, url(assets/a06/nubes/09-pie-ext.webp) center bottom / 86% auto no-repeat;
+  background: url(assets/a06/nubes/pie-largo.webp) center bottom / 100% auto no-repeat;
   animation: a6-pie-b 21s ease-in-out -6s infinite alternate;
 }
 @keyframes a6-pie-a { from { translate: calc(-16 * var(--v)) 0; opacity: .8; } to { translate: calc(16 * var(--v)) calc(-8 * var(--v)); opacity: 1; } }

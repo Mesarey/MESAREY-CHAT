@@ -115,6 +115,7 @@
       <button type="button" data-screen="a04" title="Enlace enviado">A04</button>
       <button type="button" data-screen="a06" title="Bienvenida con Alaira">A06</button>
     </div>
+    <div class="row"><button type="button" id="star3d" title="La estrella de la mano de Alaira, de cerca">★ Estrella 3D de cerca</button></div>
     <div class="row"><button type="button" id="reload">↻ Ver la entrada de nuevo</button></div>
 
     <h2>Giroscopio</h2>
@@ -169,9 +170,11 @@
     document.querySelectorAll('[data-screen]').forEach((b) => b.addEventListener('click', () => {
       const s = b.dataset.screen;
       if (s === 'a05') { app.src = 'index.html#a05'; app.contentWindow.location.reload(); return; }
+      if ((app.getAttribute('src') || '').includes('estrella')) { app.src = 'index.html#' + s; return; } // venía de la vista de la estrella
       app.contentWindow.location.hash = s;
     }));
     $('reload').addEventListener('click', () => { app.src = 'index.html#a01'; app.contentWindow.location.reload(); });
+    $('star3d').addEventListener('click', () => { app.src = 'estrella.html'; });
 
     /* ---------- Audios desde el dispositivo ---------- */
     // Nombres que usa la app y nombres originales que también se reconocen.

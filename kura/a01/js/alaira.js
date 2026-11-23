@@ -137,7 +137,9 @@ async function loadStar(url) {
 }
 const easeInOut = (t) => t * t * (3 - 2 * t);
 
-export async function createAlaira({ canvas, motion }) {
+export async function createAlaira({ canvas, motion, view = [0, 0, W, H] }) {
+  // view: recorte del lienzo que se dibuja (estrella.html lo usa para ver la estrella de cerca)
+  const [vx, vy, vw, vh] = view;
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, premultipliedAlpha: true, powerPreference: 'high-performance' });
@@ -147,7 +149,7 @@ export async function createAlaira({ canvas, motion }) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(0, W, 0, -H, -2000, 2000);
+  const camera = new THREE.OrthographicCamera(vx, vx + vw, -vy, -(vy + vh), -2000, 2000);
   camera.position.z = 1000;
 
   const tl = new THREE.TextureLoader();
@@ -340,9 +342,9 @@ export async function createAlaira({ canvas, motion }) {
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     if (!w || !h) return;
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, vw < W ? 3 : 2));
     renderer.setSize(w, h, false);
-    dust.material.uniforms.uScale.value = (w * renderer.getPixelRatio()) / W; // tamaño de las motas en px del lienzo
+    dust.material.uniforms.uScale.value = (w * renderer.getPixelRatio()) / vw; // tamaño de las motas en px del lienzo
   }
   const ro = new ResizeObserver(resize); ro.observe(canvas); resize();
 
