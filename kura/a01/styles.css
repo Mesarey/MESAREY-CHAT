@@ -531,10 +531,6 @@ button, input { font: inherit; color: inherit; }
 .cta.cta-a06 { width: calc(730 * var(--v)); height: calc(104 * var(--v) + var(--g6) * .08); margin: calc(36 * var(--v) + var(--g6) * .2) 0 0; }
 .cta-a06 .cta-label { font-size: calc(60 * var(--v)); gap: calc(26 * var(--v)); }
 .cta-a06 .cta-arrow { width: calc(56 * var(--v)); height: calc(56 * var(--v)); }
-.a06-skip { margin: calc(28 * var(--v) + var(--g6) * .16) 0 0; }
-.skip-link { position: relative; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #efe4ff; text-decoration: none; transition: color .3s, text-shadow .3s; }
-.skip-link::after { content: ''; position: absolute; left: -12px; right: -12px; top: 50%; height: max(100%, var(--tap)); translate: 0 -50%; }
-.skip-link:hover, .skip-link:focus-visible { color: #fff; text-shadow: 0 0 calc(10 * var(--v)) rgba(220, 180, 255, .8); }
 /* HUD de A07 «¿Cómo te llamo?»: el mismo marco que A06 (título, nube y panel en el mismo lugar y del
    mismo tamaño); solo cambia el contenido del panel. Los dos paneles tienen la misma altura fija y su
    contenido va centrado: al pasar de A06 a A07 el marco no se mueve. */

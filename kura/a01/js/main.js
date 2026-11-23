@@ -218,7 +218,9 @@ addEventListener('pointerdown', (e) => { if (!soundMenu.hidden && !e.target.clos
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && !soundMenu.hidden) { setMenu(false); soundBtn.focus(); } });
 audio.onChange(updateSoundButton);
 updateSoundButton();
-window.__kura = { audio, view: () => view.name, tilt, flares: () => stars?.rects?.(), a06: () => a06 };
+window.__kura = { audio, view: () => view.name, tilt,
+  /** Visor: idioma de la app ('es' | 'en'), o null para seguir el del teléfono. */
+  setLang: (l) => { if (l) applyLanguage(l, { manual: true }); else { try { sessionStorage.removeItem('kura.lang'); } catch {} location.reload(); } }, flares: () => stars?.rects?.(), a06: () => a06 };
 
 /* ---------- Términos y privacidad ---------- */
 const legal = legalDialog({ t, sfx: (n) => audio.sfx(n), lang: currentLang });
@@ -262,7 +264,7 @@ function showView(name, { animate = true } = {}) {
       .fromTo(nextIn, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .06, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.1');
     return;
   }
-  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a06-skip, .a07-info, .a07-field-wrap');
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
     onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
@@ -325,9 +327,8 @@ addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIE
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
 if (inAlaira(view.name)) { stage.classList.add('in-a06'); stage.classList.toggle('in-a07', view.name === 'a07'); $('voice-row').hidden = false; switchScene(true, false); }
 
-/* ---------- A06: Empezar y Saltar por ahora ---------- */
+/* ---------- A06: Empezar (obligatorio: no hay «Saltar por ahora») ---------- */
 $('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); setTimeout(() => go('a07'), 420); });
-$('skip-a06').addEventListener('click', (e) => { e.preventDefault(); audio.sfx('tap'); toast(t('a06SoonTour')); });
 
 /* ---------- A07: ¿Cómo te llamo? ----------
    El nombre (o apodo) se guarda solo en este dispositivo y se usa en saludos y en las afirmaciones
@@ -340,6 +341,7 @@ const nameError = (on) => { nameField.classList.toggle('is-error', on); nameMsg.
 let quietFocus = false; // al volver al campo tras «falta un dato» no suena el enfoque encima
 nameInput.addEventListener('focus', () => { if (!quietFocus) audio.sfx('focus'); quietFocus = false; });
 nameInput.addEventListener('input', () => { if (nameInput.value.trim()) nameError(false); });
+document.addEventListener('kura:lang', () => { if (nameMsg.classList.contains('is-on')) nameMsg.textContent = t('a07Empty'); });
 $('form-a07').addEventListener('submit', (e) => {
   e.preventDefault();
   const nombre = nameInput.value.replace(/\s+/g, ' ').trim();
@@ -418,7 +420,7 @@ function introA06() {
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
     .from(V.querySelector('.panel'), { y: 60 * u, duration: 1.5 }, 1.2)
     .from(V.querySelector('.panel').children, { opacity: 0, duration: 1.5 }, 1.2)
-    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .cta, .a06-skip'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
+    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .cta'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
     .to(reveal, { sky6: 1, duration: 3, ease: 'sine.inOut' }, .6)
     .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
     .add(() => setTimeout(invite, 1200), 2.6);

@@ -21,6 +21,8 @@ npx serve kura/a01
 
 ## Visor de teléfono
 
+En **Idioma** se elige cómo se ve la app: automático (el del teléfono: español si está en español, inglés en cualquier otro), español o inglés. Cambia al instante, sin recargar.
+
 `visor.html` muestra la app dentro de un teléfono (iPhone 17, 17 Pro Max, Air, 16/15, Plus, 14/13, mini, SE; Galaxy S25 Ultra, S25/S24, A55; Pixel 9 Pro; Xiaomi; Motorola, o una medida personalizada) a su resolución real, con botones para saltar a A01–A05 y ver la entrada de nuevo. «Elegir carpeta de audio» o «Elegir archivos de audio» carga la música y los sonidos desde el dispositivo (no se suben a ningún lado); reconoce los nombres del ZIP y tus nombres originales, y un archivo con «shadow» en el nombre se agrega como segunda canción. Abierto en un teléfono, la app ocupa toda la pantalla y los controles quedan en un botón.
 
 ## Paralaje y giroscopio
@@ -42,7 +44,7 @@ Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); tambié
 - **Estrella 3D** de la mano (`js/estrella3d.js`), 1.3 veces el tamaño del diseño para apreciar sus partículas: el GLB del kit gira 0° → 180° → 0° en 5.2 s, con órbita dorada, halo, rayos, chispas y polvo de oro. Suena «estrella flotando» en bucle muy suave (≈ 23 dB debajo de los efectos) mientras se ve A06. El modelo y sus destellos van dentro del código (`js/estrella-datos.js`): la web app no tiene que leer ningún archivo aparte. La estrella pintada se quitó de la capa de Alaira; si no hay WebGL se muestra la del diseño. Tocarla la hace brillar.
 - **Vista de cerca**: `estrella.html` (botón «★ Estrella 3D de cerca» en el visor). Si algo falla, lo dice en la propia pantalla.
 - **Nubes limpias** (sin partes del vestido): la bruma del pie deriva, se aparta al paso del dedo y tiene margen de sobra: nunca se ve su orilla. El banco del título sale de la transición del paquete sin el título pintado y se mueve con Alaira; no hay nube encima del título.
-- **HUD** en HTML con el mismo cristal, bordes luminosos y botón que A01–A04; «Empezar» suena `empezar.wav`. «Empezar» y «Saltar por ahora» muestran un aviso hasta que existan A07 y el recorrido.
+- **HUD** en HTML con el mismo cristal, bordes luminosos y botón que A01–A04; «Empezar» suena `empezar.wav` y lleva a A07. Empezar es obligatorio: no hay «Saltar por ahora».
 - **Pie**: la bruma va pegada al borde inferior de la pantalla y las nubes de las esquinas del panel (del HUD de referencia, sin la línea del borde) siguen el borde inferior del panel, también en teléfonos altos.
 - **Voz de Alaira**: interruptor en el menú de sonido, solo en la introducción.
 

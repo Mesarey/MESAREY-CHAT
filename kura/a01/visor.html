@@ -106,6 +106,14 @@
     <div class="row" id="custom" hidden><input id="cw" type="number" min="300" max="600" value="412" aria-label="Ancho" /><input id="ch" type="number" min="560" max="1100" value="915" aria-label="Alto" /></div>
     <p class="note">Medidas en px CSS (lo que ve la app). Las de Android son aproximadas: varían con la escala de pantalla del teléfono.</p>
 
+    <h2>Idioma</h2>
+    <select id="lang-view" aria-label="Idioma de la app">
+      <option value="">Automático (idioma del teléfono)</option>
+      <option value="es">Español</option>
+      <option value="en">English</option>
+    </select>
+    <p class="note">Automático sigue al teléfono: en español si está en español; en cualquier otro idioma, en inglés.</p>
+
     <h2>Pantalla</h2>
     <div class="grid">
       <button type="button" data-screen="a05" title="Restaurando sesión">A05</button>
@@ -262,6 +270,17 @@
     };
     pad.addEventListener('pointerup', release); pad.addEventListener('pointercancel', release);
     app.addEventListener('load', () => { neutralSent = false; });
+
+    /* ---------- Idioma de la app ---------- */
+    // La app guarda el idioma elegido en sessionStorage («kura.lang»), que comparte con el visor.
+    const langSel = $('lang-view');
+    try { langSel.value = sessionStorage.getItem('kura.lang') || ''; } catch {}
+    langSel.addEventListener('change', () => {
+      const l = langSel.value || null;
+      try { if (l) sessionStorage.setItem('kura.lang', l); else sessionStorage.removeItem('kura.lang'); } catch {}
+      try { const k = app.contentWindow.__kura; if (k?.setLang) { k.setLang(l); return; } } catch {}
+      app.contentWindow.location.reload(); // la app aún cargaba: al recargar toma el idioma
+    });
   </script>
 </body>
 </html>
