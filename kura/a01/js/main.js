@@ -429,7 +429,7 @@ async function runBoot() {
   if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .06, duration: .5, ease: 'power2.out' });
   // Sin tiempo mínimo: A05 solo dura lo que tarden la escena y la sesión. En un teléfono
   // rápido apenas se ve; si algo se traba, la animación de carga queda a la vista.
-  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(view.name === 'a06' ? 'assets/a06/escena/fondo.webp' : 'assets/img/escena.webp')]);
+  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(view.name === 'a06' ? 'assets/a06/escena/placa.webp' : 'assets/img/escena.webp')]);
   if (keep) await new Promise((r) => { boot.addEventListener('pointerdown', r, { once: true }); addEventListener('hashchange', r, { once: true }); });
   if (session) { /* aquí se abriría Hoy (L01) en el mundo predeterminado */ }
   if (keep && location.hash === '#a05') history.replaceState(null, '', '#a01');

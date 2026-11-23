@@ -16,20 +16,20 @@ const CH = A06.rig.names.length;       // 15 canales de deformación
 const IDX = Object.fromEntries(A06.rig.names.map((n, i) => [n, i]));
 
 // Cómo se mueve cada canal: amplitud del viento (rad), frecuencia (Hz), respuesta al movimiento
-// del teléfono/cursor y rigidez del resorte. Todo muy sutil: la ilustración manda.
+// del teléfono/cursor y rigidez del resorte. Se nota a simple vista, sin romper la ilustración.
 const TUNE = {
-  'cabello-izq-aire':    { wind: .016, f: .23, push: .030, k: 9 },
-  'cabello-izq-rizo':    { wind: .014, f: .27, push: .026, k: 10 },
-  'cabello-izq-largo':   { wind: .010, f: .19, push: .020, k: 7 },
-  'cabello-der-alto':    { wind: .012, f: .25, push: .024, k: 9 },
-  'cabello-der-cascada': { wind: .011, f: .21, push: .022, k: 8 },
-  'cabello-der-puntas':  { wind: .012, f: .24, push: .024, k: 8 },
-  'melena-izq':          { wind: .0035, f: .16, push: .006, k: 5, wave: .0032 },
-  'melena-der':          { wind: .0035, f: .17, push: .006, k: 5, wave: .0032 },
-  'tela-borde-manga':    { wind: .006, f: .2, push: .010, k: 8 },
-  'tela-faldon':         { wind: .005, f: .18, push: .009, k: 8 },
-  'arete-izq':           { wind: .035, f: .5, push: .16, k: 22 },
-  'arete-der':           { wind: .035, f: .46, push: .16, k: 22 },
+  'cabello-izq-aire':    { wind: .042, f: .21, push: .060, k: 8 },
+  'cabello-izq-rizo':    { wind: .036, f: .25, push: .052, k: 9 },
+  'cabello-izq-largo':   { wind: .026, f: .18, push: .040, k: 6 },
+  'cabello-der-alto':    { wind: .030, f: .23, push: .048, k: 8 },
+  'cabello-der-cascada': { wind: .028, f: .2, push: .044, k: 7 },
+  'cabello-der-puntas':  { wind: .032, f: .22, push: .048, k: 7 },
+  'melena-izq':          { wind: .009, f: .15, push: .013, k: 5, wave: .008 },
+  'melena-der':          { wind: .009, f: .16, push: .013, k: 5, wave: .008 },
+  'tela-borde-manga':    { wind: .016, f: .19, push: .022, k: 7 },
+  'tela-faldon':         { wind: .013, f: .17, push: .020, k: 7 },
+  'arete-izq':           { wind: .07, f: .48, push: .24, k: 20 },
+  'arete-der':           { wind: .07, f: .44, push: .24, k: 20 },
 };
 
 const DEFORM = /* glsl */`
@@ -56,8 +56,8 @@ const DEFORM = /* glsl */`
       off += (rot(r, ang * w[i]) - r);
     }
     off += uHead * w[12];                                                     // la cabeza sigue la mirada
-    off += w[13] * vec2((p.x - 436.) * uBreath * .0045, -uBreath * 1.9);      // respiración
-    off.y -= uBreath * .9 * w[12];
+    off += w[13] * vec2((p.x - 436.) * uBreath * .008, -uBreath * 3.4);       // respiración
+    off.y -= uBreath * 1.8 * w[12];
     // propia (fleco y hebras): punta suelta, raíz fija
     float sw = smoothstep(0., uSelfLen, length(p - uSelfPiv));
     vec2 rs = p + off - uSelfPiv;
@@ -107,6 +107,34 @@ function grid(x, y, w, h, step) {
 }
 
 const rand = (a, b) => a + Math.random() * (b - a);
+
+/** Estrella 3D: el glTF en JSON trae su geometría como data: URI. La web app no deja que fetch lea data: URIs
+ *  (política de seguridad), así que aquí se decodifica a mano y se arma un GLB en memoria: nada sale a la red. */
+async function loadStar(url) {
+  const json = await (await fetch(url)).json();
+  const bins = json.buffers.map((b) => {
+    const m = /^data:[^,]*;base64,(.*)$/.exec(b.uri || '');
+    if (!m) throw new Error('buffer externo no esperado');
+    const raw = atob(m[1]), out = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+  });
+  // un solo bloque binario (GLB admite uno): se concatenan y se recolocan las vistas
+  const starts = []; let total = 0;
+  for (const b of bins) { starts.push(total); total += (b.length + 3) & ~3; }
+  const bin = new Uint8Array(total); bins.forEach((b, i) => bin.set(b, starts[i]));
+  for (const v of json.bufferViews) { v.byteOffset = (v.byteOffset || 0) + starts[v.buffer]; v.buffer = 0; }
+  json.buffers = [{ byteLength: total }];
+  let text = new TextEncoder().encode(JSON.stringify(json));
+  const pad = (4 - (text.length % 4)) % 4;
+  const jsonChunk = new Uint8Array(text.length + pad).fill(0x20); jsonChunk.set(text);
+  const glb = new ArrayBuffer(12 + 8 + jsonChunk.length + 8 + bin.length), dv = new DataView(glb), u8 = new Uint8Array(glb);
+  dv.setUint32(0, 0x46546C67, true); dv.setUint32(4, 2, true); dv.setUint32(8, glb.byteLength, true);
+  dv.setUint32(12, jsonChunk.length, true); dv.setUint32(16, 0x4E4F534A, true); u8.set(jsonChunk, 20);
+  const o = 20 + jsonChunk.length;
+  dv.setUint32(o, bin.length, true); dv.setUint32(o + 4, 0x004E4942, true); u8.set(bin, o + 8);
+  return new GLTFLoader().parseAsync(glb, '');
+}
 const easeInOut = (t) => t * t * (3 - 2 * t);
 
 export async function createAlaira({ canvas, motion }) {
@@ -167,7 +195,7 @@ export async function createAlaira({ canvas, motion }) {
   const partTex = await Promise.all(PARTS.map((id) => tex(A06[id].src)));
   PARTS.forEach((id, i) => layer(partTex[i], A06[id].box, { step: 5, order: 2 + i }));
   const strands = [];
-  const front = [['fleco-oclusor', 2, .004], ['hebra-izq-sobre-pestana', 3, .02], ['hebra-central-luz', 3, .024], ['hebra-der-sobre-ojo', 3, .022], ['hebra-der-mejilla', 3, .026]];
+  const front = [['fleco-oclusor', 2, .01], ['hebra-izq-sobre-pestana', 3, .05], ['hebra-central-luz', 3, .06], ['hebra-der-sobre-ojo', 3, .055], ['hebra-der-mejilla', 3, .065]];
   const frontTex = await Promise.all(front.map(([id]) => tex(A06[id].src)));
   front.forEach(([id, order, amp], i) => {
     const L = layer(frontTex[i], A06[id].box, { step: 6, order: 20 + order, selfPivot: A06[id].pivot });
@@ -222,9 +250,51 @@ export async function createAlaira({ canvas, motion }) {
     return { s, a: (i / 22) * Math.PI * 2 + rand(-.12, .12), speed: rand(.14, .26), size: rand(7, 15), tw: rand(0, 6), twf: rand(.8, 2.2) };
   });
 
+  // polvo de oro: motas finas que nacen junto a la estrella, suben en espiral lenta, titilan y se apagan
+  const DUST = 180;
+  const dustGeo = new THREE.BufferGeometry();
+  const seeds = new Float32Array(DUST * 4);
+  for (let i = 0; i < DUST; i++) seeds.set([Math.random(), rand(3.2, 6.5), rand(1.3, 4), Math.random()], i * 4);
+  dustGeo.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(DUST * 3), 3));
+  dustGeo.setAttribute('aSeed', new THREE.Float32BufferAttribute(seeds, 4));
+  const dust = new THREE.Points(dustGeo, new THREE.ShaderMaterial({
+    uniforms: { uTime: { value: 0 }, uScale: { value: 1 }, uC: { value: new THREE.Vector2(sx, sy) }, uGlow: { value: 1 } },
+    vertexShader: /* glsl */`
+      attribute vec4 aSeed; // fase, vida (s), tamaño (px), tipo
+      uniform float uTime, uScale; uniform vec2 uC;
+      varying float vA; varying float vHot;
+      void main() {
+        float life = aSeed.y, age = fract(uTime / life + aSeed.x);
+        float lap = floor(uTime / life + aSeed.x);                       // cada vuelta nace en otro lugar
+        float h = fract(sin((aSeed.x + lap * .618) * 91.7) * 4375.85);
+        float h2 = fract(sin((aSeed.w + lap * .377) * 47.3) * 2731.17);
+        float r0 = mix(6., 74., h * h), dir = aSeed.w > .5 ? 1. : -1.;
+        float ang = h2 * 6.2832 + age * dir * (.9 + aSeed.w * 1.4);
+        float r = r0 * (.75 + age * .55);
+        vec2 p = uC + vec2(cos(ang) * r, sin(ang) * r * .42 - age * mix(26., 92., h2) + 8.);
+        float tw = .55 + .45 * sin(uTime * (3. + aSeed.w * 5.) + aSeed.x * 40.);
+        vA = smoothstep(0., .18, age) * (1. - smoothstep(.55, 1., age)) * tw;
+        vHot = step(.86, aSeed.w);                                       // unas pocas, más brillantes
+        gl_PointSize = aSeed.z * (1. + vHot * .9) * (.75 + .45 * tw) * uScale;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(p.x, -p.y, 0., 1.);
+      }`,
+    fragmentShader: /* glsl */`
+      uniform float uGlow; varying float vA; varying float vHot;
+      void main() {
+        vec2 q = gl_PointCoord - .5; float d = length(q) * 2.;
+        float core = exp(-d * d * 9.), halo = exp(-d * d * 2.6) * .45;
+        float rays = vHot * (exp(-abs(q.x) * 40.) + exp(-abs(q.y) * 40.)) * (1. - d) * .5; // destello en cruz
+        vec3 c = mix(vec3(1., .66, .28), vec3(1., .95, .82), core);
+        float a = (core + halo + rays) * vA * uGlow;
+        gl_FragColor = vec4(c, min(a, 1.));
+      }`,
+    transparent: true, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending,
+  }));
+  dust.renderOrder = 34; dust.frustumCulled = false; scene.add(dust);
+
   let model = null;
   try {
-    const gltf = await new GLTFLoader().loadAsync('assets/a06/fx/estrella.json'); // glTF en JSON (el GLB del kit, mismo modelo)
+    const gltf = await loadStar('assets/a06/fx/estrella.json'); // el GLB del kit, mismo modelo
     model = gltf.scene;
     const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
     model.position.sub(c);
@@ -239,7 +309,7 @@ export async function createAlaira({ canvas, motion }) {
     });
     star.add(holder);
     model = holder;
-  } catch { /* sin modelo: queda el respaldo 2D */ }
+  } catch (err) { console.warn('A06: estrella 3D no disponible, se usa la 2D.', err); }
   if (!model) await sprite('assets/a06/fx/estrella-2d.webp', 112, 112, 25, { add: false });
   pmrem.dispose();
 
@@ -272,6 +342,7 @@ export async function createAlaira({ canvas, motion }) {
     if (!w || !h) return;
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.setSize(w, h, false);
+    dust.material.uniforms.uScale.value = (w * renderer.getPixelRatio()) / W; // tamaño de las motas en px del lienzo
   }
   const ro = new ResizeObserver(resize); ro.observe(canvas); resize();
 
@@ -298,15 +369,15 @@ export async function createAlaira({ canvas, motion }) {
       rig.uAng.value[i] = s.a;
     });
     // cabeza: sigue la mirada con suavidad y un vaivén mínimo
-    const tx = still ? 0 : look.x * 3.2 + Math.sin(t * .31) * .8, ty = still ? 0 : look.y * 1.8 + Math.sin(t * .23 + 1) * .5;
-    const ta = still ? 0 : look.x * .014 + Math.sin(t * .27) * .004;
+    const tx = still ? 0 : look.x * 6 + Math.sin(t * .31) * 2.2, ty = still ? 0 : look.y * 3 + Math.sin(t * .23 + 1) * 1.2;
+    const ta = still ? 0 : look.x * .03 + Math.sin(t * .27) * .014 + Math.sin(t * .11 + 2) * .008; // inclina la cabeza con calma
     head.vx += ((tx - head.x) * 14 - head.vx * 6.5) * dt; head.x += head.vx * dt;
     head.vy += ((ty - head.y) * 14 - head.vy * 6.5) * dt; head.y += head.vy * dt;
     head.va += ((ta - head.a) * 12 - head.va * 6) * dt; head.a += head.va * dt;
     rig.uHead.value.set(head.x, head.y + poke * 1.5);
     rig.uAng.value[IDX.cabeza] = head.a;
     rig.uBreath.value = still ? .5 : .5 + .5 * Math.sin(t * (6.283 / 4.4));
-    rig.uSway.value = still ? 0 : Math.sin(t * .37) * .0016 + Math.sin(t * .13) * .0008;
+    rig.uSway.value = still ? 0 : Math.sin(t * .37) * .0042 + Math.sin(t * .13) * .002;
     poke *= Math.exp(-dt * 3);
 
     // fleco y hebras: un poco más sueltos que la cabeza
@@ -344,6 +415,9 @@ export async function createAlaira({ canvas, motion }) {
       sp.s.material.opacity = (sn > 0 ? .95 : .45) * tw * tw;
       sp.s.scale.setScalar(sp.size * (.6 + .5 * tw));
     }
+    dust.material.uniforms.uTime.value = t;
+    dust.material.uniforms.uGlow.value = still ? .6 : 1 + starPulse * .8;
+    dust.position.y = bob * .3;
     starPulse *= Math.exp(-dt * 2.5);
 
     renderer.render(scene, camera);

@@ -1,43 +1,47 @@
 // A06 · Bienvenida con Alaira — escenario por capas, nubes vivas y la Alaira animada.
 // Todo se mide en px del lienzo de A06 (911 × 1726); --v es el tamaño en pantalla de 1 px.
 import { A06 } from './a06-capas.js';
+import { TWINKLES } from './a06-estrellas.js';
 
 const box = ([x, y, w, h]) => `left:calc(${x} * var(--v));top:calc(${y} * var(--v));width:calc(${w} * var(--v));height:calc(${h} * var(--v))`;
 let seed = 7;
 const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
 
 // Profundidad de cada capa para el paralaje (mismo sistema que A01: cursor en PC, giroscopio en teléfono).
-const DEPTH = { cielo: .7, planetas: .45, ciudad: 1, puentes: 1.2, arcos: 1.45, alaira: 1.6, bancos: 2.1, piso: 1.4 };
+// El escenario es UNA placa (cielo, arcos, ciudad y puentes juntos, sin Alaira): así al moverse nada se duplica.
+const DEPTH = { cielo: .9, planetas: .45, alaira: 1.6, bancos: 2.1, piso: 1.4 };
+const EXT = 150; // las nubes del pie se prolongan 150 px hacia abajo (teléfonos altos: nunca se ve su orilla)
+const PLANETS = ['planeta-grande', 'planeta-pequeno'].map((id) => A06[id].box);
 
 /** Capas del escenario de A06, de atrás hacia adelante. */
 function sceneHTML() {
   const L = (id, cls = '', extra = '') => `<img class="a6-l ${cls}" src="${A06[id].src}" alt="" decoding="async" style="${box(A06[id].box)}${extra}">`;
-  const twinkles = A06.skyStars.map(([x, y]) => {
-    const s = 10 + rnd() * 16;
-    return `<i class="a6-twinkle" style="left:calc(${x - s / 2} * var(--v));top:calc(${y - s / 2} * var(--v));width:calc(${s} * var(--v));height:calc(${s} * var(--v));--d:${(2.6 + rnd() * 3.4).toFixed(2)}s;--w:${(-rnd() * 6).toFixed(2)}s"></i>`;
+  // estrellas que titilan: puntos de luz suaves y algunas con destello en cruz (solo sobre cielo abierto)
+  const near = (x, y) => PLANETS.some(([px, py, pw, ph]) => x > px - 10 && x < px + pw + 10 && y > py - 10 && y < py + ph + 10);
+  const twinkles = TWINKLES.filter(([x, y]) => !near(x, y)).map(([x, y, s, cross]) => {
+    const tint = rnd() < .22 ? 'rgba(255, 214, 150, .55)' : 'rgba(206, 178, 255, .5)';
+    return `<i class="a6-tw${cross ? ' is-cross' : ''}" style="left:calc(${x - s / 2} * var(--v));top:calc(${y - s / 2} * var(--v));width:calc(${s} * var(--v));height:calc(${s} * var(--v));--d:${(3 + rnd() * 4.5).toFixed(2)}s;--w:${(-rnd() * 8).toFixed(2)}s;--c:${tint}"></i>`;
   }).join('');
   const cloud = (id, depth) => {
-    const c = A06[id], dx = c.travelX ?? 10, dy = c.travelY ?? 2, per = c.periodSeconds ?? 20;
+    const c = A06[id], { dx, dy, per } = drift(c);
     return `<div class="a6-cloud" data-px="${depth}" style="${box(c.box)}"><div class="a6-push"><img src="${c.src}" alt="" decoding="async" style="--tx:${dx};--ty:${dy};--per:${per}s;--w:${(-rnd() * per).toFixed(2)}s"></div></div>`;
   };
   return `
     <div class="a6-group" data-px="${DEPTH.cielo}">
-      ${L('fondo_reconstruido', 'a6-fondo')}
+      <img class="a6-l a6-fondo" src="assets/a06/escena/placa.webp" alt="" decoding="async" style="${box([0, 0, 911, 1128])}">
       ${L('nebulosa', 'a6-nebula')}
       ${twinkles}
-      ${L('luz_sol', 'a6-glow a6-sun')}
+      ${L('luz_sol', 'a6-glow a6-sun')}${L('luz_palacio', 'a6-glow a6-palace')}${L('reflejo_piso_der', 'a6-glow a6-floor')}
       ${L('bruma-media-izq', 'a6-haze')}${L('bruma-media-der', 'a6-haze a6-haze-r')}
     </div>
     <div class="a6-group" data-px="${DEPTH.planetas}">${L('planeta-grande', 'a6-planet')}${L('planeta-pequeno', 'a6-planet a6-planet-s')}</div>
-    <div class="a6-group" data-px="${DEPTH.ciudad}">${L('ciudad_flotante')}${L('luz_palacio', 'a6-glow a6-palace')}</div>
-    <div class="a6-group" data-px="${DEPTH.puentes}">${L('puentes_y_terraza_der')}${L('reflejo_piso_der', 'a6-glow a6-floor')}</div>
-    <div class="a6-group" data-px="${DEPTH.arcos}">${L('arco_columna_central')}${L('arco_columna_izq')}</div>
     <div class="a6-deck" data-px="${DEPTH.piso}" style="top:calc(${A06['00_fondo_violeta_limpio'].box[1]} * var(--v))"></div>
     <div class="a6-group a6-alaira" data-px="${DEPTH.alaira}">
       <canvas class="a6-canvas" id="alaira-canvas" style="${box([0, 0, 911, 1128])}"></canvas>
       <div class="a6-fallback" hidden></div>
     </div>
     ${cloud('01_velo_costura_escena', 1.9)}
+    <div class="a6-pie" data-px="${DEPTH.bancos + .4}"><i class="a6-pie-a"></i><i class="a6-pie-b"></i></div>
     ${cloud('02_banco_titulo_izq', DEPTH.bancos)}${cloud('04_banco_titulo_der', DEPTH.bancos + .15)}${cloud('03_banco_titulo_centro', DEPTH.bancos + .3)}`;
 }
 
@@ -45,9 +49,16 @@ function sceneHTML() {
 function panelMist(ids) {
   const PB = 1687, PL = 23; // borde inferior e izquierdo del panel en el lienzo
   return ids.map((id) => {
-    const c = A06[id], [x, y, w, h] = c.box, dx = c.travelX ?? 10, dy = c.travelY ?? 2, per = c.periodSeconds ?? 20;
-    return `<div class="a6-cloud a6-cloud-hud" style="left:calc(${x - PL} * var(--v));bottom:calc(${PB - (y + h)} * var(--v));width:calc(${w} * var(--v));height:calc(${h} * var(--v))"><div class="a6-push"><img src="${c.src}" alt="" decoding="async" style="--tx:${dx};--ty:${dy};--per:${per}s;--w:${(-rnd() * per).toFixed(2)}s"></div></div>`;
+    const c = A06[id], [x, y, w, h] = c.box, low = y + h >= 1726; // las que tocaban el borde del lienzo vienen prolongadas
+    const H = low ? h + EXT : h, src = low ? c.src.replace('.webp', '-ext.webp') : c.src;
+    const { dx, dy, per } = drift(c);
+    return `<div class="a6-cloud a6-cloud-hud" style="left:calc(${x - PL} * var(--v));bottom:calc(${PB - (y + h) - (H - h)} * var(--v));width:calc(${w} * var(--v));height:calc(${H} * var(--v));--o:${(14 + rnd() * 10).toFixed(1)}s;--ow:${(-rnd() * 20).toFixed(1)}s"><div class="a6-push"><img src="${src}" alt="" decoding="async" style="--tx:${dx};--ty:${dy};--per:${per}s;--w:${(-rnd() * per).toFixed(2)}s"></div></div>`;
   }).join('');
+}
+
+/** Deriva de cada nube: el kit trae valores muy pequeños; aquí se nota (sutil, pero visible en un teléfono). */
+function drift(c) {
+  return { dx: Math.round((c.travelX ?? 10) * 2.2), dy: Math.round((c.travelY ?? 2) * 2), per: Math.round((c.periodSeconds ?? 20) * .6) };
 }
 
 export function mountA06({ stage, motion, onLayers = () => {} }) {
