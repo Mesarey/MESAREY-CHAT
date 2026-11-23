@@ -224,7 +224,7 @@ export async function createAlaira({ canvas, motion }) {
 
   let model = null;
   try {
-    const gltf = await new GLTFLoader().loadAsync('assets/a06/fx/estrella.glb');
+    const gltf = await new GLTFLoader().loadAsync('assets/a06/fx/estrella.json'); // glTF en JSON (el GLB del kit, mismo modelo)
     model = gltf.scene;
     const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
     model.position.sub(c);
