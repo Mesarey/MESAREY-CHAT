@@ -46,7 +46,7 @@ export function signupForm({ stage, sfx, motion, legal, onPrimary, onGranted }) 
     cta.removeAttribute('aria-busy');
     cta.removeAttribute('aria-label');
     // Cuenta creada → entra a A06 · Bienvenida con Alaira (mismo sonido que al iniciar sesión).
-    if (res.ok || res.reason === 'demo') { sfx('granted'); if (!res.ok) say('demoSignUp', 'info'); onGranted?.('signup'); return; }
+    if (res.ok || res.reason === 'demo') { sfx('granted'); onGranted?.('signup'); return; } // demo: entra igual a A06
     sfx('error'); say('errSignUp');
   });
 

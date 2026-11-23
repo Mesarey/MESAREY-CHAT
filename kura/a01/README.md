@@ -32,6 +32,17 @@ Los destellos ópticos se colocan con la posición del panel sin el paralaje (el
 
 En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la escena (y las estrellas) se mueven como con el cursor en PC. En iPhone el sistema pide permiso la primera vez. Necesita HTTPS (Netlify, GitHub Pages) y no funciona dentro de la web app de Claude, que bloquea los sensores.
 
+## A06 · Bienvenida con Alaira
+
+Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); también con `#a06`. Usa el kit de capas de A06 (lienzo 911 × 1726, `--v` = 1 px de ese lienzo), convertido con `js/a06-capas.js` y `assets/a06/`.
+
+- **Alaira viva** (`js/alaira.js`, Three.js): el cuerpo es una malla fina que se deforma con mapas de peso (`assets/a06/alaira/pesos-*.png`, 15 canales): mechones y melena se mecen desde la raíz con una onda, telas y aretes con resortes, el pecho respira y la cabeza sigue al dedo, cursor o giroscopio. Mechones, telas y aretes vienen borrados en el cuerpo y se dibujan encima, así nunca dejan copia. Ojos con el atlas de parpadeo 5 × 5 (82 ms cerrar, 19 ms sostener, 125 ms abrir; a veces doble). Fleco y hebras encima de los ojos.
+- **Estrella** de la mano: modelo GLB que reposa de frente, gira 180° y regresa en 5.2 s, con núcleo, halo dorado, rayos largos, órbita y chispas que pasan por delante y por detrás. Tocarla la hace brillar; tocar a Alaira hace que parpadee y se le mueva el cabello.
+- **Escenario** por capas con paralaje (cielo, planetas, ciudad, puentes, arcos, Alaira, nubes): estrellas del cielo que titilan, luces que respiran y nueve bancos de nubes que van y vienen; las nubes se apartan al paso del dedo o del cursor.
+- **HUD** con el mismo cristal, bordes luminosos, destellos y botón que A01–A04. «Empezar» (A07) y «Saltar por ahora» (recorrido) muestran un aviso hasta que existan.
+- **Voz de Alaira**: interruptor en el menú de sonido, solo en la introducción. La preferencia se guarda; aún no hay voz elegida.
+- Sin WebGL se muestra la ilustración fija con la estrella 2D. Con «Reducir efectos» todo queda quieto.
+
 ## Estructura
 
 | Archivo | Módulo |

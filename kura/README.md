@@ -9,3 +9,4 @@ Rediseño completo, pantalla por pantalla, a partir del inventario de pantallas 
 | A03 | Recuperar contraseña | Hecha: `a01/#a03` |
 | A04 | Enlace enviado | Hecha: `a01/#a04` |
 | A05 | Restaurando sesión | Hecha: arranque de `a01/` (`#a05` para verla quieta) |
+| A06 | Bienvenida con Alaira | Hecha: `a01/#a06` (se entra al iniciar sesión o crear cuenta) |

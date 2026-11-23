@@ -12,9 +12,11 @@ import { legalDialog } from './legal.js';
 import { signupForm } from './signup.js';
 import { recoverForm } from './recover.js';
 import { auth } from './auth.js';
+import { mountA06 } from './a06.js';
 
 const gsap = window.gsap;
 gsap?.ticker.lagSmoothing(0);
+gsap?.config({ nullTargetWarn: false }); // algunas vistas no tienen todas las piezas de la transición
 const $ = (id) => document.getElementById(id);
 const stage = $('stage');
 const unit = () => stage.clientWidth / CANVAS.width;
@@ -26,7 +28,10 @@ const wind = mountWind($('scene'), motion);
 let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
 const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06 };
-const tilt = parallax(stage, motion, unit, (o) => stars?.shift(o));
+let a06 = null;
+const tilt = parallax(stage, motion, unit, (o) => { stars?.shift(o); a06?.look(o.n); });
+// A06 · Bienvenida con Alaira: su escenario se arma la primera vez que hace falta (o en segundo plano).
+a06 = mountA06({ stage, motion, onLayers: (els) => tilt.addLayers(els) });
 // En teléfono, el primer toque activa el giroscopio (en iPhone el sistema pide permiso).
 if (matchMedia('(pointer: coarse)').matches) addEventListener('click', () => tilt.enableGyro(), { once: true, capture: true });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) tilt.recenter(); });
@@ -81,7 +86,7 @@ const makeHud = (el) => luminousBorder(el, {
   widths: { base: 1.1, near: 4, wide: 18 },
 });
 const VIEWS = {};
-for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04']]) {
+for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06']]) {
   const el = $(`view-${name}`), panel = $(panelId), c = $(ctaId);
   VIEWS[name] = { name, el, panel, cta: c, button: makeButton(c), hud: makeHud(panel) };
 }
@@ -160,6 +165,7 @@ loginForm({
   stage, motion, toast,
   sfx: (n) => audio.sfx(n),
   onPrimary: (e) => primaryFx(VIEWS.a01, e),
+  onGranted: () => enterIntro(),
 });
 // Sin sonido propio: suena «acceso fallido» si faltan datos y «acceso concedido» al entrar.
 function primaryFx(v, e) {
@@ -184,7 +190,7 @@ stage.addEventListener('pointerdown', (e) => {
 const soundBtn = $('sound'), soundMenu = $('sound-menu'), swMusic = $('sw-music'), swSfx = $('sw-sfx');
 function updateSoundButton() {
   soundBtn.dataset.on = String(audio.on);
-  swMusic.checked = audio.musicEnabled; swSfx.checked = audio.sfxEnabled;
+  swMusic.checked = audio.musicEnabled; swSfx.checked = audio.sfxEnabled; $('sw-voice').checked = audio.voiceEnabled;
 }
 // El audio se intenta activar en cada gesto (tocar, soltar, clic, tecla) hasta que de verdad
 // suene; así nunca hace falta apagar y prender el sonido para que empiece.
@@ -201,16 +207,17 @@ const setMenu = (open) => {
 };
 soundBtn.addEventListener('click', () => { unlock(); audio.sfx('soundIcon'); setMenu(soundMenu.hidden); });
 swMusic.addEventListener('change', () => { audio.setMusic(swMusic.checked); audio.sfx('toggle'); });
+$('sw-voice').addEventListener('change', (e) => { audio.setVoice(e.target.checked); audio.sfx('toggle'); });
 swSfx.addEventListener('change', () => { audio.setSfx(swSfx.checked); if (swSfx.checked) setTimeout(() => audio.sfx('toggle'), 250); });
 addEventListener('pointerdown', (e) => { if (!soundMenu.hidden && !e.target.closest('#sound-menu, #sound')) setMenu(false); });
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && !soundMenu.hidden) { setMenu(false); soundBtn.focus(); } });
 audio.onChange(updateSoundButton);
 updateSoundButton();
-window.__kura = { audio, view: () => view.name, tilt, flares: () => stars?.rects?.() };
+window.__kura = { audio, view: () => view.name, tilt, flares: () => stars?.rects?.(), a06: () => a06 };
 
 /* ---------- Términos y privacidad ---------- */
 const legal = legalDialog({ t, sfx: (n) => audio.sfx(n), lang: currentLang });
-const signup = signupForm({ stage, motion, legal, sfx: (n) => audio.sfx(n), onPrimary: (e) => primaryFx(VIEWS.a02, e) });
+const signup = signupForm({ stage, motion, legal, sfx: (n) => audio.sfx(n), onPrimary: (e) => primaryFx(VIEWS.a02, e), onGranted: () => enterIntro() });
 
 /* ---------- Cambio de vista A01 ⇄ A02: el escenario no cambia, solo el contenido del HUD ---------- */
 // Una sola transición a la vez: si se toca otro botón a mitad del cambio, la anterior se
@@ -224,15 +231,19 @@ function showView(name, { animate = true } = {}) {
   gsap?.killTweensOf(reveal, 'flares');
   const prev = view;
   view = next;
+  const sceneChange = (name === 'a06') !== (prev.name === 'a06');
   const swap = () => {
     prev.el.hidden = true; prev.el.classList.remove('is-active');
     next.el.hidden = false; next.el.classList.add('is-active');
+    stage.classList.toggle('in-a06', name === 'a06');
+    $('voice-row').hidden = name !== 'a06'; // la voz de Alaira solo aparece en la introducción
     if (name === 'a01') { signup.reset(); recover.reset(); }
     layoutShine(); syncFlares();
   };
+  if (sceneChange) switchScene(name === 'a06', animate);
   if (!animate || !gsap || motion.reduced) { swap(); reveal.flares = 1; return; }
   const u = unit();
-  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden])');
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a06-skip');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
     onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
@@ -244,6 +255,34 @@ function showView(name, { animate = true } = {}) {
     .fromTo(next.el.querySelector('.welcome') || [], { opacity: 0 }, { opacity: 1, duration: .8 }, '<')
     .fromTo(next.el.querySelector('.panel'), { opacity: 0, y: 26 * u }, { opacity: 1, y: 0, duration: .8, ease: 'expo.out', clearProps: 'transform' }, '<.1')
     .fromTo(parts, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .05, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.15');
+}
+/* ---------- Cambio de escenario: Observatorio (A01–A05) ⇄ Bienvenida con Alaira (A06) ---------- */
+// La escena nueva aparece encima con un leve acercamiento mientras la anterior se desvanece;
+// las estrellas del Observatorio se apagan (el cielo de A06 trae las suyas).
+const a01Scene = $('scene');
+function switchScene(toA06, animate = true) {
+  gsap?.killTweensOf([a01Scene, reveal]);
+  if (a06.el) gsap?.killTweensOf(a06.el);
+  const soft = animate && gsap && !motion.reduced;
+  if (toA06) {
+    a06.enter();
+    if (!soft) { a01Scene.style.visibility = 'hidden'; a06.el.style.opacity = 1; reveal.stars = 0; return; }
+    gsap.fromTo(a06.el, { opacity: 0, scale: 1.07 }, { opacity: 1, scale: 1.02, duration: 2, ease: 'power2.out' });
+    gsap.to(reveal, { stars: 0, duration: .9, ease: 'sine.inOut' });
+    gsap.to(a01Scene, { opacity: 0, duration: 1.4, ease: 'sine.inOut', onComplete: () => { a01Scene.style.visibility = 'hidden'; } });
+  } else {
+    a01Scene.style.visibility = '';
+    if (!soft) { a01Scene.style.opacity = 1; reveal.stars = 1; if (a06.el) a06.el.style.opacity = 0; a06.leave(); return; }
+    gsap.to(a01Scene, { opacity: 1, duration: 1.2, ease: 'sine.inOut' });
+    gsap.to(reveal, { stars: 1, duration: 1.6, ease: 'sine.inOut' });
+    gsap.to(a06.el, { opacity: 0, duration: 1.1, ease: 'sine.inOut', onComplete: () => a06.leave() });
+  }
+}
+// Acceso concedido (iniciar sesión, Google o cuenta nueva) → introducción con Alaira.
+function enterIntro() {
+  // deja oír el «acceso concedido» y espera a que Alaira esté lista (máximo 2.5 s) antes del cambio
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  Promise.all([wait(650), Promise.race([a06.prepare(), wait(2500)])]).then(() => go('a06'));
 }
 const go = (name) => {
   if (location.hash !== `#${name}`) location.hash = name; // el botón «atrás» del teléfono regresa
@@ -261,6 +300,11 @@ const recover = recoverForm({
 addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIEWS[n]) showView(n); });
 // Vista inicial según la dirección (#a02 abre directamente Crear cuenta).
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
+if (view.name === 'a06') { stage.classList.add('in-a06'); $('voice-row').hidden = false; switchScene(true, false); }
+
+/* ---------- A06: Empezar y Saltar por ahora ---------- */
+$('cta-a06').addEventListener('click', (e) => { audio.sfx('tap'); primaryFx(VIEWS.a06, e); toast(t('a06SoonQuiz')); });
+$('skip-a06').addEventListener('click', (e) => { e.preventDefault(); audio.sfx('tap'); toast(t('a06SoonTour')); });
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 
 /* ---------- Preferencias ---------- */
@@ -290,7 +334,11 @@ function invite() {
 /* ---------- Entrada ---------- */
 function intro() {
   const u = unit(), V = view.el;
-  if (!gsap || motion.reduced) { Object.assign(reveal, { stars: 1, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
+  const starsTo = view.name === 'a06' ? 0 : 1;
+  // Mientras se ve Iniciar sesión, la escena de A06 se prepara en segundo plano: al entrar ya está lista.
+  if (view.name === 'a06') a06.prepare(); else setTimeout(() => a06.prefetch(), 4500);
+  if (!gsap || motion.reduced) { Object.assign(reveal, { stars: starsTo, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
+  if (view.name === 'a06') { introA06(); return; }
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from('.scene-art', { opacity: 0, scale: 1.06, duration: 2.4, ease: 'power2.out' }, 0)
     // las estrellas siguen la misma escala que el cielo y se encienden una a una mientras aparece
@@ -306,6 +354,21 @@ function intro() {
     .from(V.querySelector('.panel'), { opacity: 0, y: 60 * u, duration: 1.5 }, 1.4)
     .to(reveal, { flares: 1, duration: 2.2, ease: 'sine.inOut' }, 2.4)  // los destellos del cristal llegan al final
     .from([...V.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first'), document.querySelector('.prefs')], { opacity: 0, y: 14 * u, stagger: .07, duration: 1 }, 1.8)
+    .add(() => setTimeout(invite, 1200), 2.6);
+  gsap.timeline({ repeat: -1, repeatDelay: 7, delay: 3.2 }).fromTo(shine, { p: 0 }, { p: 1, duration: 2.8, ease: 'sine.inOut', onUpdate: paintShine });
+}
+
+// Entrada directa a A06 (dirección #a06 o sesión con la introducción pendiente).
+function introA06() {
+  const u = unit(), V = view.el;
+  gsap.timeline({ defaults: { ease: 'expo.out' } })
+    .fromTo(a06.el, { opacity: 0, scale: 1.07 }, { opacity: 1, scale: 1.02, duration: 2.2, ease: 'power2.out' }, 0)
+    .from('.logo', { opacity: 0, scale: .9, filter: 'blur(8px)', duration: 1.6 }, .5)
+    .from('.sound', { opacity: 0, duration: 1.2 }, .7)
+    .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
+    .from(V.querySelector('.panel'), { opacity: 0, y: 60 * u, duration: 1.5 }, 1.2)
+    .from(V.querySelectorAll('.a06-guide, .a06-question, .cta, .a06-skip'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
+    .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
     .add(() => setTimeout(invite, 1200), 2.6);
   gsap.timeline({ repeat: -1, repeatDelay: 7, delay: 3.2 }).fromTo(shine, { p: 0 }, { p: 1, duration: 2.8, ease: 'sine.inOut', onUpdate: paintShine });
 }
@@ -366,7 +429,7 @@ async function runBoot() {
   if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .06, duration: .5, ease: 'power2.out' });
   // Sin tiempo mínimo: A05 solo dura lo que tarden la escena y la sesión. En un teléfono
   // rápido apenas se ve; si algo se traba, la animación de carga queda a la vista.
-  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady('assets/img/escena.webp')]);
+  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(view.name === 'a06' ? 'assets/a06/escena/fondo.webp' : 'assets/img/escena.webp')]);
   if (keep) await new Promise((r) => { boot.addEventListener('pointerdown', r, { once: true }); addEventListener('hashchange', r, { once: true }); });
   if (session) { /* aquí se abriría Hoy (L01) en el mundo predeterminado */ }
   if (keep && location.hash === '#a05') history.replaceState(null, '', '#a01');

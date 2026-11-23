@@ -29,6 +29,9 @@ const STRINGS = {
     loading: 'Iniciando sesión…',
     demoSignIn: 'Demo: acceso concedido. Aquí se abrirá A06 · Bienvenida con Alaira.',
     soonGoogle: 'Continuar con Google: se conectará en la integración real.',
+    a06Title: '¡Hola! Soy Alaira', a06Guide: 'Estoy aquí para guiarte', a06Question: '¿Listo para tu nueva Aura?',
+    a06Start: 'Empezar', a06Skip: 'Saltar por ahora', voice: 'Voz de Alaira',
+    a06SoonQuiz: 'El cuestionario (A07) llega en la siguiente fase.', a06SoonTour: 'El recorrido llega en la siguiente fase.',
     soon: 'Próximamente',
   },
   en: {
@@ -60,6 +63,9 @@ const STRINGS = {
     loading: 'Signing in…',
     demoSignIn: 'Demo: access granted. A06 · Welcome with Alaira will open here.',
     soonGoogle: 'Continue with Google will be connected in the real integration.',
+    a06Title: 'Hi! I’m Alaira', a06Guide: 'I’m here to guide you', a06Question: 'Ready for your new Aura?',
+    a06Start: 'Start', a06Skip: 'Skip for now', voice: 'Alaira’s voice',
+    a06SoonQuiz: 'The questionnaire (A07) comes in the next phase.', a06SoonTour: 'The tour comes in the next phase.',
     soon: 'Coming soon',
   },
 };

@@ -16,7 +16,7 @@
       document.querySelector('meta[name=viewport]').content += ', maximum-scale=1';
     }
   </script>
-  <script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+  <script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/jsm/" } }</script>
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
@@ -39,6 +39,7 @@
       <p class="sound-menu-title" id="sound-menu-title" data-i18n="soundMenu">Sonido</p>
       <label class="switch"><span data-i18n="music">Música</span><input type="checkbox" role="switch" id="sw-music" checked /><i aria-hidden="true"></i></label>
       <label class="switch"><span data-i18n="effects">Efectos de sonido</span><input type="checkbox" role="switch" id="sw-sfx" checked /><i aria-hidden="true"></i></label>
+      <label class="switch switch-voice" id="voice-row" hidden><span data-i18n="voice">Voz de Alaira</span><input type="checkbox" role="switch" id="sw-voice" checked /><i aria-hidden="true"></i></label>
     </div>
 
     <!-- 9–11: título, cristal, bordes y controles -->
@@ -191,6 +192,28 @@
             <span class="cta-label"><svg class="cta-arrow cta-arrow-back" viewBox="0 0 48 48" aria-hidden="true"><path d="M43 24H7 M19 11 6 24l13 13" /></svg><span class="cta-text" data-i18n="backToSignIn">Volver a iniciar sesión</span></span>
             <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
           </button>
+        </div>
+      </section>
+      </div>
+
+      <!-- A06 · Bienvenida con Alaira (primera vez) -->
+      <div class="view view-a06" id="view-a06" data-view="a06" hidden>
+      <header class="heading heading-a06">
+        <h2 class="title title-a06" id="titulo-a06"><span class="title-line" data-split data-i18n="a06Title">¡Hola! Soy Alaira</span></h2>
+      </header>
+      <section class="panel panel-a06" id="panel-a06" aria-labelledby="titulo-a06">
+        <div class="a6-mist" id="a6-mist-back" aria-hidden="true"></div>
+        <div class="panel-glass" aria-hidden="true"></div>
+        <div class="a6-mist a6-mist-front" id="a6-mist-front" aria-hidden="true"></div>
+        <div class="form a06-body">
+          <p class="a06-guide" data-i18n="a06Guide">Estoy aquí para guiarte</p>
+          <p class="a06-question" data-i18n="a06Question">¿Listo para tu nueva Aura?</p>
+          <button class="cta cta-a06" id="cta-a06" type="button">
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
+            <span class="cta-label"><span class="cta-text" data-i18n="a06Start">Empezar</span><svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg></span>
+            <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+          <p class="a06-skip"><a class="skip-link" href="#tour" id="skip-a06" data-i18n="a06Skip">Saltar por ahora</a></p>
         </div>
       </section>
       </div>

@@ -114,7 +114,7 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
       const v = g.prop === 'transform' ? `translate3d(${dx}px, ${dy}px, 0)` : `${dx}px ${dy}px`;
       for (const el of g.els) el.style[g.prop] = v;
     }
-    onShift({ sky: [-st.x * k * D.stars, -st.y * k * D.stars], hud: [-st.x * k * D.hud, -st.y * k * D.hud] });
+    onShift({ sky: [-st.x * k * D.stars, -st.y * k * D.stars], hud: [-st.x * k * D.hud, -st.y * k * D.hud], n: [st.x, st.y] });
   };
   // quickTo: cada nueva lectura reorienta la animación sin cortes (mismo suavizado que el cursor).
   const qx = gsap ? gsap.quickTo(st, 'x', { duration: 1.1, ease: 'power3.out', onUpdate: apply }) : (v) => { st.x = v; apply(); };
@@ -138,8 +138,8 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
   const tiltTo = (gamma, beta) => {
     if (motion.reduced || gamma == null || beta == null) return;
     const now = performance.now();
-    if (!base || now - last > 1500) base = { g: gamma, b: beta }; // primera lectura (o tras una pausa larga): posición neutra
-    const k = 1 - Math.exp(-Math.min(0.1, (now - last) / 1000) / RECENTER); last = now; // por tiempo, no por evento
+    if (!base) base = { g: gamma, b: beta }; // primera lectura: posición neutra (al volver a la app se recentra con recenter())
+    const k = 1 - Math.exp(-Math.min(0.1, Math.max(0, now - last) / 1000) / RECENTER); last = now; // por tiempo, no por evento
     base.g += (gamma - base.g) * k; base.b += (beta - base.b) * k;
     aim(clamp((gamma - base.g) / RANGE), clamp((beta - base.b) / RANGE), config.gyroParallax);
   };
@@ -148,18 +148,22 @@ export function parallax(stage, motion, unit, onShift = () => {}) {
     /** Llamar desde un toque del usuario (iOS pide permiso para leer el giroscopio). */
     async enableGyro() {
       if (gyroOn || typeof DeviceOrientationEvent === 'undefined') return false;
-      try {
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-          // iPhone responde «granted» o «denied»; Chrome puede responder «prompt»: en ese caso se escucha igual.
-          if ((await DeviceOrientationEvent.requestPermission()) === 'denied') return false;
-        }
-      } catch { return false; }
+      // Se escucha de inmediato: si el navegador deja la pregunta de permiso sin responder, igual funciona
+      // en cuanto lleguen lecturas. Solo un «denied» explícito lo apaga. (iPhone no envía nada hasta aceptar.)
       gyroOn = true;
       addEventListener('deviceorientation', onTilt);
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+          if ((await DeviceOrientationEvent.requestPermission()) === 'denied') { removeEventListener('deviceorientation', onTilt); gyroOn = false; return false; }
+        } catch { /* sin gesto válido: se queda escuchando por si el sistema ya lo permite */ }
+      }
       return true;
     },
     recenter() { base = null; },
+    /** Capas nuevas (p. ej. A06): cada elemento trae su profundidad en data-px. */
+    addLayers(els) { for (const el of els) groups.push({ els: [el], depth: parseFloat(el.dataset.px) || 1, prop: 'translate' }); apply(); },
     /** Visor: inclinación simulada (mismas lecturas que el giroscopio, sin pedir permiso al navegador). */
     simulate(gamma, beta) { tiltTo(gamma, beta); },
+    _debug: () => ({ base, last, gyroOn, reduced: motion.reduced }),
   };
 }

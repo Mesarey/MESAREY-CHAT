@@ -388,6 +388,7 @@ button, input { font: inherit; color: inherit; }
   body { min-height: 100svh; display: grid; place-items: center; }
   .stage {
     margin: 24px auto; border-radius: calc(96 * var(--u));
+    min-height: calc(1750 * var(--u)); /* el marco mide el lienzo: la página no se desborda */
     outline: 1px solid rgba(255, 240, 215, .2);
     box-shadow: 0 0 0 10px rgba(12, 8, 30, .85), 0 0 0 11px rgba(255, 240, 215, .14), 0 40px 120px rgba(0, 0, 0, .7), 0 0 80px rgba(143, 69, 248, .22);
   }
@@ -471,6 +472,69 @@ button, input { font: inherit; color: inherit; }
 .sent { padding-top: calc(10 * var(--u) + var(--g) * .06); }
 .sent-icon { margin-bottom: calc(26 * var(--u) + var(--g) * .08); }
 .sent .cta { margin-top: calc(34 * var(--u) + var(--g) * .14); margin-bottom: calc(10 * var(--u) + var(--g) * .08); height: calc(84 * var(--u) + var(--g) * .06); }
+
+/* ---------- A06 · Bienvenida con Alaira ----------
+   Lienzo propio de 911 × 1726: --v es 1 px de ese lienzo (mismo ancho de pantalla que A01).
+   --g6 es la altura sobrante en teléfonos altos: el panel la reparte entre sus elementos. */
+:root { --v: calc(var(--u) * 899 / 911); --g6: clamp(0px, calc(100svh - 1726 * var(--v) - var(--safe-bottom)), 160px); }
+@media (min-width: 700px) and (min-aspect-ratio: 3/4) { :root { --g6: calc(1750 * var(--u) - 1726 * var(--v)); } } /* marco fijo: solo sobra lo que el marco tiene de más */
+.scene6 {
+  position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+  background: #2e264b; opacity: 0; visibility: hidden;
+  scale: 1.02; transform-origin: 50% 32%; /* margen para el paralaje: ninguna orilla queda a la vista */
+}
+.scene6.is-on { visibility: visible; }
+.a6-group { position: absolute; inset: 0; }
+.a6-l { position: absolute; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
+.a6-nebula { opacity: .32; mix-blend-mode: screen; animation: a6-breathe 16s ease-in-out infinite alternate; }
+.a6-glow { mix-blend-mode: screen; animation: a6-pulse var(--d, 7s) ease-in-out infinite alternate; }
+.a6-sun { --d: 6s; } .a6-palace { --d: 8.5s; animation-delay: -3s; } .a6-floor { --d: 4.6s; animation-delay: -1s; }
+.a6-haze { opacity: .55; animation: a6-haze 22s ease-in-out infinite alternate; }
+.a6-haze-r { animation-duration: 26s; animation-delay: -9s; }
+.a6-planet { animation: a6-float 14s ease-in-out infinite alternate; }
+.a6-planet-s { animation-duration: 9s; animation-delay: -4s; }
+.a6-twinkle { position: absolute; background: url(assets/a06/fx/destello-marfil.webp) center / contain no-repeat; mix-blend-mode: screen; opacity: 0; animation: a6-twinkle var(--d) ease-in-out var(--w) infinite; }
+.a6-deck { position: absolute; left: calc(-20 * var(--v)); right: calc(-20 * var(--v)); bottom: calc(-40 * var(--v)); background: url(assets/a06/escena/violeta.webp) top / 100% calc(666 * var(--v)) no-repeat, #2e264b; }
+.a6-canvas { position: absolute; display: block; opacity: 0; transition: opacity .8s ease; }
+.a6-canvas.is-ready { opacity: 1; } /* Alaira aparece suave cuando su primer cuadro está listo */
+.a6-cloud { position: absolute; pointer-events: none; }
+.a6-push { width: 100%; height: 100%; }
+.a6-cloud img { display: block; width: 100%; height: 100%; animation: a6-cloud var(--per) ease-in-out var(--w) infinite alternate; will-change: translate; }
+@keyframes a6-cloud { from { translate: calc(var(--tx) * var(--v) * -1) calc(var(--ty) * var(--v) * -1); } to { translate: calc(var(--tx) * var(--v)) calc(var(--ty) * var(--v)); } }
+@keyframes a6-pulse { from { opacity: .45; } to { opacity: 1; } }
+@keyframes a6-breathe { from { opacity: .2; } to { opacity: .42; } }
+@keyframes a6-haze { from { translate: calc(-8 * var(--v)) 0; } to { translate: calc(8 * var(--v)) calc(-3 * var(--v)); } }
+@keyframes a6-float { from { translate: 0 calc(-3 * var(--v)); } to { translate: 0 calc(3 * var(--v)); } }
+@keyframes a6-twinkle { 0%, 100% { opacity: 0; scale: .45; } 50% { opacity: .95; scale: 1; } }
+
+/* HUD de A06: mismo cristal, bordes luminosos y botón que A01–A04 */
+.stage.in-a06 .content { padding-top: calc(1104 * var(--v)); }
+.stage.in-a06 .prefs { display: none; }
+.heading-a06 { height: calc(146 * var(--v)); }
+.heading-a06::before, .heading-a06::after { display: none; } /* aquí las nubes del título son del escenario */
+.title-a06 { padding-top: calc(4 * var(--v)); font-size: calc(82 * var(--v)); line-height: calc(100 * var(--v)); letter-spacing: calc(.6 * var(--v)); }
+.title-a06 .ch {
+  background-image: linear-gradient(100deg, #e6d6ff 0%, #f6efff 24%, #ffffff 44%, #fffaff 50%, #ffffff 56%, #f1e6ff 76%, #dfcdfd 100%);
+  filter: drop-shadow(0 calc(2 * var(--v)) calc(8 * var(--v)) rgba(24, 10, 56, .6)) drop-shadow(0 0 calc(14 * var(--v)) rgba(210, 160, 255, .45));
+}
+.panel-a06 {
+  width: calc(862 * var(--v)); border-radius: calc(66 * var(--v));
+  padding: calc(54 * var(--v) + var(--g6) * .14) calc(60 * var(--v)) calc(54 * var(--v) + var(--g6) * .12);
+}
+.a6-mist { position: absolute; inset: 0; pointer-events: none; }
+.a06-body { align-items: center; text-align: center; }
+.a06-guide { margin: 0; font-style: normal; font-size: calc(35 * var(--v)); line-height: calc(52 * var(--v) + var(--g6) * .05); letter-spacing: calc(.8 * var(--v)); color: #f2e8ff; text-shadow: 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
+.a06-question { margin: 0; font-style: italic; font-size: calc(44 * var(--v)); line-height: calc(64 * var(--v) + var(--g6) * .05); letter-spacing: calc(.6 * var(--v)); color: #fbf4ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(210, 160, 255, .5); }
+.cta.cta-a06 { width: calc(730 * var(--v)); height: calc(104 * var(--v) + var(--g6) * .08); margin: calc(36 * var(--v) + var(--g6) * .2) 0 0; }
+.cta-a06 .cta-label { font-size: calc(60 * var(--v)); gap: calc(26 * var(--v)); }
+.cta-a06 .cta-arrow { width: calc(56 * var(--v)); height: calc(56 * var(--v)); }
+.a06-skip { margin: calc(28 * var(--v) + var(--g6) * .16) 0 0; }
+.skip-link { position: relative; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #efe4ff; text-decoration: none; transition: color .3s, text-shadow .3s; }
+.skip-link::after { content: ''; position: absolute; left: -12px; right: -12px; top: 50%; height: max(100%, var(--tap)); translate: 0 -50%; }
+.skip-link:hover, .skip-link:focus-visible { color: #fff; text-shadow: 0 0 calc(10 * var(--v)) rgba(220, 180, 255, .8); }
+.a6-fallback { position: absolute; inset: 0; }
+@media (prefers-reduced-motion: reduce) { .scene6 *, .a6-cloud img { animation: none !important; } }
+.reduce-motion .scene6 *, .reduce-motion .a6-cloud img { animation: none !important; }
 
 /* ---------- A05 · Restaurando sesión (arranque) ----------
    La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:

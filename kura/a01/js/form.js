@@ -41,7 +41,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
     cta.removeAttribute('aria-busy');
     cta.removeAttribute('aria-label');
     // Acceso concedido → entra a A06 · Bienvenida con Alaira. En la demo (sin servidor) suena igual y lo avisa.
-    if (res.ok || res.reason === 'demo') { sfx('granted'); if (!res.ok) say('demoSignIn', 'info'); onGranted?.('email'); return; }
+    if (res.ok || res.reason === 'demo') { sfx('granted'); onGranted?.('email'); return; } // demo: entra igual a A06
     sfx('error'); say('errLogin');
   });
 

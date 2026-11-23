@@ -11,9 +11,9 @@ let ctx = null, master, musicGain, sfxGain, reverb, el = null, musicOk = true;
 let lastSfx = '';
 const history = [];
 const PREFS_KEY = 'kura.audio';
-let musicOn = true, sfxOn = true;   // preferencias del usuario (selector del botón de sonido)
-try { const p = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); if (typeof p.music === 'boolean') musicOn = p.music; if (typeof p.sfx === 'boolean') sfxOn = p.sfx; } catch {}
-const savePrefs = () => { try { localStorage.setItem(PREFS_KEY, JSON.stringify({ music: musicOn, sfx: sfxOn })); } catch {} };
+let musicOn = true, sfxOn = true, voiceOn = true;   // preferencias del usuario (selector del botón de sonido)
+try { const p = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); if (typeof p.music === 'boolean') musicOn = p.music; if (typeof p.sfx === 'boolean') sfxOn = p.sfx; if (typeof p.voice === 'boolean') voiceOn = p.voice; } catch {}
+const savePrefs = () => { try { localStorage.setItem(PREFS_KEY, JSON.stringify({ music: musicOn, sfx: sfxOn, voice: voiceOn })); } catch {} };
 let track = 0;
 const badTracks = new Set();
 let started = false;        // ya hubo un gesto que permitió iniciar el audio
@@ -116,7 +116,7 @@ function apply() {
   ramp(sfxGain.gain, sfxOn ? config.audio.sfxVolume : 0, .2);
   emit();
 }
-const emit = () => listeners.forEach((fn) => fn({ music: musicOn, sfx: sfxOn, musicAvailable: musicOk }));
+const emit = () => listeners.forEach((fn) => fn({ music: musicOn, sfx: sfxOn, voice: voiceOn, musicAvailable: musicOk }));
 
 // Pestaña oculta: se pausa todo; al volver, sigue desde el mismo punto.
 document.addEventListener('visibilitychange', () => {
@@ -133,6 +133,9 @@ export const audio = {
   setSfx(on) { sfxOn = on; savePrefs(); if (!started) start(); else apply(); },
   get musicEnabled() { return musicOn; },
   get sfxEnabled() { return sfxOn; },
+  /** Voz de Alaira (introducción). Aún no hay voz elegida: la preferencia ya se guarda y se respetará. */
+  setVoice(on) { voiceOn = on; savePrefs(); emit(); },
+  get voiceEnabled() { return voiceOn; },
   get on() { return musicOn || sfxOn; },
   onChange(fn) { listeners.add(fn); },
   /** Para la transición al mundo de Alaira: desvanece y detiene la música de A01. */
@@ -154,7 +157,7 @@ export const audio = {
   /** Solo para pruebas: simula que la canción actual terminó. */
   _ended() { el?.dispatchEvent(new Event('ended')); },
   /** Estado para pruebas y depuración. */
-  debug: () => ({ started, musicOn, sfxOn, musicOk, track, src: el?.src ?? '', playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx, history: [...history] }),
+  debug: () => ({ started, musicOn, sfxOn, voiceOn, musicOk, track, src: el?.src ?? '', playing: !!el && !el.paused, time: el?.currentTime ?? 0, gain: musicGain?.gain.value ?? 0, state: ctx?.state, samples: Object.keys(samples), lastSfx, history: [...history] }),
 };
 
 /* ---------- Sonidos de interfaz ---------- */
