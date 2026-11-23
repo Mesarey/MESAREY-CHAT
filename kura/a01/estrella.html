@@ -9,36 +9,40 @@
   <style>
     html, body { margin: 0; height: 100%; background: #1d1636; color: #efe4ff; font-family: Georgia, 'Times New Roman', serif; overflow: hidden; }
     .wrap { position: fixed; inset: 0; display: grid; place-items: center; }
-    .view { --s: calc(min(100vw, 100svh - 120px) / 220); position: relative; width: calc(220 * var(--s)); height: calc(220 * var(--s)); overflow: hidden; border-radius: 18px; box-shadow: 0 0 40px rgba(150, 110, 220, .35); }
-    .view img { position: absolute; left: calc(-75 * var(--s)); top: calc(-508 * var(--s)); width: calc(959 * var(--s)); max-width: none; }
+    /* recorte del lienzo de A06 alrededor de la mano: x 41…281, y 444…734 */
+    .view { --s: calc(min(100vw - 24px, (100svh - 140px) * 240 / 290) / 240); position: relative; width: calc(240 * var(--s)); height: calc(290 * var(--s)); overflow: hidden; border-radius: 18px; box-shadow: 0 0 40px rgba(150, 110, 220, .35); background: #2b2347; }
+    .view img { position: absolute; max-width: none; }
+    .cielo { left: calc(-89 * var(--s)); top: calc(-492 * var(--s)); width: calc(1007 * var(--s)); }
+    .alaira { left: calc(-89 * var(--s)); top: calc(-367 * var(--s)); width: calc(1007 * var(--s)); }
     canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    .cap { position: fixed; left: 0; right: 0; text-align: center; font-size: 14px; letter-spacing: .06em; opacity: .85; padding: 0 16px; }
+    .cap { position: fixed; left: 0; right: 0; text-align: center; font-size: 14px; letter-spacing: .06em; opacity: .85; padding: 0 16px; margin: 0; }
     .top { top: max(18px, env(safe-area-inset-top)); font-style: italic; font-size: 17px; }
     .bottom { bottom: max(18px, env(safe-area-inset-bottom)); opacity: .65; }
+    .err { color: #ffd2a8; }
   </style>
 </head>
 <body>
-  <p class="cap top">Estrella 3D · gira 0° → 180° → 0° sobre su eje</p>
+  <p class="cap top" id="top">Estrella 3D · gira 0° → 180° → 0° sobre su eje</p>
   <div class="wrap">
     <div class="view" id="view">
-      <img src="assets/a06/escena/placa.webp" alt="" />
+      <img class="cielo" src="assets/a06/escena/cielo.webp" alt="" />
+      <img class="alaira" src="assets/a06/alaira/alaira.webp" alt="" />
       <canvas id="c"></canvas>
     </div>
   </div>
-  <p class="cap bottom">Tócala para que brille · inclina o mueve el cursor</p>
+  <p class="cap bottom">Tócala para que brille</p>
   <script type="module">
-    import { createAlaira } from './js/alaira.js';
-    const motion = { reduced: false, onChange() {} };
-    const a = await createAlaira({ canvas: document.getElementById('c'), motion, view: [51, 484, 220, 220] });
-    if (a) {
-      a.start();
-      const view = document.getElementById('view');
-      view.addEventListener('pointerdown', () => a.shine());
-      addEventListener('pointermove', (e) => a.look([(e.clientX / innerWidth) * 2 - 1, (e.clientY / innerHeight) * 2 - 1]));
-      // el visor manda la inclinación simulada por aquí
-      window.__kura = { tilt: { simulate: (g, b) => a.look([Math.max(-1, Math.min(1, g / 18)), Math.max(-1, Math.min(1, (b - 45) / 18))]) } };
-    } else {
-      document.querySelector('.top').textContent = 'Este navegador no tiene WebGL: no se puede mostrar la estrella 3D.';
+    const top = document.getElementById('top');
+    try {
+      const { createStar3D } = await import('./js/estrella3d.js');
+      const s = await createStar3D({ canvas: document.getElementById('c'), motion: { reduced: false }, centro: [161, 594], vista: [41, 444, 240, 290] });
+      s.start();
+      document.getElementById('view').addEventListener('pointerdown', () => s.shine());
+    } catch (err) {
+      // si algo falla, se dice aquí mismo (así se puede saber por qué en el teléfono)
+      top.classList.add('err');
+      top.textContent = 'No se pudo mostrar la estrella 3D: ' + (err && err.message ? err.message : err);
+      console.error(err);
     }
   </script>
 </body>

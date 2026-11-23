@@ -1,69 +1,47 @@
-// A06 · Bienvenida con Alaira — escenario por capas, nubes vivas y la Alaira animada.
-// Todo se mide en px del lienzo de A06 (911 × 1726); --v es el tamaño en pantalla de 1 px.
-import { A06 } from './a06-capas.js';
+// A06 · Bienvenida con Alaira.
+// Escena por capas del paquete de parallax (lienzo 911 × 1726; --v = 1 px de ese lienzo en pantalla).
+// Cada plano se desplaza según su profundidad con el cursor o el giroscopio (recorrido de cámara ±18 × ±11 px):
+// cielo, planetas, ciudad, arcos, puentes y Alaira van a distinta velocidad; la estrella va unida a su mano.
+// Encima: estrellas que titilan en el cielo, parpadeo de Alaira, la estrella 3D con polvo de oro y nubes limpias que derivan.
+import { CAMARA, ESCENA, ALAIRA, BANCO, NUBES } from './a06-capas.js';
 import { TWINKLES } from './a06-estrellas.js';
 
 const box = ([x, y, w, h]) => `left:calc(${x} * var(--v));top:calc(${y} * var(--v));width:calc(${w} * var(--v));height:calc(${h} * var(--v))`;
+const depth = ([dx, dy]) => `--dx:${dx};--dy:${dy}`;
 let seed = 7;
 const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+const rand = (a, b) => a + Math.random() * (b - a);
 
-// Profundidad de cada capa para el paralaje (mismo sistema que A01: cursor en PC, giroscopio en teléfono).
-// El escenario es UNA placa (cielo, arcos, ciudad y puentes juntos, sin Alaira): así al moverse nada se duplica.
-const DEPTH = { cielo: .9, planetas: .45, alaira: 1.6, bancos: 2.1, piso: 1.4 };
-const EXT = 150; // las nubes del pie se prolongan 150 px hacia abajo (teléfonos altos: nunca se ve su orilla)
-const PLANETS = ['planeta-grande', 'planeta-pequeno'].map((id) => A06[id].box); // ya van en la placa
-
-/** Capas del escenario de A06, de atrás hacia adelante. */
-function sceneHTML() {
-  const L = (id, cls = '', extra = '') => `<img class="a6-l ${cls}" src="${A06[id].src}" alt="" decoding="async" style="${box(A06[id].box)}${extra}">`;
-  // estrellas que titilan: puntos de luz suaves y algunas con destello en cruz (solo sobre cielo abierto)
-  const near = (x, y) => PLANETS.some(([px, py, pw, ph]) => x > px - 10 && x < px + pw + 10 && y > py - 10 && y < py + ph + 10);
-  const twinkles = TWINKLES.filter(([x, y]) => !near(x, y)).map(([x, y, s, cross]) => {
+/** Estrellas que titilan: punto de luz suave; algunas con destello en cruz. Coordenadas relativas a la capa del cielo. */
+function twinklesHTML([ox, oy]) {
+  return TWINKLES.map(([x, y, s, cross]) => {
     const tint = rnd() < .22 ? 'rgba(255, 214, 150, .55)' : 'rgba(206, 178, 255, .5)';
-    return `<i class="a6-tw${cross ? ' is-cross' : ''}" style="left:calc(${x - s / 2} * var(--v));top:calc(${y - s / 2} * var(--v));width:calc(${s} * var(--v));height:calc(${s} * var(--v));--d:${(3 + rnd() * 4.5).toFixed(2)}s;--w:${(-rnd() * 8).toFixed(2)}s;--c:${tint}"></i>`;
-  }).join('');
-  // nubes largas: con margen a los lados, así ni el paralaje ni la deriva dejan ver una orilla
-  const cloud = (src, b, depth, { dx, dy, per }) => `<div class="a6-cloud" data-px="${depth}" style="${box(b)}"><div class="a6-push"><img src="${src}" alt="" decoding="async" style="--tx:${dx};--ty:${dy};--per:${per}s;--w:${(-rnd() * per).toFixed(2)}s"></div></div>`;
-  return `
-    <div class="a6-group" data-px="${DEPTH.cielo}">
-      <img class="a6-l a6-fondo" src="assets/a06/escena/placa.webp" alt="" decoding="async" style="${box([-24, -24, 959, 1176])}">
-      ${L('nebulosa', 'a6-nebula')}
-      ${twinkles}
-      ${L('luz_sol', 'a6-glow a6-sun')}${L('luz_palacio', 'a6-glow a6-palace')}${L('reflejo_piso_der', 'a6-glow a6-floor')}
-      ${L('bruma-media-izq', 'a6-haze')}${L('bruma-media-der', 'a6-haze a6-haze-r')}
-    </div>
-    <div class="a6-deck" data-px="${DEPTH.piso}" style="top:calc(${A06['00_fondo_violeta_limpio'].box[1]} * var(--v))"></div>
-    <div class="a6-group a6-alaira" data-px="${DEPTH.alaira}">
-      <canvas class="a6-canvas" id="alaira-canvas" style="${box([0, 0, 911, 1128])}"></canvas>
-      <div class="a6-fallback" hidden></div>
-    </div>
-    ${cloud('assets/a06/nubes/01-velo-ext.webp', [-64, 1060, 1039, 174], 1.9, { dx: 14, dy: 3, per: 22 })}
-    <div class="a6-pie" data-px="${DEPTH.bancos + .4}"><i class="a6-pie-a"></i><i class="a6-pie-b"></i></div>
-    ${cloud('assets/a06/nubes/bancos-largo.webp', [-48, 1078, 1007, 189], DEPTH.bancos, { dx: 12, dy: 3, per: 19 })}`;
-}
-
-/** Nubes del HUD: 05–06 detrás del vidrio; 07–09 delante del vidrio y debajo de los textos. */
-function panelMist(ids) {
-  const PB = 1687, PL = 23; // borde inferior e izquierdo del panel en el lienzo
-  return ids.map((id) => {
-    const c = A06[id], [x0, y, w0, h] = c.box, low = y + h >= 1726; // las que tocaban el borde del lienzo vienen prolongadas
-    const H = low ? h + EXT : h, src = low ? c.src.replace('.webp', '-ext.webp') : c.src;
-    // 07 y 08 traen 64 px reflejados del lado de la orilla de la pantalla (05 y 06 se desvanecen hacia ella)
-    const side = SIDE[id] || 0, x = side < 0 ? x0 - 64 : x0, w = side ? w0 + 64 : w0;
-    const { dx, dy, per } = drift(c);
-    return `<div class="a6-cloud a6-cloud-hud" style="left:calc(${x - PL} * var(--v));bottom:calc(${PB - (y + h) - (H - h)} * var(--v));width:calc(${w} * var(--v));height:calc(${H} * var(--v));--o:${(14 + rnd() * 10).toFixed(1)}s;--ow:${(-rnd() * 20).toFixed(1)}s"><div class="a6-push"><img src="${src}" alt="" decoding="async" style="--tx:${dx};--ty:${dy};--per:${per}s;--w:${(-rnd() * per).toFixed(2)}s"></div></div>`;
+    return `<i class="a6-tw${cross ? ' is-cross' : ''}" style="${box([x - ox - s / 2, y - oy - s / 2, s, s])};--d:${(3 + rnd() * 4.5).toFixed(2)}s;--w:${(-rnd() * 8).toFixed(2)}s;--c:${tint}"></i>`;
   }).join('');
 }
 
-/** Deriva de cada nube: el kit trae valores muy pequeños; aquí se nota (sutil, pero visible en un teléfono). */
-function drift(c) {
-  return { dx: Math.min(30, Math.round((c.travelX ?? 10) * 1.6)), dy: Math.round((c.travelY ?? 2) * 1.6), per: Math.round((c.periodSeconds ?? 20) * .6) };
+function sceneHTML() {
+  const img = (src, b, cls = '') => `<img class="${cls}" src="${src}" alt="" decoding="async" draggable="false" style="${box(b)}">`;
+  const [ax, ay] = ALAIRA.box;
+  const rel = ([x, y, w, h]) => [x - ax, y - ay, w, h]; // coordenadas dentro de la capa de Alaira
+  const layers = ESCENA.map((L) => `<div class="a6-layer ${L.cls || ''}" data-id="${L.id}" style="${box(L.box)};${depth(L.d)}">${img(L.src, [0, 0, L.box[2], L.box[3]])}${L.id === 'cielo' ? twinklesHTML(L.box) : ''}</div>`).join('');
+  const a = ALAIRA, e = a.estrella;
+  const alaira = `<div class="a6-layer a6-alaira" style="${box(a.box)};${depth(a.d)}">
+      ${img(a.src, [0, 0, a.box[2], a.box[3]])}
+      <i class="a6-eyes" hidden style="${box(rel(a.ojos.box))};background-image:url(${a.ojos.src});background-size:calc(${a.ojos.atlas[0]} * var(--v)) calc(${a.ojos.atlas[1]} * var(--v))"></i>
+      <div class="a6-front" hidden>${a.frente.map((f) => img(f.src, rel(f.box))).join('')}</div>
+      ${img(e.respaldo.src, rel(e.respaldo.box), 'a6-star2d')}
+      <canvas class="a6-star" style="${box(rel(e.vista))}"></canvas>
+    </div>`;
+  const clouds = NUBES.map((n) => `<div class="a6-layer a6-cloud" data-id="${n.id}" style="${box(n.box)};${depth(n.d)};opacity:${n.o}"><div class="a6-push"><img src="${n.src}" alt="" decoding="async" draggable="false" style="--tx:${n.drift[0]};--ty:${n.drift[1]};--per:${n.drift[2]}s;--w:${(-rnd() * n.drift[2]).toFixed(2)}s"></div></div>`);
+  // la nube cercana va delante de Alaira; la bruma del pie, al fondo de la pantalla (el HUD va encima)
+  const banco = `<div class="a6-layer" data-id="banco" style="${box(BANCO.box)};${depth(BANCO.d)}">${img(BANCO.src, [0, 0, BANCO.box[2], BANCO.box[3]])}</div>`;
+  return layers + alaira + banco + '<div class="a6-pie"></div>' + clouds.join('');
 }
-const SIDE = { '07_bruma_frontal_izq': -1, '08_bruma_frontal_der': 1 };
 
-export function mountA06({ stage, motion, onLayers = () => {} }) {
+export function mountA06({ stage, motion }) {
   const gsap = window.gsap;
-  let root = null, alaira = null, alairaReady = null, built = false, active = false;
+  let root = null, built = false, active = false, star = null, starReady = null;
 
   function build() {
     if (built) return;
@@ -72,100 +50,129 @@ export function mountA06({ stage, motion, onLayers = () => {} }) {
     root.className = 'scene6'; root.id = 'scene-a06'; root.setAttribute('aria-hidden', 'true');
     root.innerHTML = sceneHTML();
     stage.querySelector('#scene').after(root);
-    document.getElementById('a6-mist-back').innerHTML = panelMist(['05_bruma_detras_panel_izq', '06_bruma_detras_panel_der']);
-    document.getElementById('a6-mist-front').innerHTML = panelMist(['07_bruma_frontal_izq', '08_bruma_frontal_der', '09_neblina_pie_hud']);
-    onLayers(root.querySelectorAll('[data-px]'));
+    // bruma limpia dentro del panel (detrás del vidrio), como en el diseño
+    const mist = document.getElementById('a6-mist-back');
+    if (mist) mist.innerHTML = '<img class="a6-mist-img" src="assets/a06/nubes/bruma-inferior.webp" alt="" decoding="async">';
     wireClouds();
   }
 
-  // Alaira se crea aparte (WebGL + modelo 3D); si no hay WebGL, se muestra la ilustración fija.
-  // El escenario (imágenes) se arma enseguida; Alaira (WebGL + modelo 3D) cuando el navegador está libre o al entrar.
+  // Si no hay WebGL, queda la estrella 2D del diseño.
+  // En A01 solo se arma la escena (las imágenes se descargan); la estrella 3D se crea al entrar a A06,
+  // así la app (y el visor) no se traban mientras se usa otra pantalla.
   function prefetch() {
-    build();
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
-    idle(() => prepare(), { timeout: 9000 });
+    idle(() => build(), { timeout: 9000 });
   }
   function prepare() {
     build();
-    if (!alairaReady) {
-      alairaReady = import('./alaira.js')
-        .then(({ createAlaira }) => createAlaira({ canvas: root.querySelector('#alaira-canvas'), motion }))
-        .catch((err) => { console.warn('A06: Alaira sin WebGL, se muestra la ilustración fija.', err); return null; })
-        .then((a) => {
-          alaira = a;
-          if (!a) showFallback();
-          else { if (active) a.start(); else a.renderOnce(); root.querySelector('#alaira-canvas').classList.add('is-ready'); }
-          return a;
-        });
+    if (!starReady) {
+      const canvas = root.querySelector('.a6-star'), e = ALAIRA.estrella;
+      starReady = import('./estrella3d.js')
+        .then(({ createStar3D }) => createStar3D({ canvas, motion, centro: e.centro, vista: e.vista }))
+        .then((s) => {
+          star = s;
+          if (active) s.start(); else s.renderOnce();
+          root.classList.add('star-3d'); // oculta la estrella 2D
+          return s;
+        })
+        .catch((err) => { console.warn('A06: la estrella 3D no está disponible; queda la del diseño.', err); return null; });
     }
-    return alairaReady;
+    return starReady;
   }
-  function showFallback() {
-    const f = root.querySelector('.a6-fallback');
-    root.querySelector('#alaira-canvas').hidden = true;
-    const img = (src, b) => `<img src="${src}" alt="" style="position:absolute;${box(b)}">`;
-    f.innerHTML = img('assets/a06/alaira/cuerpo.webp', [0, 0, 911, 1128])
-      + `<i class="a6-eyes" style="position:absolute;${box(A06.ojos.box)};background:url(${A06.ojos.src}) calc(-2 * var(--v)) calc(-2 * var(--v)) / calc(920 * var(--v)) calc(470 * var(--v)) no-repeat"></i>`
-      + ['fleco-oclusor', 'hebra-izq-sobre-pestana', 'hebra-central-luz', 'hebra-der-sobre-ojo', 'hebra-der-mejilla'].map((id) => img(A06[id].src, A06[id].box)).join('')
-      + img('assets/a06/fx/estrella-2d.webp', A06.estrella_2d_opcional.box);
-    f.hidden = false;
+
+  /* ---------- Parallax: cada plano recibe su parte del recorrido de cámara ---------- */
+  let nx = 0, ny = 0;
+  function look([x, y]) {
+    if (!root) return;
+    const r = motion.reduced;
+    nx = r ? 0 : Math.max(-1, Math.min(1, x)); ny = r ? 0 : Math.max(-1, Math.min(1, y));
+    root.style.setProperty('--cx', (-nx * CAMARA[0]).toFixed(3));
+    root.style.setProperty('--cy', (-ny * CAMARA[1]).toFixed(3));
   }
+  motion.onChange?.((r) => { if (r) look([0, 0]); });
+
+  /* ---------- Parpadeo (atlas 5 × 5): cerrar 86 ms, sostener 25 ms, abrir 130 ms; a veces doble ---------- */
+  let blinkRaf = 0, blinkT0 = 0, blinkNext = 0, blinkDouble = false, lastFrame = -1;
+  const T = ALAIRA.parpadeoMs, O = ALAIRA.ojos;
+  function setEye(f) {
+    if (f === lastFrame) return;
+    lastFrame = f;
+    const eyes = root.querySelector('.a6-eyes'), front = root.querySelector('.a6-front');
+    eyes.hidden = front.hidden = f === 0; // abierto = idéntico a la ilustración
+    if (f) eyes.style.backgroundPosition = `calc(${-((f % 5) * O.celda[0] + 2)} * var(--v)) calc(${-(Math.floor(f / 5) * O.celda[1] + 2)} * var(--v))`;
+  }
+  function blinkLoop(now) {
+    blinkRaf = requestAnimationFrame(blinkLoop);
+    if (motion.reduced) { setEye(0); return; }
+    if (!blinkT0 && now >= blinkNext) blinkT0 = now;
+    if (!blinkT0) return;
+    const e = now - blinkT0, total = T.cerrar + T.sostener + T.abrir;
+    if (e >= total) {
+      blinkT0 = 0; setEye(0);
+      const again = !blinkDouble && Math.random() < .18;
+      blinkDouble = again;
+      blinkNext = now + (again ? rand(140, 220) : rand(2400, 5600));
+      return;
+    }
+    setEye(e < T.cerrar ? Math.round((e / T.cerrar) * 24) : e < T.cerrar + T.sostener ? 24 : Math.round((1 - (e - T.cerrar - T.sostener) / T.abrir) * 24));
+  }
+  const blink = () => { blinkNext = performance.now(); };
 
   /* ---------- Nubes que se apartan al paso del dedo o del cursor ---------- */
   function wireClouds() {
-    const clouds = [...document.querySelectorAll('.a6-cloud')].map((el) => {
+    const clouds = [...root.querySelectorAll('.a6-cloud')].map((el) => {
       const push = el.querySelector('.a6-push');
-      return {
-        el, push,
-        qx: gsap ? gsap.quickTo(push, 'x', { duration: 1.6, ease: 'power3.out' }) : () => {},
-        qy: gsap ? gsap.quickTo(push, 'y', { duration: 1.6, ease: 'power3.out' }) : () => {},
-      };
+      return { el, qx: gsap ? gsap.quickTo(push, 'x', { duration: 1.6, ease: 'power3.out' }) : () => {}, qy: gsap ? gsap.quickTo(push, 'y', { duration: 1.6, ease: 'power3.out' }) : () => {} };
     });
     const v = () => stage.clientWidth / 911;
     const stir = (x, y, strength) => {
       if (motion.reduced || !active) return;
-      const R = 260 * v(), max = 16 * v() * strength;
+      const R = 260 * v(), max = 18 * v() * strength;
       for (const c of clouds) {
         const r = c.el.getBoundingClientRect();
-        const cx = Math.max(r.left, Math.min(x, r.right)), cy = Math.max(r.top, Math.min(y, r.bottom)); // punto más cercano de la nube
-        const dx = cx - x, dy = cy - y, d = Math.hypot(dx, dy);
-        const k = Math.max(0, 1 - d / R);
+        const cx = Math.max(r.left, Math.min(x, r.right)), cy = Math.max(r.top, Math.min(y, r.bottom));
+        const dx = cx - x, dy = cy - y, d = Math.hypot(dx, dy), k = Math.max(0, 1 - d / R);
         const ax = d > 1 ? dx / d : (x < r.left + r.width / 2 ? 1 : -1), ay = d > 1 ? dy / d : .3;
         c.qx(ax * max * k); c.qy(ay * max * k * .45);
       }
     };
     const settle = () => clouds.forEach((c) => { c.qx(0); c.qy(0); });
-    stage.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch' || e.buttons) stir(e.clientX, e.clientY, 1); }, { passive: true });
+    let idle;
+    stage.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'touch' || e.buttons) stir(e.clientX, e.clientY, 1);
+      clearTimeout(idle); idle = setTimeout(settle, 1400);
+    }, { passive: true });
     stage.addEventListener('pointerdown', (e) => stir(e.clientX, e.clientY, 1.4), { passive: true });
     stage.addEventListener('pointerup', () => setTimeout(settle, 900));
     stage.addEventListener('pointerleave', settle);
-    let idle;
-    stage.addEventListener('pointermove', () => { clearTimeout(idle); idle = setTimeout(settle, 1400); }, { passive: true });
   }
 
-  /* ---------- Toques sobre Alaira y la estrella ---------- */
+  /* ---------- Toques: la estrella brilla; Alaira parpadea ---------- */
   stage.addEventListener('pointerdown', (e) => {
-    if (!active || !alaira || e.target.closest('button, a, input, .panel, .sound-menu')) return;
-    const r = root.querySelector('#alaira-canvas').getBoundingClientRect(), k = r.width / 911;
-    const x = (e.clientX - r.left) / k, y = (e.clientY - r.top) / k;
-    const s = alaira.starPoint();
-    if (Math.hypot(x - s.x, y - s.y) < 70) alaira.shine();
-    else if (x > 180 && x < 720 && y > 140 && y < 1100) alaira.poke();
+    if (!active || e.target.closest('button, a, input, .panel, .sound-menu')) return;
+    const r = root.querySelector('.a6-alaira').getBoundingClientRect(), k = r.width / ALAIRA.box[2];
+    const x = (e.clientX - r.left) / k + ALAIRA.box[0], y = (e.clientY - r.top) / k + ALAIRA.box[1];
+    const [sx, sy] = ALAIRA.estrella.centro;
+    if (Math.hypot(x - sx, y - sy) < 70) star?.shine();
+    else if (x > 180 && x < 720 && y > 140 && y < 1100) blink();
   });
 
   document.addEventListener('visibilitychange', () => {
-    if (!alaira) return;
-    if (document.hidden) alaira.stop(); else if (active) alaira.start();
+    if (!active) return;
+    if (document.hidden) { star?.stop(); cancelAnimationFrame(blinkRaf); } else { star?.start(); blinkRaf = requestAnimationFrame(blinkLoop); }
   });
 
   return {
-    prepare, prefetch,
+    prepare, prefetch, look,
     get el() { return root; },
-    get alaira() { return alaira; },
-    /** Muestra la escena (la transición la coordina main.js). */
-    enter() { prepare(); active = true; root.classList.add('is-on'); alaira?.start(); },
-    leave() { active = false; root?.classList.remove('is-on'); alaira?.stop(); },
-    look(n) { alaira?.look(n); },
+    get star() { return star; },
     get active() { return active; },
+    /** Muestra la escena (la transición la coordina main.js). */
+    enter() {
+      prepare(); active = true; root.classList.add('is-on'); star?.start();
+      cancelAnimationFrame(blinkRaf); blinkNext = performance.now() + rand(1200, 2600); blinkRaf = requestAnimationFrame(blinkLoop);
+    },
+    leave() { active = false; root?.classList.remove('is-on'); star?.stop(); cancelAnimationFrame(blinkRaf); if (root) setEye(0); },
+    _debug: { setEye: (f) => setEye(f), blink },
   };
 }

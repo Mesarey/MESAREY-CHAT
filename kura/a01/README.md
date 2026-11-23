@@ -34,18 +34,16 @@ En teléfono, el primer toque activa el giroscopio: al inclinar el teléfono la 
 
 ## A06 · Bienvenida con Alaira
 
-Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); también con `#a06`. Usa el kit de capas de A06 (lienzo 911 × 1726, `--v` = 1 px de ese lienzo), convertido con `js/a06-capas.js` y `assets/a06/`.
+Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); también con `#a06`. Rehecha desde cero con el paquete **KURA_A06_Implementacion_Parallax** (lienzo 911 × 1726, `--v` = 1 px de ese lienzo). Capas y profundidades en `js/a06-capas.js`; imágenes en `assets/a06/`.
 
-- **Alaira viva** (`js/alaira.js`, Three.js): el cuerpo es una malla fina que se deforma con mapas de peso (`assets/a06/alaira/pesos-*.png`, 15 canales): mechones y melena se mecen desde la raíz con una onda, telas y aretes con resortes, el pecho respira y la cabeza sigue al dedo, cursor o giroscopio. Mechones, telas y aretes vienen borrados en el cuerpo y se dibujan encima, así nunca dejan copia. Ojos con el atlas de parpadeo 5 × 5 (82 ms cerrar, 19 ms sostener, 125 ms abrir; a veces doble). Fleco y hebras encima de los ojos.
-- **Estrella** de la mano: modelo GLB que reposa de frente, gira 180° y regresa en 5.2 s, con núcleo, halo dorado, rayos largos, órbita, chispas que pasan por delante y por detrás y polvo de oro que sube en espiral y titila. Tocarla la hace brillar; tocar a Alaira hace que parpadee y se le mueva el cabello. El glTF (`estrella.json`) se convierte a GLB en memoria: la web app no deja leer data: URIs con fetch.
-- **Escenario** con paralaje: una sola placa (`escena/placa.webp`, con 24 px de margen) armada con el kit de paralaje: cielo y nubes reconstruidos detrás de Alaira, arcos, ciudad, puentes y planetas juntos. Así, al mover el teléfono, detrás de las hebras de Alaira se ven el cielo y las columnas, nunca una copia ni un relleno liso. Estrellas que titilan solo sobre cielo abierto (`js/a06-estrellas.js`), luces que respiran.
-- **Nubes largas**: los bancos del título son una sola nube de 1007 px (`nubes/bancos-largo.webp`, 48 px de margen por lado) y la bruma del pie igual (`nubes/pie-largo.webp`); el velo y las brumas del panel traen margen reflejado o se desvanecen hacia la orilla. Ni el paralaje ni la deriva dejan ver un corte. Se apartan al paso del dedo o del cursor.
-- **Pie de pantalla**: las nubes que tocaban el borde del lienzo se prolongan hacia abajo (`nubes/*-ext.webp`) y una niebla (`.a6-pie`) cubre hasta el borde en teléfonos altos.
-- **Estrella de cerca**: `estrella.html` (botón «★ Estrella 3D de cerca» en el visor) muestra la estrella ampliada con el mismo render de la app.
-- **Versión** hasta abajo en todas las pantallas: «KURA_001 · Versión MVP» / «KURA_001 · MVP version».
-- **HUD** con el mismo cristal, bordes luminosos, destellos y botón que A01–A04. «Empezar» (A07) y «Saltar por ahora» (recorrido) muestran un aviso hasta que existan.
-- **Voz de Alaira**: interruptor en el menú de sonido, solo en la introducción. La preferencia se guarda; aún no hay voz elegida.
-- Sin WebGL se muestra la ilustración fija con la estrella 2D. Con «Reducir efectos» todo queda quieto.
+- **Paralaje por capas** (cursor en PC, giroscopio en teléfono; recorrido de cámara ±18 × ±11 px): el cielo va al fondo, los planetas un poco más rápido, Alaira con arcos, ciudad, puentes y el banco de nubes del título en un mismo plano, y las nubes cercanas y la bruma del pie por delante. Alaira y la arquitectura van juntas porque la capa de Alaira trae pegado el fondo original que la rodea: si fueran a otra velocidad, ese fondo se vería duplicado.
+- **Estrellas del cielo** que titilan solo donde se ve cielo abierto (`js/a06-estrellas.js`).
+- **Parpadeo** de Alaira con el atlas 5 × 5 del kit (cerrar 86 ms, sostener 25 ms, abrir 130 ms; a veces doble), con el fleco y las hebras delante de los ojos. Con los ojos abiertos es idéntica a la ilustración. Tocarla la hace parpadear.
+- **Estrella 3D** de la mano (`js/estrella3d.js`): el GLB del kit gira 0° → 180° → 0° en 5.2 s, con órbita dorada, halo, rayos, chispas y polvo de oro. El modelo y sus destellos van dentro del código (`js/estrella-datos.js`): la web app no tiene que leer ningún archivo aparte. La estrella pintada se quitó de la capa de Alaira; si no hay WebGL se muestra la del diseño. Tocarla la hace brillar.
+- **Vista de cerca**: `estrella.html` (botón «★ Estrella 3D de cerca» en el visor). Si algo falla, lo dice en la propia pantalla.
+- **Nubes limpias** (sin partes del vestido): derivan, se apartan al paso del dedo y tienen margen de sobra: nunca se ve su orilla. El banco del título sale de la transición del paquete sin el título pintado.
+- **HUD** en HTML con el mismo cristal, bordes luminosos y botón que A01–A04; «Empezar» y «Saltar por ahora» muestran un aviso hasta que existan A07 y el recorrido.
+- **Voz de Alaira**: interruptor en el menú de sonido, solo en la introducción.
 
 ## Estructura
 

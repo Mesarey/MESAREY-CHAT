@@ -167,13 +167,21 @@
     layout();
 
     /* ---------- Saltar a una pantalla ---------- */
+    // ¿El teléfono muestra la vista de la estrella en vez de la app?
+    const onStar = () => (app.getAttribute('src') || '').includes('estrella');
+    // Abre la app en una pantalla desde cero (si ya estaba abierta, recarga; si venía de la estrella, navega)
+    function openApp(screen) {
+      const target = 'index.html#' + screen, was = app.getAttribute('src');
+      app.src = target;
+      if (was && was.startsWith('index.html')) app.contentWindow.location.reload();
+    }
     document.querySelectorAll('[data-screen]').forEach((b) => b.addEventListener('click', () => {
       const s = b.dataset.screen;
-      if (s === 'a05') { app.src = 'index.html#a05'; app.contentWindow.location.reload(); return; }
-      if ((app.getAttribute('src') || '').includes('estrella')) { app.src = 'index.html#' + s; return; } // venía de la vista de la estrella
+      if (s === 'a05') { openApp('a05'); return; }
+      if (onStar()) { openApp(s); return; } // venía de la vista de la estrella: se carga la app
       app.contentWindow.location.hash = s;
     }));
-    $('reload').addEventListener('click', () => { app.src = 'index.html#a01'; app.contentWindow.location.reload(); });
+    $('reload').addEventListener('click', () => openApp('a01'));
     $('star3d').addEventListener('click', () => { app.src = 'estrella.html'; });
 
     /* ---------- Audios desde el dispositivo ---------- */

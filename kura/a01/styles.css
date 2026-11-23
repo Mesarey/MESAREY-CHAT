@@ -483,19 +483,18 @@ button, input { font: inherit; color: inherit; }
 @media (min-width: 700px) and (min-aspect-ratio: 3/4) { :root { --g6: calc(1750 * var(--u) - 1726 * var(--v)); } } /* marco fijo: solo sobra lo que el marco tiene de más */
 .scene6 {
   position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
-  background: #2e264b; opacity: 0; visibility: hidden;
-  scale: 1.02; transform-origin: 50% 32%; /* margen para el paralaje: ninguna orilla queda a la vista */
+  background: #2b2347; opacity: 0; visibility: hidden;
+  scale: 1.02; transform-origin: 50% 32%;
+  --cx: 0; --cy: 0; /* cámara (px del lienzo), la mueve el cursor o el giroscopio */
 }
 .scene6.is-on { visibility: visible; }
-.a6-group { position: absolute; inset: 0; }
-.a6-l { position: absolute; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
-.a6-nebula { opacity: .32; mix-blend-mode: screen; animation: a6-breathe 16s ease-in-out infinite alternate; }
-.a6-glow { mix-blend-mode: screen; animation: a6-pulse var(--d, 7s) ease-in-out infinite alternate; }
-.a6-sun { --d: 6s; } .a6-palace { --d: 8.5s; animation-delay: -3s; } .a6-floor { --d: 4.6s; animation-delay: -1s; }
-.a6-haze { opacity: .55; animation: a6-haze 22s ease-in-out infinite alternate; }
-.a6-haze-r { animation-duration: 26s; animation-delay: -9s; }
-.a6-planet { animation: a6-float 14s ease-in-out infinite alternate; }
-.a6-planet-s { animation-duration: 9s; animation-delay: -4s; }
+/* cada plano recibe su parte del recorrido de cámara según su profundidad (--dx, --dy) */
+.a6-layer { position: absolute; translate: calc(var(--cx) * var(--dx) * var(--v)) calc(var(--cy) * var(--dy) * var(--v)); will-change: translate; }
+.a6-layer img, .a6-layer canvas { position: absolute; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
+.a6-planet > img { animation: a6-float 14s ease-in-out infinite alternate; }
+.a6-planet-s > img { animation-duration: 9s; animation-delay: -4s; }
+@keyframes a6-float { from { translate: 0 calc(-2 * var(--v)); } to { translate: 0 calc(2 * var(--v)); } }
+/* estrellas del cielo: titilan suave, algunas con destello en cruz */
 .a6-tw {
   position: absolute; border-radius: 50%; mix-blend-mode: screen; opacity: 0;
   background: radial-gradient(circle, #fff 0 9%, rgba(255, 248, 255, .8) 17%, var(--c) 36%, transparent 70%);
@@ -503,37 +502,20 @@ button, input { font: inherit; color: inherit; }
 }
 .a6-tw.is-cross { background: radial-gradient(circle, #fff 0 5%, rgba(255, 248, 255, .7) 10%, var(--c) 22%, transparent 46%); }
 .a6-tw.is-cross::after { content: ''; position: absolute; inset: 0; background: url(assets/a06/fx/destello-marfil.webp) center / contain no-repeat; }
-.a6-deck { position: absolute; left: calc(-48 * var(--v)); right: calc(-48 * var(--v)); bottom: calc(-40 * var(--v)); background: url(assets/a06/escena/violeta.webp) top / 100% max(100%, calc(666 * var(--v))) no-repeat, #2e264b; }
-/* niebla del pie: pegada al borde inferior, nunca deja ver una orilla en teléfonos altos */
-.a6-pie { position: absolute; left: calc(-70 * var(--v)); right: calc(-70 * var(--v)); bottom: calc(-60 * var(--v)); height: calc(330 * var(--v) + var(--g6)); pointer-events: none; }
-.a6-pie i { position: absolute; inset: 0; }
-.a6-pie-a {
-  background:
-    radial-gradient(55% 75% at 14% 100%, rgba(160, 120, 214, .55), transparent 72%),
-    radial-gradient(55% 75% at 88% 100%, rgba(150, 112, 208, .5), transparent 72%),
-    linear-gradient(to top, rgba(96, 72, 156, .7), rgba(74, 56, 128, .28) 50%, transparent);
-  animation: a6-pie-a 17s ease-in-out infinite alternate;
-}
-.a6-pie-b {
-  background: url(assets/a06/nubes/pie-largo.webp) center bottom / 100% auto no-repeat;
-  animation: a6-pie-b 21s ease-in-out -6s infinite alternate;
-}
-@keyframes a6-pie-a { from { translate: calc(-16 * var(--v)) 0; opacity: .8; } to { translate: calc(16 * var(--v)) calc(-8 * var(--v)); opacity: 1; } }
-@keyframes a6-pie-b { from { translate: calc(26 * var(--v)) calc(5 * var(--v)); opacity: .75; } to { translate: calc(-26 * var(--v)) calc(-5 * var(--v)); opacity: 1; } }
-.a6-canvas { position: absolute; display: block; opacity: 0; transition: opacity .8s ease; }
-.a6-canvas.is-ready { opacity: 1; } /* Alaira aparece suave cuando su primer cuadro está listo */
-.a6-cloud { position: absolute; pointer-events: none; }
-.a6-push { width: 100%; height: 100%; }
-.a6-cloud-hud { animation: a6-mist var(--o, 18s) ease-in-out var(--ow, 0s) infinite alternate; }
-@keyframes a6-mist { from { opacity: .72; } to { opacity: 1; } }
-.a6-cloud img { display: block; width: 100%; height: 100%; animation: a6-cloud var(--per) ease-in-out var(--w) infinite alternate; will-change: translate; }
-@keyframes a6-cloud { from { translate: calc(var(--tx) * var(--v) * -1) calc(var(--ty) * var(--v) * -1); } to { translate: calc(var(--tx) * var(--v)) calc(var(--ty) * var(--v)); } }
-@keyframes a6-pulse { from { opacity: .45; } to { opacity: 1; } }
-@keyframes a6-breathe { from { opacity: .2; } to { opacity: .42; } }
-@keyframes a6-haze { from { translate: calc(-8 * var(--v)) 0; } to { translate: calc(8 * var(--v)) calc(-3 * var(--v)); } }
-@keyframes a6-float { from { translate: 0 calc(-3 * var(--v)); } to { translate: 0 calc(3 * var(--v)); } }
 @keyframes a6-tw { 0%, 100% { opacity: .05; scale: .5; } 35% { opacity: .3; scale: .7; } 52% { opacity: 1; scale: 1; } 68% { opacity: .45; scale: .82; } }
-
+/* Alaira: parpadeo con el atlas, fleco delante de los ojos, estrella 3D sobre la mano */
+.a6-eyes { position: absolute; background-repeat: no-repeat; }
+.a6-front { position: absolute; inset: 0; }
+.a6-star { pointer-events: none; }
+.scene6.star-3d .a6-star2d { visibility: hidden; }
+/* nubes limpias: derivan aparte del paralaje y se apartan al paso del dedo */
+.a6-cloud { pointer-events: none; }
+.a6-push { position: absolute; inset: 0; }
+.a6-push img { width: 100%; height: 100%; animation: a6-cloud var(--per) ease-in-out var(--w) infinite alternate; }
+@keyframes a6-cloud { from { translate: calc(var(--tx) * var(--v) * -1) calc(var(--ty) * var(--v) * -1); } to { translate: calc(var(--tx) * var(--v)) calc(var(--ty) * var(--v)); } }
+/* niebla del pie: en teléfonos altos cubre hasta el borde */
+.a6-pie { position: absolute; left: calc(-70 * var(--v)); right: calc(-70 * var(--v)); bottom: calc(-60 * var(--v)); height: calc(260 * var(--v) + var(--g6)); pointer-events: none;
+  background: radial-gradient(55% 75% at 14% 100%, rgba(150, 112, 205, .45), transparent 72%), radial-gradient(55% 75% at 88% 100%, rgba(140, 104, 200, .4), transparent 72%), linear-gradient(to top, rgba(70, 54, 120, .55), transparent); }
 /* HUD de A06: mismo cristal, bordes luminosos y botón que A01–A04 */
 .stage.in-a06 .content { padding-top: calc(1104 * var(--v)); }
 .stage.in-a06 .prefs { display: none; }
@@ -549,6 +531,8 @@ button, input { font: inherit; color: inherit; }
   padding: calc(54 * var(--v) + var(--g6) * .14) calc(60 * var(--v)) calc(54 * var(--v) + var(--g6) * .12);
 }
 .a6-mist { position: absolute; inset: 0; pointer-events: none; }
+.a6-mist { overflow: hidden; border-radius: inherit; }
+.a6-mist-img { position: absolute; left: -22%; width: 144%; bottom: calc(-46 * var(--v)); opacity: .55; animation: a6-cloud 26s ease-in-out -9s infinite alternate; --tx: 20; --ty: 3; }
 .a06-body { align-items: center; text-align: center; }
 .a06-guide { margin: 0; font-style: normal; font-size: calc(35 * var(--v)); line-height: calc(52 * var(--v) + var(--g6) * .05); letter-spacing: calc(.8 * var(--v)); color: #f2e8ff; text-shadow: 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
 .a06-question { margin: 0; font-style: italic; font-size: calc(44 * var(--v)); line-height: calc(64 * var(--v) + var(--g6) * .05); letter-spacing: calc(.6 * var(--v)); color: #fbf4ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(210, 160, 255, .5); }
@@ -559,9 +543,8 @@ button, input { font: inherit; color: inherit; }
 .skip-link { position: relative; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #efe4ff; text-decoration: none; transition: color .3s, text-shadow .3s; }
 .skip-link::after { content: ''; position: absolute; left: -12px; right: -12px; top: 50%; height: max(100%, var(--tap)); translate: 0 -50%; }
 .skip-link:hover, .skip-link:focus-visible { color: #fff; text-shadow: 0 0 calc(10 * var(--v)) rgba(220, 180, 255, .8); }
-.a6-fallback { position: absolute; inset: 0; }
-@media (prefers-reduced-motion: reduce) { .scene6 *, .a6-cloud img, .a6-cloud-hud { animation: none !important; } }
-.reduce-motion .scene6 *, .reduce-motion .a6-cloud img, .reduce-motion .a6-cloud-hud { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .scene6 *, .a6-mist * { animation: none !important; } }
+.reduce-motion .scene6 *, .reduce-motion .a6-mist * { animation: none !important; }
 
 /* ---------- A05 · Restaurando sesión (arranque) ----------
    La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:
