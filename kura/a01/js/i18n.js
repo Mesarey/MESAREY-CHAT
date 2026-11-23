@@ -31,7 +31,10 @@ const STRINGS = {
     soonGoogle: 'Continuar con Google: se conectará en la integración real.',
     build: 'KURA_001 · Versión MVP', a06Title: '¡Hola! Soy Alaira', a06Guide: 'Estoy aquí para guiarte', a06Question: 'Un nuevo tú te espera',
     a06Start: 'Empezar', a06Skip: 'Saltar por ahora', voice: 'Voz de Alaira',
-    a06SoonQuiz: 'El cuestionario (A07) llega en la siguiente fase.', a06SoonTour: 'El recorrido llega en la siguiente fase.',
+    a06SoonTour: 'El recorrido llega en la siguiente fase.',
+    a07Title: '¿Cómo te llamo?', a07Info: 'Usaré tu nombre para crear afirmaciones y planes solo para ti.', a07Label: 'Tu nombre',
+    a07Continue: 'Continuar', a07Skip: 'Omitir', a07Empty: 'Escribe cómo quieres que te llame, o toca Omitir.',
+    a07Hello: '¡Encantada, {nombre}! ✨', a07Next: 'La siguiente pantalla llega en la próxima fase.',
     soon: 'Próximamente',
   },
   en: {
@@ -65,7 +68,10 @@ const STRINGS = {
     soonGoogle: 'Continue with Google will be connected in the real integration.',
     build: 'KURA_001 · MVP version', a06Title: 'Hi! I’m Alaira', a06Guide: 'I’m here to guide you', a06Question: 'A new you awaits',
     a06Start: 'Start', a06Skip: 'Skip for now', voice: 'Alaira’s voice',
-    a06SoonQuiz: 'The questionnaire (A07) comes in the next phase.', a06SoonTour: 'The tour comes in the next phase.',
+    a06SoonTour: 'The tour comes in the next phase.',
+    a07Title: 'What should I call you?', a07Info: 'I’ll use your name to create affirmations and plans just for you.', a07Label: 'Your name',
+    a07Continue: 'Continue', a07Skip: 'Skip', a07Empty: 'Type what you’d like me to call you, or tap Skip.',
+    a07Hello: 'Lovely to meet you, {nombre}! ✨', a07Next: 'The next screen comes in the next phase.',
     soon: 'Coming soon',
   },
 };

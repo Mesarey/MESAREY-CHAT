@@ -218,6 +218,33 @@
       </section>
       </div>
 
+      <!-- A07 · ¿Cómo te llamo? (mismo escenario de Alaira) -->
+      <div class="view view-a07" id="view-a07" data-view="a07" hidden>
+      <header class="heading heading-a06 heading-a07">
+        <h2 class="title title-a06 title-a07" id="titulo-a07"><span class="title-line" data-split data-i18n="a07Title">¿Cómo te llamo?</span></h2>
+      </header>
+      <section class="panel panel-a06 panel-a07" id="panel-a07" aria-labelledby="titulo-a07">
+        <div class="a6-mist" aria-hidden="true"><img class="a6-mist-img" src="assets/a06/nubes/panel-pie.webp" alt="" decoding="async" /></div>
+        <div class="panel-glass" aria-hidden="true"></div>
+        <form class="form a06-body a07-body" id="form-a07" novalidate>
+          <p class="a07-info" id="info-a07" data-i18n="a07Info">Usaré tu nombre para crear afirmaciones y planes solo para ti.</p>
+          <div class="a07-field-wrap">
+            <label class="field field-a07" id="field-name">
+              <span class="sr" data-i18n="a07Label">Tu nombre</span>
+              <input id="nombre" name="nickname" type="text" autocomplete="given-name" autocapitalize="words" spellcheck="false" maxlength="40" enterkeyhint="go" data-i18n-attr="placeholder:a07Label" placeholder="Tu nombre" aria-describedby="info-a07 msg-a07" />
+            </label>
+            <p class="msg msg-a07" id="msg-a07" role="status" aria-live="polite"></p>
+          </div>
+          <button class="cta cta-a06 cta-a07" id="cta-a07" type="submit">
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
+            <span class="cta-label"><span class="cta-text" data-i18n="a07Continue">Continuar</span><svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg></span>
+            <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+          <p class="a06-skip a07-skip"><a class="skip-link" href="#a08" id="skip-a07" data-i18n="a07Skip">Omitir</a></p>
+        </form>
+      </section>
+      </div>
+
       <nav class="prefs" aria-label="Preferencias">
         <button type="button" id="lang" class="pref" data-i18n="otherLang">English</button>
         <span aria-hidden="true">·</span>

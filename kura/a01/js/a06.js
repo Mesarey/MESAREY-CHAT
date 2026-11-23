@@ -3,7 +3,7 @@
 // Cada plano se desplaza según su profundidad con el cursor o el giroscopio (recorrido de cámara ±18 × ±11 px):
 // cielo, planetas, ciudad, arcos, puentes y Alaira van a distinta velocidad; la estrella va unida a su mano.
 // Encima: parpadeo de Alaira, la estrella 3D con polvo de oro y nubes limpias que derivan.
-import { CAMARA, ESCENA, ALAIRA, BANCO, NUBES } from './a06-capas.js';
+import { CAMARA, ESCENA, ALAIRA, BANCO, BANCO_A07, NUBES } from './a06-capas.js';
 
 const box = ([x, y, w, h]) => `left:calc(${x} * var(--v));top:calc(${y} * var(--v));width:calc(${w} * var(--v));height:calc(${h} * var(--v))`;
 const depth = ([dx, dy]) => `--dx:${dx};--dy:${dy}`;
@@ -27,7 +27,8 @@ function sceneHTML() {
   const place = (n) => (n.abajo == null ? box(n.box) : box(n.box).replace(/top:calc\([^)]*\)\)/, `bottom:calc(${n.abajo} * var(--v))`));
   const clouds = NUBES.map((n) => `<div class="a6-layer a6-cloud" data-id="${n.id}" style="${place(n)};${depth(n.d)};opacity:${n.o}"><div class="a6-push"><img src="${n.src}" alt="" decoding="async" draggable="false" style="--tx:${n.drift[0]};--ty:${n.drift[1]};--per:${n.drift[2]}s;--w:${(-rnd() * n.drift[2]).toFixed(2)}s"></div></div>`);
   // la nube cercana va delante de Alaira; la bruma del pie, al fondo de la pantalla (el HUD va encima)
-  const banco = `<div class="a6-layer" data-id="banco" style="${box(BANCO.box)};${depth(BANCO.d)}">${img(BANCO.src, [0, 0, BANCO.box[2], BANCO.box[3]])}</div>`;
+  const bank = (B, cls) => `<div class="a6-layer ${cls}" style="${box(B.box)};${depth(B.d)}">${img(B.src, [0, 0, B.box[2], B.box[3]])}</div>`;
+  const banco = bank(BANCO, 'a6-banco-a06') + bank(BANCO_A07, 'a6-banco-a07');
   return layers + alaira + banco + '<div class="a6-pie"></div>' + clouds.join('');
 }
 
@@ -169,6 +170,8 @@ export function mountA06({ stage, motion }) {
 
   return {
     prepare, prefetch, look,
+    /** Pantalla de la introducción que se ve (a06 | a07): cambia el banco de nubes del título. */
+    screen(name) { build(); root.classList.toggle('is-a07', name === 'a07'); },
     get el() { return root; },
     get star() { return star; },
     get active() { return active; },

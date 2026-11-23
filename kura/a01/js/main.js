@@ -87,11 +87,14 @@ const makeHud = (el) => luminousBorder(el, {
   widths: { base: 1.1, near: 4, wide: 18 },
 });
 const VIEWS = {};
-for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06']]) {
+for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07']]) {
   const el = $(`view-${name}`), panel = $(panelId), c = $(ctaId);
   VIEWS[name] = { name, el, panel, cta: c, button: makeButton(c), hud: makeHud(panel) };
 }
 let view = VIEWS[location.hash.slice(1)] || VIEWS.a01;
+// Pantallas de la introducción con Alaira: comparten su escenario (A06 Bienvenida, A07 ¿Cómo te llamo?).
+const ALAIRA_VIEWS = new Set(['a06', 'a07']);
+const inAlaira = (n) => ALAIRA_VIEWS.has(n);
 const cta = VIEWS.a01.cta, button = VIEWS.a01.button, hud = VIEWS.a01.hud; // panel de ajustes
 const setReduced = (r) => Object.values(VIEWS).forEach((v) => { v.button.setReduced(r); v.hud.setReduced(r); });
 setReduced(motion.reduced);
@@ -233,19 +236,21 @@ function showView(name, { animate = true } = {}) {
   gsap?.killTweensOf(reveal, 'flares');
   const prev = view;
   view = next;
-  const sceneChange = (name === 'a06') !== (prev.name === 'a06');
+  const sceneChange = inAlaira(name) !== inAlaira(prev.name);
   const swap = () => {
     prev.el.hidden = true; prev.el.classList.remove('is-active');
     next.el.hidden = false; next.el.classList.add('is-active');
-    stage.classList.toggle('in-a06', name === 'a06');
-    $('voice-row').hidden = name !== 'a06'; // la voz de Alaira solo aparece en la introducción
+    stage.classList.toggle('in-a06', inAlaira(name)); // escenario y HUD de Alaira
+    stage.classList.toggle('in-a07', name === 'a07');
+    a06.screen(name);                                  // A07 usa el banco de nubes de su diseño
+    $('voice-row').hidden = !inAlaira(name); // la voz de Alaira solo aparece en la introducción
     if (name === 'a01') { signup.reset(); recover.reset(); }
     layoutShine(); syncFlares();
   };
-  if (sceneChange) switchScene(name === 'a06', animate);
+  if (sceneChange) switchScene(inAlaira(name), animate);
   if (!animate || !gsap || motion.reduced) { swap(); reveal.flares = 1; return; }
   const u = unit();
-  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a06-skip');
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a06-skip, .a07-info, .a07-field-wrap');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
     onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
@@ -305,11 +310,38 @@ const recover = recoverForm({
 addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIEWS[n]) showView(n); });
 // Vista inicial según la dirección (#a02 abre directamente Crear cuenta).
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
-if (view.name === 'a06') { stage.classList.add('in-a06'); $('voice-row').hidden = false; switchScene(true, false); }
+if (inAlaira(view.name)) { stage.classList.add('in-a06'); stage.classList.toggle('in-a07', view.name === 'a07'); a06.screen(view.name); $('voice-row').hidden = false; switchScene(true, false); }
 
 /* ---------- A06: Empezar y Saltar por ahora ---------- */
-$('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); toast(t('a06SoonQuiz')); });
+$('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); setTimeout(() => go('a07'), 420); });
 $('skip-a06').addEventListener('click', (e) => { e.preventDefault(); audio.sfx('tap'); toast(t('a06SoonTour')); });
+
+/* ---------- A07: ¿Cómo te llamo? ----------
+   El nombre (o apodo) se guarda solo en este dispositivo y se usa en saludos y en las afirmaciones
+   que admiten personalización. Omitir deja el nombre vacío. */
+const NAME_KEY = 'kura.nombre';
+const savedName = () => { try { return localStorage.getItem(NAME_KEY) || null; } catch { return null; } };
+const nameInput = $('nombre'), nameField = $('field-name'), nameMsg = $('msg-a07');
+try { nameInput.value = savedName() ?? ''; } catch {}
+const nameError = (on) => { nameField.classList.toggle('is-error', on); nameMsg.textContent = on ? t('a07Empty') : ''; nameMsg.classList.toggle('is-on', on); nameInput.setAttribute('aria-invalid', String(on)); };
+nameInput.addEventListener('focus', () => audio.sfx('focus'));
+nameInput.addEventListener('input', () => { if (nameInput.value.trim()) nameError(false); });
+$('form-a07').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nombre = nameInput.value.replace(/\s+/g, ' ').trim();
+  if (!nombre) { audio.sfx('error'); nameError(true); nameInput.focus(); return; }
+  nameError(false);
+  try { localStorage.setItem(NAME_KEY, nombre); } catch {}
+  audio.sfx('tap'); primaryFx(VIEWS.a07, {});
+  nameInput.blur();
+  toast(t('a07Hello').replace('{nombre}', nombre));
+  setTimeout(() => toast(t('a07Next')), 2900);
+});
+$('skip-a07').addEventListener('click', (e) => {
+  e.preventDefault(); audio.sfx('tap'); nameError(false);
+  try { localStorage.removeItem(NAME_KEY); } catch {}
+  toast(t('a07Next'));
+});
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 
 /* ---------- Preferencias ---------- */
@@ -339,11 +371,11 @@ function invite() {
 /* ---------- Entrada ---------- */
 function intro() {
   const u = unit(), V = view.el;
-  const starsTo = view.name === 'a06' ? 0 : 1;
+  const starsTo = inAlaira(view.name) ? 0 : 1;
   // Mientras se ve Iniciar sesión, la escena de A06 se prepara en segundo plano: al entrar ya está lista.
-  if (view.name === 'a06') a06.prepare(); else setTimeout(() => a06.prefetch(), 4500);
+  if (inAlaira(view.name)) a06.prepare(); else setTimeout(() => a06.prefetch(), 4500);
   if (!gsap || motion.reduced) { Object.assign(reveal, { stars: starsTo, sky6: 1 - starsTo, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
-  if (view.name === 'a06') { introA06(); return; }
+  if (inAlaira(view.name)) { introA06(); return; }
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from('.scene-art', { opacity: 0, scale: 1.06, duration: 2.4, ease: 'power2.out' }, 0)
     // las estrellas siguen la misma escala que el cielo y se encienden una a una mientras aparece
@@ -372,7 +404,7 @@ function introA06() {
     .from('.sound', { opacity: 0, duration: 1.2 }, .7)
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
     .from(V.querySelector('.panel'), { opacity: 0, y: 60 * u, duration: 1.5 }, 1.2)
-    .from(V.querySelectorAll('.a06-guide, .a06-question, .cta, .a06-skip'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
+    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .cta, .a06-skip'), { opacity: 0, y: 14 * u, stagger: .08, duration: 1 }, 1.5)
     .to(reveal, { sky6: 1, duration: 3, ease: 'sine.inOut' }, .6)
     .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
     .add(() => setTimeout(invite, 1200), 2.6);
@@ -435,7 +467,7 @@ async function runBoot() {
   if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .06, duration: .5, ease: 'power2.out' });
   // Sin tiempo mínimo: A05 solo dura lo que tarden la escena y la sesión. En un teléfono
   // rápido apenas se ve; si algo se traba, la animación de carga queda a la vista.
-  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(view.name === 'a06' ? 'assets/a06/escena/cielo.webp' : 'assets/img/escena.webp')]);
+  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(inAlaira(view.name) ? 'assets/a06/escena/cielo.webp' : 'assets/img/escena.webp')]);
   if (keep) await new Promise((r) => { boot.addEventListener('pointerdown', r, { once: true }); addEventListener('hashchange', r, { once: true }); });
   if (session) { /* aquí se abriría Hoy (L01) en el mundo predeterminado */ }
   if (keep && location.hash === '#a05') history.replaceState(null, '', '#a01');

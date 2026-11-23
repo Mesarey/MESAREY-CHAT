@@ -42,6 +42,8 @@ export const ALAIRA = {
 // Banco de nubes bajo el vestido y alrededor del título (transición del paquete, sin el título pintado).
 // Va a la misma profundidad que Alaira: el borde del vestido nunca se desfasa.
 export const BANCO = { src: 'assets/a06/nubes/banco-titulo.webp', box: [0, 970, 911, 270], d: PLANO };
+// A07 («¿Cómo te llamo?») tiene el título más arriba: su banco de nubes es el de su diseño (KURA_A07_HUD)
+export const BANCO_A07 = { src: 'assets/a06/nubes/banco-titulo-a07.webp', box: [0, 992, 911, 230], d: PLANO };
 
 // Nubes limpias (sin partes del vestido): van encima y derivan aparte; nunca se ve su orilla.
 export const NUBES = [
