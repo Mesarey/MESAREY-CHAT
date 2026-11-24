@@ -57,6 +57,17 @@ Se entra con «Empezar» en A06 (suena `empezar.wav`); también con `#a07`. Es c
 - El nombre se usará en saludos y en las afirmaciones que admiten personalización.
 - Español e inglés («What’s your name?»).
 
+## A08 · ¿Cuál es tu fecha de nacimiento?
+
+Se entra con «Continuar» en A07 (después del saludo); también con `#a08`. Mismo escenario y mismo marco que A06–A07: al pasar de A07 a A08 el panel se queda quieto y solo cambia el contenido. No necesitó imágenes nuevas.
+
+- **Título** en dos líneas («¿Cuál es tu fecha / de nacimiento?» · «What’s your / date of birth?»).
+- **Día, Mes y Año** con las listas nativas del teléfono (la rueda de iOS / Android). Los días se ajustan al mes y al año: 30 o 31, y 29 de febrero solo en año bisiesto. Años: del actual hacia atrás, 120 años.
+- **Tu edad** se calcula al momento («28 años» · «28 years»; «1 año»).
+- **Continuar**: si falta un dato suena `falta-dato.wav` y se marcan las listas vacías («Elige tu día, mes y año de nacimiento.»); si la fecha está en el futuro, «Esa fecha todavía no llega.». La fecha se guarda solo en este dispositivo (`localStorage`, clave `kura.nacimiento`, formato AAAA-MM-DD). Después, aviso hasta que exista la siguiente pantalla.
+- **Sin edad mínima**: los textos legales piden no añadir una restricción de edad sin una decisión posterior.
+- Empieza vacía cada vez que se entra.
+
 ## Estructura
 
 | Archivo | Módulo |

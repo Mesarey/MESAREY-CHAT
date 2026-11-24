@@ -243,6 +243,43 @@
       </section>
       </div>
 
+      <!-- A08 · ¿Cuál es tu fecha de nacimiento? (mismo escenario y marco que A06–A07) -->
+      <div class="view view-a08" id="view-a08" data-view="a08" hidden>
+      <header class="heading heading-a06 heading-a08">
+        <h2 class="title title-a06 title-a08" id="titulo-a08"><span class="title-line" data-split data-i18n="a08Title1">¿Cuál es tu fecha</span><span class="title-line" data-split data-i18n="a08Title2">de nacimiento?</span></h2>
+      </header>
+      <section class="panel panel-a06 panel-a08" id="panel-a08" aria-labelledby="titulo-a08">
+        <div class="a6-mist" aria-hidden="true"><img class="a6-mist-img" src="assets/a06/nubes/panel-pie.webp" alt="" decoding="async" /></div>
+        <div class="panel-glass" aria-hidden="true"></div>
+        <form class="form a06-body a08-body" id="form-a08" novalidate>
+          <div class="a08-date">
+            <label class="a08-sel" id="field-dia">
+              <span class="a08-sel-label" data-i18n="a08Day">Día</span>
+              <select id="dia" name="dia" aria-describedby="msg-a08"><option value="" data-i18n="a08Pick">—</option></select>
+              <svg class="a08-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+            </label>
+            <label class="a08-sel" id="field-mes">
+              <span class="a08-sel-label" data-i18n="a08Month">Mes</span>
+              <select id="mes" name="mes" aria-describedby="msg-a08"><option value="" data-i18n="a08Pick">—</option></select>
+              <svg class="a08-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+            </label>
+            <label class="a08-sel" id="field-anio">
+              <span class="a08-sel-label" data-i18n="a08Year">Año</span>
+              <select id="anio" name="anio" aria-describedby="msg-a08"><option value="" data-i18n="a08Pick">—</option></select>
+              <svg class="a08-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+            </label>
+          </div>
+          <p class="a08-age" id="age-a08" aria-live="polite"><span data-i18n="a08Age">Tu edad:</span> <em id="age-value">—</em></p>
+          <p class="msg msg-a08" id="msg-a08" role="status" aria-live="polite"></p>
+          <button class="cta cta-a06 cta-a08" id="cta-a08" type="submit">
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
+            <span class="cta-label"><span class="cta-text" data-i18n="a07Continue">Continuar</span><svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg></span>
+            <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+        </form>
+      </section>
+      </div>
+
       <nav class="prefs" aria-label="Preferencias">
         <button type="button" id="lang" class="pref" data-i18n="otherLang">English</button>
         <span aria-hidden="true">·</span>

@@ -544,6 +544,37 @@ button, input { font: inherit; color: inherit; }
 .cta.cta-a07 { width: calc(728 * var(--v)); height: calc(90 * var(--v) + var(--g6) * .08); margin-top: calc(42 * var(--v) + var(--g6) * .2); }
 .cta-a07 .cta-label { font-size: calc(54 * var(--v)); gap: calc(24 * var(--v)); }
 .cta-a07 .cta-arrow { width: calc(52 * var(--v)); height: calc(52 * var(--v)); }
+/* HUD de A08 «¿Cuál es tu fecha de nacimiento?»: mismo marco que A06–A07; título en dos líneas */
+.title-a08 { margin-top: calc(-22 * var(--v)); padding-top: 0; font-size: calc(66 * var(--v)); line-height: calc(70 * var(--v)); }
+.title-a08 .title-line { display: block; }
+.panel-a08 { padding: calc(40 * var(--v) + var(--g6) * .14) calc(30 * var(--v)) calc(40 * var(--v) + var(--g6) * .12); }
+.panel-a08 .a08-date, .a08-age { font-variant-numeric: lining-nums; } /* cifras de altura uniforme, como en el diseño */
+.a08-date { display: grid; grid-template-columns: .88fr 1fr .9fr; gap: calc(16 * var(--v)); width: 100%; }
+.a08-sel {
+  position: relative; display: block; height: calc(108 * var(--v) + var(--g6) * .06); cursor: pointer;
+  border: 1px solid rgba(236, 215, 255, .62); border-radius: calc(24 * var(--v));
+  background: linear-gradient(180deg, rgba(110, 88, 150, .18), rgba(60, 46, 100, .16));
+  box-shadow: inset 0 0 calc(16 * var(--v)) rgba(210, 170, 255, .06);
+  transition: border-color .35s, box-shadow .35s, background .35s;
+}
+.a08-sel-label { position: absolute; left: 0; right: calc(34 * var(--v)); top: calc(12 * var(--v) + var(--g6) * .02); text-align: center; font-size: calc(27 * var(--v)); letter-spacing: calc(.5 * var(--v)); color: rgba(236, 226, 250, .84); pointer-events: none; }
+.a08-sel select {
+  -webkit-appearance: none; appearance: none; position: absolute; inset: 0; width: 100%; height: 100%;
+  padding: calc(38 * var(--v)) calc(46 * var(--v)) 0 calc(12 * var(--v)); border: 0; border-radius: inherit; outline: 0; background: transparent;
+  font: inherit; font-size: calc(44 * var(--v)); font-variant-numeric: lining-nums; color: var(--ivory); text-align: center; text-align-last: center; cursor: pointer;
+}
+.a08-sel select option { color: #1c1430; font-size: 16px; }
+.a08-chev { position: absolute; right: calc(16 * var(--v)); top: 50%; width: calc(30 * var(--v)); height: calc(30 * var(--v)); translate: 0 -40%; fill: none; stroke: #efe4ff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.a08-sel:focus-within { border-color: #f4dcff; background: linear-gradient(180deg, rgba(140, 115, 185, .3), rgba(80, 62, 125, .26)); box-shadow: 0 0 calc(18 * var(--v)) rgba(200, 140, 255, .35), inset 0 0 calc(18 * var(--v)) rgba(220, 180, 255, .14); }
+.a08-sel:has(select:focus-visible) { outline: 2px solid rgba(246, 220, 255, .55); outline-offset: 2px; }
+.a08-sel.is-error { border-color: #f0a2c6; box-shadow: 0 0 calc(18 * var(--v)) rgba(240, 150, 190, .4); }
+.a08-age { margin: calc(30 * var(--v) + var(--g6) * .12) 0 0; font-size: calc(42 * var(--v)); letter-spacing: calc(.4 * var(--v)); color: #efe4ff; text-shadow: 0 0 calc(10 * var(--v)) rgba(30, 16, 70, .8); }
+.a08-age em { font-size: calc(50 * var(--v)); font-weight: 500; color: rgba(251, 244, 255, .55); transition: color .3s; }
+.a08-age em.is-set { color: #fbf4ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(210, 160, 255, .5); }
+.msg-a08 { min-height: calc(30 * var(--v)); margin-top: calc(4 * var(--v)); font-size: calc(24 * var(--v)); text-align: center; }
+.cta.cta-a08 { width: calc(728 * var(--v)); height: calc(90 * var(--v) + var(--g6) * .08); margin-top: calc(14 * var(--v) + var(--g6) * .16); }
+.cta-a08 .cta-label { font-size: calc(54 * var(--v)); gap: calc(24 * var(--v)); }
+.cta-a08 .cta-arrow { width: calc(52 * var(--v)); height: calc(52 * var(--v)); }
 @media (prefers-reduced-motion: reduce) { .scene6 *, .a6-mist * { animation: none !important; } }
 .reduce-motion .scene6 *, .reduce-motion .a6-mist * { animation: none !important; }
 

@@ -87,13 +87,13 @@ const makeHud = (el) => luminousBorder(el, {
   widths: { base: 1.1, near: 4, wide: 18 },
 });
 const VIEWS = {};
-for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07']]) {
+for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07'], ['a08', 'panel-a08', 'cta-a08']]) {
   const el = $(`view-${name}`), panel = $(panelId), c = $(ctaId);
   VIEWS[name] = { name, el, panel, cta: c, button: makeButton(c), hud: makeHud(panel) };
 }
 let view = VIEWS[location.hash.slice(1)] || VIEWS.a01;
 // Pantallas de la introducción con Alaira: comparten su escenario (A06 Bienvenida, A07 ¿Cómo te llamo?).
-const ALAIRA_VIEWS = new Set(['a06', 'a07']);
+const ALAIRA_VIEWS = new Set(['a06', 'a07', 'a08']);
 const inAlaira = (n) => ALAIRA_VIEWS.has(n);
 const cta = VIEWS.a01.cta, button = VIEWS.a01.button, hud = VIEWS.a01.hud; // panel de ajustes
 const setReduced = (r) => Object.values(VIEWS).forEach((v) => { v.button.setReduced(r); v.hud.setReduced(r); });
@@ -247,6 +247,7 @@ function showView(name, { animate = true } = {}) {
     $('voice-row').hidden = !inAlaira(name); // la voz de Alaira solo aparece en la introducción
     if (name === 'a01') { signup.reset(); recover.reset(); }
     if (name === 'a07') { nameInput.value = ''; nameError(false); } // A07 siempre empieza con el campo vacío
+    if (name === 'a08') resetBirth();                                // A08 también empieza vacía
     layoutShine(); syncFlares();
   };
   if (sceneChange) switchScene(inAlaira(name), animate);
@@ -265,7 +266,7 @@ function showView(name, { animate = true } = {}) {
       .fromTo(nextIn, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .06, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.1');
     return;
   }
-  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap');
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a08-date, .a08-age');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
     onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
@@ -357,7 +358,61 @@ $('form-a07').addEventListener('submit', (e) => {
   audio.sfx('tap'); primaryFx(VIEWS.a07, {});
   nameInput.blur();
   toast(t('a07Hello').replace('{nombre}', nombre));
-  setTimeout(() => toast(t('a07Next')), 2900);
+  setTimeout(() => go('a08'), 700);
+});
+
+/* ---------- A08: ¿Cuál es tu fecha de nacimiento? ----------
+   Día, mes y año con las listas nativas del teléfono (la rueda de iOS / Android). Los días se ajustan al
+   mes y al año (30, 31 o febrero bisiesto). La edad se calcula al momento. La fecha se guarda solo en
+   este dispositivo. Sin edad mínima: los textos legales piden no añadirla sin una decisión posterior. */
+const BIRTH_KEY = 'kura.nacimiento';
+const dSel = $('dia'), mSel = $('mes'), ySel = $('anio'), ageOut = $('age-value'), birthMsg = $('msg-a08');
+const daysIn = (m, y) => new Date(y || 2000, m, 0).getDate(); // sin año: 29 días en febrero
+const opts = (sel, items) => {
+  const keep = sel.value;
+  sel.innerHTML = `<option value="">${t('a08Pick')}</option>` + items.map(([v, label]) => `<option value="${v}">${label}</option>`).join('');
+  if (items.some(([v]) => String(v) === keep)) sel.value = keep;
+};
+function fillBirth() {
+  const now = new Date(), Y = now.getFullYear();
+  opts(mSel, t('a08Months').split(',').map((name, i) => [i + 1, name]));
+  opts(ySel, Array.from({ length: 121 }, (_, i) => [Y - i, Y - i]));
+  const max = daysIn(+mSel.value || 1, +ySel.value), d = +dSel.value;
+  opts(dSel, Array.from({ length: mSel.value ? max : 31 }, (_, i) => [i + 1, i + 1]));
+  if (d > max && mSel.value) dSel.value = String(max); // 31 de abril → 30
+}
+function birthAge() {
+  const d = +dSel.value, m = +mSel.value, y = +ySel.value;
+  if (!d || !m || !y) return null;
+  const now = new Date();
+  return now.getFullYear() - y - ((now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d)) ? 1 : 0);
+}
+function showAge() {
+  const a = birthAge();
+  ageOut.textContent = a == null || a < 0 ? '—' : a === 1 ? t('a08Year1') : t('a08Years').replace('{n}', a);
+  ageOut.classList.toggle('is-set', a != null && a >= 0);
+}
+const birthError = (key) => {
+  birthMsg.textContent = key ? t(key) : ''; birthMsg.classList.toggle('is-on', !!key); birthMsg.dataset.key = key || '';
+  [dSel, mSel, ySel].forEach((s) => s.closest('.a08-sel').classList.toggle('is-error', key === 'a08Empty' ? !s.value : !!key));
+};
+function resetBirth() { [dSel, mSel, ySel].forEach((s) => { s.value = ''; }); fillBirth(); showAge(); birthError(null); }
+[dSel, mSel, ySel].forEach((s) => {
+  s.addEventListener('focus', () => audio.sfx('focus'));
+  s.addEventListener('change', () => { fillBirth(); showAge(); if (birthMsg.dataset.key) birthError(null); });
+});
+document.addEventListener('kura:lang', () => { fillBirth(); showAge(); if (birthMsg.dataset.key) birthMsg.textContent = t(birthMsg.dataset.key); });
+resetBirth();
+$('form-a08').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const a = birthAge();
+  if (a == null) { audio.sfx('decline'); birthError('a08Empty'); return; } // falta un dato
+  if (a < 0) { audio.sfx('decline'); birthError('a08Future'); return; }
+  birthError(null);
+  const iso = `${ySel.value}-${String(mSel.value).padStart(2, '0')}-${String(dSel.value).padStart(2, '0')}`;
+  try { localStorage.setItem(BIRTH_KEY, iso); } catch {}
+  audio.sfx('tap'); primaryFx(VIEWS.a08, {});
+  toast(t('a07Next'));
 });
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 

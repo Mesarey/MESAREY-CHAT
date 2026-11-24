@@ -34,6 +34,9 @@ const STRINGS = {
     a07Title: '¿Cómo te llamo?', a07Info: 'Usaré tu nombre para crear afirmaciones y planes solo para ti.', a07Label: 'Tu nombre',
     a07Continue: 'Continuar', a07Empty: 'Escribe cómo quieres que te llame.',
     a07Hello: '¡Encantada, {nombre}! ✨', a07Next: 'La siguiente pantalla llega en la próxima fase.',
+    a08Title1: '¿Cuál es tu fecha', a08Title2: 'de nacimiento?', a08Day: 'Día', a08Month: 'Mes', a08Year: 'Año', a08Pick: '—',
+    a08Age: 'Tu edad:', a08Years: '{n} años', a08Year1: '1 año', a08Empty: 'Elige tu día, mes y año de nacimiento.', a08Future: 'Esa fecha todavía no llega.',
+    a08Months: 'Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre',
     soon: 'Próximamente',
   },
   en: {
@@ -70,6 +73,9 @@ const STRINGS = {
     a07Title: 'What’s your name?', a07Info: 'I’ll use your name to create affirmations and plans just for you.', a07Label: 'Your name',
     a07Continue: 'Continue', a07Empty: 'Type what you’d like me to call you.',
     a07Hello: 'Lovely to meet you, {nombre}! ✨', a07Next: 'The next screen comes in the next phase.',
+    a08Title1: 'What’s your', a08Title2: 'date of birth?', a08Day: 'Day', a08Month: 'Month', a08Year: 'Year', a08Pick: '—',
+    a08Age: 'Your age:', a08Years: '{n} years', a08Year1: '1 year', a08Empty: 'Choose your day, month and year of birth.', a08Future: 'That date hasn’t come yet.',
+    a08Months: 'January,February,March,April,May,June,July,August,September,October,November,December',
     soon: 'Coming soon',
   },
 };

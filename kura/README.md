@@ -11,3 +11,4 @@ Rediseño completo, pantalla por pantalla, a partir del inventario de pantallas 
 | A05 | Restaurando sesión | Hecha: arranque de `a01/` (`#a05` para verla quieta) |
 | A06 | Bienvenida con Alaira | Hecha: `a01/#a06` (se entra al iniciar sesión o crear cuenta) |
 | A07 | ¿Cómo te llamo? | Hecha: `a01/#a07` (se entra con «Empezar» en A06) |
+| A08 | ¿Cuál es tu fecha de nacimiento? | Hecha: `a01/#a08` (se entra con «Continuar» en A07) |
