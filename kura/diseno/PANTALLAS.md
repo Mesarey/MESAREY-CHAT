@@ -4,6 +4,8 @@ Cada código identifica una pantalla o un estado. Los archivos de diseño se nom
 
 La navegación principal, una vez dentro de KURA, es **Hoy · Mundos · Mi camino · Biblioteca · Perfil**. Hoy siempre muestra el mundo activo. Si la persona entra a un mundo disponible desde Mundos, aterriza directamente en su portada. Cada actividad tiene un regreso visible que devuelve al punto desde el que se abrió.
 
+**Regla del cielo de KURA:** en todo cielo de KURA se ven los dos planetas del mundo, uno grande lavanda-violeta y uno pequeño a su lado (`a01/assets/a06/escena/planeta-grande.webp` y `planeta-pequeno.webp`). Pueden estar lejos y cambiar de lugar en cada escena, pero siempre aparecen. La luna también puede estar presente.
+
 ## 1. Inicio de sesión y primera entrada
 
 | Código | Pantalla | Qué aparece y qué pasa al tocar |
@@ -17,7 +19,7 @@ La navegación principal, una vez dentro de KURA, es **Hoy · Mundos · Mi camin
 | A07 | ¿Cómo te llamo? | Campo de nombre, Continuar y Omitir. El nombre se usa en saludos y en algunas afirmaciones que admiten personalización. |
 | A08 | ¿Cuántos años tienes? | Selector o campo de edad, con opción de omitir. |
 | A09 | ¿Cómo te identificas? | Mujer, hombre, otra identidad y Prefiero no decirlo. |
-| A10 | ¿Qué te gustaría cultivar? | Sentirme mejor conmigo, encontrar calma, cuidar mi cuerpo, avanzar hacia mis metas o cambiar cómo me hago presente. Incluye «No sé todavía. Quiero descubrirlo». |
+| A10 | ¿Qué te motiva a cambiar tu Aura? | Sentirme mejor conmigo, Calmar mi ansiedad, Cuidar más mi cuerpo, Avanzar hacia mis metas, Comenzar a manifestar y Aprender habilidades sociales. Incluye «No sé todavía. Quiero descubrirlo». Escena propia: Alaira sentada en una luna creciente sobre un lago, con los dos planetas y la luna llena. |
 | A11 | Cuéntame un poco más | Respuesta libre y opcional. Alaira puede preguntar «¿Qué te gustaría que se sintiera diferente en tu día?». |
 | A12 | Tu primera recomendación | Una práctica sugerida según lo elegido. Si quiere explorar, Alaira propone empezar con gratitud y una afirmación. Conocer los mundos lleva al tour. |
 | A13–A17 | Tour de los cinco mundos | Una imagen por personaje: Alaira, Amaya, Azara, Nova y Orion. Cada una muestra una escena, su especialidad y Siguiente. Saltar tour permite entrar a KURA. |
