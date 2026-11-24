@@ -16,7 +16,6 @@ import { mountA06 } from './a06.js';
 import { mountA10 } from './a10.js';
 import { makeCombo } from './fecha.js';
 import { fireworks as launchFireworks } from './fuegos.js';
-import { makeMotes } from './motas.js';
 import { TWINKLES as A06_STARS } from './a06-estrellas.js';
 
 const gsap = window.gsap;
@@ -260,7 +259,6 @@ function showView(name, { animate = true } = {}) {
     if (name === 'a08') resetBirth();                                // A08 también empieza vacía
     if (name === 'a09') { resetIdentity(); a10.prefetch(); }         // A09 empieza sin opción elegida; A10 se descarga mientras
     if (name === 'a10') resetMotives();                              // A10 también
-    if (prev.name === 'a08') motes.stop();                           // las partículas de la edad se apagan al salir
     layoutShine(); syncFlares();
   };
   if (sceneChange) switchScene(sceneOf(prev.name), sceneOf(name), animate);
@@ -405,9 +403,6 @@ function fireworks() {
    Día, mes y año en cajas propias que se pueden escribir (la lista se acorta al escribir; js/fecha.js).
    Los días se ajustan al mes y al año (30, 31 o febrero bisiesto). La edad se calcula al momento. La fecha se guarda solo en
    este dispositivo. Sin edad mínima: los textos legales piden no añadirla sin una decisión posterior. */
-/* Partículas que salen de la edad: lienzo pequeño fuera del panel de cristal (js/motas.js), para no trabar la app. */
-const motes = makeMotes({ motion });
-function agePop() { motes.pop(ageOut); }
 const BIRTH_KEY = 'kura.nacimiento';
 const ageOut = $('age-value'), birthMsg = $('msg-a08');
 const daysIn = (m, y) => new Date(y || 2000, m, 0).getDate(); // sin año: 29 días en febrero
@@ -428,13 +423,11 @@ function showAge({ celebrate = false } = {}) {
   const a = birthAge(), ok = a != null && a >= 0;
   ageOut.classList.toggle('is-set', ok);
   $('age-a08').classList.toggle('is-set', ok);
-  motes.ambient(ageOut, ok && view.name === 'a08');
   if (!ok) { ageOut.textContent = '—'; shownAge = null; return; }
   if (celebrate && a !== shownAge && gsap && !motion.reduced) {
-    // la edad «cuenta» hasta su valor y salen partículas doradas del número
+    // la edad «cuenta» hasta su valor y el número brilla una vez
     const c = { n: Math.max(0, a - 12) };
     gsap.to(c, { n: a, duration: .7, ease: 'power2.out', onUpdate: () => { ageOut.textContent = ageText(Math.round(c.n)); } });
-    agePop();
     ageOut.classList.remove('is-shine'); void ageOut.offsetWidth; ageOut.classList.add('is-shine'); // brillo una sola vez
   } else ageOut.textContent = ageText(a);
   shownAge = a;

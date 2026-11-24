@@ -40,7 +40,7 @@ void main() {
   // estrellas pequeñas: cada una titila con su propia fase
   vec2 cell = floor(uv * vec2(118., 94.));
   float tw = .5 + .5 * sin(t * (.6 + hash(cell + 7.) * 1.8) + hash(cell) * 6.283);
-  c *= 1. + m.b * (tw * tw * 1.1 - .38); // nunca más oscuras que el cielo
+  c *= 1. + m.b * tw * tw * .95; // solo se encienden: nunca oscurecen el cielo de alrededor
   // halo de la luna que respira
   float md = length((uv - uMoon.xy) * PX), mr = uMoon.z * PX.x;
   c += vec3(1., .92, .76) * smoothstep(mr * 3., mr * .95, md) * (.06 + .045 * sin(t * .8));

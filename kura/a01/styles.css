@@ -637,8 +637,6 @@ button, input { font: inherit; color: inherit; }
 /* el brillo recorre el número una sola vez al cambiar la fecha (una animación sin fin dentro del cristal trababa la app) */
 .a08-age em.is-shine { animation: a08-age-shine 1.4s ease-in-out 1; }
 @keyframes a08-age-shine { 0%, 100% { background-position: 0 0; } 50% { background-position: 100% 0; } }
-/* motas de la edad: lienzo pequeño fuera del panel (js/motas.js) */
-.fx-motas { position: fixed; z-index: 30; pointer-events: none; }
 /* A09 «¿Cómo te identificas?»: mismo marco que A06–A08; cuatro opciones en cuadrícula 2 × 2 con íconos dorados
    (luna, sol, destello, nube). Son radios nativos (flechas del teclado, lector de pantalla) con aspecto de KURA. */
 .title-a09 { font-size: calc(76 * var(--v)); white-space: nowrap; }
@@ -756,8 +754,8 @@ button, input { font: inherit; color: inherit; }
 .a10-opt:has(input:checked) .a10-check::after { opacity: 1; scale: 1; }
 .a10-opt:has(input:focus-visible) { outline: 2px solid rgba(246, 220, 255, .6); outline-offset: 2px; }
 .a10-opts.is-error .a10-opt { border-color: #f0a2c6; box-shadow: 0 0 calc(12 * var(--v)) rgba(240, 150, 190, .28); }
-.msg-a10 { min-height: calc(32 * var(--v)); margin-top: calc(6 * var(--v)); font-size: calc(24 * var(--v)); text-align: center; }
-.a10-actions { display: flex; align-items: center; gap: calc(18 * var(--v)); margin-top: calc(2 * var(--v) + var(--g6) * .06); }
+.msg-a10 { min-height: calc(32 * var(--v)); margin-top: calc(16 * var(--v) + var(--g6) * .03); font-size: calc(24 * var(--v)); line-height: calc(32 * var(--v)); text-align: center; }
+.a10-actions { display: flex; align-items: center; gap: calc(18 * var(--v)); margin-top: calc(11 * var(--v) + var(--g6) * .05); }
 .a10-skip {
   position: relative; flex: none; width: calc(232 * var(--v)); height: calc(84 * var(--v) + var(--g6) * .06); padding: 0; cursor: pointer;
   border-radius: 999px; border: 1px solid rgba(236, 215, 255, .55); background: linear-gradient(180deg, rgba(90, 70, 130, .3), rgba(48, 36, 84, .34));

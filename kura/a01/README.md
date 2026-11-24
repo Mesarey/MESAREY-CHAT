@@ -75,8 +75,7 @@ Se entra con «Continuar» en A07 (después del saludo); también con `#a08`. Mi
   - Los días se ajustan al mes y al año: 30 o 31, y 29 de febrero solo en año bisiesto. Los años van del actual hacia atrás, 120 años.
 - **Tu edad** se calcula al momento («28 años» · «28 years»; «1 año»).
   - Al cambiar la fecha, el número cuenta hasta la edad y brilla en dorado.
-  - Del número salen partículas: motas doradas y lilas, y estrellitas del adorno. Mientras la edad está a la vista, siguen subiendo motas suaves.
-  - Las partículas se dibujan en un lienzo pequeño fuera del panel de cristal (`js/motas.js`). Así el teléfono no vuelve a desenfocar el cristal en cada cuadro. El brillo del número pasa una sola vez cada vez que cambia la fecha.
+  - Sin partículas (se quitaron porque trababan la pantalla). El brillo del número pasa una sola vez cada vez que cambia la fecha.
   - A los lados hay dos filetes dorados con lunas. Son tenues mientras no hay fecha y brillan cuando aparece la edad.
 - **Continuar**: si falta un dato suena `falta-dato.wav` y se marcan las cajas vacías («Elige tu día, mes y año de nacimiento.»); si la fecha está en el futuro, «Esa fecha todavía no llega.». La fecha se guarda solo en este dispositivo (`localStorage`, clave `kura.nacimiento`, formato AAAA-MM-DD). Después pasa a A09.
 - **Sin edad mínima**: los textos legales piden no añadir una restricción de edad sin una decisión posterior.

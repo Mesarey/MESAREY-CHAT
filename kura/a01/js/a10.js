@@ -28,20 +28,19 @@ function sceneHTML() {
 }
 
 /* ---------- Partículas doradas del brote ---------- */
-// Motas que suben meciéndose y se apagan despacio; a veces una estrellita del adorno. Se dibujan con
-// sprites ya preparados (un círculo con halo por color), sin degradados por cuadro.
-const COLORES = ['255,224,150', '255,240,205', '255,206,120'];
+// Lucecitas finas y solo doradas que suben meciéndose, titilan y se apagan despacio. Se dibujan con sprites
+// ya preparados (un punto de luz con halo cálido por tono de oro), sin degradados por cuadro.
+const OROS = ['255,214,128', '255,224,150', '246,196,104'];
 function makeSparks(canvas) {
   const g = canvas.getContext('2d');
   const sprite = (c) => {
     const s = document.createElement('canvas'); s.width = s.height = 32;
     const x = s.getContext('2d'), gr = x.createRadialGradient(16, 16, 0, 16, 16, 16);
-    gr.addColorStop(0, 'rgba(255,255,250,1)'); gr.addColorStop(.16, `rgba(${c},1)`); gr.addColorStop(.42, `rgba(${c},.36)`); gr.addColorStop(1, `rgba(${c},0)`);
+    gr.addColorStop(0, 'rgba(255,248,226,1)'); gr.addColorStop(.12, `rgba(${c},1)`); gr.addColorStop(.3, `rgba(${c},.32)`); gr.addColorStop(1, `rgba(${c},0)`);
     x.fillStyle = gr; x.fillRect(0, 0, 32, 32); return s;
   };
-  const dots = COLORES.map(sprite);
-  const chispa = new Image(); chispa.src = 'assets/a08/chispa.webp';
-  const [, , BW, BH] = ALAIRA.particulas;
+  const dots = OROS.map(sprite);
+  const [, , BW] = ALAIRA.particulas;
   const [ex, ey] = [ALAIRA.brote[0] - ALAIRA.particulas[0], ALAIRA.brote[1] - ALAIRA.particulas[1]]; // origen dentro de la zona
   let parts = [], acc = 0, k = 1;
 
@@ -53,14 +52,13 @@ function makeSparks(canvas) {
     k = W / BW; // px del lienzo por unidad del diseño
   }
   function spawn(burst) {
-    const star = Math.random() < (burst ? .3 : .16);
     const a = burst ? -Math.PI / 2 + (Math.random() - .5) * 2.2 : -Math.PI / 2 + (Math.random() - .5) * .5;
-    const sp = burst ? 46 + Math.random() * 60 : 22 + Math.random() * 20;
+    const sp = burst ? 44 + Math.random() * 56 : 20 + Math.random() * 20;
     parts.push({
       x: ex + (Math.random() - .5) * (burst ? 10 : 26), y: ey + (Math.random() - .2) * 14,
       vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, sway: 5 + Math.random() * 9, f: .5 + Math.random() * .7, ph: Math.random() * 6.3,
-      life: 0, max: (burst ? 1700 : 2800) + Math.random() * 1600, s: star ? 9 + Math.random() * 6 : 3.2 + Math.random() * 3.4,
-      star, c: dots[Math.floor(Math.random() * dots.length)], rot: Math.random() * 6.3, vr: (Math.random() - .5) * 1.2,
+      life: 0, max: (burst ? 1700 : 2800) + Math.random() * 1600, s: 1.2 + Math.random() * 1.3, tw: 90 + Math.random() * 120,
+      c: dots[Math.floor(Math.random() * dots.length)],
     });
   }
   function step(dt, on) {
@@ -73,13 +71,11 @@ function makeSparks(canvas) {
       p.life += dt; if (p.life >= p.max) return false;
       const u = p.life / p.max;
       p.vx *= 1 - .8 * t; p.vy = p.vy * (1 - .35 * t) - 4 * t; // suben cada vez más lento, con un leve empuje
-      p.x += p.vx * t; p.y += p.vy * t; p.rot += p.vr * t;
+      p.x += p.vx * t; p.y += p.vy * t;
       const x = (p.x + Math.sin(p.life / 1000 * p.f * 6.283 + p.ph) * p.sway * Math.min(1, u * 3)) * k, y = p.y * k;
-      const al = (u < .15 ? u / .15 : u > .55 ? 1 - (u - .55) / .45 : 1) * (.75 + .25 * Math.sin(p.life / 140 + p.ph));
+      const al = (u < .15 ? u / .15 : u > .55 ? 1 - (u - .55) / .45 : 1) * (.6 + .4 * Math.sin(p.life / p.tw + p.ph)); // titilan
       g.globalAlpha = Math.max(0, al);
-      if (p.star && chispa.complete && chispa.naturalWidth) {
-        const s = p.s * k * (1 - u * .35); g.setTransform(1, 0, 0, 1, x, y); g.rotate(p.rot * .3); g.drawImage(chispa, -s * .87, -s, s * 1.74, s * 2); g.setTransform(1, 0, 0, 1, 0, 0);
-      } else { const s = p.s * k * (1 - u * .4) * 3; g.drawImage(p.c, x - s / 2, y - s / 2, s, s); }
+      const s = p.s * k * (1 - u * .35) * 4.2; g.drawImage(p.c, x - s / 2, y - s / 2, s, s);
       return true;
     });
     g.globalAlpha = 1;
