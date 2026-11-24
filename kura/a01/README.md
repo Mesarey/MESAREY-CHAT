@@ -55,7 +55,7 @@ Se entra con «Empezar» en A06 (suena `empezar.wav`); también con `#a07`. Es c
 - **Panel**: explicación en dos líneas, campo «Tu nombre» (input real con `autocomplete="given-name"`) y «Continuar →». Sin «Omitir».
 - **Continuar** guarda el nombre o apodo sin espacios al inicio ni al final, **solo en este dispositivo** (`localStorage`, clave `kura.nombre`), y saluda: «¡Encantada, {nombre}!». Si el campo está vacío, el borde se marca y aparece «Escribe cómo quieres que te llame.». Después muestra un aviso hasta que exista la siguiente pantalla.
 - El nombre se usará en saludos y en las afirmaciones que admiten personalización.
-- Español e inglés («What should I call you?»).
+- Español e inglés («What’s your name?»).
 
 ## Estructura
 

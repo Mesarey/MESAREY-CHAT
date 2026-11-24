@@ -67,7 +67,7 @@ const STRINGS = {
     soonGoogle: 'Continue with Google will be connected in the real integration.',
     build: 'KURA_001 · MVP version', a06Title: 'Hi! I’m Alaira', a06Guide: 'I’m here to guide you', a06Question: 'A new you awaits',
     a06Start: 'Start', voice: 'Alaira’s voice',
-    a07Title: 'What should I call you?', a07Info: 'I’ll use your name to create affirmations and plans just for you.', a07Label: 'Your name',
+    a07Title: 'What’s your name?', a07Info: 'I’ll use your name to create affirmations and plans just for you.', a07Label: 'Your name',
     a07Continue: 'Continue', a07Empty: 'Type what you’d like me to call you.',
     a07Hello: 'Lovely to meet you, {nombre}! ✨', a07Next: 'The next screen comes in the next phase.',
     soon: 'Coming soon',
