@@ -94,8 +94,29 @@ Se entra con «Continuar» en A08; también con `#a09`. Mismo escenario y mismo 
   - Prefiero no decirlo (nube) · Prefer not to say
 - **Al elegir**: la opción se enciende con borde dorado y su ícono crece un poco. Suena un toque y salen chispas del ícono. Son botones de opción nativos: funcionan con flechas del teclado y con lector de pantalla.
 - **Continuar** sin elegir: suena `falta-dato.wav`, se marcan las opciones y aparece «Elige una opción para continuar.».
-- La respuesta se guarda **solo en este dispositivo** (`localStorage`, clave `kura.identidad`; valores `mujer`, `hombre`, `otra`, `prefiero-no-decir`). Después, aviso hasta que exista la siguiente pantalla.
+- La respuesta se guarda **solo en este dispositivo** (`localStorage`, clave `kura.identidad`; valores `mujer`, `hombre`, `otra`, `prefiero-no-decir`). Después pasa a A10.
 - Empieza sin opción elegida cada vez que se entra.
+
+## A10 · ¿Qué te motiva a cambiar tu Aura?
+
+Se entra con «Continuar» en A09; también con `#a10`. **Escenario propio**, distinto de A06–A09: diseño A aprobado (Alaira sentada en una luna creciente dorada sobre un lago, con aurora boreal, luna llena, jardín y los dos planetas de KURA). El diseño está guardado en `kura/diseno/A10/aprobado-diseno-A.webp`.
+
+- **Capas** (`js/a10-capas.js`), separadas del diseño con Higgsfield: fondo sin Alaira (`assets/a10/fondo.webp`), Alaira con su luna (`alaira.webp`, la luna rehecha sólida y sin el logo pintado), halo de la luna (`luna-brillo.webp`), los dos planetas de KURA y bruma delante.
+- **Cielo vivo en WebGL** (`js/a10-cielo.js`, sin librerías): la aurora ondula y una luz recorre sus cortinas; cada estrella titila a su ritmo y 15 estrellas grandes tienen destello en cruz; el lago tiene ondas finas y reflejos que chispean; el halo de la luna llena respira. Un mapa (`assets/a10/mapas.png`: rojo aurora, verde lago, azul estrellas) dice dónde va cada efecto.
+- **Partículas doradas** que suben del brote, meciéndose, con estrellitas del adorno. Al elegir una opción (o tocar el brote) florece: destello de luz y un puñado de chispas.
+- **Paralaje** con cursor o giroscopio: fondo y planetas muy lejos, Alaira en medio, la bruma delante y el HUD encima.
+- **Rendimiento**: el cielo se dibuja a 30 cuadros/s en un solo lienzo y baja su resolución solo si el teléfono se atrasa; las partículas viven en un lienzo pequeño junto al brote; nada se anima detrás del panel de cristal (la bruma del panel está quieta). Todo se detiene al salir de A10, con la pestaña oculta o con «Reducir efectos». Sin WebGL queda la ilustración quieta.
+- **Título** en dos renglones: «¿Qué te motiva a cambiar / tu Aura?» · «What motivates you / to change your Aura?», con «Elige una o varias» · «Choose one or more».
+- **Siete opciones** con ícono dorado en SVG (se pueden marcar varias; casillas nativas, funcionan con teclado y lector de pantalla):
+  - Sentirme mejor conmigo (corazón) · Feel better about myself
+  - Calmar mi ansiedad (ondas) · Calm my anxiety
+  - Cuidar más mi cuerpo (loto) · Take better care of my body
+  - Avanzar hacia mis metas (montaña con estrella) · Move toward my goals
+  - Comenzar a manifestar (mano con destello) · Start manifesting
+  - Aprender habilidades sociales (dos destellos) · Learn social skills
+  - No sé todavía. Quiero descubrirlo (brújula) · I don't know yet. I want to find out — es exclusiva: desmarca las demás, y marcar otra la desmarca.
+- **Continuar** sin elegir: suena `falta-dato.wav`, se marcan las opciones y aparece «Elige al menos una opción o toca Omitir.». Con opciones, se guardan **solo en este dispositivo** (`localStorage`, clave `kura.motivos`, lista JSON de valores).
+- **Omitir** · **Skip**: sigue sin guardar nada (borra `kura.motivos`). Por ahora ambos muestran el aviso hasta que exista A11.
 
 ## Estructura
 
@@ -115,6 +136,7 @@ Se entra con «Continuar» en A08; también con `#a09`. Mismo escenario y mismo 
 | `js/i18n.js` | Textos en español e inglés |
 | `js/legal.js` | Términos y aviso de privacidad (textos de prototipo) y su ventana |
 | `js/devpanel.js` | Panel de ajustes de desarrollo |
+| `js/a10.js` · `js/a10-capas.js` · `js/a10-cielo.js` | A10: escena por capas, partículas del brote y cielo vivo en WebGL |
 
 Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delanteras e inferiores → luces → logo y audio → cristal → bordes luminosos → textos y controles → estrellas y chispas (lienzo sin eventos de puntero).
 

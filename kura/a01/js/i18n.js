@@ -38,6 +38,10 @@ const STRINGS = {
     a08Age: 'Tu edad:', a08Years: '{n} años', a08Year1: '1 año', a08Empty: 'Elige tu día, mes y año de nacimiento.', a08Future: 'Esa fecha todavía no llega.',
     a08Months: 'Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre',
     a09Title: '¿Cómo te identificas?', a09Woman: 'Mujer', a09Man: 'Hombre', a09Other: 'Otra identidad', a09None: 'Prefiero no decirlo', a09Empty: 'Elige una opción para continuar.',
+    a10Title1: '¿Qué te motiva a cambiar', a10Title2: 'tu Aura?', a10Hint: 'Elige una o varias',
+    a10o1: 'Sentirme mejor conmigo', a10o2: 'Calmar mi ansiedad', a10o3: 'Cuidar más mi cuerpo', a10o4: 'Avanzar hacia mis metas',
+    a10o5: 'Comenzar a manifestar', a10o6: 'Aprender habilidades sociales', a10o7: 'No sé todavía. Quiero descubrirlo',
+    a10Empty: 'Elige al menos una opción o toca Omitir.', a10Skip: 'Omitir',
     soon: 'Próximamente',
   },
   en: {
@@ -78,6 +82,10 @@ const STRINGS = {
     a08Age: 'Your age:', a08Years: '{n} years', a08Year1: '1 year', a08Empty: 'Choose your day, month and year of birth.', a08Future: 'That date hasn’t come yet.',
     a08Months: 'January,February,March,April,May,June,July,August,September,October,November,December',
     a09Title: 'How do you identify?', a09Woman: 'Woman', a09Man: 'Man', a09Other: 'Another identity', a09None: 'Prefer not to say', a09Empty: 'Choose an option to continue.',
+    a10Title1: 'What motivates you', a10Title2: 'to change your Aura?', a10Hint: 'Choose one or more',
+    a10o1: 'Feel better about myself', a10o2: 'Calm my anxiety', a10o3: 'Take better care of my body', a10o4: 'Move toward my goals',
+    a10o5: 'Start manifesting', a10o6: 'Learn social skills', a10o7: "I don't know yet. I want to find out",
+    a10Empty: 'Choose at least one option, or tap Skip.', a10Skip: 'Skip',
     soon: 'Coming soon',
   },
 };

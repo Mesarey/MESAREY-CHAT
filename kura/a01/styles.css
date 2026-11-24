@@ -680,6 +680,98 @@ button, input { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) { .scene6 *, .a6-mist * { animation: none !important; } }
 .reduce-motion .scene6 *, .reduce-motion .a6-mist * { animation: none !important; }
 
+/* ---------- A10 · ¿Qué te motiva a cambiar tu Aura? ----------
+   Escenario propio (js/a10.js): fondo con cielo WebGL, los dos planetas de KURA, Alaira en la luna creciente,
+   partículas del brote y bruma delante. Nada se anima detrás del panel de cristal (no se re-desenfoca en cada cuadro). */
+.scene10 {
+  position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+  background: linear-gradient(#1f1a45, #2d2358 40%, #3a2d6a 70%, #2e2457);
+  opacity: 0; visibility: hidden; scale: 1.02; transform-origin: 50% 30%;
+  --cx: 0; --cy: 0;
+}
+.scene10.is-on { visibility: visible; }
+.scene10 .a6-layer > img { width: 100%; height: 100%; }
+.a10-fondo > img, .a10-cielo { position: absolute; display: block; }
+.a10-cielo { opacity: 0; transition: opacity .8s ease; }
+.scene10.sky-on .a10-cielo { opacity: 1; }
+.a10-planeta > img { filter: saturate(.9) brightness(.92); }
+.scene10 .a10-alaira > img { position: absolute; max-width: none; }
+/* halo de la luna creciente: respira despacio (solo opacidad: no cuesta) */
+.a10-brillo { opacity: .7; animation: a10-respira 7s ease-in-out infinite alternate; }
+@keyframes a10-respira { from { opacity: .5; } to { opacity: .95; } }
+/* luz del brote: late suave; al elegir una opción florece (is-bloom) */
+.a10-luz { position: absolute; width: calc(170 * var(--v)); height: calc(170 * var(--v)); margin: calc(-85 * var(--v)) 0 0 calc(-85 * var(--v)); border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 238, 190, .6), rgba(255, 210, 130, .2) 45%, rgba(255, 200, 120, 0));
+  animation: a10-late 3.4s ease-in-out infinite alternate; }
+@keyframes a10-late { from { opacity: .4; scale: .9; } to { opacity: .85; scale: 1.06; } }
+.a10-luz::after { content: ''; position: absolute; inset: calc(-40 * var(--v)); border-radius: 50%; opacity: 0;
+  background: radial-gradient(closest-side, rgba(255, 246, 214, .75), rgba(255, 214, 140, .25) 45%, rgba(255, 200, 120, 0)); }
+.scene10.is-bloom .a10-luz::after { animation: a10-flor 1.3s cubic-bezier(.2, .8, .3, 1); }
+@keyframes a10-flor { 0% { opacity: 0; scale: .6; } 22% { opacity: 1; } 100% { opacity: 0; scale: 1.25; } }
+.a10-chispas { position: absolute; }
+/* orilla de la escena: se funde con el pie, debajo del título y del panel */
+.a10-pie { position: absolute; left: 0; right: 0; top: calc(620 * var(--v)); bottom: 0;
+  background: linear-gradient(rgba(150, 120, 200, 0), rgba(140, 112, 196, .55) calc(120 * var(--v)), #5b4891 calc(190 * var(--v)), #3f3172 calc(420 * var(--v)), #2e2457); }
+@media (prefers-reduced-motion: reduce) { .scene10 *, .scene10 *::after { animation: none !important; } }
+.reduce-motion .scene10 *, .reduce-motion .scene10 *::after { animation: none !important; }
+
+/* HUD de A10: título en dos renglones, «Elige una o varias» y siete opciones en lista (se pueden marcar varias). */
+.stage.in-a10 .content { padding-top: calc(662 * var(--v)); }
+.stage.in-a10 .prefs { display: none; }
+.stage.in-a10 .build { margin-top: calc(12 * var(--v) + var(--g6) * .1); }
+.heading-a10 { height: auto; padding-bottom: calc(14 * var(--v) + var(--g6) * .05); }
+.heading-a10::before, .heading-a10::after { display: none; }
+.title.title-a10 { padding-top: 0; font-size: calc(72 * var(--v)); line-height: calc(82 * var(--v)); }
+.a10-hint { margin: calc(2 * var(--v)) 0 0; font-style: italic; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #dcc8ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(40, 20, 80, .9), 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
+.panel-a10 { width: calc(862 * var(--v)); border-radius: calc(66 * var(--v)); padding: calc(24 * var(--v) + var(--g6) * .1) calc(28 * var(--v)) calc(24 * var(--v) + var(--g6) * .08); }
+.a10-mist-img { animation: none; } /* quieta: detrás del cristal no se anima nada */
+.a10-opts { display: flex; flex-direction: column; gap: calc(8 * var(--v) + var(--g6) * .03); }
+.a10-opt {
+  position: relative; display: flex; align-items: center; gap: calc(22 * var(--v));
+  height: calc(74 * var(--v) + var(--g6) * .07); padding: 0 calc(24 * var(--v)) 0 calc(30 * var(--v)); box-sizing: border-box; cursor: pointer;
+  border: 1px solid rgba(236, 215, 255, .58); border-radius: calc(40 * var(--v));
+  background: linear-gradient(180deg, rgba(110, 88, 150, .18), rgba(60, 46, 100, .16));
+  box-shadow: inset 0 0 calc(16 * var(--v)) rgba(210, 170, 255, .06);
+  transition: border-color .35s, box-shadow .35s, background .35s, transform .25s cubic-bezier(.2, .8, .2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.a10-opt::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: max(100%, 40px); translate: 0 -50%; } /* área táctil */
+.a10-opt input { position: absolute; inset: 0; margin: 0; opacity: 0; pointer-events: none; }
+.a10-ico { flex: none; width: calc(50 * var(--v)); height: calc(50 * var(--v)); fill: none; stroke: url(#a10-oro); stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 calc(4 * var(--v)) rgba(255, 205, 130, .35)); transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+.a10-ico .a10-dot { fill: url(#a10-oro); stroke: none; }
+.a10-label { flex: 1; min-width: 0; font-size: calc(33 * var(--v)); line-height: 1.15; letter-spacing: calc(.3 * var(--v)); color: #f6eeff; text-shadow: 0 0 calc(10 * var(--v)) rgba(30, 16, 70, .8); }
+:lang(en) .a10-label { font-size: calc(32 * var(--v)); }
+.a10-check { position: relative; flex: none; width: calc(32 * var(--v)); height: calc(32 * var(--v)); border-radius: 50%; border: 1.5px solid rgba(240, 220, 255, .55); transition: background .3s, border-color .3s, box-shadow .3s; }
+.a10-check::after { content: ''; position: absolute; left: 34%; top: 18%; width: 26%; height: 46%; border: solid #3a2a5e; border-width: 0 calc(3.4 * var(--v)) calc(3.4 * var(--v)) 0; rotate: 45deg; opacity: 0; scale: .4; transition: opacity .25s, scale .3s cubic-bezier(.3, 1.6, .5, 1); }
+@media (hover: hover) { .a10-opt:hover { border-color: rgba(246, 225, 255, .85); background: linear-gradient(180deg, rgba(130, 105, 175, .24), rgba(70, 54, 112, .2)); } }
+.a10-opt:active { transform: scale(.985); }
+.a10-opt:has(input:checked) {
+  border-color: #ffdca0; background: linear-gradient(180deg, rgba(150, 118, 170, .34), rgba(92, 66, 120, .3));
+  box-shadow: 0 0 calc(18 * var(--v)) rgba(255, 205, 130, .34), inset 0 0 calc(18 * var(--v)) rgba(255, 220, 160, .14);
+}
+.a10-opt:has(input:checked) .a10-ico { transform: scale(1.12); }
+.a10-opt:has(input:checked) .a10-label { color: #fff8e8; }
+.a10-opt:has(input:checked) .a10-check { border-color: #ffe2a8; background: radial-gradient(circle at 35% 30%, #fff6dc, #f2c777 55%, #d9a24e); box-shadow: 0 0 calc(10 * var(--v)) rgba(255, 205, 130, .6); }
+.a10-opt:has(input:checked) .a10-check::after { opacity: 1; scale: 1; }
+.a10-opt:has(input:focus-visible) { outline: 2px solid rgba(246, 220, 255, .6); outline-offset: 2px; }
+.a10-opts.is-error .a10-opt { border-color: #f0a2c6; box-shadow: 0 0 calc(12 * var(--v)) rgba(240, 150, 190, .28); }
+.msg-a10 { min-height: calc(32 * var(--v)); margin-top: calc(6 * var(--v)); font-size: calc(24 * var(--v)); text-align: center; }
+.a10-actions { display: flex; align-items: center; gap: calc(18 * var(--v)); margin-top: calc(2 * var(--v) + var(--g6) * .06); }
+.a10-skip {
+  position: relative; flex: none; width: calc(232 * var(--v)); height: calc(84 * var(--v) + var(--g6) * .06); padding: 0; cursor: pointer;
+  border-radius: 999px; border: 1px solid rgba(236, 215, 255, .55); background: linear-gradient(180deg, rgba(90, 70, 130, .3), rgba(48, 36, 84, .34));
+  font-style: italic; font-size: calc(40 * var(--v)); letter-spacing: calc(.4 * var(--v)); color: #efe4ff; text-shadow: 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45);
+  transition: border-color .3s, box-shadow .3s, background .3s, scale .15s;
+}
+.a10-skip::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: max(100%, var(--tap)); translate: 0 -50%; }
+.a10-skip span { display: block; translate: 0 calc(-3 * var(--v)); }
+@media (hover: hover) { .a10-skip:hover { border-color: #f4dcff; box-shadow: 0 0 calc(14 * var(--v)) rgba(200, 140, 255, .35); } }
+.a10-skip:active { scale: .97; }
+.cta.cta-a10 { flex: 1; width: auto; height: calc(84 * var(--v) + var(--g6) * .06); margin: 0; }
+.cta-a10 .cta-label { font-size: calc(50 * var(--v)); gap: calc(22 * var(--v)); }
+.cta-a10 .cta-arrow { width: calc(48 * var(--v)); height: calc(48 * var(--v)); }
+
 /* ---------- A05 · Restaurando sesión (arranque) ----------
    La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:
    --bu es la escala que la hace llenar el ancho y el alto, sin franjas ni bordes. */
