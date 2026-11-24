@@ -28,7 +28,7 @@ export function loginForm({ stage, sfx, onPrimary, toast, motion, onGranted }) {
     clear();
     const badEmail = !EMAIL_RE.test(email.value.trim()), badPass = pass.value.length < 6;
     if (badEmail || badPass) {
-      sfx('error');
+      sfx(!email.value.trim() || !pass.value ? 'decline' : 'error'); // campo vacío: el mismo aviso de «falta un dato» que en la introducción
       if (badEmail) { fEmail.classList.add('is-error'); email.setAttribute('aria-invalid', 'true'); shake(fEmail); }
       if (badPass) { fPass.classList.add('is-error'); pass.setAttribute('aria-invalid', 'true'); shake(fPass); }
       say(badEmail && badPass ? 'errBoth' : badEmail ? 'errEmail' : 'errPass');

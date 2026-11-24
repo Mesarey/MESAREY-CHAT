@@ -272,9 +272,36 @@
               <ul class="a08-list" id="list-anio" role="listbox" data-i18n-attr="aria-label:a08Year" aria-label="Año" hidden></ul>
             </div>
           </div>
-          <p class="a08-age" id="age-a08" aria-live="polite"><img class="a08-filete" src="assets/a08/filete-izq.webp" alt="" aria-hidden="true" /><span class="a08-age-text"><span data-i18n="a08Age">Tu edad:</span> <em id="age-value">—</em></span><img class="a08-filete" src="assets/a08/filete-der.webp" alt="" aria-hidden="true" /><span class="a08-motes" id="age-motes" aria-hidden="true"></span></p>
+          <p class="a08-age" id="age-a08" aria-live="polite"><img class="a08-filete" src="assets/a08/filete-izq.webp" alt="" aria-hidden="true" /><span class="a08-age-text"><span data-i18n="a08Age">Tu edad:</span> <em id="age-value">—</em></span><img class="a08-filete" src="assets/a08/filete-der.webp" alt="" aria-hidden="true" /></p>
           <p class="msg msg-a08" id="msg-a08" role="status" aria-live="polite"></p>
           <button class="cta cta-a06 cta-a08" id="cta-a08" type="submit">
+            <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
+            <span class="cta-label"><span class="cta-text" data-i18n="a07Continue">Continuar</span><svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg></span>
+            <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+        </form>
+      </section>
+      </div>
+
+      <!-- A09 · ¿Cómo te identificas? (mismo escenario y marco que A06–A08; diseño A aprobado: cuadrícula 2 × 2) -->
+      <div class="view view-a09" id="view-a09" data-view="a09" hidden>
+      <header class="heading heading-a06 heading-a09">
+        <h2 class="title title-a06 title-a09" id="titulo-a09"><span class="title-line" data-split data-i18n="a09Title">¿Cómo te identificas?</span></h2>
+      </header>
+      <section class="panel panel-a06 panel-a09" id="panel-a09" aria-labelledby="titulo-a09">
+        <div class="a6-mist" aria-hidden="true"><img class="a6-mist-img" src="assets/a06/nubes/panel-pie.webp" alt="" decoding="async" /></div>
+        <div class="panel-glass" aria-hidden="true"></div>
+        <form class="form a06-body a09-body" id="form-a09" novalidate>
+          <!-- oro de los íconos (degradado compartido) -->
+          <svg class="a09-defs" aria-hidden="true" focusable="false"><defs><linearGradient id="a09-oro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1c8" /><stop offset=".5" stop-color="#f2c777" /><stop offset="1" stop-color="#d9a24e" /></linearGradient></defs></svg>
+          <div class="a09-opts" role="radiogroup" aria-labelledby="titulo-a09" aria-describedby="msg-a09">
+            <label class="a09-opt"><input type="radio" name="identidad" value="mujer" /><svg class="a09-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M30.5 8.5a16 16 0 1 0 9 26.6A13.5 13.5 0 0 1 30.5 8.5Z" /><path class="a09-dot" d="M36 12.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9Z" /></svg><span class="a09-label" data-i18n="a09Woman">Mujer</span></label>
+            <label class="a09-opt"><input type="radio" name="identidad" value="hombre" /><svg class="a09-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="8.5" /><path d="M24 5.5v6M24 36.5v6M5.5 24h6M36.5 24h6M10.9 10.9l4.2 4.2M32.9 32.9l4.2 4.2M10.9 37.1l4.2-4.2M32.9 15.1l4.2-4.2" /></svg><span class="a09-label" data-i18n="a09Man">Hombre</span></label>
+            <label class="a09-opt"><input type="radio" name="identidad" value="otra" /><svg class="a09-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5c1.6 9.6 4.4 12.4 14 14-9.6 1.6-12.4 4.4-14 14-1.6-9.6-4.4-12.4-14-14 9.6-1.6 12.4-4.4 14-14Z" /><path class="a09-dot" d="M37 31l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z" /><path class="a09-dot" d="M11 33.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6Z" /></svg><span class="a09-label" data-i18n="a09Other">Otra identidad</span></label>
+            <label class="a09-opt"><input type="radio" name="identidad" value="prefiero-no-decir" /><svg class="a09-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M14.5 35.5h20a7.5 7.5 0 0 0 .7-15 10.5 10.5 0 0 0-20.1 2.6 6.3 6.3 0 0 0-.6 12.4Z" /></svg><span class="a09-label" data-i18n="a09None">Prefiero no decirlo</span></label>
+          </div>
+          <p class="msg msg-a09" id="msg-a09" role="status" aria-live="polite"></p>
+          <button class="cta cta-a06 cta-a09" id="cta-a09" type="submit">
             <span class="cta-glass" aria-hidden="true"><span class="cta-sheen"></span></span>
             <span class="cta-label"><span class="cta-text" data-i18n="a07Continue">Continuar</span><svg class="cta-arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 24h36 M29 11l13 13-13 13" /></svg></span>
             <span class="cta-loading" aria-hidden="true"><i></i><i></i><i></i></span>

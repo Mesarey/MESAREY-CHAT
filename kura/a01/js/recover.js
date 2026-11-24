@@ -20,7 +20,7 @@ export function recoverForm({ stage, sfx, motion, onPrimary, onSent }) {
     if (cta.getAttribute('aria-busy') === 'true') return;
     clear();
     if (!EMAIL_RE.test(email.value.trim())) {
-      sfx('error');
+      sfx(email.value.trim() ? 'error' : 'decline'); // campo vacío: aviso de «falta un dato»
       field.classList.add('is-error'); email.setAttribute('aria-invalid', 'true');
       if (!motion.reduced) field.animate([{ translate: '0' }, { translate: '-8px' }, { translate: '7px' }, { translate: '-5px' }, { translate: '3px' }, { translate: '0' }], { duration: 450, easing: 'ease-out' });
       say('errEmail');

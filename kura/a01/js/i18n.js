@@ -37,6 +37,7 @@ const STRINGS = {
     a08Title1: '¿Cuál es tu fecha', a08Title2: 'de nacimiento?', a08Day: 'Día', a08Month: 'Mes', a08Year: 'Año', a08Pick: '—',
     a08Age: 'Tu edad:', a08Years: '{n} años', a08Year1: '1 año', a08Empty: 'Elige tu día, mes y año de nacimiento.', a08Future: 'Esa fecha todavía no llega.',
     a08Months: 'Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre',
+    a09Title: '¿Cómo te identificas?', a09Woman: 'Mujer', a09Man: 'Hombre', a09Other: 'Otra identidad', a09None: 'Prefiero no decirlo', a09Empty: 'Elige una opción para continuar.',
     soon: 'Próximamente',
   },
   en: {
@@ -76,6 +77,7 @@ const STRINGS = {
     a08Title1: 'What’s your', a08Title2: 'date of birth?', a08Day: 'Day', a08Month: 'Month', a08Year: 'Year', a08Pick: '—',
     a08Age: 'Your age:', a08Years: '{n} years', a08Year1: '1 year', a08Empty: 'Choose your day, month and year of birth.', a08Future: 'That date hasn’t come yet.',
     a08Months: 'January,February,March,April,May,June,July,August,September,October,November,December',
+    a09Title: 'How do you identify?', a09Woman: 'Woman', a09Man: 'Man', a09Other: 'Another identity', a09None: 'Prefer not to say', a09Empty: 'Choose an option to continue.',
     soon: 'Coming soon',
   },
 };

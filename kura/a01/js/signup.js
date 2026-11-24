@@ -29,7 +29,7 @@ export function signupForm({ stage, sfx, motion, legal, onPrimary, onGranted }) 
     const badPass = pass.value.length < MIN_PASS;
     const mismatch = !badPass && pass.value !== pass2.value;
     if (badEmail || badPass || mismatch) {
-      sfx('error');
+      sfx(!email.value.trim() || !pass.value || !pass2.value ? 'decline' : 'error'); // campo vacío: aviso de «falta un dato»
       if (badEmail) mark(email, fEmail);
       if (badPass) mark(pass, fPass);
       if (mismatch) mark(pass2, fPass2);

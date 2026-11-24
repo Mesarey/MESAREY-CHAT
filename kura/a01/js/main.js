@@ -15,6 +15,7 @@ import { auth } from './auth.js';
 import { mountA06 } from './a06.js';
 import { makeCombo } from './fecha.js';
 import { fireworks as launchFireworks } from './fuegos.js';
+import { makeMotes } from './motas.js';
 import { TWINKLES as A06_STARS } from './a06-estrellas.js';
 
 const gsap = window.gsap;
@@ -89,13 +90,13 @@ const makeHud = (el) => luminousBorder(el, {
   widths: { base: 1.1, near: 4, wide: 18 },
 });
 const VIEWS = {};
-for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07'], ['a08', 'panel-a08', 'cta-a08']]) {
+for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07'], ['a08', 'panel-a08', 'cta-a08'], ['a09', 'panel-a09', 'cta-a09']]) {
   const el = $(`view-${name}`), panel = $(panelId), c = $(ctaId);
   VIEWS[name] = { name, el, panel, cta: c, button: makeButton(c), hud: makeHud(panel) };
 }
 let view = VIEWS[location.hash.slice(1)] || VIEWS.a01;
 // Pantallas de la introducción con Alaira: comparten su escenario (A06 Bienvenida, A07 ¿Cómo te llamo?).
-const ALAIRA_VIEWS = new Set(['a06', 'a07', 'a08']);
+const ALAIRA_VIEWS = new Set(['a06', 'a07', 'a08', 'a09']);
 const inAlaira = (n) => ALAIRA_VIEWS.has(n);
 const cta = VIEWS.a01.cta, button = VIEWS.a01.button, hud = VIEWS.a01.hud; // panel de ajustes
 const setReduced = (r) => Object.values(VIEWS).forEach((v) => { v.button.setReduced(r); v.hud.setReduced(r); });
@@ -250,6 +251,8 @@ function showView(name, { animate = true } = {}) {
     if (name === 'a01') { signup.reset(); recover.reset(); }
     if (name === 'a07') { nameInput.value = ''; nameError(false); } // A07 siempre empieza con el campo vacío
     if (name === 'a08') resetBirth();                                // A08 también empieza vacía
+    if (name === 'a09') resetIdentity();                             // A09 empieza sin opción elegida
+    if (prev.name === 'a08') motes.stop();                           // las partículas de la edad se apagan al salir
     layoutShine(); syncFlares();
   };
   if (sceneChange) switchScene(inAlaira(name), animate);
@@ -268,7 +271,7 @@ function showView(name, { animate = true } = {}) {
       .fromTo(nextIn, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .06, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.1');
     return;
   }
-  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a08-date, .a08-age');
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a08-date, .a08-age, .a09-opts');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
     onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
@@ -389,6 +392,9 @@ function fireworks() {
    Día, mes y año en cajas propias que se pueden escribir (la lista se acorta al escribir; js/fecha.js).
    Los días se ajustan al mes y al año (30, 31 o febrero bisiesto). La edad se calcula al momento. La fecha se guarda solo en
    este dispositivo. Sin edad mínima: los textos legales piden no añadirla sin una decisión posterior. */
+/* Partículas que salen de la edad: lienzo pequeño fuera del panel de cristal (js/motas.js), para no trabar la app. */
+const motes = makeMotes({ motion });
+function agePop() { motes.pop(ageOut); }
 const BIRTH_KEY = 'kura.nacimiento';
 const ageOut = $('age-value'), birthMsg = $('msg-a08');
 const daysIn = (m, y) => new Date(y || 2000, m, 0).getDate(); // sin año: 29 días en febrero
@@ -409,12 +415,14 @@ function showAge({ celebrate = false } = {}) {
   const a = birthAge(), ok = a != null && a >= 0;
   ageOut.classList.toggle('is-set', ok);
   $('age-a08').classList.toggle('is-set', ok);
+  motes.ambient(ageOut, ok && view.name === 'a08');
   if (!ok) { ageOut.textContent = '—'; shownAge = null; return; }
   if (celebrate && a !== shownAge && gsap && !motion.reduced) {
     // la edad «cuenta» hasta su valor y salen partículas doradas del número
     const c = { n: Math.max(0, a - 12) };
     gsap.to(c, { n: a, duration: .7, ease: 'power2.out', onUpdate: () => { ageOut.textContent = ageText(Math.round(c.n)); } });
     agePop();
+    ageOut.classList.remove('is-shine'); void ageOut.offsetWidth; ageOut.classList.add('is-shine'); // brillo una sola vez
   } else ageOut.textContent = ageText(a);
   shownAge = a;
 }
@@ -434,26 +442,6 @@ function resetBirth() { for (const c of [birth.d, birth.m, birth.y]) { c.set('')
 document.addEventListener('kura:lang', () => { birth.m.refresh(); birth.d.refresh(); birth.y.refresh(); showAge(); if (birthMsg.dataset.key) birthMsg.textContent = t(birthMsg.dataset.key); });
 resetBirth();
 
-/* Partículas doradas que salen de la edad: un estallido de chispas finas y motas que suben desde el número. */
-const ageMotes = $('age-motes');
-function agePop() {
-  const r = ageOut.getBoundingClientRect();
-  stars?.burst(r.left + r.width / 2, r.top + r.height / 2, 1.4);
-  for (let i = 0; i < 16; i++) moteFrom(r, i * 35);
-}
-function moteFrom(r, delay = 0) {
-  if (motion.reduced || !ageMotes) return;
-  const box = ageMotes.getBoundingClientRect(), m = document.createElement('i');
-  const x = r.left - box.left + Math.random() * r.width, y = r.top - box.top + r.height * (.3 + Math.random() * .5);
-  m.style.left = `${x}px`; m.style.top = `${y}px`;
-  m.style.setProperty('--dx', `${(Math.random() - .5) * 60}px`); m.style.setProperty('--dy', `${-(30 + Math.random() * 70)}px`);
-  m.style.setProperty('--s', (.5 + Math.random() * .9).toFixed(2)); m.style.animationDelay = `${delay}ms`;
-  m.style.animationDuration = `${1100 + Math.random() * 900}ms`;
-  if (Math.random() < .3) m.className = 'is-star'; // algunas son la estrellita dorada del adorno
-  ageMotes.append(m); m.addEventListener('animationend', () => m.remove());
-}
-// mientras la edad está a la vista, siguen saliendo motas suaves del número
-setInterval(() => { if (view.name === 'a08' && shownAge != null && !document.hidden) moteFrom(ageOut.getBoundingClientRect()); }, 260);
 $('form-a08').addEventListener('submit', (e) => {
   e.preventDefault();
   for (const c of [birth.d, birth.m, birth.y]) c.close();
@@ -464,6 +452,30 @@ $('form-a08').addEventListener('submit', (e) => {
   const iso = `${birth.y.value}-${String(birth.m.value).padStart(2, '0')}-${String(birth.d.value).padStart(2, '0')}`;
   try { localStorage.setItem(BIRTH_KEY, iso); } catch {}
   audio.sfx('tap'); primaryFx(VIEWS.a08, {});
+  go('a09');
+});
+
+/* ---------- A09 · ¿Cómo te identificas? ----------
+   Mujer, Hombre, Otra identidad o Prefiero no decirlo (radios nativos con aspecto de KURA). Al elegir suena un
+   toque y salen chispas de la opción. Se guarda solo en este dispositivo (localStorage, clave kura.identidad). */
+const ID_KEY = 'kura.identidad';
+const idOpts = $('form-a09').querySelector('.a09-opts'), idMsg = $('msg-a09');
+const idRadios = [...idOpts.querySelectorAll('input[type=radio]')];
+const idError = (on) => { idMsg.textContent = on ? t('a09Empty') : ''; idMsg.classList.toggle('is-on', on); idOpts.classList.toggle('is-error', on); };
+function resetIdentity() { for (const r of idRadios) r.checked = false; idError(false); }
+idOpts.addEventListener('change', (e) => {
+  const opt = e.target.closest('.a09-opt'); if (!opt) return;
+  audio.sfx('tap'); idError(false);
+  const r = opt.querySelector('.a09-ico').getBoundingClientRect();
+  if (!motion.reduced) stars?.burst(r.left + r.width / 2, r.top + r.height / 2, .9);
+});
+document.addEventListener('kura:lang', () => { if (idMsg.classList.contains('is-on')) idMsg.textContent = t('a09Empty'); });
+$('form-a09').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const sel = idRadios.find((r) => r.checked);
+  if (!sel) { audio.sfx('decline'); idError(true); return; } // falta elegir
+  try { localStorage.setItem(ID_KEY, sel.value); } catch {}
+  audio.sfx('tap'); primaryFx(VIEWS.a09, {});
   toast(t('a07Next'));
 });
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));

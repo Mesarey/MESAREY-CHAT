@@ -76,10 +76,26 @@ Se entra con «Continuar» en A07 (después del saludo); también con `#a08`. Mi
 - **Tu edad** se calcula al momento («28 años» · «28 years»; «1 año»).
   - Al cambiar la fecha, el número cuenta hasta la edad y brilla en dorado.
   - Del número salen partículas: motas doradas y lilas, y estrellitas del adorno. Mientras la edad está a la vista, siguen subiendo motas suaves.
+  - Las partículas se dibujan en un lienzo pequeño fuera del panel de cristal (`js/motas.js`). Así el teléfono no vuelve a desenfocar el cristal en cada cuadro. El brillo del número pasa una sola vez cada vez que cambia la fecha.
   - A los lados hay dos filetes dorados con lunas. Son tenues mientras no hay fecha y brillan cuando aparece la edad.
-- **Continuar**: si falta un dato suena `falta-dato.wav` y se marcan las cajas vacías («Elige tu día, mes y año de nacimiento.»); si la fecha está en el futuro, «Esa fecha todavía no llega.». La fecha se guarda solo en este dispositivo (`localStorage`, clave `kura.nacimiento`, formato AAAA-MM-DD). Después, aviso hasta que exista la siguiente pantalla.
+- **Continuar**: si falta un dato suena `falta-dato.wav` y se marcan las cajas vacías («Elige tu día, mes y año de nacimiento.»); si la fecha está en el futuro, «Esa fecha todavía no llega.». La fecha se guarda solo en este dispositivo (`localStorage`, clave `kura.nacimiento`, formato AAAA-MM-DD). Después pasa a A09.
 - **Sin edad mínima**: los textos legales piden no añadir una restricción de edad sin una decisión posterior.
 - Empieza vacía cada vez que se entra.
+
+## A09 · ¿Cómo te identificas?
+
+Se entra con «Continuar» en A08; también con `#a09`. Mismo escenario y mismo marco que A06–A08. Sigue el diseño A aprobado (imagen hecha con Higgsfield sobre una captura de A08).
+
+- **Título** en una línea: «¿Cómo te identificas?» · «How do you identify?».
+- **Cuatro opciones** en cuadrícula de 2 × 2, cada una con un ícono dorado dibujado en SVG (nítido en cualquier pantalla):
+  - Mujer (luna) · Woman
+  - Hombre (sol) · Man
+  - Otra identidad (destello) · Another identity
+  - Prefiero no decirlo (nube) · Prefer not to say
+- **Al elegir**: la opción se enciende con borde dorado y su ícono crece un poco. Suena un toque y salen chispas del ícono. Son botones de opción nativos: funcionan con flechas del teclado y con lector de pantalla.
+- **Continuar** sin elegir: suena `falta-dato.wav`, se marcan las opciones y aparece «Elige una opción para continuar.».
+- La respuesta se guarda **solo en este dispositivo** (`localStorage`, clave `kura.identidad`; valores `mujer`, `hombre`, `otra`, `prefiero-no-decir`). Después, aviso hasta que exista la siguiente pantalla.
+- Empieza sin opción elegida cada vez que se entra.
 
 ## Estructura
 
@@ -137,7 +153,7 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delan
 | `empezar.wav` | «Empezar» en A06 | **Incluido** (elegido por ti) |
 | `encantada.wav` | Tarjeta «¡Encantada, {nombre}!» en A07 (mismo volumen que los demás efectos) | **Incluido** (elegido por ti) |
 | `fuegos-artificiales.wav` | Fuegos artificiales al decir tu nombre en A07: ≈ 27 dB debajo de los efectos, más bajo que la estrella | **Incluido** (elegido por ti) |
-| `falta-dato.wav` | Formulario de la introducción (A07 y las siguientes): tocar para avanzar cuando falta un dato | **Incluido** (elegido por ti) |
+| `falta-dato.wav` | Tocar para avanzar cuando falta un dato: campos vacíos en A01, A02 y A03, y la introducción (A07 y las siguientes). Si el dato está escrito pero no es válido, A01–A03 usan `acceso-fallido.mp3` | **Incluido** (elegido por ti) |
 | `estrella-flotando.wav` | La estrella de Alaira en A06: bucle muy suave, ≈ 23 dB debajo de los efectos | **Incluido** (elegido por ti) |
 | `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |
 | `crear-cuenta.wav` | «Crear cuenta» | **Incluido** (elegido por ti) |

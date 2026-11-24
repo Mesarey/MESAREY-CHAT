@@ -92,7 +92,7 @@ export const config = {
       start: 'audio/sfx/empezar.wav',              // «Empezar» en A06
       greet: 'audio/sfx/encantada.wav',            // A07: aparece el saludo con el nombre
       fireworks: 'audio/sfx/fuegos-artificiales.wav', // A07: fuegos artificiales al poner el nombre
-      decline: 'audio/sfx/falta-dato.wav',         // formulario de la introducción (A07 en adelante): falta un dato para avanzar
+      decline: 'audio/sfx/falta-dato.wav',         // falta un dato para avanzar: campos vacíos en A01–A03 y la introducción (A07 en adelante)
       starFloat: 'audio/sfx/estrella-flotando.wav', // la estrella de la mano de Alaira (A06), en bucle y muy suave
     },
   },
