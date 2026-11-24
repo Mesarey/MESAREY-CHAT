@@ -27,6 +27,13 @@ export const ALAIRA = {
     ojos: [{ box: [333, 287, 71, 43], origen: [2, 2], retraso: 0 }, { box: [433, 271, 63, 46], origen: [75, 2], retraso: 5 }],
   },
   parpadeoMs: { cerrar: 76, sostener: 18, abrir: 136 },
+  // parpadeo suave (fotogramas generados con Higgsfield sobre la ilustración: a medio, casi y cerrado, con
+  // pestañas que bajan): se funden uno en otro. Alterna con el rápido del parche; a veces es lento y tranquilo.
+  suave: {
+    capas: ['medio', 'casi', 'cerrado'].map((n) => `assets/a06/alaira/parpadeo-${n}.webp`), box: [303, 233, 218, 119],
+    ms: { cerrar: 150, sostener: 70, abrir: 230 }, lento: { cerrar: 280, sostener: 420, abrir: 460 },
+    mezcla: { rapido: 0.55, suave: 0.33, lento: 0.12 },
+  },
   // descansos entre parpadeos del parche (ciclo de 52.2 s, con uno doble): se ven naturales, nunca a ritmo fijo
   ritmoMs: { ciclo: 52200, inicios: [3595, 8160, 12820, 17450, 20920, 26480, 31300, 37120, 40890, 41275, 47190] },
   // fleco y hebras van delante de los ojos (solo se muestran mientras parpadea; en reposo son idénticos a la capa)
@@ -36,6 +43,8 @@ export const ALAIRA = {
     { src: 'assets/a06/alaira/mechita-centro.webp', box: [388, 257, 40, 53] },
     { src: 'assets/a06/alaira/mechita-derecha.webp', box: [468, 265, 38, 75] },
   ],
+  // sonrisa (generada con Higgsfield sobre la ilustración, solo ojos y boca): aparece al saludar por su nombre
+  sonrisa: { src: 'assets/a06/alaira/sonrisa.webp', box: [295, 225, 234, 191] },
   estrella: { centro: [161, 594], palma: [158, 676], escala: 1.3, vista: [6, 414, 310, 340], respaldo: { src: 'assets/a06/fx/estrella-2d.webp', box: [81, 531, 147, 112] } },
 };
 

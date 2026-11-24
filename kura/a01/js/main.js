@@ -13,6 +13,8 @@ import { signupForm } from './signup.js';
 import { recoverForm } from './recover.js';
 import { auth } from './auth.js';
 import { mountA06 } from './a06.js';
+import { makeCombo } from './fecha.js';
+import { fireworks as launchFireworks } from './fuegos.js';
 import { TWINKLES as A06_STARS } from './a06-estrellas.js';
 
 const gsap = window.gsap;
@@ -357,59 +359,109 @@ $('form-a07').addEventListener('submit', (e) => {
   try { localStorage.setItem(NAME_KEY, nombre); } catch {}
   audio.sfx('tap'); primaryFx(VIEWS.a07, {});
   nameInput.blur();
-  toast(t('a07Hello').replace('{nombre}', nombre));
-  setTimeout(() => go('a08'), 700);
+  fireworks();
+  a06.smile(2900);
+  greet(nombre).then(() => { if (view.name === 'a07') go('a08'); });
 });
 
+// Saludo grande (cristal como el HUD) entre la estrella y el título; Alaira sonríe mientras tanto.
+const greetEl = $('greet');
+function greet(nombre) {
+  greetEl.querySelector('.greet-a').textContent = t('a07Hello1');
+  greetEl.querySelector('.greet-b').textContent = t('a07Hello2').replace('{nombre}', nombre);
+  greetEl.hidden = false;
+  audio.sfx('greet');
+  if (!gsap || motion.reduced) return new Promise((r) => setTimeout(() => { greetEl.hidden = true; r(); }, 2600));
+  const u = unit();
+  return new Promise((done) => gsap.timeline({ onComplete: () => { greetEl.hidden = true; done(); } })
+    .fromTo(greetEl, { opacity: 0, scale: .86, y: 24 * u, filter: 'blur(8px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: .7, ease: 'back.out(1.6)' })
+    .fromTo(greetEl.querySelector('.greet-b'), { backgroundPosition: '120% 0' }, { backgroundPosition: '-20% 0', duration: 1.6, ease: 'sine.inOut' }, .2)
+    .to(greetEl, { opacity: 0, y: -16 * u, filter: 'blur(6px)', duration: .55, ease: 'power2.in' }, '+=1.4'));
+}
+// Fuegos artificiales sencillos sobre el HUD al poner el nombre (chispas finas del motor de estrellas).
+function fireworks() {
+  if (motion.reduced) return;
+  audio.sfx('fireworks');
+  launchFireworks(VIEWS.a07.panel.getBoundingClientRect()); // estallidos sobre el HUD (js/fuegos.js)
+}
+
 /* ---------- A08: ¿Cuál es tu fecha de nacimiento? ----------
-   Día, mes y año con las listas nativas del teléfono (la rueda de iOS / Android). Los días se ajustan al
-   mes y al año (30, 31 o febrero bisiesto). La edad se calcula al momento. La fecha se guarda solo en
+   Día, mes y año en cajas propias que se pueden escribir (la lista se acorta al escribir; js/fecha.js).
+   Los días se ajustan al mes y al año (30, 31 o febrero bisiesto). La edad se calcula al momento. La fecha se guarda solo en
    este dispositivo. Sin edad mínima: los textos legales piden no añadirla sin una decisión posterior. */
 const BIRTH_KEY = 'kura.nacimiento';
-const dSel = $('dia'), mSel = $('mes'), ySel = $('anio'), ageOut = $('age-value'), birthMsg = $('msg-a08');
+const ageOut = $('age-value'), birthMsg = $('msg-a08');
 const daysIn = (m, y) => new Date(y || 2000, m, 0).getDate(); // sin año: 29 días en febrero
-const opts = (sel, items) => {
-  const keep = sel.value;
-  sel.innerHTML = `<option value="">${t('a08Pick')}</option>` + items.map(([v, label]) => `<option value="${v}">${label}</option>`).join('');
-  if (items.some(([v]) => String(v) === keep)) sel.value = keep;
-};
-function fillBirth() {
-  const now = new Date(), Y = now.getFullYear();
-  opts(mSel, t('a08Months').split(',').map((name, i) => [i + 1, name]));
-  opts(ySel, Array.from({ length: 121 }, (_, i) => [Y - i, Y - i]));
-  const max = daysIn(+mSel.value || 1, +ySel.value), d = +dSel.value;
-  opts(dSel, Array.from({ length: mSel.value ? max : 31 }, (_, i) => [i + 1, i + 1]));
-  if (d > max && mSel.value) dSel.value = String(max); // 31 de abril → 30
-}
+const sfxBirth = (n) => audio.sfx(n);
+const birth = {};
+birth.m = makeCombo($('field-mes'), { sfx: sfxBirth, next: () => $('anio'), options: () => t('a08Months').split(',').map((label, i) => ({ v: i + 1, label })), onCommit: () => dateChanged() });
+birth.y = makeCombo($('field-anio'), { sfx: sfxBirth, next: () => [$('dia'), $('mes')].find((i) => !i.value) || null, options: () => { const Y = new Date().getFullYear(); return Array.from({ length: 121 }, (_, i) => ({ v: Y - i, label: String(Y - i) })); }, onCommit: () => dateChanged() });
+birth.d = makeCombo($('field-dia'), { sfx: sfxBirth, next: () => $('mes'), options: () => Array.from({ length: birth.m.value ? daysIn(+birth.m.value, +birth.y.value) : 31 }, (_, i) => ({ v: i + 1, label: String(i + 1) })), onCommit: () => dateChanged() });
 function birthAge() {
-  const d = +dSel.value, m = +mSel.value, y = +ySel.value;
+  const d = +birth.d.value, m = +birth.m.value, y = +birth.y.value;
   if (!d || !m || !y) return null;
   const now = new Date();
   return now.getFullYear() - y - ((now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d)) ? 1 : 0);
 }
-function showAge() {
-  const a = birthAge();
-  ageOut.textContent = a == null || a < 0 ? '—' : a === 1 ? t('a08Year1') : t('a08Years').replace('{n}', a);
-  ageOut.classList.toggle('is-set', a != null && a >= 0);
+const ageText = (a) => (a === 1 ? t('a08Year1') : t('a08Years').replace('{n}', a));
+let shownAge = null;
+function showAge({ celebrate = false } = {}) {
+  const a = birthAge(), ok = a != null && a >= 0;
+  ageOut.classList.toggle('is-set', ok);
+  $('age-a08').classList.toggle('is-set', ok);
+  if (!ok) { ageOut.textContent = '—'; shownAge = null; return; }
+  if (celebrate && a !== shownAge && gsap && !motion.reduced) {
+    // la edad «cuenta» hasta su valor y salen partículas doradas del número
+    const c = { n: Math.max(0, a - 12) };
+    gsap.to(c, { n: a, duration: .7, ease: 'power2.out', onUpdate: () => { ageOut.textContent = ageText(Math.round(c.n)); } });
+    agePop();
+  } else ageOut.textContent = ageText(a);
+  shownAge = a;
+}
+function dateChanged() {
+  // 31 de abril → 30; 29 de febrero en año no bisiesto → 28
+  const m = +birth.m.value, d = +birth.d.value;
+  if (m && d) { const max = daysIn(m, +birth.y.value); if (d > max) birth.d.set(max); }
+  birth.d.refresh();
+  if (birthMsg.dataset.key) birthError(null);
+  showAge({ celebrate: true });
 }
 const birthError = (key) => {
   birthMsg.textContent = key ? t(key) : ''; birthMsg.classList.toggle('is-on', !!key); birthMsg.dataset.key = key || '';
-  [dSel, mSel, ySel].forEach((s) => s.closest('.a08-sel').classList.toggle('is-error', key === 'a08Empty' ? !s.value : !!key));
+  for (const c of [birth.d, birth.m, birth.y]) c.input.closest('.a08-sel').classList.toggle('is-error', key === 'a08Empty' ? !c.value : !!key);
 };
-function resetBirth() { [dSel, mSel, ySel].forEach((s) => { s.value = ''; }); fillBirth(); showAge(); birthError(null); }
-[dSel, mSel, ySel].forEach((s) => {
-  s.addEventListener('focus', () => audio.sfx('focus'));
-  s.addEventListener('change', () => { fillBirth(); showAge(); if (birthMsg.dataset.key) birthError(null); });
-});
-document.addEventListener('kura:lang', () => { fillBirth(); showAge(); if (birthMsg.dataset.key) birthMsg.textContent = t(birthMsg.dataset.key); });
+function resetBirth() { for (const c of [birth.d, birth.m, birth.y]) { c.set(''); c.close(); } shownAge = null; showAge(); birthError(null); }
+document.addEventListener('kura:lang', () => { birth.m.refresh(); birth.d.refresh(); birth.y.refresh(); showAge(); if (birthMsg.dataset.key) birthMsg.textContent = t(birthMsg.dataset.key); });
 resetBirth();
+
+/* Partículas doradas que salen de la edad: un estallido de chispas finas y motas que suben desde el número. */
+const ageMotes = $('age-motes');
+function agePop() {
+  const r = ageOut.getBoundingClientRect();
+  stars?.burst(r.left + r.width / 2, r.top + r.height / 2, 1.4);
+  for (let i = 0; i < 16; i++) moteFrom(r, i * 35);
+}
+function moteFrom(r, delay = 0) {
+  if (motion.reduced || !ageMotes) return;
+  const box = ageMotes.getBoundingClientRect(), m = document.createElement('i');
+  const x = r.left - box.left + Math.random() * r.width, y = r.top - box.top + r.height * (.3 + Math.random() * .5);
+  m.style.left = `${x}px`; m.style.top = `${y}px`;
+  m.style.setProperty('--dx', `${(Math.random() - .5) * 60}px`); m.style.setProperty('--dy', `${-(30 + Math.random() * 70)}px`);
+  m.style.setProperty('--s', (.5 + Math.random() * .9).toFixed(2)); m.style.animationDelay = `${delay}ms`;
+  m.style.animationDuration = `${1100 + Math.random() * 900}ms`;
+  if (Math.random() < .3) m.className = 'is-star'; // algunas son la estrellita dorada del adorno
+  ageMotes.append(m); m.addEventListener('animationend', () => m.remove());
+}
+// mientras la edad está a la vista, siguen saliendo motas suaves del número
+setInterval(() => { if (view.name === 'a08' && shownAge != null && !document.hidden) moteFrom(ageOut.getBoundingClientRect()); }, 260);
 $('form-a08').addEventListener('submit', (e) => {
   e.preventDefault();
+  for (const c of [birth.d, birth.m, birth.y]) c.close();
   const a = birthAge();
   if (a == null) { audio.sfx('decline'); birthError('a08Empty'); return; } // falta un dato
   if (a < 0) { audio.sfx('decline'); birthError('a08Future'); return; }
   birthError(null);
-  const iso = `${ySel.value}-${String(mSel.value).padStart(2, '0')}-${String(dSel.value).padStart(2, '0')}`;
+  const iso = `${birth.y.value}-${String(birth.m.value).padStart(2, '0')}-${String(birth.d.value).padStart(2, '0')}`;
   try { localStorage.setItem(BIRTH_KEY, iso); } catch {}
   audio.sfx('tap'); primaryFx(VIEWS.a08, {});
   toast(t('a07Next'));

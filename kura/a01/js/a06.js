@@ -20,7 +20,9 @@ function sceneHTML() {
   const alaira = `<div class="a6-layer a6-alaira" style="${box(a.box)};${depth(a.d)}">
       ${img(a.src, [0, 0, a.box[2], a.box[3]])}
       ${a.ojos.ojos.map((o) => `<i class="a6-eye" hidden style="${box(rel(o.box))};background-image:url(${a.ojos.src});background-size:calc(${a.ojos.atlas[0]} * var(--v)) calc(${a.ojos.atlas[1]} * var(--v))"></i>`).join('')}
+      ${a.suave.capas.map((src) => img(src, rel(a.suave.box), 'a6-lid')).join('')}
       <div class="a6-front" hidden>${a.frente.map((f) => img(f.src, rel(f.box))).join('')}</div>
+      ${img(a.sonrisa.src, rel(a.sonrisa.box), 'a6-smile')}
       ${img(e.respaldo.src, rel(e.respaldo.box), 'a6-star2d')}
       <canvas class="a6-star" style="${box(rel(e.vista))}"></canvas>
     </div>`;
@@ -112,17 +114,46 @@ export function mountA06({ stage, motion }) {
     });
     root.querySelector('.a6-front').hidden = !poses.some(Boolean); // el fleco y las hebras van delante del párpado
   }
-  const setEye = (f) => setEyes(f ? T.cerrar : -1); // pruebas: cerrado o abierto
+  const setEye = (f) => { setLids(-1); setEyes(f ? T.cerrar : -1); }; // pruebas: cerrado o abierto
+
+  /* Parpadeo suave: tres fotogramas (a medio, casi, cerrado) apilados; cada uno se funde encima del anterior,
+     así el párpado baja con las pestañas sin saltos. p = 0 abierto … 1 cerrado. */
+  const S = ALAIRA.suave;
+  let lids = null, lastP = -1;
+  function setLids(p) {
+    lids ||= [...root.querySelectorAll('.a6-lid')];
+    const v = Math.max(0, p) * lids.length, k = Math.round(v * 40) / 40;
+    if (k === lastP) return; lastP = k;
+    // cada fotograma se sostiene y el cambio al siguiente es breve (40 % del tramo): nunca se ven dos ojos a la vez
+    lids.forEach((el, i) => { el.style.opacity = Math.max(0, Math.min(1, (v - i - .5) / .4 + .5)).toFixed(3); });
+    root.querySelector('.a6-front').hidden = !(p > 0);
+  }
+  const ease = (v) => { const a = Math.max(0, Math.min(1, v)); return a < .5 ? 2 * a * a : 1 - (-2 * a + 2) ** 2 / 2; };
+  const lidAt = (t, m) => (t < m.cerrar ? ease(t / m.cerrar) : t < m.cerrar + m.sostener ? 1 : 1 - ease((t - m.cerrar - m.sostener) / m.abrir));
+  let smiling = false, kind = 'rapido', kindMs = null;
+  function pickKind(forced) {
+    const r = Math.random(), x = S.mezcla;
+    kind = forced || (r < x.rapido ? 'rapido' : r < x.rapido + x.suave ? 'suave' : 'lento');
+    kindMs = kind === 'lento' ? S.lento : S.ms;
+  }
+  const durOf = () => (kind === 'rapido' ? DUR : kindMs.cerrar + kindMs.sostener + kindMs.abrir);
   function blinkLoop(now) {
     blinkRaf = requestAnimationFrame(blinkLoop);
-    if (motion.reduced) { setEyes(-1); return; }
-    if (!blinkT0 && now >= blinkNext) blinkT0 = now;
+    if (held) return; // pruebas: los ojos se quedan como los dejó _debug
+    if (motion.reduced || smiling) { if (blinkT0 || lastP > 0) { setEyes(-1); setLids(-1); } blinkT0 = 0; return; }
+    if (!blinkT0 && now >= blinkNext) { blinkT0 = now; pickKind(forcedKind); forcedKind = null; }
     if (!blinkT0) return;
     const e = now - blinkT0;
-    if (e >= DUR) { blinkT0 = 0; setEyes(-1); blinkNext = now + gaps[gapIdx++ % gaps.length]; return; }
-    setEyes(e);
+    if (e >= durOf()) {
+      blinkT0 = 0; setEyes(-1); setLids(-1);
+      // tras un parpadeo lento, descanso más largo; los demás siguen el ritmo del parche
+      blinkNext = now + gaps[gapIdx++ % gaps.length] * (kind === 'lento' ? 1.3 : 1);
+      return;
+    }
+    if (kind === 'rapido') setEyes(e); else setLids(lidAt(e, kindMs));
   }
-  const blink = () => { blinkNext = performance.now(); };
+  let forcedKind = null, held = false;
+  const blink = (k = 'suave') => { if (!blinkT0) { forcedKind = k; blinkNext = performance.now(); } }; // al tocarla: parpadeo suave
 
   /* ---------- Nubes que se apartan al paso del dedo o del cursor ---------- */
   function wireClouds() {
@@ -170,6 +201,13 @@ export function mountA06({ stage, motion }) {
 
   return {
     prepare, prefetch, look,
+    /** Alaira sonríe (ojos felices y boca abierta) durante ms y vuelve a su expresión; no parpadea mientras tanto. */
+    smile(ms = 2600) {
+      if (!root) return;
+      smiling = true; root.classList.add('is-smiling');
+      clearTimeout(this._smileT);
+      this._smileT = setTimeout(() => { root.classList.remove('is-smiling'); setTimeout(() => { smiling = false; blinkNext = performance.now() + rand(900, 1600); }, 400); }, ms);
+    },
     get el() { return root; },
     get star() { return star; },
     get active() { return active; },
@@ -179,6 +217,6 @@ export function mountA06({ stage, motion }) {
       cancelAnimationFrame(blinkRaf); blinkNext = performance.now() + rand(1400, 2600); blinkRaf = requestAnimationFrame(blinkLoop);
     },
     leave() { active = false; root?.classList.remove('is-on'); star?.stop(); cancelAnimationFrame(blinkRaf); if (root) setEye(0); },
-    _debug: { setEye: (f) => setEye(f), blink },
+    _debug: { setEye: (f) => setEye(f), blink, setLids: (p) => { held = true; setLids(p); }, release: () => { held = false; } },
   };
 }

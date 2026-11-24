@@ -40,7 +40,7 @@ Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); tambié
 
 - **Paralaje por capas** (cursor en PC, giroscopio en teléfono; recorrido de cámara ±18 × ±11 px): el cielo va al fondo, los planetas un poco más rápido, Alaira con arcos, ciudad, puentes y el banco de nubes del título en un mismo plano, y las nubes cercanas y la bruma del pie por delante. Alaira y la arquitectura van juntas porque la capa de Alaira trae pegado el fondo original que la rodea: si fueran a otra velocidad, ese fondo se vería duplicado.
 - **Estrellas del cielo**: las dibuja el mismo motor que las de A01 (`js/starfield.js`, nítidas, con destello en cruz), solo donde se ve cielo abierto (`js/a06-estrellas.js`).
-- **Parpadeo** con el parche del kit (`alaira/parpadeo-atlas.webp`, 32 poses por ojo): el párpado baja sobre el iris (cerrar 76 ms, pausa 18 ms, abrir 136 ms, con suavizado), el ojo derecho 5 ms después, descansos variados con algún parpadeo doble. El fleco y las hebras van delante. Con los ojos abiertos es idéntica a la ilustración. Tocarla la hace parpadear.
+- **Parpadeo** de dos clases que se alternan. El **rápido** usa el parche del kit (`alaira/parpadeo-atlas.webp`, 32 poses por ojo: cerrar 76 ms, pausa 18 ms, abrir 136 ms, ojo derecho 5 ms después). El **suave** usa tres fotogramas hechos con Higgsfield sobre la ilustración (`parpadeo-medio`, `parpadeo-casi`, `parpadeo-cerrado`): las pestañas bajan y los fotogramas se funden (cerrar 150 ms, pausa 70 ms, abrir 230 ms). A veces es **lento y tranquilo** (cerrar 280 ms, pausa 420 ms, abrir 460 ms). Mezcla: 55 % rápido, 33 % suave, 12 % lento. Los descansos son variados y a veces hay un parpadeo doble. El fleco y las hebras van delante. Con los ojos abiertos se ve idéntica a la ilustración. Tocarla la hace parpadear suave.
 - **Estrella 3D** de la mano (`js/estrella3d.js`), 1.3 veces el tamaño del diseño para apreciar sus partículas: el GLB del kit gira 0° → 180° → 0° en 5.2 s, con órbita dorada, halo, rayos, chispas y polvo de oro. Suena «estrella flotando» en bucle muy suave (≈ 23 dB debajo de los efectos) mientras se ve A06. El modelo y sus destellos van dentro del código (`js/estrella-datos.js`): la web app no tiene que leer ningún archivo aparte. La estrella pintada se quitó de la capa de Alaira; si no hay WebGL se muestra la del diseño. Tocarla la hace brillar.
 - **Vista de cerca**: `estrella.html` (botón «★ Estrella 3D de cerca» en el visor). Si algo falla, lo dice en la propia pantalla.
 - **Nubes limpias** (sin partes del vestido): la bruma del pie deriva, se aparta al paso del dedo y tiene margen de sobra: nunca se ve su orilla. El banco del título sale de la transición del paquete sin el título pintado y se mueve con Alaira; no hay nube encima del título.
@@ -53,18 +53,31 @@ Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); tambié
 Se entra con «Empezar» en A06 (suena `empezar.wav`); también con `#a07`. Es casi igual a A06: mismo escenario de Alaira (paralaje, estrellas, parpadeo, estrella 3D y su sonido), misma nube del título y el mismo marco (título y panel en el mismo lugar y del mismo tamaño, con altura fija y contenido centrado). Al pasar de A06 a A07 el panel se queda quieto y solo cambian el título y el contenido de adentro: no se cruzan capas.
 
 - **Panel**: explicación en dos líneas, campo «Tu nombre» y «Continuar →». Sin «Omitir». El campo siempre empieza vacío (también al recargar o al regresar a A07).
-- **Continuar** guarda el nombre o apodo sin espacios al inicio ni al final, **solo en este dispositivo** (`localStorage`, clave `kura.nombre`), y saluda: «¡Encantada, {nombre}!». Si el campo está vacío, el borde se marca y aparece «Escribe cómo quieres que te llame.». Después muestra un aviso hasta que exista la siguiente pantalla.
+- **Continuar** guarda el nombre o apodo sin espacios al inicio ni al final, **solo en este dispositivo** (`localStorage`, clave `kura.nombre`), y saluda.
+- **Saludo**: aparece una tarjeta de cristal grande arriba, entre la estrella y el título: «¡Encantada, {nombre}!» («Lovely to meet you, {name}!»), con el nombre en dorado. Al mismo tiempo pasa esto:
+  - Suena `encantada.wav`.
+  - Alaira **sonríe**: una expresión hecha con Higgsfield sobre la ilustración (`alaira/sonrisa.webp`, solo ojos y boca). Dura unos 3 s y luego vuelve a su cara de siempre.
+  - Salen **fuegos artificiales** sobre el HUD (`js/fuegos.js`): chispas doradas, lilas y rosadas que caen con estela. Suena `fuegos-artificiales.wav`, más bajo que la estrella.
+  - Después pasa sola a A08.
+- Si el campo está vacío, suena `falta-dato.wav`, el borde se marca y aparece «Escribe cómo quieres que te llame.».
 - El nombre se usará en saludos y en las afirmaciones que admiten personalización.
 - Español e inglés («What’s your name?»).
 
 ## A08 · ¿Cuál es tu fecha de nacimiento?
 
-Se entra con «Continuar» en A07 (después del saludo); también con `#a08`. Mismo escenario y mismo marco que A06–A07: al pasar de A07 a A08 el panel se queda quieto y solo cambia el contenido. No necesitó imágenes nuevas.
+Se entra con «Continuar» en A07 (después del saludo); también con `#a08`. Mismo escenario y mismo marco que A06–A07: al pasar de A07 a A08 el panel se queda quieto y solo cambia el contenido. Los adornos dorados de la edad (`assets/a08/`) se hicieron con Higgsfield.
 
 - **Título** en dos líneas («¿Cuál es tu fecha / de nacimiento?» · «What’s your / date of birth?»).
-- **Día, Mes y Año** con las listas nativas del teléfono (la rueda de iOS / Android). Los días se ajustan al mes y al año: 30 o 31, y 29 de febrero solo en año bisiesto. Años: del actual hacia atrás, 120 años.
+- **Día, Mes y Año** en cajas propias de KURA (`js/fecha.js`): se puede escribir y la lista se acorta. Por ejemplo, «3» deja 3, 30 y 31; «ju» deja Junio y Julio; «199» deja 1999 a 1990.
+  - Debajo se abre una lista de cristal con el elegido en dorado. Si no cabe abajo, se abre hacia arriba.
+  - Se usa con toque, flechas, Enter y Escape. Con Enter pasa a la siguiente caja vacía.
+  - Si lo escrito no coincide con nada, la caja vuelve a lo que estaba elegido.
+  - Los días se ajustan al mes y al año: 30 o 31, y 29 de febrero solo en año bisiesto. Los años van del actual hacia atrás, 120 años.
 - **Tu edad** se calcula al momento («28 años» · «28 years»; «1 año»).
-- **Continuar**: si falta un dato suena `falta-dato.wav` y se marcan las listas vacías («Elige tu día, mes y año de nacimiento.»); si la fecha está en el futuro, «Esa fecha todavía no llega.». La fecha se guarda solo en este dispositivo (`localStorage`, clave `kura.nacimiento`, formato AAAA-MM-DD). Después, aviso hasta que exista la siguiente pantalla.
+  - Al cambiar la fecha, el número cuenta hasta la edad y brilla en dorado.
+  - Del número salen partículas: motas doradas y lilas, y estrellitas del adorno. Mientras la edad está a la vista, siguen subiendo motas suaves.
+  - A los lados hay dos filetes dorados con lunas. Son tenues mientras no hay fecha y brillan cuando aparece la edad.
+- **Continuar**: si falta un dato suena `falta-dato.wav` y se marcan las cajas vacías («Elige tu día, mes y año de nacimiento.»); si la fecha está en el futuro, «Esa fecha todavía no llega.». La fecha se guarda solo en este dispositivo (`localStorage`, clave `kura.nacimiento`, formato AAAA-MM-DD). Después, aviso hasta que exista la siguiente pantalla.
 - **Sin edad mínima**: los textos legales piden no añadir una restricción de edad sin una decisión posterior.
 - Empieza vacía cada vez que se entra.
 
@@ -122,6 +135,8 @@ Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delan
 | `abrir-aviso.wav` | Abrir Términos o Privacidad | **Incluido** (elegido por ti) |
 | `cerrar-aviso.wav` | Cerrar Términos o Privacidad (X, tocar fuera o Escape; al aceptar no suena) | **Incluido** (elegido por ti) |
 | `empezar.wav` | «Empezar» en A06 | **Incluido** (elegido por ti) |
+| `encantada.wav` | Tarjeta «¡Encantada, {nombre}!» en A07 (mismo volumen que los demás efectos) | **Incluido** (elegido por ti) |
+| `fuegos-artificiales.wav` | Fuegos artificiales al decir tu nombre en A07: ≈ 27 dB debajo de los efectos, más bajo que la estrella | **Incluido** (elegido por ti) |
 | `falta-dato.wav` | Formulario de la introducción (A07 y las siguientes): tocar para avanzar cuando falta un dato | **Incluido** (elegido por ti) |
 | `estrella-flotando.wav` | La estrella de Alaira en A06: bucle muy suave, ≈ 23 dB debajo de los efectos | **Incluido** (elegido por ti) |
 | `efectos.wav` | Botón «Reducir / Efectos completos» | **Incluido** (elegido por ti) |
