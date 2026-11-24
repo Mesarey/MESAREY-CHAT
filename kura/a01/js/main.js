@@ -246,6 +246,7 @@ function showView(name, { animate = true } = {}) {
     stage.classList.toggle('in-a07', name === 'a07');
     $('voice-row').hidden = !inAlaira(name); // la voz de Alaira solo aparece en la introducción
     if (name === 'a01') { signup.reset(); recover.reset(); }
+    if (name === 'a07') { nameInput.value = ''; nameError(false); } // A07 siempre empieza con el campo vacío
     layoutShine(); syncFlares();
   };
   if (sceneChange) switchScene(inAlaira(name), animate);
@@ -330,13 +331,18 @@ if (inAlaira(view.name)) { stage.classList.add('in-a06'); stage.classList.toggle
 /* ---------- A06: Empezar (obligatorio: no hay «Saltar por ahora») ---------- */
 $('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); setTimeout(() => go('a07'), 420); });
 
+/* ---------- Campos vacíos al abrir ----------
+   El navegador vuelve a poner lo escrito antes al recargar (o al regresar a la página): todos los
+   campos de texto empiezan vacíos. El gestor de contraseñas del teléfono puede seguir ofreciendo los suyos. */
+const clearFields = () => document.querySelectorAll('.content input:not([type=checkbox]):not([type=radio])').forEach((i) => { i.value = ''; });
+clearFields();
+addEventListener('pageshow', clearFields);
+
 /* ---------- A07: ¿Cómo te llamo? ----------
    El nombre (o apodo) se guarda solo en este dispositivo y se usa en saludos y en las afirmaciones
    que admiten personalización. */
 const NAME_KEY = 'kura.nombre';
-const savedName = () => { try { return localStorage.getItem(NAME_KEY) || null; } catch { return null; } };
 const nameInput = $('nombre'), nameField = $('field-name'), nameMsg = $('msg-a07');
-try { nameInput.value = savedName() ?? ''; } catch {}
 const nameError = (on) => { nameField.classList.toggle('is-error', on); nameMsg.textContent = on ? t('a07Empty') : ''; nameMsg.classList.toggle('is-on', on); nameInput.setAttribute('aria-invalid', String(on)); };
 let quietFocus = false; // al volver al campo tras «falta un dato» no suena el enfoque encima
 nameInput.addEventListener('focus', () => { if (!quietFocus) audio.sfx('focus'); quietFocus = false; });

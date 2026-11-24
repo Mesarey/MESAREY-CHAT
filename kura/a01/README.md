@@ -52,7 +52,7 @@ Se entra al iniciar sesión o crear cuenta (suena «acceso concedido»); tambié
 
 Se entra con «Empezar» en A06 (suena `empezar.wav`); también con `#a07`. Es casi igual a A06: mismo escenario de Alaira (paralaje, estrellas, parpadeo, estrella 3D y su sonido), misma nube del título y el mismo marco (título y panel en el mismo lugar y del mismo tamaño, con altura fija y contenido centrado). Al pasar de A06 a A07 el panel se queda quieto y solo cambian el título y el contenido de adentro: no se cruzan capas.
 
-- **Panel**: explicación en dos líneas, campo «Tu nombre» (input real con `autocomplete="given-name"`) y «Continuar →». Sin «Omitir».
+- **Panel**: explicación en dos líneas, campo «Tu nombre» y «Continuar →». Sin «Omitir». El campo siempre empieza vacío (también al recargar o al regresar a A07).
 - **Continuar** guarda el nombre o apodo sin espacios al inicio ni al final, **solo en este dispositivo** (`localStorage`, clave `kura.nombre`), y saluda: «¡Encantada, {nombre}!». Si el campo está vacío, el borde se marca y aparece «Escribe cómo quieres que te llame.». Después muestra un aviso hasta que exista la siguiente pantalla.
 - El nombre se usará en saludos y en las afirmaciones que admiten personalización.
 - Español e inglés («What’s your name?»).
