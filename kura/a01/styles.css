@@ -479,7 +479,7 @@ button, input { font: inherit; color: inherit; }
 /* ---------- A06 · Bienvenida con Alaira ----------
    Lienzo propio de 911 × 1726: --v es 1 px de ese lienzo (mismo ancho de pantalla que A01).
    --g6 es la altura sobrante en teléfonos altos: el panel la reparte entre sus elementos. */
-:root { --v: calc(var(--u) * 899 / 911); --g6: clamp(0px, calc(100svh - 1726 * var(--v) - var(--safe-bottom)), 160px); }
+:root { --v: calc(var(--u) * 899 / 911); --g6: clamp(0px, calc(100svh - 1726 * var(--v) - var(--safe-bottom)), 160px); --s10: 0px; }
 @media (min-width: 700px) and (min-aspect-ratio: 3/4) { :root { --g6: calc(1750 * var(--u) - 1726 * var(--v)); } } /* marco fijo: solo sobra lo que el marco tiene de más */
 .scene6 {
   position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
@@ -708,25 +708,31 @@ button, input { font: inherit; color: inherit; }
 @keyframes a10-flor { 0% { opacity: 0; scale: .6; } 22% { opacity: 1; } 100% { opacity: 0; scale: 1.25; } }
 .a10-chispas { position: absolute; }
 /* orilla de la escena: se funde con el pie, debajo del título y del panel */
-.a10-pie { position: absolute; left: 0; right: 0; top: calc(620 * var(--v)); bottom: 0;
+.a10-pie { position: absolute; left: 0; right: 0; top: calc(620 * var(--v) - var(--s10) * .6); bottom: 0;
   background: linear-gradient(rgba(150, 120, 200, 0), rgba(140, 112, 196, .55) calc(120 * var(--v)), #5b4891 calc(190 * var(--v)), #3f3172 calc(420 * var(--v)), #2e2457); }
 @media (prefers-reduced-motion: reduce) { .scene10 *, .scene10 *::after { animation: none !important; } }
 .reduce-motion .scene10 *, .reduce-motion .scene10 *::after { animation: none !important; }
 
 /* HUD de A10: título en dos renglones, «Elige una o varias» y siete opciones en lista (se pueden marcar varias). */
-.stage.in-a10 .content { padding-top: calc(662 * var(--v)); }
+/* A10 siempre cabe en la pantalla, sin scroll:
+   · teléfonos altos: lo que sobra (--g6) lo reparten las opciones, pero solo el 85 % (nunca se pasa ni por redondeo);
+   · teléfonos bajos (iPhone SE, Safari con barras): --s10 es lo que falta; el título sube sobre la bruma y la lista se
+     compacta un poco. El escenario de A10 no fija una altura mínima propia. */
+.stage.in-a10 { min-height: calc(100svh - var(--safe-bottom)); --s10: clamp(0px, calc(1712 * var(--v) + var(--safe-bottom) - 100svh), calc(200 * var(--v))); }
+.stage.in-a10 .content { padding-top: calc(662 * var(--v) - var(--s10) * .6); }
+.scene10 .a6-cloud { margin-top: calc(var(--s10, 0px) * -.6); }
 .stage.in-a10 .prefs { display: none; }
-.stage.in-a10 .build { margin-top: calc(12 * var(--v) + var(--g6) * .1); }
-.heading-a10 { height: auto; padding-bottom: calc(14 * var(--v) + var(--g6) * .05); }
+.stage.in-a10 .build { margin-top: calc(12 * var(--v) + var(--g6) * .06 - var(--s10) * .02); }
+.heading-a10 { height: auto; padding-bottom: calc(14 * var(--v) + var(--g6) * .04 - var(--s10) * .04); }
 .heading-a10::before, .heading-a10::after { display: none; }
 .title.title-a10 { padding-top: 0; font-size: calc(72 * var(--v)); line-height: calc(82 * var(--v)); }
 .a10-hint { margin: calc(2 * var(--v)) 0 0; font-style: italic; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #dcc8ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(40, 20, 80, .9), 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
-.panel-a10 { width: calc(862 * var(--v)); border-radius: calc(66 * var(--v)); padding: calc(24 * var(--v) + var(--g6) * .1) calc(28 * var(--v)) calc(24 * var(--v) + var(--g6) * .08); }
+.panel-a10 { width: calc(862 * var(--v)); border-radius: calc(66 * var(--v)); padding: calc(24 * var(--v) + var(--g6) * .08 - var(--s10) * .03) calc(28 * var(--v)) calc(24 * var(--v) + var(--g6) * .06 - var(--s10) * .03); }
 .a10-mist-img { animation: none; } /* quieta: detrás del cristal no se anima nada */
-.a10-opts { display: flex; flex-direction: column; gap: calc(8 * var(--v) + var(--g6) * .03); }
+.a10-opts { display: flex; flex-direction: column; gap: calc(8 * var(--v) + var(--g6) * .025 - var(--s10) * .01); }
 .a10-opt {
   position: relative; display: flex; align-items: center; gap: calc(22 * var(--v));
-  height: calc(74 * var(--v) + var(--g6) * .07); padding: 0 calc(24 * var(--v)) 0 calc(30 * var(--v)); box-sizing: border-box; cursor: pointer;
+  height: calc(74 * var(--v) + var(--g6) * .065 - var(--s10) * .03); padding: 0 calc(24 * var(--v)) 0 calc(30 * var(--v)); box-sizing: border-box; cursor: pointer;
   border: 1px solid rgba(236, 215, 255, .58); border-radius: calc(40 * var(--v));
   background: linear-gradient(180deg, rgba(110, 88, 150, .18), rgba(60, 46, 100, .16));
   box-shadow: inset 0 0 calc(16 * var(--v)) rgba(210, 170, 255, .06);
@@ -754,10 +760,10 @@ button, input { font: inherit; color: inherit; }
 .a10-opt:has(input:checked) .a10-check::after { opacity: 1; scale: 1; }
 .a10-opt:has(input:focus-visible) { outline: 2px solid rgba(246, 220, 255, .6); outline-offset: 2px; }
 .a10-opts.is-error .a10-opt { border-color: #f0a2c6; box-shadow: 0 0 calc(12 * var(--v)) rgba(240, 150, 190, .28); }
-.msg-a10 { min-height: calc(32 * var(--v)); margin-top: calc(16 * var(--v) + var(--g6) * .03); font-size: calc(24 * var(--v)); line-height: calc(32 * var(--v)); text-align: center; }
-.a10-actions { display: flex; align-items: center; gap: calc(18 * var(--v)); margin-top: calc(11 * var(--v) + var(--g6) * .05); }
+.msg-a10 { min-height: calc(32 * var(--v)); margin-top: calc(16 * var(--v) + var(--g6) * .02 - var(--s10) * .03); font-size: calc(24 * var(--v)); line-height: calc(32 * var(--v)); text-align: center; }
+.a10-actions { display: flex; align-items: center; gap: calc(18 * var(--v)); margin-top: calc(11 * var(--v) + var(--g6) * .04 - var(--s10) * .02); }
 .a10-skip {
-  position: relative; flex: none; width: calc(232 * var(--v)); height: calc(84 * var(--v) + var(--g6) * .06); padding: 0; cursor: pointer;
+  position: relative; flex: none; width: calc(232 * var(--v)); height: calc(84 * var(--v) + var(--g6) * .05 - var(--s10) * .02); padding: 0; cursor: pointer;
   border-radius: 999px; border: 1px solid rgba(236, 215, 255, .55); background: linear-gradient(180deg, rgba(90, 70, 130, .3), rgba(48, 36, 84, .34));
   font-style: italic; font-size: calc(40 * var(--v)); letter-spacing: calc(.4 * var(--v)); color: #efe4ff; text-shadow: 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45);
   transition: border-color .3s, box-shadow .3s, background .3s, scale .15s;
@@ -766,7 +772,7 @@ button, input { font: inherit; color: inherit; }
 .a10-skip span { display: block; translate: 0 calc(-3 * var(--v)); }
 @media (hover: hover) { .a10-skip:hover { border-color: #f4dcff; box-shadow: 0 0 calc(14 * var(--v)) rgba(200, 140, 255, .35); } }
 .a10-skip:active { scale: .97; }
-.cta.cta-a10 { flex: 1; width: auto; height: calc(84 * var(--v) + var(--g6) * .06); margin: 0; }
+.cta.cta-a10 { flex: 1; width: auto; height: calc(84 * var(--v) + var(--g6) * .05 - var(--s10) * .02); margin: 0; }
 .cta-a10 .cta-label { font-size: calc(50 * var(--v)); gap: calc(22 * var(--v)); }
 .cta-a10 .cta-arrow { width: calc(48 * var(--v)); height: calc(48 * var(--v)); }
 
