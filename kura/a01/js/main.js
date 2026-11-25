@@ -542,7 +542,7 @@ labelGuides();
 document.addEventListener('kura:lang', labelGuides);
 const loadGuides = () => guiaCards.forEach((b) => { const im = b.querySelector('img'); if (!im.src) im.src = im.dataset.src; });
 function prepareA11() {
-  loadGuides();
+  loadGuides(); setTimeout(() => preview.prefetch(), 1200); // las ilustraciones de las fichas, sin estorbar la entrada
   let id = ''; try { id = localStorage.getItem(ID_KEY) || ''; } catch {}
   const v = id === 'mujer' ? 'F' : id === 'hombre' ? '' : 'N';
   const l1 = $('titulo-a11-1'), l2 = $('titulo-a11-2');
