@@ -130,6 +130,14 @@ Se entra con «Continuar» u «Omitir» en A10; también con `#a11`. **Escenario
 - **Iniciar el tour** · **Start the tour** (sonido de inicio) y **Saltar** · **Skip**: por ahora muestran un aviso, hasta que existan el tour (A13–A17) y Hoy.
 - **Cabe sin scroll** en cualquier teléfono (probado de 375 × 629 a 430 × 932): en teléfonos altos los banners crecen; en los bajos suben sobre el barandal y se compactan.
 
+
+## A12 · Alaira, tu guía principal
+
+Se llega con «Saltar» en A11 («Iniciar el tour» queda pendiente hasta que exista toda la plataforma); también con `#a12`.
+- **Escenario propio** (`js/a12.js`): el jardín lunar de Alaira sin ella (`assets/a12/fondo.webp`) y Alaira de cuerpo completo con su outfit original, recortada encima (`alaira.webp`). Arte hecho con Higgsfield a partir de su personaje guardado («Alaira · KURA»); HD en `kura/diseno/A12/`.
+- **Animada al estilo Live2D** con WebGL sobre una sola imagen: un mapa de pesos (`pesos.png`: R cabello, G tela, B cabeza) decide cuánto se mueve cada zona; el cabello y las capas translúcidas de la falda ondean, el torso respira y la cabeza se balancea y sigue un poco el paralaje. Parpadeo natural con párpados generados con Higgsfield sobre su cara (`parpadeo-medio.png`, `parpadeo-cerrado.png`), a veces doble; al tocarla parpadea. La poción de su mano late con luz suave. Sin WebGL o con «Reducir efectos», queda la ilustración quieta.
+- **HUD**: «Tu guía principal · Alaira · Compasiva. Te acompaña cada día.» y seis funciones en cristal esmerilado (Afirmaciones de gratitud, Inteligencia emocional, Rituales de ritmo emocional, Soundscape y contemplación, Arcanos y tarot, Horóscopo del día), la línea «Tu camino: rachas, medallas, outfits y paisajes que desbloqueas» y el botón **Entrar al mundo de Alaira** (por ahora muestra un aviso, hasta que exista su mundo). Español e inglés. Cabe sin scroll en cualquier teléfono.
+
 ## Estructura
 
 | Archivo | Módulo |

@@ -45,6 +45,9 @@ const STRINGS = {
     a11Eyebrow: 'Tu viaje comienza', a11Title1: '¿Listo para', a11Title1F: '¿Lista para', a11Title1N: '¿Todo listo', a11Title2: 'KURA?', a11Title2F: 'KURA?', a11Title2N: 'para KURA?',
     a11Sub: 'Ellos también te esperan.', a11Tour: 'Iniciar el tour', a11Skip: 'Saltar', a11Meet: 'Conoce a {nombre} y su mundo',
     a11Soon: 'El tour llega en la próxima fase.',
+    a12Eyebrow: 'Tu guía principal', a12Title: 'Alaira', a12Sub: 'Compasiva. Te acompaña cada día.',
+    a12F1: 'Afirmaciones de gratitud', a12F2: 'Inteligencia emocional', a12F3: 'Rituales de ritmo emocional', a12F4: 'Soundscape y contemplación', a12F5: 'Arcanos y tarot', a12F6: 'Horóscopo del día',
+    a12Camino: 'Tu camino: rachas, medallas, outfits y paisajes que desbloqueas', a12Cta: 'Entrar al mundo de Alaira', a12Soon: 'El mundo de Alaira llega en la próxima fase.',
     soon: 'Próximamente',
   },
   en: {
@@ -92,6 +95,9 @@ const STRINGS = {
     a11Eyebrow: 'Your journey begins', a11Title1: 'Ready for', a11Title1F: 'Ready for', a11Title1N: 'Ready for', a11Title2: 'KURA?', a11Title2F: 'KURA?', a11Title2N: 'KURA?',
     a11Sub: 'They’re waiting for you too.', a11Tour: 'Start the tour', a11Skip: 'Skip', a11Meet: 'Meet {nombre} and their world',
     a11Soon: 'The tour arrives in the next phase.',
+    a12Eyebrow: 'Your main guide', a12Title: 'Alaira', a12Sub: 'Compassionate. With you every day.',
+    a12F1: 'Gratitude affirmations', a12F2: 'Emotional intelligence', a12F3: 'Emotional rhythm rituals', a12F4: 'Soundscape & contemplation', a12F5: 'Arcana & tarot', a12F6: 'Daily horoscope',
+    a12Camino: 'Your path: streaks, medals, outfits and landscapes to unlock', a12Cta: "Enter Alaira's world", a12Soon: "Alaira's world arrives in the next phase.",
     soon: 'Coming soon',
   },
 };
