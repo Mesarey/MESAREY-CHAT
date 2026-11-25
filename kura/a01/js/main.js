@@ -16,6 +16,7 @@ import { mountA06 } from './a06.js';
 import { mountA10 } from './a10.js';
 import { mountA11 } from './a11.js';
 import { GUIAS } from './a11-capas.js';
+import { guidePreview } from './a11-guias.js';
 import { makeCombo } from './fecha.js';
 import { fireworks as launchFireworks } from './fuegos.js';
 import { TWINKLES as A06_STARS } from './a06-estrellas.js';
@@ -251,6 +252,7 @@ function showView(name, { animate = true } = {}) {
   gsap?.killTweensOf(reveal, 'flares');
   const prev = view;
   view = next;
+  { const d = $('guia-dialog'); if (d.open) d.close(); } // la vista previa de un guía no sobrevive a un cambio de pantalla
   const sceneChange = sceneOf(name) !== sceneOf(prev.name);
   const swap = () => {
     prev.el.hidden = true; prev.el.classList.remove('is-active');
@@ -546,12 +548,17 @@ function prepareA11() {
   const l1 = $('titulo-a11-1'), l2 = $('titulo-a11-2');
   if (l1.dataset.i18n !== 'a11Title1' + v) { l1.dataset.i18n = 'a11Title1' + v; l2.dataset.i18n = 'a11Title2' + v; applyLanguage(currentLang()); }
 }
+// Tocar un banner abre la vista previa del guía (js/a11-guias.js). «Empezar con …» deja anotado por quién
+// empezar el tour (kura.tourInicio).
+const preview = guidePreview({
+  guias: GUIAS, lang: currentLang, sfx: (n) => audio.sfx(n), reduced: () => motion.reduced,
+  onStart: (id) => { audio.sfx('start'); a11.sparkle(20); try { localStorage.setItem('kura.tourInicio', id); } catch {} toast(t('a11Soon')); },
+});
 guiasEl.addEventListener('click', (e) => {
   const card = e.target.closest('.a11-card'); if (!card) return;
   audio.sfx('tap'); a11.sparkle(16);
   if (!motion.reduced) { const r = card.getBoundingClientRect(); stars?.burst(r.left + r.width * .3, r.top + r.height / 2, .8); }
-  try { localStorage.setItem('kura.tourInicio', card.dataset.guia); } catch {}
-  toast(t('a11Soon'));
+  preview.open(card.dataset.guia, card);
 });
 $('cta-a11').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a11, e); a11.sparkle(20); try { localStorage.removeItem('kura.tourInicio'); } catch {} toast(t('a11Soon')); });
 $('skip-a11').addEventListener('click', () => { audio.sfx('tap'); toast(t('a07Next')); });

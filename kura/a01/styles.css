@@ -874,6 +874,69 @@ button, input { font: inherit; color: inherit; }
 .cta-a11 .cta-arrow { width: calc(50 * var(--v)); height: calc(50 * var(--v)); }
 .a10-skip.a11-skip { width: calc(300 * var(--v)); height: calc(66 * var(--v) + var(--g6) * .03 - var(--s11) * .02); margin-top: calc(16 * var(--v) + var(--g6) * .02 - var(--s11) * .02); font-size: calc(36 * var(--v)); }
 
+/* A11 · Vista previa de un guía (al tocar su banner): su mundo arriba, su frase, lo que ofrece, el modo
+   contemplación y, en Amaya, el aviso de salud. --acento es el color de cada guía (r, g, b). */
+.guia-dialog {
+  --acento: 214, 170, 255;
+  width: min(92vw, 440px); max-height: min(88svh, 780px); padding: 0; margin: auto; border: 0; background: none; overflow: visible;
+  color: #f4effa; display: none;
+}
+.guia-dialog[open] { display: flex; }
+.guia-dialog::backdrop { background: rgba(8, 5, 24, .66); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.guia-card {
+  position: relative; display: flex; flex-direction: column; width: 100%; max-height: inherit; overflow: hidden; touch-action: pan-y;
+  border-radius: 24px; border: 1.5px solid rgba(246, 222, 196, .8);
+  background: linear-gradient(180deg, rgba(38, 26, 74, .98), rgba(20, 14, 44, .99));
+  box-shadow: 0 30px 80px rgba(4, 2, 16, .7), 0 0 44px rgba(var(--acento), .35), inset 0 0 22px rgba(230, 190, 255, .12);
+}
+.guia-dialog[open] .guia-card { animation: guia-in .45s cubic-bezier(.2, .9, .3, 1.1); }
+@keyframes guia-in { from { opacity: 0; translate: 0 22px; scale: .94; } }
+.guia-card.is-in-r .guia-hero img, .guia-card.is-in-r .guia-body { animation: guia-r .4s cubic-bezier(.2, .9, .3, 1); }
+.guia-card.is-in-l .guia-hero img, .guia-card.is-in-l .guia-body { animation: guia-l .4s cubic-bezier(.2, .9, .3, 1); }
+@keyframes guia-r { from { opacity: 0; translate: 26px 0; } }
+@keyframes guia-l { from { opacity: 0; translate: -26px 0; } }
+
+.guia-hero { position: relative; flex: none; aspect-ratio: 2.05; overflow: hidden; }
+.guia-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 0 var(--fy, 40%); display: block; }
+.guia-hero::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 14, 44, 0) 52%, rgba(34, 24, 68, .75) 84%, rgba(38, 26, 74, 1)); }
+.guia-close { position: absolute; z-index: 1; top: 10px; right: 10px; width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid rgba(255, 240, 220, .45); border-radius: 50%; background: rgba(16, 10, 38, .55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.guia-close svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; }
+
+.guia-body { position: relative; flex: 1; min-height: 0; overflow-y: auto; margin-top: -34px; padding: 0 22px 16px;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 16px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 16px), transparent);
+  overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: rgba(var(--acento), .5) transparent; }
+.guia-nombre { margin: 0; font: 400 40px/1.05 var(--serif); letter-spacing: .3px; color: #fff;
+  text-shadow: 0 0 14px rgba(10, 6, 30, .9), 0 0 18px rgba(var(--acento), .45); }
+.guia-frase { margin: 6px 0 0; font: italic 18px/1.35 var(--serif); color: #fbf3ff; }
+.guia-ofrece { margin: 16px 0 6px; font: 700 12px/1.2 Arial, Helvetica, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(var(--acento), 1); }
+.guia-puntos { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.guia-puntos li { display: flex; align-items: flex-start; gap: 10px; font: 15px/1.38 Arial, 'Helvetica Neue', Helvetica, sans-serif; color: #f1eafa; }
+.guia-puntos svg { flex: none; width: 13px; height: 13px; margin-top: 3px; fill: rgba(var(--acento), 1); filter: drop-shadow(0 0 4px rgba(var(--acento), .8)); }
+.guia-contempla { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 11px 14px; border-radius: 14px;
+  border: 1px solid rgba(var(--acento), .45); background: linear-gradient(100deg, rgba(var(--acento), .16), rgba(var(--acento), .05)); }
+.guia-contempla svg { flex: none; width: 24px; height: 24px; fill: none; stroke: rgba(var(--acento), 1); stroke-width: 1.7; }
+.guia-contempla p { margin: 0; display: flex; flex-direction: column; gap: 1px; font: 14px/1.35 Arial, Helvetica, sans-serif; color: #e9e0f6; }
+.guia-contempla strong { font-size: 14.5px; color: #fff; }
+.guia-aviso { margin: 12px 0 0; padding: 9px 12px; border-radius: 10px; font: 600 12.5px/1.4 Arial, Helvetica, sans-serif; color: #ffe2a6;
+  background: rgba(255, 210, 140, .08); border: 1px solid rgba(255, 210, 140, .25); }
+
+.guia-foot { flex: none; display: flex; align-items: center; gap: 10px; padding: 12px 14px 14px; border-top: 1px solid rgba(240, 218, 255, .16); }
+.guia-start { flex: 1; min-width: 0; height: 50px; padding: 0 14px; cursor: pointer; border-radius: 999px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: 400 19px/1 var(--serif); color: #fff; border: 1.5px solid rgba(246, 222, 196, .85);
+  background: linear-gradient(180deg, rgba(var(--acento), .42), rgba(var(--acento), .18));
+  box-shadow: 0 0 18px rgba(var(--acento), .45), inset 0 0 14px rgba(255, 255, 255, .1); text-shadow: 0 1px 6px rgba(10, 6, 30, .7); }
+.guia-nav { flex: none; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; border-radius: 50%;
+  border: 1px solid rgba(246, 222, 196, .5); background: rgba(255, 255, 255, .05); }
+.guia-nav svg { width: 22px; height: 22px; fill: none; stroke: #f6ecff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.guia-start:active, .guia-nav:active, .guia-close:active { scale: .96; }
+.guia-start:focus-visible, .guia-nav:focus-visible, .guia-close:focus-visible { outline: 2px solid rgba(246, 220, 255, .85); outline-offset: 2px; }
+@media (hover: hover) { .guia-start:hover { box-shadow: 0 0 26px rgba(var(--acento), .65), inset 0 0 14px rgba(255, 255, 255, .14); } .guia-nav:hover, .guia-close:hover { background: rgba(255, 255, 255, .12); } }
+.reduce-motion .guia-dialog[open] .guia-card, .reduce-motion .guia-card .guia-hero img, .reduce-motion .guia-card .guia-body { animation: none; }
+@media (prefers-reduced-motion: reduce) { .guia-dialog[open] .guia-card, .guia-card .guia-hero img, .guia-card .guia-body { animation: none; } }
+@media (max-height: 640px) { .guia-hero { aspect-ratio: 2.6; } .guia-nombre { font-size: 34px; } .guia-frase { font-size: 16.5px; } }
+
 /* ---------- A05 · Restaurando sesión (arranque) ----------
    La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:
    --bu es la escala que la hace llenar el ancho y el alto, sin franjas ni bordes. */

@@ -125,7 +125,8 @@ Se entra con «Continuar» u «Omitir» en A10; también con `#a11`. **Escenario
 - **Vivo y ligero**: Alaira respira; de la punta de su índice late una luz y cae una estela de chispas doradas hacia los banners; las glicinas se mecen y caen pétalos lila por toda la pantalla; un brillo recorre cada banner de vez en cuando. Estela y pétalos comparten un solo ciclo a 30 cuadros/s; todo se detiene al salir de A11, con la pestaña oculta o con «Reducir efectos». No hay panel de cristal (nada se re-desenfoca).
 - **Paralaje** con cursor o giroscopio: templo y cielo al fondo, Alaira en medio, glicinas y pétalos delante, el HUD encima, y dentro de cada banner el mundo se desliza un poco (ventana con profundidad).
 - **Título** según la identidad elegida en A09: «¿Lista para / KURA?» (mujer), «¿Listo para / KURA?» (hombre) y «¿Todo listo / para KURA?» (otra identidad, prefiero no decirlo o sin respuesta). En inglés siempre «Ready for / KURA?». Arriba «Tu viaje comienza» · «Your journey begins» y abajo «Ellos también te esperan.» · «They’re waiting for you too.».
-- **Banners** de Amaya (ciudad aérea de cristal y jardines), Azara (castillo carmesí imponente, con vitrales y cristales de rubí), Nova (noche pop star en azul oscuro, con flashes) y Orion (biblioteca observatorio con esfera armilar), en HD (`assets/a11/banners/`, 1400 × 600). El nombre y la flecha van en texto real (nítido y traducible). Tocar un banner hace destellar el dedo de Alaira y deja anotado por quién empezar el tour (`localStorage`, clave `kura.tourInicio`).
+- **Banners** de Amaya (ciudad aérea de cristal y jardines), Azara (castillo carmesí imponente, con vitrales y cristales de rubí), Nova (noche pop star en azul oscuro, con flashes) y Orion (biblioteca observatorio con esfera armilar), en HD (`assets/a11/banners/`, 1400 × 600). El nombre y la flecha van en texto real (nítido y traducible). Tocar un banner hace destellar el dedo de Alaira y abre su **vista previa** (`js/a11-guias.js`).
+- **Vista previa del guía**: su mundo arriba, su frase, «Lo que te ofrece», el **modo contemplación** (ver su mundo en calma, lo tienen todos) y, en Amaya, el aviso de consultar siempre al médico. Se pasa de un guía a otro con las flechas, deslizando o con ← →; se cierra con la X, tocando fuera, Esc o al cambiar de pantalla. «Empezar con …» deja anotado por quién empezar el tour (`localStorage`, clave `kura.tourInicio`). Color propio por guía (verde Amaya, carmesí Azara, azul Nova, violeta Orion). Español e inglés.
 - **Iniciar el tour** · **Start the tour** (sonido de inicio) y **Saltar** · **Skip**: por ahora muestran un aviso, hasta que existan el tour (A13–A17) y Hoy.
 - **Cabe sin scroll** en cualquier teléfono (probado de 375 × 629 a 430 × 932): en teléfonos altos los banners crecen; en los bajos suben sobre el barandal y se compactan.
 
@@ -149,6 +150,7 @@ Se entra con «Continuar» u «Omitir» en A10; también con `#a11`. **Escenario
 | `js/devpanel.js` | Panel de ajustes de desarrollo |
 | `js/a10.js` · `js/a10-capas.js` · `js/a10-cielo.js` | A10: escena por capas, partículas del brote y cielo vivo en WebGL |
 | `js/a11.js` · `js/a11-capas.js` | A11: escena por capas, estela de chispas del índice, pétalos y paralaje de los banners |
+| `js/a11-guias.js` | A11: vista previa de cada guía (frase, lo que ofrece, modo contemplación) |
 
 Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delanteras e inferiores → luces → logo y audio → cristal → bordes luminosos → textos y controles → estrellas y chispas (lienzo sin eventos de puntero).
 
