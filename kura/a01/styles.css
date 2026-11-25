@@ -797,7 +797,7 @@ button, input { font: inherit; color: inherit; }
 .scene11.is-on { visibility: visible; }
 .scene11 .a6-layer > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
 /* Alaira respira: un vaivén mínimo anclado a sus brazos sobre el barandal (solo transformación: no cuesta) */
-.a11-alaira-img { transform-origin: 40% 96%; animation: a11-respira 5.2s ease-in-out infinite alternate; }
+.a11-alaira-img { transform-origin: 40% 93%; animation: a11-respira 5.2s ease-in-out infinite alternate; }
 @keyframes a11-respira { from { scale: 1 1; rotate: 0deg; } to { scale: 1.006 1.012; rotate: -.35deg; } }
 /* punta del índice: una lucecita late; al tocar un banner destella */
 .a11-dedo { position: absolute; width: calc(76 * var(--v)); height: calc(76 * var(--v)); margin: calc(-38 * var(--v)) 0 0 calc(-38 * var(--v)); border-radius: 50%;

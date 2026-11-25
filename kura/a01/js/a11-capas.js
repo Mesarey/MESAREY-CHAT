@@ -18,7 +18,7 @@ export const FONDO = { src: 'assets/a11/fondo.webp', box: box(0, 0, 944, 2048), 
 // Alaira recortada (se apoya en el barandal). Se mueve más que el fondo, pero poco en vertical para que sus brazos
 // sigan apoyados en la piedra.
 export const ALAIRA = {
-  src: 'assets/a11/alaira.webp', box: box(209, 99, 735, 713), d: [0.45, 0.14],
+  src: 'assets/a11/alaira.webp', box: box(209, 99, 735, 733), d: [0.45, 0.14],
   dedo: at(252, 790),                 // punta del índice: de aquí sale la estela de chispas
   chispas: box(20, 700, 330, 230),    // zona donde viven las chispas (lienzo pequeño)
 };
