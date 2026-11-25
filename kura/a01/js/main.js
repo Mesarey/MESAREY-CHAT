@@ -14,6 +14,8 @@ import { recoverForm } from './recover.js';
 import { auth } from './auth.js';
 import { mountA06 } from './a06.js';
 import { mountA10 } from './a10.js';
+import { mountA11 } from './a11.js';
+import { GUIAS } from './a11-capas.js';
 import { makeCombo } from './fecha.js';
 import { fireworks as launchFireworks } from './fuegos.js';
 import { TWINKLES as A06_STARS } from './a06-estrellas.js';
@@ -32,12 +34,14 @@ const wind = mountWind($('scene'), motion);
 let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
 const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06, sky6: 0 }; // sky6: estrellas del cielo de A06
-let a06 = null, a10 = null;
-const tilt = parallax(stage, motion, unit, (o) => { stars?.shift(o); a06?.look(o.n); a10?.look(o.n); });
+let a06 = null, a10 = null, a11 = null;
+const tilt = parallax(stage, motion, unit, (o) => { stars?.shift(o); a06?.look(o.n); a10?.look(o.n); a11?.look(o.n); });
 // A06 · Bienvenida con Alaira: su escenario se arma la primera vez que hace falta (o en segundo plano).
 a06 = mountA06({ stage, motion, onLayers: (els) => tilt.addLayers(els) });
 // A10 · ¿Qué te motiva a cambiar tu Aura?: escenario propio (Alaira en la luna creciente sobre el lago).
 a10 = mountA10({ stage, motion });
+// A11 · ¿Listo para KURA?: escenario propio (Alaira en el barandal del templo señala a los demás guías).
+a11 = mountA11({ stage, motion });
 // En teléfono, el primer toque activa el giroscopio (en iPhone el sistema pide permiso).
 if (matchMedia('(pointer: coarse)').matches) addEventListener('click', () => tilt.enableGyro(), { once: true, capture: true });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) tilt.recenter(); });
@@ -47,7 +51,7 @@ let chars = [];
 function splitTitle() {
   chars = [];
   document.querySelectorAll('[data-split]').forEach((line) => {
-    const text = line.textContent;
+    const text = line.querySelector(':scope > .sr')?.textContent ?? line.textContent; // ya partido: se reparte de nuevo sin duplicar
     line.textContent = '';
     const label = document.createElement('span');
     label.className = 'sr'; label.textContent = text;
@@ -92,16 +96,17 @@ const makeHud = (el) => luminousBorder(el, {
   widths: { base: 1.1, near: 4, wide: 18 },
 });
 const VIEWS = {};
-for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07'], ['a08', 'panel-a08', 'cta-a08'], ['a09', 'panel-a09', 'cta-a09'], ['a10', 'panel-a10', 'cta-a10']]) {
+for (const [name, panelId, ctaId] of [['a01', 'panel', 'cta'], ['a02', 'panel-a02', 'cta-a02'], ['a03', 'panel-a03', 'cta-a03'], ['a04', 'panel-a04', 'cta-a04'], ['a06', 'panel-a06', 'cta-a06'], ['a07', 'panel-a07', 'cta-a07'], ['a08', 'panel-a08', 'cta-a08'], ['a09', 'panel-a09', 'cta-a09'], ['a10', 'panel-a10', 'cta-a10'], ['a11', 'panel-a11', 'cta-a11']]) {
   const el = $(`view-${name}`), panel = $(panelId), c = $(ctaId);
   VIEWS[name] = { name, el, panel, cta: c, button: makeButton(c), hud: makeHud(panel) };
 }
+VIEWS.a11.hud.setIntensity(0, 0); // A11 no tiene panel de cristal: sus banners van sobre la terraza, sin contorno
 let view = VIEWS[location.hash.slice(1)] || VIEWS.a01;
 // Pantallas de la introducción con Alaira: comparten su escenario (A06 Bienvenida, A07 ¿Cómo te llamo?).
 const ALAIRA_VIEWS = new Set(['a06', 'a07', 'a08', 'a09']);
 const inAlaira = (n) => ALAIRA_VIEWS.has(n);
-// Escenario de cada pantalla: Observatorio (A01–A05), Alaira (A06–A09) o la luna sobre el lago (A10).
-const sceneOf = (n) => (ALAIRA_VIEWS.has(n) ? 'a06' : n === 'a10' ? 'a10' : 'obs');
+// Escenario de cada pantalla: Observatorio (A01–A05), Alaira (A06–A09), la luna sobre el lago (A10) o el templo (A11).
+const sceneOf = (n) => (ALAIRA_VIEWS.has(n) ? 'a06' : n === 'a10' || n === 'a11' ? n : 'obs');
 const inIntro = (n) => sceneOf(n) !== 'obs';
 const cta = VIEWS.a01.cta, button = VIEWS.a01.button, hud = VIEWS.a01.hud; // panel de ajustes
 const setReduced = (r) => Object.values(VIEWS).forEach((v) => { v.button.setReduced(r); v.hud.setReduced(r); });
@@ -228,7 +233,7 @@ audio.onChange(updateSoundButton);
 updateSoundButton();
 window.__kura = { audio, view: () => view.name, tilt,
   /** Visor: idioma de la app ('es' | 'en'), o null para seguir el del teléfono. */
-  setLang: (l) => { if (l) applyLanguage(l, { manual: true }); else { try { sessionStorage.removeItem('kura.lang'); } catch {} location.reload(); } }, flares: () => stars?.rects?.(), a06: () => a06, a10: () => a10 };
+  setLang: (l) => { if (l) applyLanguage(l, { manual: true }); else { try { sessionStorage.removeItem('kura.lang'); } catch {} location.reload(); } }, flares: () => stars?.rects?.(), a06: () => a06, a10: () => a10, a11: () => a11 };
 
 /* ---------- Términos y privacidad ---------- */
 const legal = legalDialog({ t, sfx: (n) => audio.sfx(n), lang: currentLang });
@@ -253,12 +258,15 @@ function showView(name, { animate = true } = {}) {
     stage.classList.toggle('in-a06', inAlaira(name)); // escenario y HUD de Alaira
     stage.classList.toggle('in-a07', name === 'a07');
     stage.classList.toggle('in-a10', name === 'a10');
+    stage.classList.toggle('in-a11', name === 'a11');
+    reveal.flareless = name === 'a11'; // sin panel de cristal no hay destellos de contorno
     $('voice-row').hidden = !inIntro(name); // la voz de Alaira solo aparece en la introducción
     if (name === 'a01') { signup.reset(); recover.reset(); }
     if (name === 'a07') { nameInput.value = ''; nameError(false); } // A07 siempre empieza con el campo vacío
     if (name === 'a08') resetBirth();                                // A08 también empieza vacía
     if (name === 'a09') { resetIdentity(); a10.prefetch(); }         // A09 empieza sin opción elegida; A10 se descarga mientras
-    if (name === 'a10') resetMotives();                              // A10 también
+    if (name === 'a10') { resetMotives(); a11.prefetch(); }          // A10 también; A11 se descarga mientras
+    if (name === 'a11') prepareA11();                                // título según la identidad y banners
     layoutShine(); syncFlares();
   };
   if (sceneChange) switchScene(sceneOf(prev.name), sceneOf(name), animate);
@@ -277,7 +285,7 @@ function showView(name, { animate = true } = {}) {
       .fromTo(nextIn, { opacity: 0, y: 10 * u }, { opacity: 1, y: 0, stagger: .06, duration: .6, ease: 'expo.out', clearProps: 'transform' }, '<.1');
     return;
   }
-  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a08-date, .a08-age, .a09-opts, .a10-opts, .a10-actions');
+  const parts = next.el.querySelectorAll('.field, .row-msg, .cta, .or, .google, .first, .back-link, .sent-icon, .sent-text, .sent-demo:not([hidden]), .a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a08-date, .a08-age, .a09-opts, .a10-opts, .a10-actions, .a11-eyebrow, .a11-filete, .a11-sub, .a11-card, .a11-actions');
   reveal.flares = 0; // apagados de inmediato: ningún destello se queda en el panel que sale
   switchTl = gsap.timeline({
     onComplete: () => { switchTl = null; syncFlares(); gsap.to(reveal, { flares: 1, duration: 1.2, ease: 'sine.inOut' }); },
@@ -295,10 +303,10 @@ function showView(name, { animate = true } = {}) {
 // La escena nueva aparece encima con un leve acercamiento mientras la anterior se desvanece. Las estrellas del
 // Observatorio solo se ven en A01–A05 y las del cielo de A06 solo en A06–A09 (A10 trae su propio cielo vivo).
 const a01Scene = $('scene');
-const sceneMod = { a06: () => a06, a10: () => a10 };
+const sceneMod = { a06: () => a06, a10: () => a10, a11: () => a11 };
 function switchScene(from, to, animate = true) {
   gsap?.killTweensOf([a01Scene, reveal]);
-  for (const k of ['a06', 'a10']) if (sceneMod[k]().el) gsap?.killTweensOf(sceneMod[k]().el);
+  for (const k of ['a06', 'a10', 'a11']) if (sceneMod[k]().el) gsap?.killTweensOf(sceneMod[k]().el);
   const soft = animate && gsap && !motion.reduced;
   audio.loop('starFloat', to === 'a06'); // la estrella de Alaira suena muy suave mientras se ve A06–A09
   const starsTo = to === 'obs' ? 1 : 0, sky6To = to === 'a06' ? 1 : 0;
@@ -343,7 +351,7 @@ const recover = recoverForm({
 addEventListener('hashchange', () => { const n = location.hash.slice(1); if (VIEWS[n]) showView(n); });
 // Vista inicial según la dirección (#a02 abre directamente Crear cuenta).
 for (const v of Object.values(VIEWS)) { v.el.hidden = v !== view; v.el.classList.toggle('is-active', v === view); }
-if (inIntro(view.name)) { stage.classList.toggle('in-a06', inAlaira(view.name)); stage.classList.toggle('in-a07', view.name === 'a07'); stage.classList.toggle('in-a10', view.name === 'a10'); $('voice-row').hidden = false; switchScene('obs', sceneOf(view.name), false); }
+if (inIntro(view.name)) { stage.classList.toggle('in-a06', inAlaira(view.name)); stage.classList.toggle('in-a07', view.name === 'a07'); stage.classList.toggle('in-a10', view.name === 'a10'); stage.classList.toggle('in-a11', view.name === 'a11'); reveal.flareless = view.name === 'a11'; if (view.name === 'a11') queueMicrotask(prepareA11); $('voice-row').hidden = false; switchScene('obs', sceneOf(view.name), false); }
 
 /* ---------- A06: Empezar (obligatorio: no hay «Saltar por ahora») ---------- */
 $('cta-a06').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a06, e); setTimeout(() => go('a07'), 420); });
@@ -511,14 +519,42 @@ $('form-a10').addEventListener('submit', (e) => {
   if (!sel.length) { audio.sfx('decline'); motError(true); return; } // falta elegir
   try { localStorage.setItem(MOT_KEY, JSON.stringify(sel)); } catch {}
   audio.sfx('tap'); primaryFx(VIEWS.a10, e); a10.bloom(28);
-  toast(t('a07Next'));
+  setTimeout(() => go('a11'), 520); // deja ver el brote florecer
 });
 $('skip-a10').addEventListener('click', () => {
   audio.sfx('tap'); motError(false);
   try { localStorage.removeItem(MOT_KEY); } catch {}
-  toast(t('a07Next'));
+  go('a11');
 });
 resetMotives();
+
+/* ---------- A11 · ¿Listo para KURA? ----------
+   Alaira señala los banners de los otros cuatro guías. «Iniciar el tour» abre el recorrido por los mundos (A13–A17,
+   aún no existe) y «Saltar» entra a KURA. Tocar un banner deja anotado por quién empezar el tour (kura.tourInicio).
+   El título se adapta a la identidad elegida en A09: «¿Lista para KURA?», «¿Listo para KURA?» o «¿Todo listo para KURA?». */
+const guiasEl = $('guias-a11');
+guiasEl.innerHTML = GUIAS.map((g, i) => `<li><button class="a11-card" type="button" data-guia="${g.id}" style="--i:${i};--fy:${g.fy}%"><img class="a11-card-img" data-src="${g.src}" alt="" decoding="async" draggable="false"><span class="a11-name">${g.nombre}<svg class="a11-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5 15.5 12 9 18.5" /></svg></span></button></li>`).join('');
+const guiaCards = [...guiasEl.querySelectorAll('.a11-card')];
+const labelGuides = () => guiaCards.forEach((b) => b.setAttribute('aria-label', t('a11Meet').replace('{nombre}', b.querySelector('.a11-name').textContent)));
+labelGuides();
+document.addEventListener('kura:lang', labelGuides);
+const loadGuides = () => guiaCards.forEach((b) => { const im = b.querySelector('img'); if (!im.src) im.src = im.dataset.src; });
+function prepareA11() {
+  loadGuides();
+  let id = ''; try { id = localStorage.getItem(ID_KEY) || ''; } catch {}
+  const v = id === 'mujer' ? 'F' : id === 'hombre' ? '' : 'N';
+  const l1 = $('titulo-a11-1'), l2 = $('titulo-a11-2');
+  if (l1.dataset.i18n !== 'a11Title1' + v) { l1.dataset.i18n = 'a11Title1' + v; l2.dataset.i18n = 'a11Title2' + v; applyLanguage(currentLang()); }
+}
+guiasEl.addEventListener('click', (e) => {
+  const card = e.target.closest('.a11-card'); if (!card) return;
+  audio.sfx('tap'); a11.sparkle(16);
+  if (!motion.reduced) { const r = card.getBoundingClientRect(); stars?.burst(r.left + r.width * .3, r.top + r.height / 2, .8); }
+  try { localStorage.setItem('kura.tourInicio', card.dataset.guia); } catch {}
+  toast(t('a11Soon'));
+});
+$('cta-a11').addEventListener('click', (e) => { audio.sfx('start'); primaryFx(VIEWS.a11, e); a11.sparkle(20); try { localStorage.removeItem('kura.tourInicio'); } catch {} toast(t('a11Soon')); });
+$('skip-a11').addEventListener('click', () => { audio.sfx('tap'); toast(t('a07Next')); });
 document.querySelectorAll('[data-legal]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); legal.open(a.dataset.legal, { sound: a.closest('.prefs') ? 'effects' : 'legal' }); }));
 
 /* ---------- Preferencias ---------- */
@@ -553,7 +589,7 @@ function intro() {
   const u = unit(), V = view.el;
   const starsTo = inIntro(view.name) ? 0 : 1, sky6To = inAlaira(view.name) ? 1 : 0;
   // Mientras se ve Iniciar sesión, la escena de A06 se prepara en segundo plano: al entrar ya está lista.
-  if (inAlaira(view.name)) a06.prepare(); else if (view.name === 'a10') a10.prepare(); else setTimeout(() => a06.prefetch(), 4500);
+  if (inAlaira(view.name)) a06.prepare(); else if (view.name === 'a10') a10.prepare(); else if (view.name === 'a11') a11.prepare(); else setTimeout(() => a06.prefetch(), 4500);
   if (!gsap || motion.reduced) { Object.assign(reveal, { stars: starsTo, sky6: sky6To, flares: 1, zoom: 1 }); setTimeout(invite, 3500); return; }
   if (inIntro(view.name)) { introA06(); return; }
   gsap.timeline({ defaults: { ease: 'expo.out' } })
@@ -578,7 +614,7 @@ function intro() {
 
 // Entrada directa a A06–A10 (dirección #a06… o sesión con la introducción pendiente).
 function introA06() {
-  const u = unit(), V = view.el, sceneEl = view.name === 'a10' ? a10.el : a06.el;
+  const u = unit(), V = view.el, sceneEl = view.name === 'a10' ? a10.el : view.name === 'a11' ? a11.el : a06.el;
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .fromTo(sceneEl, { opacity: 0, scale: 1.07 }, { opacity: 1, scale: 1.02, duration: 2.2, ease: 'power2.out' }, 0)
     .from('.logo', { opacity: 0, scale: .9, filter: 'blur(8px)', duration: 1.6 }, .5)
@@ -586,7 +622,7 @@ function introA06() {
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
     .from(V.querySelector('.panel'), { y: 60 * u, duration: 1.5 }, 1.2)
     .from(V.querySelector('.panel').children, { opacity: 0, duration: 1.5 }, 1.2)
-    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a10-hint, .a10-opt, .a10-actions, .cta'), { opacity: 0, y: 14 * u, stagger: .05, duration: 1 }, 1.5)
+    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a10-hint, .a10-opt, .a10-actions, .a11-eyebrow, .a11-filete, .a11-sub, .a11-card, .a11-skip, .cta'), { opacity: 0, y: 14 * u, stagger: .05, duration: 1 }, 1.5)
     .to(reveal, { sky6: inAlaira(view.name) ? 1 : 0, duration: 3, ease: 'sine.inOut' }, .6)
     .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
     .add(() => setTimeout(invite, 1200), 2.6);
@@ -649,7 +685,7 @@ async function runBoot() {
   if (gsap && !motion.reduced) gsap.from(boot.querySelectorAll('.boot-halo, .boot-logo, .boot-orbit, .boot-text'), { opacity: 0, y: 10 * unit(), stagger: .06, duration: .5, ease: 'power2.out' });
   // Sin tiempo mínimo: A05 solo dura lo que tarden la escena y la sesión. En un teléfono
   // rápido apenas se ve; si algo se traba, la animación de carga queda a la vista.
-  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(inAlaira(view.name) ? 'assets/a06/escena/cielo.webp' : view.name === 'a10' ? 'assets/a10/fondo.webp' : 'assets/img/escena.webp')]);
+  const [{ session }] = await Promise.all([auth.restoreSession(), imageReady(inAlaira(view.name) ? 'assets/a06/escena/cielo.webp' : view.name === 'a10' ? 'assets/a10/fondo.webp' : view.name === 'a11' ? 'assets/a11/fondo.webp' : 'assets/img/escena.webp')]);
   if (keep) await new Promise((r) => { boot.addEventListener('pointerdown', r, { once: true }); addEventListener('hashchange', r, { once: true }); });
   if (session) { /* aquí se abriría Hoy (L01) en el mundo predeterminado */ }
   if (keep && location.hash === '#a05') history.replaceState(null, '', '#a01');

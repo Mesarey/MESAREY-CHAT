@@ -115,7 +115,19 @@ Se entra con «Continuar» en A09; también con `#a10`. **Escenario propio**, di
   - Aprender habilidades sociales (dos destellos) · Learn social skills
   - No sé todavía. Quiero descubrirlo (brújula) · I don't know yet. I want to find out — es exclusiva: desmarca las demás, y marcar otra la desmarca.
 - **Continuar** sin elegir: suena `falta-dato.wav`, se marcan las opciones y aparece «Elige al menos una opción o toca Omitir.». Con opciones, se guardan **solo en este dispositivo** (`localStorage`, clave `kura.motivos`, lista JSON de valores).
-- **Omitir** · **Skip**: sigue sin guardar nada (borra `kura.motivos`). Por ahora ambos muestran el aviso hasta que exista A11.
+- **Omitir** · **Skip**: sigue sin guardar nada (borra `kura.motivos`). Los dos llevan a A11.
+
+## A11 · ¿Listo para KURA?
+
+Se entra con «Continuar» u «Omitir» en A10; también con `#a11`. **Escenario propio**: diseño D aprobado (Alaira asomada al barandal de un templo con glicinas, al atardecer, señala con el índice los banners de los otros cuatro guías). El diseño y los banners HD están en `kura/diseno/A11/`.
+
+- **Capas** (`js/a11-capas.js`), separadas del diseño con Higgsfield: templo sin Alaira con los dos planetas de KURA y el castillo (`assets/a11/fondo.webp`), Alaira recortada (`alaira.webp`) y glicinas del frente (`glicina.webp`, la derecha es la misma en espejo).
+- **Vivo y ligero**: Alaira respira; de la punta de su índice late una luz y cae una estela de chispas doradas hacia los banners; las glicinas se mecen y caen pétalos lila por toda la pantalla; un brillo recorre cada banner de vez en cuando. Estela y pétalos comparten un solo ciclo a 30 cuadros/s; todo se detiene al salir de A11, con la pestaña oculta o con «Reducir efectos». No hay panel de cristal (nada se re-desenfoca).
+- **Paralaje** con cursor o giroscopio: templo y cielo al fondo, Alaira en medio, glicinas y pétalos delante, el HUD encima, y dentro de cada banner el mundo se desliza un poco (ventana con profundidad).
+- **Título** según la identidad elegida en A09: «¿Lista para / KURA?» (mujer), «¿Listo para / KURA?» (hombre) y «¿Todo listo / para KURA?» (otra identidad, prefiero no decirlo o sin respuesta). En inglés siempre «Ready for / KURA?». Arriba «Tu viaje comienza» · «Your journey begins» y abajo «Ellos también te esperan.» · «They’re waiting for you too.».
+- **Banners** de Amaya (ciudad aérea de cristal y jardines), Azara (ciudad gótica al atardecer carmesí), Nova (noche pop star en azul oscuro, con flashes) y Orion (biblioteca observatorio con esfera armilar), en HD (`assets/a11/banners/`, 1400 × 600). El nombre y la flecha van en texto real (nítido y traducible). Tocar un banner hace destellar el dedo de Alaira y deja anotado por quién empezar el tour (`localStorage`, clave `kura.tourInicio`).
+- **Iniciar el tour** · **Start the tour** (sonido de inicio) y **Saltar** · **Skip**: por ahora muestran un aviso, hasta que existan el tour (A13–A17) y Hoy.
+- **Cabe sin scroll** en cualquier teléfono (probado de 375 × 629 a 430 × 932): en teléfonos altos los banners crecen; en los bajos suben sobre el barandal y se compactan.
 
 ## Estructura
 
@@ -136,6 +148,7 @@ Se entra con «Continuar» en A09; también con `#a10`. **Escenario propio**, di
 | `js/legal.js` | Términos y aviso de privacidad (textos de prototipo) y su ventana |
 | `js/devpanel.js` | Panel de ajustes de desarrollo |
 | `js/a10.js` · `js/a10-capas.js` · `js/a10-cielo.js` | A10: escena por capas, partículas del brote y cielo vivo en WebGL |
+| `js/a11.js` · `js/a11-capas.js` | A11: escena por capas, estela de chispas del índice, pétalos y paralaje de los banners |
 
 Orden de capas: escena → nubes posteriores (detrás del grupo) → nubes delanteras e inferiores → luces → logo y audio → cristal → bordes luminosos → textos y controles → estrellas y chispas (lienzo sin eventos de puntero).
 

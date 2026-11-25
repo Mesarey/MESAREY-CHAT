@@ -784,6 +784,96 @@ button, input { font: inherit; color: inherit; }
 .cta-a10 .cta-label { font-size: calc(50 * var(--v)); gap: calc(22 * var(--v)); }
 .cta-a10 .cta-arrow { width: calc(48 * var(--v)); height: calc(48 * var(--v)); }
 
+/* ---------- A11 · ¿Listo para KURA? ----------
+   Escenario propio (js/a11.js): templo con glicinas y los dos planetas de KURA, Alaira asomada al barandal que
+   señala con el índice, glicinas delante y pétalos que caen. Los banners de los guías van sobre la terraza,
+   sin panel de cristal (no hay desenfoque en vivo). */
+.scene11 {
+  position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+  background: linear-gradient(#3a2d62, #4a3b72 50%, #4b3c70 80%, #3c305e);
+  opacity: 0; visibility: hidden; scale: 1.02; transform-origin: 50% 30%;
+  --cx: 0; --cy: 0;
+}
+.scene11.is-on { visibility: visible; }
+.scene11 .a6-layer > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
+/* Alaira respira: un vaivén mínimo anclado a sus brazos sobre el barandal (solo transformación: no cuesta) */
+.a11-alaira-img { transform-origin: 40% 96%; animation: a11-respira 5.2s ease-in-out infinite alternate; }
+@keyframes a11-respira { from { scale: 1 1; rotate: 0deg; } to { scale: 1.006 1.012; rotate: -.35deg; } }
+/* punta del índice: una lucecita late; al tocar un banner destella */
+.a11-dedo { position: absolute; width: calc(76 * var(--v)); height: calc(76 * var(--v)); margin: calc(-38 * var(--v)) 0 0 calc(-38 * var(--v)); border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 244, 210, .85), rgba(255, 214, 140, .3) 40%, rgba(255, 200, 120, 0));
+  animation: a11-late 2.6s ease-in-out infinite alternate; }
+@keyframes a11-late { from { opacity: .35; scale: .8; } to { opacity: .9; scale: 1.08; } }
+.a11-dedo::after { content: ''; position: absolute; inset: calc(-34 * var(--v)); border-radius: 50%; opacity: 0;
+  background: radial-gradient(closest-side, rgba(255, 248, 222, .9), rgba(255, 214, 140, .3) 45%, rgba(255, 200, 120, 0)); }
+.scene11.is-point .a11-dedo::after { animation: a10-flor 1.1s cubic-bezier(.2, .8, .3, 1); }
+.a11-chispas { position: absolute; }
+/* glicinas del frente: ancladas al pie de la pantalla, se mecen con la brisa */
+.a11-glicina { bottom: calc(-24 * var(--v)); }
+.a11-glicina-izq { left: calc(-30 * var(--v)); }
+.a11-glicina-der { right: calc(-30 * var(--v)); scale: -1 1; } /* la misma glicina en espejo (el reflejo va en la capa, no en la imagen que se mece) */
+.a11-glicina > img { transform-origin: 20% 100%; animation: a11-mece 6.5s ease-in-out infinite alternate; }
+.a11-glicina-der > img { animation-duration: 7.4s; animation-delay: -2.4s; }
+@keyframes a11-mece { from { rotate: -1.4deg; } to { rotate: 1.2deg; } }
+.a11-petalos { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none; display: none; }
+.stage.a11-on .a11-petalos { display: block; }
+@media (prefers-reduced-motion: reduce) { .scene11 *, .scene11 *::after, .a11-card::after { animation: none !important; } .a11-petalos { display: none !important; } }
+.reduce-motion .scene11 *, .reduce-motion .scene11 *::after, .reduce-motion .a11-card::after { animation: none !important; }
+.reduce-motion .a11-petalos { display: none !important; }
+
+/* HUD de A11 · siempre cabe en la pantalla, sin scroll:
+   · teléfonos altos: lo que sobra (--g6) lo reparten los banners y los botones (95 %);
+   · teléfonos bajos: --s11 es lo que falta; los banners suben sobre el barandal y se compactan un poco. */
+.stage.in-a11 { min-height: calc(100svh - var(--safe-bottom)); --s11: clamp(0px, calc(1712 * var(--v) + var(--safe-bottom) - 100svh), calc(220 * var(--v))); }
+.stage.in-a11 .content { padding-top: calc(852 * var(--v) + var(--g6) * .1 - var(--s11) * .55); }
+.stage.in-a11 .prefs { display: none; }
+.stage.in-a11 .build { margin-top: calc(12 * var(--v) + var(--g6) * .04 - var(--s11) * .02); }
+.heading-a11 { position: absolute; left: calc(60 * var(--v)); top: calc(214 * var(--v)); width: calc(470 * var(--v)); height: auto; text-align: left; isolation: isolate; }
+.heading-a11::after { display: none; }
+.heading-a11::before { left: calc(-70 * var(--v)); right: calc(-50 * var(--v)); top: calc(-40 * var(--v)); bottom: calc(-30 * var(--v));
+  background: radial-gradient(closest-side, rgba(34, 20, 70, .55), rgba(40, 24, 80, .28) 60%, rgba(40, 24, 80, 0)); }
+.a11-eyebrow { margin: 0; font-style: italic; font-size: calc(34 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #f1e4ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(30, 16, 70, .9), 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .4); }
+.title.title-a11 { padding-top: calc(4 * var(--v)); font-style: normal; font-size: calc(88 * var(--v)); line-height: calc(96 * var(--v)); letter-spacing: 0; }
+.a11-filete { display: block; width: calc(420 * var(--v)); height: calc(30 * var(--v)); margin: calc(2 * var(--v)) 0 0 calc(-6 * var(--v)); overflow: visible; }
+.a11-filete path:first-of-type { fill: none; stroke: url(#a11-oro); stroke-width: 1.6; stroke-linecap: round; }
+.a11-estrella { fill: #fff3dc; filter: drop-shadow(0 0 3px rgba(255, 230, 180, .9)); transform-box: fill-box; transform-origin: center; animation: a11-brilla 3.2s ease-in-out infinite alternate; }
+@keyframes a11-brilla { from { opacity: .7; scale: .85; } to { opacity: 1; scale: 1.15; } }
+.a11-sub { margin: calc(10 * var(--v)) 0 0; font-style: italic; font-size: calc(36 * var(--v)); letter-spacing: calc(.4 * var(--v)); color: #f6ecff; text-shadow: 0 0 calc(12 * var(--v)) rgba(30, 16, 70, .95), 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
+
+.panel.panel-a11 { width: calc(862 * var(--v)); padding: 0; border-radius: 0; }
+.a11-guias { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: calc(14 * var(--v) + var(--g6) * .01 - var(--s11) * .01); }
+.a11-card {
+  --h: calc(142 * var(--v) + var(--g6) * .155 - var(--s11) * .1);
+  position: relative; display: block; width: 100%; height: var(--h); padding: 0; border: 0; cursor: pointer; overflow: hidden;
+  border-radius: calc(36 * var(--v)); background: #2c2350; isolation: isolate;
+  box-shadow: 0 0 calc(16 * var(--v)) rgba(214, 170, 255, .4), 0 calc(10 * var(--v)) calc(26 * var(--v)) rgba(10, 5, 30, .45);
+  transition: box-shadow .3s, scale .15s;
+}
+/* el mundo de cada guía: ventana con profundidad (se desliza un poco con el paralaje) */
+.a11-card-img { position: absolute; left: calc(-14 * var(--v)); top: calc(-8 * var(--v)); width: calc(100% + 28 * var(--v)); height: calc(100% + 16 * var(--v)); max-width: none;
+  object-fit: cover; object-position: 0 var(--fy, 45%); translate: calc(var(--bx, 0) * var(--v)) calc(var(--by, 0) * var(--v)); z-index: -1; }
+/* contorno dorado-lila y un brillo que recorre la tarjeta de vez en cuando */
+.a11-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  border: 1.5px solid rgba(246, 222, 196, .85); box-shadow: inset 0 0 calc(14 * var(--v)) rgba(230, 190, 255, .25); }
+.a11-card::after { content: ''; position: absolute; top: -20%; bottom: -20%; left: 0; width: 22%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 246, 230, .22) 45%, rgba(255, 255, 255, .32) 50%, rgba(255, 246, 230, .22) 55%, transparent);
+  translate: -140% 0; animation: a11-brillo 7.5s ease-in-out infinite; animation-delay: calc(var(--i) * .6s + 2s); }
+@keyframes a11-brillo { 0% { translate: -140% 0; } 22%, 100% { translate: 560% 0; } }
+.a11-name { position: absolute; left: 52%; top: 50%; translate: 0 -54%; display: flex; align-items: center; gap: calc(8 * var(--v));
+  font-size: calc(66 * var(--v) + var(--g6) * .03); line-height: 1; color: #fff; letter-spacing: calc(.4 * var(--v));
+  text-shadow: 0 0 calc(14 * var(--v)) rgba(10, 6, 30, .85), 0 calc(2 * var(--v)) calc(6 * var(--v)) rgba(10, 6, 30, .7); }
+.a11-name::before { content: ''; position: absolute; left: -22%; right: -18%; top: -38%; bottom: -38%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(18, 10, 42, .42), rgba(18, 10, 42, .16) 60%, rgba(18, 10, 42, 0)); } /* el nombre se lee aunque el cielo sea claro */
+.a11-chev { width: calc(34 * var(--v)); height: calc(34 * var(--v)); translate: 0 calc(4 * var(--v)); fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 3px rgba(10, 6, 30, .8)); transition: translate .35s cubic-bezier(.2, .9, .3, 1.4); }
+@media (hover: hover) { .a11-card:hover { box-shadow: 0 0 calc(22 * var(--v)) rgba(230, 190, 255, .65), 0 calc(10 * var(--v)) calc(26 * var(--v)) rgba(10, 5, 30, .45); } .a11-card:hover .a11-chev { translate: calc(6 * var(--v)) calc(4 * var(--v)); } }
+.a11-card:active { scale: .985; }
+.a11-card:focus-visible { outline: 2px solid rgba(246, 220, 255, .8); outline-offset: 3px; }
+.a11-actions { display: flex; flex-direction: column; align-items: center; margin-top: calc(28 * var(--v) + var(--g6) * .06 - var(--s11) * .06); }
+.cta.cta-a11 { width: calc(560 * var(--v)); height: calc(100 * var(--v) + var(--g6) * .05 - var(--s11) * .03); margin: 0; }
+.cta-a11 .cta-label { font-size: calc(54 * var(--v)); gap: calc(24 * var(--v)); }
+.cta-a11 .cta-arrow { width: calc(50 * var(--v)); height: calc(50 * var(--v)); }
+.a10-skip.a11-skip { width: calc(300 * var(--v)); height: calc(66 * var(--v) + var(--g6) * .03 - var(--s11) * .02); margin-top: calc(16 * var(--v) + var(--g6) * .02 - var(--s11) * .02); font-size: calc(36 * var(--v)); }
+
 /* ---------- A05 · Restaurando sesión (arranque) ----------
    La composición (899 × 1750) cubre siempre toda la pantalla, como un fondo «cover»:
    --bu es la escala que la hace llenar el ancho y el alto, sin franjas ni bordes. */

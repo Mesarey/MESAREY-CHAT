@@ -256,7 +256,7 @@ export async function createStarField({ canvas, stage, motion, isMobile, reveal 
     if (!running) return;
     const dt = Math.min((now - last) / 1000, 0.05); last = now;
     shared.uTime.value += dt;
-    shared.uReveal.value = reveal.stars; shared.uZoom.value = reveal.zoom; flareU.uFlareReveal.value = reveal.flares; sky6.uReveal6.value = reveal.sky6 ?? 0;
+    shared.uReveal.value = reveal.stars; shared.uZoom.value = reveal.zoom; flareU.uFlareReveal.value = reveal.flareless ? 0 : reveal.flares; sky6.uReveal6.value = reveal.sky6 ?? 0;
     updateFlares(dt);
     renderer.render(scene, camera);
     // Si el dispositivo va lento, se baja la resolución una sola vez.

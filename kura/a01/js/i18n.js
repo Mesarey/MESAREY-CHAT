@@ -42,6 +42,9 @@ const STRINGS = {
     a10o1: 'Sentirme mejor conmigo', a10o2: 'Calmar mi ansiedad', a10o3: 'Cuidar más mi cuerpo', a10o4: 'Avanzar hacia mis metas',
     a10o5: 'Comenzar a manifestar', a10o6: 'Aprender habilidades sociales', a10o7: 'No sé todavía. Quiero descubrirlo',
     a10Empty: 'Elige al menos una opción o toca Omitir.', a10Skip: 'Omitir',
+    a11Eyebrow: 'Tu viaje comienza', a11Title1: '¿Listo para', a11Title1F: '¿Lista para', a11Title1N: '¿Todo listo', a11Title2: 'KURA?', a11Title2F: 'KURA?', a11Title2N: 'para KURA?',
+    a11Sub: 'Ellos también te esperan.', a11Tour: 'Iniciar el tour', a11Skip: 'Saltar', a11Meet: 'Conoce a {nombre} y su mundo',
+    a11Soon: 'El tour llega en la próxima fase.',
     soon: 'Próximamente',
   },
   en: {
@@ -86,6 +89,9 @@ const STRINGS = {
     a10o1: 'Feel better about myself', a10o2: 'Calm my anxiety', a10o3: 'Take better care of my body', a10o4: 'Move toward my goals',
     a10o5: 'Start manifesting', a10o6: 'Learn social skills', a10o7: "I don't know yet. I want to find out",
     a10Empty: 'Choose at least one option, or tap Skip.', a10Skip: 'Skip',
+    a11Eyebrow: 'Your journey begins', a11Title1: 'Ready for', a11Title1F: 'Ready for', a11Title1N: 'Ready for', a11Title2: 'KURA?', a11Title2F: 'KURA?', a11Title2N: 'KURA?',
+    a11Sub: 'They’re waiting for you too.', a11Tour: 'Start the tour', a11Skip: 'Skip', a11Meet: 'Meet {nombre} and their world',
+    a11Soon: 'The tour arrives in the next phase.',
     soon: 'Coming soon',
   },
 };
