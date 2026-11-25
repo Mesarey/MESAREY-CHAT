@@ -895,16 +895,16 @@ button, input { font: inherit; color: inherit; }
   box-shadow: 0 6cqw 18cqw rgba(4, 2, 16, .7), 0 0 9cqw rgba(var(--g-acc), .28);
 }
 .guia-dialog[open] .guia-card { animation: guia-in .5s cubic-bezier(.2, .9, .3, 1.05); }
-@keyframes guia-in { from { opacity: 0; translate: 0 5cqw; scale: .95; } }
+@keyframes guia-in { from { opacity: 0; translate: 0 4cqw; } }
 .guia-card.is-in-r .guia-arte, .guia-card.is-in-r .guia-body { animation: guia-r .45s cubic-bezier(.2, .9, .3, 1); }
 .guia-card.is-in-l .guia-arte, .guia-card.is-in-l .guia-body { animation: guia-l .45s cubic-bezier(.2, .9, .3, 1); }
 @keyframes guia-r { from { opacity: 0; translate: 6cqw 0; } }
 @keyframes guia-l { from { opacity: 0; translate: -6cqw 0; } }
 .guia-arte, .guia-flashes { position: absolute; left: -3cqw; top: -3cqw; width: calc(100% + 6cqw); height: calc(100% + 6cqw); z-index: -2;
-  translate: calc(var(--gx, 0) * -2.6cqw) calc(var(--gy, 0) * -2.2cqw); transition: translate .5s cubic-bezier(.2, .8, .3, 1); }
+  translate: calc(var(--gx, 0) * -2.6cqw) calc(var(--gy, 0) * -2.2cqw); will-change: translate; }
 .guia-arte { object-fit: cover; object-position: 50% 0; }
 /* paralaje: el HUD flota al frente, en sentido contrario a la ilustración */
-.guia-body, .guia-foot { translate: calc(var(--gx, 0) * 1.3cqw) calc(var(--gy, 0) * 1cqw); transition: translate .5s cubic-bezier(.2, .8, .3, 1); }
+.guia-body, .guia-foot { translate: calc(var(--gx, 0) * 1.3cqw) calc(var(--gy, 0) * 1cqw); }
 /* Nova: flashes de cámara que se disparan al azar en el fondo */
 .guia-flashes { pointer-events: none; }
 .guia-flashes i { position: absolute; width: calc(var(--s) * 13cqw); height: calc(var(--s) * 13cqw); translate: -50% -50%; opacity: .12; border-radius: 50%;
@@ -1112,8 +1112,8 @@ button, input { font: inherit; color: inherit; }
 .guia-card[data-guia="nova"] { --g-glass: rgba(10, 26, 60, .26); }
 .guia-card[data-guia="orion"] { --g-glass: rgba(16, 26, 56, .26); }
 .guia-card:not([data-guia="amaya"]) .guia-lista, .guia-card:not([data-guia="amaya"]) .guia-filas .gi, .guia-card[data-guia="nova"] .guia-grid,
-.guia-card:not([data-guia="amaya"]) .guia-contempla, .guia-card:not([data-guia="amaya"]) .guia-nav, .guia-card:not([data-guia="amaya"]) .guia-close {
-  backdrop-filter: blur(16px) saturate(1.35); -webkit-backdrop-filter: blur(16px) saturate(1.35);
+.guia-card:not([data-guia="amaya"]) .guia-contempla {
+  backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); transform: translateZ(0);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 4cqw rgba(255, 255, 255, .04), 0 1.2cqw 4cqw rgba(0, 0, 0, .18); }
 .guia-card[data-guia="azara"] .guia-velo { background: linear-gradient(180deg, rgba(40, 6, 14, 0) 30%, rgba(58, 9, 20, .5) 46%, rgba(50, 8, 18, .68) 62%, rgba(42, 8, 16, .8) 100%); }
 .guia-card[data-guia="nova"] .guia-velo { background: linear-gradient(180deg, rgba(4, 10, 28, 0) 32%, rgba(6, 14, 36, .5) 46%, rgba(6, 12, 30, .66) 60%, rgba(6, 12, 30, .8) 100%); }
@@ -1121,6 +1121,8 @@ button, input { font: inherit; color: inherit; }
 /* el texto sigue nítido sobre el cristal */
 .guia-card:not([data-guia="amaya"]) .guia-titulo, .guia-card:not([data-guia="amaya"]) .gi, .guia-card:not([data-guia="amaya"]) .guia-contempla, .guia-card:not([data-guia="amaya"]) .guia-sub,
 .guia-card:not([data-guia="amaya"]) .gh-tag, .guia-card:not([data-guia="amaya"]) .gh-orion { text-shadow: 0 .2cqw 1.4cqw rgba(0, 0, 0, .55); }
+.guia-grid .gi-ancho { grid-column: 1 / -1; }
+.guia-card[data-guia="amaya"] .gi-ancho .gi-dato { letter-spacing: .02em; font-size: 2.9cqw; }
 .reduce-motion .guia-dialog[open] .guia-card, .reduce-motion .guia-card .guia-arte, .reduce-motion .guia-card .guia-body, .reduce-motion .guia-sheen, .reduce-motion .guia-flashes i { animation: none; }
 @media (prefers-reduced-motion: reduce) { .guia-dialog[open] .guia-card, .guia-card .guia-arte, .guia-card .guia-body, .guia-sheen, .guia-flashes i { animation: none; } }
 

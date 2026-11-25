@@ -12,6 +12,7 @@ const I = {
   cuerpo: '<circle cx="12" cy="3.6" r="1.9"/><path d="M12 6v8.2M7 8.6l5 1.4 5-1.4M9.6 21l1.3-6.8h2.2l1.3 6.8"/>',
   pulso: '<path d="M12 20.2S3.5 15 3.5 9.2A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 8.5 2.2C20.5 15 12 20.2 12 20.2Z"/><path d="M5.5 12.2h3.2l1.4-2.6 2.2 5 1.5-2.4h4.6"/>',
   estira: '<circle cx="14.5" cy="4" r="1.8"/><path d="M14 6.6 11.6 13l3.4 2.4-1 5.4M11.6 13 8 17.5l-3 .5M12.8 8.6l4.6 1.6 2.6-3"/>',
+  alarma: '<circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.4 1.6M4.5 5.5 7 3.5M19.5 5.5 17 3.5M7.5 19.5 6 21M16.5 19.5 18 21"/>',
   gota: '<path d="M12 3.2s5.6 6.2 5.6 10.2a5.6 5.6 0 0 1-11.2 0C6.4 9.4 12 3.2 12 3.2Z"/>',
   loto: '<path d="M12 19c-3.8 0-7.5-2.4-8.8-6.2 2.6-.4 5.2.4 7 2M12 19c3.8 0 7.5-2.4 8.8-6.2-2.6-.4-5.2.4-7 2M12 19c-2.2-1.8-3.4-4.4-3.4-7.2S10 6.6 12 5c2 1.6 3.4 4 3.4 6.8S14.2 17.2 12 19Z"/>',
   diamante: '<path d="M7 4h10l4 5-9 11L3 9l4-5Z"/><path d="M3 9h18M9.5 4 8 9l4 11 4-11-1.5-5"/>',
@@ -39,12 +40,12 @@ const GUIA = {
     arte: 'assets/a11/guias/amaya.webp', layout: 'grid', contemplaIco: 'sol',
     es: {
       sello: 'Cuerpo · Cuidado · Descanso', titulo: ['Mejora tu salud.'], sub: 'Reprograma tu cuerpo y tu sistema nervioso.',
-      items: [['cuerpo', 'Afirmaciones por zona del cuerpo'], ['pulso', 'Presión arterial', '120/80'], ['estira', 'Ejercicios y consejos'], ['gota', 'Agua y medicamentos', 'anillo']],
+      items: [['cuerpo', 'Afirmaciones por zona del cuerpo'], ['pulso', 'Presión arterial', '120/80'], ['estira', 'Ejercicios y consejos'], ['gota', 'Agua y medicamentos', 'anillo'], ['alarma', 'Motivación para levantarte temprano', 'Alarma que solo se apaga al resolver retos']],
       mundo: 'su ciudad de cristal', aviso: 'Amaya no sustituye a tu médico. Consulta siempre a un profesional de la salud.',
     },
     en: {
       sello: 'Body · Care · Rest', titulo: ['Improve your health.'], sub: 'Reprogram your body and your nervous system.',
-      items: [['cuerpo', 'Affirmations for each part of your body'], ['pulso', 'Blood pressure', '120/80'], ['estira', 'Exercises and tips'], ['gota', 'Water and medication', 'anillo']],
+      items: [['cuerpo', 'Affirmations for each part of your body'], ['pulso', 'Blood pressure', '120/80'], ['estira', 'Exercises and tips'], ['gota', 'Water and medication', 'anillo'], ['alarma', 'Motivation to wake up early', 'An alarm that only stops once you solve puzzles']],
       mundo: 'her city of glass', aviso: 'Amaya doesn’t replace your doctor. Always consult a health professional.',
     },
   },
@@ -67,12 +68,12 @@ const GUIA = {
     flashes: [[60.4, 23.5, 1], [63.4, 24.6, .7], [72.7, 23.4, 1], [82.5, 24.4, .9], [90.4, 25.3, .8], [97.4, 24.7, .7], [58.9, 24.3, .6], [75.7, 24.5, .6], [86.7, 24.8, .65]],
     es: {
       titulo: ['Tu presencia importa.'], sub: 'Experto en seducción y juegos sociales.',
-      items: [['aura', 'Aura de atracción'], ['grupo', 'Juego social'], ['corona', 'Reglas de oro para ligar'], ['copa', 'Domina el lugar'], ['charla', 'Habilidades sociales'], ['pin', 'Escenarios reales'], ['escudo', 'Anti-bullying'], ['corazon', 'Señales de interés']],
+      items: [['aura', 'Aura de atracción'], ['grupo', 'Juego social'], ['corona', 'Reglas de oro para ligar'], ['copa', 'Domina el lugar'], ['charla', 'Habilidades sociales'], ['pin', 'Escenarios reales'], ['escudo', 'Anti-bullying tricks'], ['corazon', 'Señales de interés']],
       mundo: 'su ciudad de noche',
     },
     en: {
       titulo: ['Your presence matters.'], sub: 'Expert in seduction and social games.',
-      items: [['aura', 'Aura of attraction'], ['grupo', 'Social game'], ['corona', 'Golden rules for dating'], ['copa', 'Own the room'], ['charla', 'Social skills'], ['pin', 'Real-life scenarios'], ['escudo', 'Anti-bullying'], ['corazon', 'Signs of interest']],
+      items: [['aura', 'Aura of attraction'], ['grupo', 'Social game'], ['corona', 'Golden rules for dating'], ['copa', 'Own the room'], ['charla', 'Social skills'], ['pin', 'Real-life scenarios'], ['escudo', 'Anti-bullying tricks'], ['corazon', 'Signs of interest']],
       mundo: 'his city at night',
     },
   },
@@ -113,7 +114,7 @@ function item([k, txt, dato]) {
   // el anillo de agua (6 de 8 vasos) ocupa el lugar del icono; los demás datos van bajo el texto
   const lead = dato === 'anillo' ? `<span class="gi-anillo" aria-hidden="true">${icon(k)}<b>6/8</b></span>` : icon(k);
   const sub = dato && dato !== 'anillo' ? `<span class="gi-dato" aria-hidden="true">${esc(dato)}</span>` : '';
-  return `<li class="gi">${lead}<span class="gi-txt">${esc(txt)}${sub}</span>${CHEV}</li>`;
+  return `<li class="gi${k === 'alarma' ? ' gi-ancho' : ''}">${lead}<span class="gi-txt">${esc(txt)}${sub}</span>${CHEV}</li>`;
 }
 
 /**
@@ -156,8 +157,12 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
     card.querySelector('.guia-start').focus({ preventScroll: true });
   }
 
-  function open(id, from) {
+  // las ilustraciones se decodifican antes de mostrarse: la ficha y su cristal aparecen ya completos
+  const decoded = {};
+  const ready = (id) => (decoded[id] ??= (() => { const im = new Image(); im.src = GUIA[id].arte; return im.decode().catch(() => {}); })());
+  async function open(id, from) {
     opener = from || null;
+    await Promise.race([ready(id), new Promise((r) => setTimeout(r, 600))]);
     render(id);
     card.classList.remove('is-in-l', 'is-in-r');
     if (!dlg.open) dlg.showModal();
@@ -166,7 +171,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
   function close() { if (dlg.open) dlg.close(); }
 
   // precarga silenciosa de las cuatro ilustraciones (al pasar de una a otra no hay parpadeo)
-  const pre = () => Object.values(GUIA).forEach((G) => { const im = new Image(); im.decoding = 'async'; im.src = G.arte; });
+  const pre = () => Object.keys(GUIA).forEach(ready);
 
   // al cerrar suena lo mismo que al cerrar Términos y Privacidad en A01 (no al empezar el tour, que tiene su propio sonido)
   let starting = false;

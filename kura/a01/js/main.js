@@ -255,6 +255,7 @@ function showView(name, { animate = true } = {}) {
   view = next;
   { const d = $('guia-dialog'); if (d.open) d.close(); } // la vista previa de un guía no sobrevive a un cambio de pantalla
   const sceneChange = sceneOf(name) !== sceneOf(prev.name);
+  if ((prev.name === 'a09' && name === 'a10') || (prev.name === 'a10' && name === 'a11')) audio.sfx('transicion'); // paso de escenario hacia adelante
   const swap = () => {
     prev.el.hidden = true; prev.el.classList.remove('is-active');
     next.el.hidden = false; next.el.classList.add('is-active');
@@ -310,6 +311,9 @@ const sceneMod = { a06: () => a06, a10: () => a10, a11: () => a11 };
 function switchScene(from, to, animate = true) {
   gsap?.killTweensOf([a01Scene, reveal]);
   for (const k of ['a06', 'a10', 'a11']) if (sceneMod[k]().el) gsap?.killTweensOf(sceneMod[k]().el);
+  // cambios rápidos: un desvanecido cortado a la mitad no deja escenas viejas encima
+  for (const k of ['a06', 'a10', 'a11']) { const m = sceneMod[k](); if (k !== to && k !== from && m.el) { m.el.style.opacity = 0; m.leave(); } }
+  if (from !== 'obs' && to !== 'obs') { a01Scene.style.opacity = 0; a01Scene.style.visibility = 'hidden'; }
   const soft = animate && gsap && !motion.reduced;
   audio.loop('starFloat', to === 'a06'); // la estrella de Alaira suena muy suave mientras se ve A06–A09
   const starsTo = to === 'obs' ? 1 : 0, sky6To = to === 'a06' ? 1 : 0;
