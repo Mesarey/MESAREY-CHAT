@@ -29,7 +29,7 @@ export const GLICINA = { src: 'assets/a11/glicina.webp', w: 204, h: 497, d: [1.2
 // Los cuatro guías que Alaira presenta. fy = encuadre vertical del retrato dentro de la tarjeta (object-position).
 export const GUIAS = [
   { id: 'amaya', nombre: 'Amaya', src: 'assets/a11/banners/amaya.webp', fy: 40 },
-  { id: 'azara', nombre: 'Azara', src: 'assets/a11/banners/azara.webp', fy: 44 },
+  { id: 'azara', nombre: 'Azara', src: 'assets/a11/banners/azara.webp', fy: 30 },
   { id: 'nova', nombre: 'Nova', src: 'assets/a11/banners/nova.webp', fy: 40 },
   { id: 'orion', nombre: 'Orion', src: 'assets/a11/banners/orion.webp', fy: 44 },
 ];
