@@ -968,27 +968,28 @@ button, input { font: inherit; color: inherit; }
 .guia-card[data-guia="azara"] .guia-contempla b::after { content: ' ·'; }
 .guia-card[data-guia="azara"] .guia-start { font-style: italic; font-weight: 500; font-size: 6cqw; border-color: rgba(255, 196, 180, .7); background: linear-gradient(180deg, rgba(150, 30, 52, .7), rgba(100, 16, 34, .75)); box-shadow: 0 0 5cqw rgba(220, 70, 90, .35), inset 0 0 3cqw rgba(255, 180, 180, .18); }
 
-/* ---- Orion · biblioteca filosófica onírica ---- */
-.guia-card[data-guia="orion"] { --g-ink: #f6eedd; --g-soft: rgba(240, 228, 206, .78); --g-acc: 236, 200, 140; --g-line: rgba(236, 210, 170, .3); --g-glass: rgba(46, 30, 82, .5);
-  --g-title: 'Cormorant', Georgia, serif; --g-body: 'Cormorant', Georgia, serif; background: #171030; }
-.guia-card[data-guia="orion"] .guia-velo { background: linear-gradient(180deg, rgba(20, 12, 42, 0) 40%, rgba(28, 18, 56, .8) 57%, rgba(24, 16, 48, .95) 70%, #171030 100%); }
-.guia-card[data-guia="orion"] .guia-titulo { font-weight: 600; font-size: 8.2cqw; line-height: 1.1; text-align: center; }
-.guia-card[data-guia="orion"] .guia-lista .gi { font-size: 4.9cqw; font-weight: 500; padding: 3.6cqw 0; }
-.guia-card[data-guia="orion"] .guia-contempla { justify-content: center; font-size: 3.9cqw; font-weight: 500; }
+/* ---- Orion · biblioteca observatorio, azul noche y oro (como sus pantallas: título a la izquierda con trazo dorado,
+   cada función en su propia barra de cristal oscuro con icono dorado) ---- */
+.guia-card[data-guia="orion"] { --g-ink: #f2e8d5; --g-soft: rgba(242, 232, 213, .74); --g-acc: 214, 164, 91; --g-line: rgba(242, 232, 213, .2); --g-glass: rgba(14, 24, 44, .58);
+  --g-title: 'Cormorant', Georgia, serif; --g-body: 'Cormorant', Georgia, serif; background: #0b1426; border-color: rgba(214, 164, 91, .4); }
+.guia-card[data-guia="orion"] .guia-velo { background: linear-gradient(180deg, rgba(8, 14, 30, 0) 36%, rgba(10, 18, 36, .72) 52%, rgba(10, 17, 34, .93) 66%, #0b1426 100%); }
+.gh-orion { position: relative; margin: 0 0 4.2cqw; font: 500 6.4cqw/1 var(--g-title); color: var(--g-ink); }
+.gh-orion::after { content: ''; position: absolute; left: 0; bottom: -2.2cqw; width: 14cqw; height: 1.2cqw; border-radius: 50%;
+  background: radial-gradient(ellipse at 30% 50%, #f3cf8a, #d6a45b 45%, rgba(214, 164, 91, 0) 72%); }
+.guia-card[data-guia="orion"] .guia-titulo { font-weight: 600; font-size: 9cqw; line-height: 1.05; text-align: left; text-shadow: 0 .4cqw 3cqw rgba(4, 8, 20, .8); }
+.guia-filas { display: flex; flex-direction: column; gap: 2.4cqw; margin-top: 4.4cqw; }
+.guia-filas .gi { padding: 2.6cqw 3.6cqw; gap: 3.4cqw; border-radius: 4.4cqw; border: 1px solid var(--g-line); background: var(--g-glass);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: inset 0 0 3cqw rgba(242, 232, 213, .05); font-size: 5.4cqw; font-weight: 600; line-height: 1.1; }
+.guia-filas .gi-ico { width: 8cqw; height: 8cqw; stroke: #d6a45b; stroke-width: 1.3; }
+.guia-filas .gi-dato { margin-top: .5cqw; font-size: 3.6cqw; font-weight: 500; font-style: italic; letter-spacing: 0; color: var(--g-soft); }
+.guia-filas .gi-chev { width: 4.4cqw; height: 4.4cqw; color: var(--g-ink); }
+.guia-card[data-guia="orion"] .guia-contempla { border-radius: 4.4cqw; font-size: 4cqw; font-weight: 500; }
+.guia-card[data-guia="orion"] .guia-contempla .gi-ico { stroke: #d6a45b; }
 .guia-card[data-guia="orion"] .gc-sep { display: none; }
 .guia-card[data-guia="orion"] .guia-contempla b::after { content: ' ·'; }
-.guia-card[data-guia="orion"] .guia-start { font-style: italic; font-weight: 500; font-size: 6cqw; border-color: rgba(236, 200, 140, .75); background: linear-gradient(180deg, rgba(110, 70, 170, .55), rgba(70, 40, 120, .6)); box-shadow: 0 0 5cqw rgba(236, 190, 120, .3), inset 0 0 3cqw rgba(200, 160, 255, .2); }
-
-/* Orion: cada función escrita en un libro abierto (ilustración de Higgsfield; texto real en tinta sobre las páginas) */
-.guia-libros { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; margin-top: 3cqw; }
-.gl { position: relative; aspect-ratio: 640 / 408; filter: drop-shadow(0 1.6cqw 2.6cqw rgba(8, 4, 24, .6)) drop-shadow(0 0 3cqw rgba(255, 200, 120, .22)); }
-.gl-libro { position: absolute; inset: 0; width: 100%; height: 100%; }
-.gl-pag { position: absolute; top: 14%; bottom: 25%; display: flex; flex-direction: column; justify-content: center; text-align: center; color: #4a2c52;
-  font-family: var(--g-body); font-weight: 600; line-height: 1.12; }
-.gl-izq { left: 13%; right: 53%; align-items: center; gap: .8cqw; font-size: 3cqw; }
-.gl-izq .gi-ico { width: 4.6cqw; height: 4.6cqw; stroke: #8a5a2c; stroke-width: 1.5; }
-.gl-izq b { font-weight: 600; }
-.gl-der { left: 53%; right: 13%; font-size: 2.6cqw; font-weight: 500; font-style: italic; color: #5a3c5e; }
+.guia-card[data-guia="orion"] .guia-start { font-weight: 600; font-size: 6cqw; border-color: rgba(214, 164, 91, .75); background: rgba(14, 24, 44, .7);
+  box-shadow: 0 0 5cqw rgba(214, 164, 91, .3), inset 0 0 3cqw rgba(214, 164, 91, .14); }
+.guia-card[data-guia="orion"] .guia-start .gi-chev, .guia-card[data-guia="orion"] .guia-nav { color: #f2e8d5; }
 
 /* ---- Nova · pop star de noche, minimalista, azul de ciudad ---- */
 .guia-card[data-guia="nova"] { --g-ink: #eef6ff; --g-soft: rgba(196, 220, 245, .74); --g-acc: 92, 200, 255; --g-line: rgba(120, 190, 255, .28); --g-glass: rgba(10, 22, 48, .55);

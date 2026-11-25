@@ -25,6 +25,7 @@ const I = {
   pin: '<path d="M12 21s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0c0 5 6.5 11 6.5 11Z"/><circle cx="12" cy="10" r="2.4"/>',
   escudo: '<path d="M12 3.2 19 6v5.4c0 4.6-3 8-7 9.4-4-1.4-7-4.8-7-9.4V6l7-2.8Z"/><path d="m8.8 12 2.2 2.2 4.4-4.4"/>',
   corazon: '<path d="M12 20S3.5 14.8 3.5 9A4.4 4.4 0 0 1 12 6.8 4.4 4.4 0 0 1 20.5 9C20.5 14.8 12 20 12 20Z"/>',
+  laurel: '<path d="M12 21v-6M8.2 19.4C5 17.8 3.4 14.6 3.8 10.6M15.8 19.4c3.2-1.6 4.8-4.8 4.4-8.8"/><path d="M5.6 16.2c-1.6-.2-2.6-1.2-3-2.6 1.6-.2 2.8.6 3 2.6ZM4.4 12.6c-1.4-.6-2-1.8-2-3.2 1.4.2 2.4 1.2 2 3.2ZM4.6 9c-1-.9-1.2-2.2-.8-3.4 1.2.6 1.8 1.8.8 3.4ZM18.4 16.2c1.6-.2 2.6-1.2 3-2.6-1.6-.2-2.8.6-3 2.6ZM19.6 12.6c1.4-.6 2-1.8 2-3.2-1.4.2-2.4 1.2-2 3.2ZM19.4 9c1-.9 1.2-2.2.8-3.4-1.2.6-1.8 1.8-.8 3.4Z"/>',
   brujula: '<circle cx="12" cy="12" r="8.5"/><path d="m15.6 8.4-2 5.2-5.2 2 2-5.2 5.2-2Z"/><path d="M12 3.5v1.6M12 18.9v1.6M3.5 12h1.6M18.9 12h1.6"/>',
   pluma: '<path d="M19.5 4.5c-6 .3-10.6 4.6-11.6 10.8l-1.4 1.4M19.5 4.5c-.3 6-4.6 10.6-10.8 11.6M19.5 4.5 9 15M4 20l2.5-3.3"/>',
   ojo: '<path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/>',
@@ -74,15 +75,15 @@ const GUIA = {
     },
   },
   orion: {
-    arte: 'assets/a11/guias/orion.webp', layout: 'libros', contemplaIco: 'ojo',
+    arte: 'assets/a11/guias/orion.webp', layout: 'filas', contemplaIco: 'ojo',
     es: {
       titulo: ['Tu camino filosófico.', 'Nunca dejes de aprender.'],
-      items: [['brujula', 'Corrientes filosóficas', 'Un camino para aprender de cada escuela'], ['pluma', 'Frases célebres', 'De estoicos, poetas y más']],
+      items: [['laurel', 'Corrientes filosóficas', 'Un camino para aprender de cada escuela'], ['pluma', 'Frases célebres', 'De estoicos, poetas y más']],
       mundo: 'su biblioteca observatorio',
     },
     en: {
       titulo: ['Your philosophical path.', 'Never stop learning.'],
-      items: [['brujula', 'Schools of philosophy', 'A path to learn from each school'], ['pluma', 'Famous quotes', 'From Stoics, poets and more']],
+      items: [['laurel', 'Schools of philosophy', 'A path to learn from each school'], ['pluma', 'Famous quotes', 'From Stoics, poets and more']],
       mundo: 'his observatory library',
     },
   },
@@ -101,10 +102,9 @@ const CHEV = '<svg class="gi-chev" viewBox="0 0 24 24" aria-hidden="true"><path 
 function heading(id, nombre, T) {
   if (id === 'amaya') return `<div class="gh-amaya"><h2 class="gh-nombre" id="guia-nombre">${esc(nombre)}</h2><p class="gh-sello">${esc(T.sello)}</p></div>`;
   if (id === 'nova') return `<h2 class="gh-tag" id="guia-nombre"><i aria-hidden="true">/</i>${esc(nombre)}</h2>`;
+  if (id === 'orion') return `<h2 class="gh-orion" id="guia-nombre">${esc(nombre)}</h2>`;
   return `<h2 class="gh-tag" id="guia-nombre"><i aria-hidden="true"></i>${esc(nombre)}<i aria-hidden="true"></i></h2>`;
 }
-// Orion: cada función escrita en las páginas de un libro abierto (izquierda: icono y título; derecha: detalle)
-const libro = ([k, titulo, detalle]) => `<li class="gl"><img class="gl-libro" src="assets/a11/guias/libro.webp" alt="" decoding="async" draggable="false"><span class="gl-pag gl-izq">${icon(k)}<b>${esc(titulo)}</b></span><span class="gl-pag gl-der">${esc(detalle)}</span></li>`;
 function item([k, txt, dato]) {
   // el anillo de agua (6 de 8 vasos) ocupa el lugar del icono; los demás datos van bajo el texto
   const lead = dato === 'anillo' ? `<span class="gi-anillo" aria-hidden="true">${icon(k)}<b>6/8</b></span>` : icon(k);
@@ -132,7 +132,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
         ${heading(id, g.nombre, T)}
         <p class="guia-titulo">${T.titulo.map((l) => `<span>${esc(l)}</span>`).join('')}</p>
         ${T.sub ? `<p class="guia-sub">${esc(T.sub)}</p>` : ''}
-        <ul class="guia-items guia-${G.layout}">${T.items.map(G.layout === 'libros' ? libro : item).join('')}</ul>
+        <ul class="guia-items guia-${G.layout}">${T.items.map(item).join('')}</ul>
         <p class="guia-contempla">${icon(G.contemplaIco)}<span><b>${U.contempla}</b> <span class="gc-sep">—</span> ${esc(T.mundo)}</span></p>
         ${T.aviso ? `<p class="guia-aviso" role="note">${esc(T.aviso)}</p>` : ''}
       </div>
@@ -161,7 +161,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
   function close() { if (dlg.open) dlg.close(); }
 
   // precarga silenciosa de las cuatro ilustraciones (al pasar de una a otra no hay parpadeo)
-  const pre = () => [...Object.values(GUIA).map((G) => G.arte), 'assets/a11/guias/libro.webp'].forEach((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; });
+  const pre = () => Object.values(GUIA).forEach((G) => { const im = new Image(); im.decoding = 'async'; im.src = G.arte; });
 
   dlg.addEventListener('close', () => { current = null; opener?.focus?.({ preventScroll: true }); opener = null; });
   dlg.addEventListener('click', (e) => { if (e.target === dlg) { sfx('tap'); close(); } }); // tocar fuera la cierra
