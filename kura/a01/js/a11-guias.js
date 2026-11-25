@@ -95,6 +95,8 @@ const UI = {
   es: { contempla: 'Modo contemplación', empezar: 'Empezar con {nombre}', cerrar: 'Cerrar', anterior: 'Guía anterior', siguiente: 'Siguiente guía' },
   en: { contempla: 'Contemplation mode', empezar: 'Start with {nombre}', cerrar: 'Close', anterior: 'Previous guide', siguiente: 'Next guide' },
 };
+/** Sonido propio de cada guía al elegirlo (banner o flechas): guiaAmaya, guiaAzara, guiaNova, guiaOrion. */
+export const guideSound = (id) => 'guia' + id[0].toUpperCase() + id.slice(1);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const ARROW_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
 const ARROW_R = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -148,7 +150,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
 
   function step(dir) {
     const i = guias.findIndex((x) => x.id === current), next = guias[(i + dir + guias.length) % guias.length].id;
-    sfx('tap');
+    sfx(guideSound(next));
     render(next);
     if (!reduced()) { card.classList.remove('is-in-l', 'is-in-r'); void card.offsetWidth; card.classList.add(dir > 0 ? 'is-in-r' : 'is-in-l'); }
     card.querySelector('.guia-start').focus({ preventScroll: true });

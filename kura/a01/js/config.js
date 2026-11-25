@@ -78,7 +78,9 @@ export const config = {
     // Sonidos con archivo propio. Los que no están aquí (toque, enfoque, alternar) se sintetizan.
     // Auditoría de volumen: ajuste en dB por sonido para que todos lleguen al mismo nivel
     // (pico de corto plazo ≈ −24 dBFS medido dentro de la app). Medido con audio._measure(nombre).
-    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: -10, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8, start: 14, starFloat: -1, decline: 3, fireworks: -29, greet: -15.4 },
+    sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: -10, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8, start: 14, starFloat: -1, decline: 3, fireworks: -29, greet: -15.4,
+      guiaAmaya: -2.1, guiaAzara: -11.5, guiaNova: -21.1, guiaOrion: -1.6 },
+    // los cuatro sonidos de guía de A11 quedan iguales entre sí y 5 dB por debajo del resto de los efectos
     // fireworks: más bajo que la estrella (≈ −49 dB), como un eco lejano
     // starFloat es un fondo muy sutil (≈ 23 dB por debajo de los demás sonidos), en bucle mientras se ve A06
     sfxFiles: {
@@ -94,6 +96,10 @@ export const config = {
       fireworks: 'audio/sfx/fuegos-artificiales.wav', // A07: fuegos artificiales al poner el nombre
       decline: 'audio/sfx/falta-dato.wav',         // falta un dato para avanzar: campos vacíos en A01–A03 y la introducción (A07 en adelante)
       starFloat: 'audio/sfx/estrella-flotando.wav', // la estrella de la mano de Alaira (A06), en bucle y muy suave
+      guiaAmaya: 'audio/sfx/guia-amaya.wav',       // A11: elegir a Amaya (banner o flechas de la vista previa)
+      guiaAzara: 'audio/sfx/guia-azara.wav',       // A11: elegir a Azara
+      guiaNova: 'audio/sfx/guia-nova.wav',         // A11: elegir a Nova
+      guiaOrion: 'audio/sfx/guia-orion.wav',       // A11: elegir a Orion
     },
   },
   performance: {

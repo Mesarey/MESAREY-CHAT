@@ -16,7 +16,7 @@ import { mountA06 } from './a06.js';
 import { mountA10 } from './a10.js';
 import { mountA11 } from './a11.js';
 import { GUIAS } from './a11-capas.js';
-import { guidePreview } from './a11-guias.js';
+import { guidePreview, guideSound } from './a11-guias.js';
 import { makeCombo } from './fecha.js';
 import { fireworks as launchFireworks } from './fuegos.js';
 import { TWINKLES as A06_STARS } from './a06-estrellas.js';
@@ -558,7 +558,7 @@ const preview = guidePreview({
 guiaFicha = preview;
 guiasEl.addEventListener('click', (e) => {
   const card = e.target.closest('.a11-card'); if (!card) return;
-  audio.sfx('tap'); a11.sparkle(16);
+  audio.sfx(guideSound(card.dataset.guia)); a11.sparkle(16); // cada guía suena distinto al elegirlo
   if (!motion.reduced) { const r = card.getBoundingClientRect(); stars?.burst(r.left + r.width * .3, r.top + r.height / 2, .8); }
   preview.open(card.dataset.guia, card);
 });
