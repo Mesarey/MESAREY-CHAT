@@ -724,7 +724,15 @@ button, input { font: inherit; color: inherit; }
 .stage.in-a10 .prefs { display: none; }
 .stage.in-a10 .build { margin-top: calc(12 * var(--v) + var(--g6) * .06 - var(--s10) * .02); }
 .heading-a10 { height: auto; padding-bottom: calc(14 * var(--v) + var(--g6) * .04 - var(--s10) * .04); }
-.heading-a10::before, .heading-a10::after { display: none; }
+.heading-a10 { isolation: isolate; }
+.heading-a10::after { display: none; }
+/* nube oscura y translúcida detrás del título: lo despega de la bruma clara (quieta, sin desenfoque en vivo) */
+.heading-a10::before { display: block; content: ''; position: absolute; z-index: -1; pointer-events: none;
+  left: calc(-20 * var(--v)); right: calc(-20 * var(--v)); top: calc(-34 * var(--v)); bottom: calc(-6 * var(--v));
+  background:
+    radial-gradient(54% 60% at 50% 48%, rgba(30, 17, 66, .7), rgba(38, 22, 80, .46) 55%, rgba(48, 30, 92, 0) 100%),
+    radial-gradient(32% 46% at 20% 40%, rgba(36, 21, 76, .38), transparent 100%),
+    radial-gradient(32% 46% at 80% 40%, rgba(36, 21, 76, .38), transparent 100%); }
 .title.title-a10 { padding-top: 0; font-size: calc(72 * var(--v)); line-height: calc(82 * var(--v)); }
 .a10-hint { margin: calc(2 * var(--v)) 0 0; font-style: italic; font-size: calc(33 * var(--v)); letter-spacing: calc(.6 * var(--v)); color: #dcc8ff; text-shadow: 0 0 calc(12 * var(--v)) rgba(40, 20, 80, .9), 0 0 calc(10 * var(--v)) rgba(200, 150, 255, .45); }
 .panel-a10 { width: calc(862 * var(--v)); border-radius: calc(66 * var(--v)); padding: calc(24 * var(--v) + var(--g6) * .08 - var(--s10) * .03) calc(28 * var(--v)) calc(24 * var(--v) + var(--g6) * .06 - var(--s10) * .03); }
