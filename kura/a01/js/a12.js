@@ -84,7 +84,7 @@ function makeRig(canvas, imgs) {
 }
 
 /* ---------- Cielo estrellado (como el de A01) ----------
-   El fondo trae su cielo pintado (vía láctea y estrellas, hecho con Higgsfield). Cada estrella pintada se detectó
+   Pocas estrellas sobre el cielo del fondo (sin saturarlo), en posiciones fijas
    (data/estrellas-a12.json: [x, y, tamaño] en proporción del fondo) y aquí cobra vida en su lugar: titila, las grandes
    llevan destello en cruz y un destello óptico horizontal lento como los de A01; de vez en cuando cruza una fugaz. */
 function makeSky(canvas) {
