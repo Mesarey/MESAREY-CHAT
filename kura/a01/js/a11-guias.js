@@ -74,15 +74,15 @@ const GUIA = {
     },
   },
   orion: {
-    arte: 'assets/a11/guias/orion.webp', layout: 'lista', contemplaIco: 'ojo',
+    arte: 'assets/a11/guias/orion.webp', layout: 'libros', contemplaIco: 'ojo',
     es: {
       titulo: ['Tu camino filosófico.', 'Nunca dejes de aprender.'],
-      items: [['brujula', 'Un camino por las corrientes filosóficas'], ['pluma', 'Frases célebres de estoicos, poetas y más']],
+      items: [['brujula', 'Corrientes filosóficas', 'Un camino para aprender de cada escuela'], ['pluma', 'Frases célebres', 'De estoicos, poetas y más']],
       mundo: 'su biblioteca observatorio',
     },
     en: {
       titulo: ['Your philosophical path.', 'Never stop learning.'],
-      items: [['brujula', 'A path through the schools of philosophy'], ['pluma', 'Famous quotes from Stoics, poets and more']],
+      items: [['brujula', 'Schools of philosophy', 'A path to learn from each school'], ['pluma', 'Famous quotes', 'From Stoics, poets and more']],
       mundo: 'his observatory library',
     },
   },
@@ -103,6 +103,8 @@ function heading(id, nombre, T) {
   if (id === 'nova') return `<h2 class="gh-tag" id="guia-nombre"><i aria-hidden="true">/</i>${esc(nombre)}</h2>`;
   return `<h2 class="gh-tag" id="guia-nombre"><i aria-hidden="true"></i>${esc(nombre)}<i aria-hidden="true"></i></h2>`;
 }
+// Orion: cada función escrita en las páginas de un libro abierto (izquierda: icono y título; derecha: detalle)
+const libro = ([k, titulo, detalle]) => `<li class="gl"><img class="gl-libro" src="assets/a11/guias/libro.webp" alt="" decoding="async" draggable="false"><span class="gl-pag gl-izq">${icon(k)}<b>${esc(titulo)}</b></span><span class="gl-pag gl-der">${esc(detalle)}</span></li>`;
 function item([k, txt, dato]) {
   // el anillo de agua (6 de 8 vasos) ocupa el lugar del icono; los demás datos van bajo el texto
   const lead = dato === 'anillo' ? `<span class="gi-anillo" aria-hidden="true">${icon(k)}<b>6/8</b></span>` : icon(k);
@@ -130,7 +132,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
         ${heading(id, g.nombre, T)}
         <p class="guia-titulo">${T.titulo.map((l) => `<span>${esc(l)}</span>`).join('')}</p>
         ${T.sub ? `<p class="guia-sub">${esc(T.sub)}</p>` : ''}
-        <ul class="guia-items guia-${G.layout}">${T.items.map(item).join('')}</ul>
+        <ul class="guia-items guia-${G.layout}">${T.items.map(G.layout === 'libros' ? libro : item).join('')}</ul>
         <p class="guia-contempla">${icon(G.contemplaIco)}<span><b>${U.contempla}</b> <span class="gc-sep">—</span> ${esc(T.mundo)}</span></p>
         ${T.aviso ? `<p class="guia-aviso" role="note">${esc(T.aviso)}</p>` : ''}
       </div>
@@ -159,7 +161,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
   function close() { if (dlg.open) dlg.close(); }
 
   // precarga silenciosa de las cuatro ilustraciones (al pasar de una a otra no hay parpadeo)
-  const pre = () => Object.values(GUIA).forEach((G) => { const im = new Image(); im.decoding = 'async'; im.src = G.arte; });
+  const pre = () => [...Object.values(GUIA).map((G) => G.arte), 'assets/a11/guias/libro.webp'].forEach((src) => { const im = new Image(); im.decoding = 'async'; im.src = src; });
 
   dlg.addEventListener('close', () => { current = null; opener?.focus?.({ preventScroll: true }); opener = null; });
   dlg.addEventListener('click', (e) => { if (e.target === dlg) { sfx('tap'); close(); } }); // tocar fuera la cierra

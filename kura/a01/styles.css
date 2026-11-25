@@ -979,6 +979,17 @@ button, input { font: inherit; color: inherit; }
 .guia-card[data-guia="orion"] .guia-contempla b::after { content: ' ·'; }
 .guia-card[data-guia="orion"] .guia-start { font-style: italic; font-weight: 500; font-size: 6cqw; border-color: rgba(236, 200, 140, .75); background: linear-gradient(180deg, rgba(110, 70, 170, .55), rgba(70, 40, 120, .6)); box-shadow: 0 0 5cqw rgba(236, 190, 120, .3), inset 0 0 3cqw rgba(200, 160, 255, .2); }
 
+/* Orion: cada función escrita en un libro abierto (ilustración de Higgsfield; texto real en tinta sobre las páginas) */
+.guia-libros { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; margin-top: 3cqw; }
+.gl { position: relative; aspect-ratio: 640 / 408; filter: drop-shadow(0 1.6cqw 2.6cqw rgba(8, 4, 24, .6)) drop-shadow(0 0 3cqw rgba(255, 200, 120, .22)); }
+.gl-libro { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gl-pag { position: absolute; top: 14%; bottom: 25%; display: flex; flex-direction: column; justify-content: center; text-align: center; color: #4a2c52;
+  font-family: var(--g-body); font-weight: 600; line-height: 1.12; }
+.gl-izq { left: 13%; right: 53%; align-items: center; gap: .8cqw; font-size: 3cqw; }
+.gl-izq .gi-ico { width: 4.6cqw; height: 4.6cqw; stroke: #8a5a2c; stroke-width: 1.5; }
+.gl-izq b { font-weight: 600; }
+.gl-der { left: 53%; right: 13%; font-size: 2.6cqw; font-weight: 500; font-style: italic; color: #5a3c5e; }
+
 /* ---- Nova · pop star de noche, minimalista, azul de ciudad ---- */
 .guia-card[data-guia="nova"] { --g-ink: #eef6ff; --g-soft: rgba(196, 220, 245, .74); --g-acc: 92, 200, 255; --g-line: rgba(120, 190, 255, .28); --g-glass: rgba(10, 22, 48, .55);
   --g-title: 'Outfit', 'Helvetica Neue', Arial, sans-serif; --g-body: 'Outfit', 'Helvetica Neue', Arial, sans-serif; background: #060c1e; border-color: rgba(92, 200, 255, .45); }
