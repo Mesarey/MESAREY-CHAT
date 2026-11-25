@@ -36,7 +36,8 @@ let stars = null;
 // Estado de aparición del lienzo de Three.js (estrellas y destellos), animado junto con la escena.
 const reveal = { stars: motion.reduced ? 1 : 0, flares: motion.reduced ? 1 : 0, zoom: motion.reduced ? 1 : 1.06, sky6: 0 }; // sky6: estrellas del cielo de A06
 let a06 = null, a10 = null, a11 = null;
-const tilt = parallax(stage, motion, unit, (o) => { stars?.shift(o); a06?.look(o.n); a10?.look(o.n); a11?.look(o.n); });
+let guiaFicha = null; // vista previa de los guías de A11 (también con paralaje)
+const tilt = parallax(stage, motion, unit, (o) => { stars?.shift(o); a06?.look(o.n); a10?.look(o.n); a11?.look(o.n); guiaFicha?.look(o.n); });
 // A06 · Bienvenida con Alaira: su escenario se arma la primera vez que hace falta (o en segundo plano).
 a06 = mountA06({ stage, motion, onLayers: (els) => tilt.addLayers(els) });
 // A10 · ¿Qué te motiva a cambiar tu Aura?: escenario propio (Alaira en la luna creciente sobre el lago).
@@ -554,6 +555,7 @@ const preview = guidePreview({
   guias: GUIAS, lang: currentLang, sfx: (n) => audio.sfx(n), reduced: () => motion.reduced,
   onStart: (id) => { audio.sfx('start'); a11.sparkle(20); try { localStorage.setItem('kura.tourInicio', id); } catch {} toast(t('a11Soon')); },
 });
+guiaFicha = preview;
 guiasEl.addEventListener('click', (e) => {
   const card = e.target.closest('.a11-card'); if (!card) return;
   audio.sfx('tap'); a11.sparkle(16);

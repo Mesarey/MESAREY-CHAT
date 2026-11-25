@@ -63,6 +63,8 @@ const GUIA = {
   },
   nova: {
     arte: 'assets/a11/guias/nova.webp', layout: 'grid', contemplaIco: 'ojo',
+    // flashes de los fotógrafos del fondo (en % de la ilustración): [x, y, tamaño]
+    flashes: [[60.4, 23.5, 1], [63.4, 24.6, .7], [72.7, 23.4, 1], [82.5, 24.4, .9], [90.4, 25.3, .8], [97.4, 24.7, .7], [58.9, 24.3, .6], [75.7, 24.5, .6], [86.7, 24.8, .65]],
     es: {
       titulo: ['Tu presencia importa.'], sub: 'Experto en seducción y juegos sociales.',
       items: [['aura', 'Aura de atracción'], ['grupo', 'Juego social'], ['corona', 'Reglas de oro para ligar'], ['copa', 'Domina el lugar'], ['charla', 'Habilidades sociales'], ['pin', 'Escenarios reales'], ['escudo', 'Anti-bullying'], ['corazon', 'Señales de interés']],
@@ -126,6 +128,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
     card.dataset.guia = id;
     card.innerHTML = `
       <img class="guia-arte" src="${G.arte}" alt="" decoding="async" draggable="false">
+      ${G.flashes ? `<div class="guia-flashes" aria-hidden="true">${G.flashes.map(([x, y, s], i) => `<i style="left:${x}%;top:${y}%;--s:${s};--d:${(i * 1.13) % 3.3}s;--t:${1.5 + (i * .61) % 1.9}s"></i>`).join('')}</div>` : ''}
       <div class="guia-velo" aria-hidden="true"></div>
       <button type="button" class="guia-close" aria-label="${U.cerrar}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" /></svg></button>
       <div class="guia-body">
@@ -138,7 +141,7 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
       </div>
       <div class="guia-foot">
         <button type="button" class="guia-nav guia-prev" aria-label="${U.anterior}">${ARROW_L}</button>
-        <button type="button" class="guia-start"><span>${esc(U.empezar.replace('{nombre}', g.nombre))}</span>${CHEV}</button>
+        <button type="button" class="guia-start"><i class="guia-sheen" aria-hidden="true"></i><span>${esc(U.empezar.replace('{nombre}', g.nombre))}</span>${CHEV}</button>
         <button type="button" class="guia-nav guia-next" aria-label="${U.siguiente}">${ARROW_R}</button>
       </div>`;
   }
@@ -163,13 +166,15 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
   // precarga silenciosa de las cuatro ilustraciones (al pasar de una a otra no hay parpadeo)
   const pre = () => Object.values(GUIA).forEach((G) => { const im = new Image(); im.decoding = 'async'; im.src = G.arte; });
 
-  dlg.addEventListener('close', () => { current = null; opener?.focus?.({ preventScroll: true }); opener = null; });
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) { sfx('tap'); close(); } }); // tocar fuera la cierra
+  // al cerrar suena lo mismo que al cerrar Términos y Privacidad en A01 (no al empezar el tour, que tiene su propio sonido)
+  let starting = false;
+  dlg.addEventListener('close', () => { if (!starting) sfx('closeLegal'); starting = false; current = null; opener?.focus?.({ preventScroll: true }); opener = null; });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); }); // tocar fuera la cierra
   card.addEventListener('click', (e) => {
-    if (e.target.closest('.guia-close')) { sfx('tap'); close(); }
+    if (e.target.closest('.guia-close')) close();
     else if (e.target.closest('.guia-prev')) step(-1);
     else if (e.target.closest('.guia-next')) step(1);
-    else if (e.target.closest('.guia-start')) { const id = current; close(); onStart(id); }
+    else if (e.target.closest('.guia-start')) { const id = current; starting = true; close(); onStart(id); }
   });
   dlg.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
@@ -186,5 +191,12 @@ export function guidePreview({ guias, lang, sfx, onStart, reduced }) {
   card.addEventListener('pointercancel', () => { tracking = false; });
   document.addEventListener('kura:lang', () => { if (current) render(current); });
 
-  return { open, close, prefetch: pre, get current() { return current; }, get isOpen() { return dlg.open; } };
+  /** Paralaje (cursor o giroscopio): la ilustración va al fondo y el HUD flota al frente. n = [x, y] en −1…1. */
+  function look([x, y]) {
+    if (!dlg.open) return;
+    const r = reduced(), nx = r ? 0 : Math.max(-1, Math.min(1, x)), ny = r ? 0 : Math.max(-1, Math.min(1, y));
+    card.style.setProperty('--gx', nx.toFixed(3)); card.style.setProperty('--gy', ny.toFixed(3));
+  }
+
+  return { open, close, look, prefetch: pre, get current() { return current; }, get isOpen() { return dlg.open; } };
 }
