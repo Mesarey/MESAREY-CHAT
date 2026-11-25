@@ -1,7 +1,7 @@
 // A12 · Alaira, tu guía principal (se llega con «Saltar» en A11).
 // Escenario propio: el jardín lunar de Alaira (fondo sin ella) y Alaira recortada encima, animada al estilo Live2D
 // con WebGL sobre una sola imagen:
-//   · un mapa de pesos (assets/a12/pesos.png: R cabello, G tela, B cabeza) dice cuánto se mueve cada zona;
+//   · un mapa de pesos (assets/a12/pesos.png: R cabello, G falda (solo de la cadera hacia abajo, sin piernas), B cabeza) dice cuánto se mueve cada zona;
 //   · el cabello y las capas translúcidas de la falda ondean, el torso respira y la cabeza se balancea un poco;
 //   · parpadeo con párpados generados con Higgsfield sobre su propia cara (a medio y cerrados), a ritmo natural;
 //   · la poción de su mano late con una luz suave.
@@ -33,8 +33,6 @@ void main(){
   d.x+=w.g*(11.*sin(t*1.25+uv.y*7.+uv.x*4.)+3.*sin(t*2.3+uv.y*13.-uv.x*5.)+1.2*sin(t*3.7+uv.y*21.));
   d.y+=w.g*(4.*cos(t*1.05+uv.x*6.)+1.5*sin(t*2.6+uv.x*11.));
   d+=w.b*vec2(1.5*sin(t*.55)+look.x*3.,.9*sin(t*.8)+look.y*1.6);
-  float br=smoothstep(.12,.22,uv.y)*(1.-smoothstep(.38,.52,uv.y));
-  d.y+=br*1.5*sin(t*1.6);
   vec2 s=uv-d*px;
   vec4 c=texture2D(tex,s);
   vec2 e=(s-eye.xy)/eye.zw;
