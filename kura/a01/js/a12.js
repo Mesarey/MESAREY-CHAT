@@ -30,8 +30,8 @@ void main(){
   vec2 d=vec2(0.);
   d.x+=w.r*(5.5*sin(t*1.15+uv.y*9.)+1.8*sin(t*2.3+uv.y*17.));
   d.y+=w.r*1.4*sin(t*.9+uv.x*7.);
-  d.x+=w.g*(6.5*sin(t*1.25+uv.y*7.+uv.x*4.)+1.5*sin(t*2.1+uv.y*13.));
-  d.y+=w.g*2.2*cos(t*1.05+uv.x*6.);
+  d.x+=w.g*(11.*sin(t*1.25+uv.y*7.+uv.x*4.)+3.*sin(t*2.3+uv.y*13.-uv.x*5.)+1.2*sin(t*3.7+uv.y*21.));
+  d.y+=w.g*(4.*cos(t*1.05+uv.x*6.)+1.5*sin(t*2.6+uv.x*11.));
   d+=w.b*vec2(1.5*sin(t*.55)+look.x*3.,.9*sin(t*.8)+look.y*1.6);
   float br=smoothstep(.12,.22,uv.y)*(1.-smoothstep(.38,.52,uv.y));
   d.y+=br*1.5*sin(t*1.6);
@@ -83,48 +83,52 @@ function makeRig(canvas, imgs) {
   };
 }
 
-/* ---------- Cielo estrellado (como el de A01): estrellas que titilan, algunas con destello en cruz, y estrellas fugaces ---------- */
-// Viven en la capa del fondo (se mueven con ella) y solo en el cielo; se apartan de los dos planetas.
-const PLANETAS = [[0.75, 0.096, 0.14], [0.787, 0.172, 0.03]]; // [x, y, radio] en proporción del fondo (radio sobre el ancho)
+/* ---------- Cielo estrellado (como el de A01) ----------
+   El fondo trae su cielo pintado (vía láctea y estrellas, hecho con Higgsfield). Cada estrella pintada se detectó
+   (data/estrellas-a12.json: [x, y, tamaño] en proporción del fondo) y aquí cobra vida en su lugar: titila, las grandes
+   llevan destello en cruz y un destello óptico horizontal lento como los de A01; de vez en cuando cruza una fugaz. */
 function makeSky(canvas) {
   const g = canvas.getContext('2d');
-  let W = 1, H = 1, q = 1, stars = [], shoot = null, nextShoot = 0;
-  const dot = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
-    const r = x.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.12, 'rgba(255,244,255,.95)'); r.addColorStop(.3, 'rgba(214,190,255,.35)'); r.addColorStop(1, 'rgba(200,170,255,0)');
-    x.fillStyle = r; x.fillRect(0, 0, 64, 64); return c; })();
-  function seed() {
-    stars = [];
-    for (let i = 0; i < 260; i++) {
-      const x = Math.random(), y = Math.pow(Math.random(), 1.35) * 0.5;
-      if (PLANETAS.some(([px, py, pr]) => Math.hypot((x - px) * W, (y - py) * H) < pr * W * 1.05)) continue;
-      const big = Math.random() < 0.11;
-      stars.push({ x, y, s: big ? 2.2 + Math.random() * 1.6 : 0.6 + Math.random() * 1.1, ph: Math.random() * 6.3, f: 0.4 + Math.random() * 1.4, big, a: 0.45 + Math.random() * 0.55 });
-    }
-  }
+  let W = 1, H = 1, stars = [], shoot = null, nextShoot = 2500;
+  const sprite = (inner, outer) => { const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
+    const r = x.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, '#fff'); r.addColorStop(.1, inner); r.addColorStop(.32, outer); r.addColorStop(1, 'rgba(190,160,255,0)');
+    x.fillStyle = r; x.fillRect(0, 0, 64, 64); return c; };
+  const dot = sprite('rgba(255,246,255,.95)', 'rgba(214,186,255,.32)'), warm = sprite('rgba(255,236,214,.95)', 'rgba(255,200,230,.3)');
+  const streak = (() => { const c = document.createElement('canvas'); c.width = 256; c.height = 16; const x = c.getContext('2d');
+    const l = x.createLinearGradient(0, 0, 256, 0); l.addColorStop(0, 'rgba(200,170,255,0)'); l.addColorStop(.5, 'rgba(255,246,255,.9)'); l.addColorStop(1, 'rgba(200,170,255,0)');
+    const v = x.createLinearGradient(0, 0, 0, 16); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(.5, '#000'); v.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = l; x.fillRect(0, 0, 256, 16); x.globalCompositeOperation = 'destination-in'; x.fillStyle = v; x.fillRect(0, 0, 256, 16); return c; })();
+  fetch('data/estrellas-a12.json').then((r) => r.json()).then((list) => {
+    stars = list.map(([x, y, s]) => ({ x, y, s, big: s > 0.4, ph: Math.random() * 6.3, f: s > 0.4 ? 0.5 + Math.random() * 0.5 : 0.9 + Math.random() * 2.2,
+      sp: Math.random() < 0.3 ? warm : dot, fl: Math.random() * 6.3 }));
+  }).catch(() => {});
   function fit() {
     const r = canvas.getBoundingClientRect(); if (!r.width) return;
-    q = Math.min(2, devicePixelRatio || 1); const w = Math.round(r.width * q), h = Math.round(r.height * q);
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = W = w; canvas.height = H = h; seed(); }
+    const q = Math.min(2, devicePixelRatio || 1); const w = Math.round(r.width * q), h = Math.round(r.height * q);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = W = w; canvas.height = H = h; }
   }
   function draw(now) {
     const t = now / 1000, u = W / 1000;
     g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter';
     for (const st of stars) {
-      const tw = 0.55 + 0.45 * Math.sin(t * st.f + st.ph), fade = 1 - Math.max(0, (st.y - 0.34) / 0.16);
-      const a = st.a * tw * fade; if (a <= 0.02) continue;
-      const s = st.s * u * 7 * (0.8 + 0.25 * tw);
-      g.globalAlpha = a; g.drawImage(dot, st.x * W - s / 2, st.y * H - s / 2, s, s);
-      if (st.big) { // destello en cruz, como los de A01
-        const L = s * 2.4 * tw; g.globalAlpha = a * 0.7; g.fillStyle = '#f3e8ff';
-        g.fillRect(st.x * W - L, st.y * H - 0.6 * u, L * 2, 1.2 * u); g.fillRect(st.x * W - 0.6 * u, st.y * H - L * 0.7, 1.2 * u, L * 1.4);
+      const x = st.x * W, y = st.y * H;
+      const tw = Math.pow(0.5 + 0.5 * Math.sin(t * st.f + st.ph), 1.6); // titileo marcado: casi se apaga y vuelve
+      const s = (st.big ? 26 + st.s * 22 : 9 + st.s * 16) * u * (0.75 + 0.45 * tw);
+      g.globalAlpha = 0.15 + 0.85 * tw; g.drawImage(st.sp, x - s / 2, y - s / 2, s, s);
+      if (st.big) {
+        // destello óptico horizontal lento (como A01) y cruz que respira
+        const k = 0.5 + 0.5 * Math.sin(t * 0.45 + st.fl), L = (55 + 50 * k) * u;
+        g.globalAlpha = 0.25 + 0.55 * k; g.drawImage(streak, x - L, y - 3 * u, L * 2, 6 * u);
+        const c = (24 + 14 * tw) * u; g.globalAlpha = 0.35 + 0.5 * tw; g.drawImage(streak, x - c / 2, y - 1.5 * u, c, 3 * u);
+        g.save(); g.translate(x, y); g.rotate(Math.PI / 2); g.drawImage(streak, -c * 0.4, -1.5 * u, c * 0.8, 3 * u); g.restore();
       }
     }
-    if (!shoot && now > nextShoot) { shoot = { x: 0.15 + Math.random() * 0.5, y: 0.04 + Math.random() * 0.14, t0: now }; nextShoot = now + 7000 + Math.random() * 9000; }
+    if (!shoot && now > nextShoot) { shoot = { x: 0.1 + Math.random() * 0.5, y: 0.03 + Math.random() * 0.15, t0: now }; nextShoot = now + 6000 + Math.random() * 8000; }
     if (shoot) {
       const e = (now - shoot.t0) / 1100; if (e > 1) shoot = null; else {
-        const x = (shoot.x + e * 0.32) * W, y = (shoot.y + e * 0.12) * H, len = 90 * u;
+        const x = (shoot.x + e * 0.32) * W, y = (shoot.y + e * 0.12) * H, len = 110 * u;
         const gr = g.createLinearGradient(x, y, x - len, y - len * 0.37); gr.addColorStop(0, 'rgba(255,250,255,.95)'); gr.addColorStop(1, 'rgba(210,180,255,0)');
-        g.globalAlpha = Math.sin(e * Math.PI); g.strokeStyle = gr; g.lineWidth = 1.6 * u; g.beginPath(); g.moveTo(x, y); g.lineTo(x - len, y - len * 0.37); g.stroke();
+        g.globalAlpha = Math.sin(e * Math.PI); g.strokeStyle = gr; g.lineWidth = 1.8 * u; g.beginPath(); g.moveTo(x, y); g.lineTo(x - len, y - len * 0.37); g.stroke();
       }
     }
     g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
