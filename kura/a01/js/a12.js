@@ -10,7 +10,7 @@
 const ESC = {
   camara: [18, 11],
   fondo: { src: 'assets/a12/fondo.webp', box: [-50, -31, 1011, 1788], d: [0.08, 0.05] },
-  alaira: { src: 'assets/a12/alaira.webp', box: [330, 96, 616, 1060], d: [0.3, 0.16], tex: [1000, 1722] },
+  alaira: { src: 'assets/a12/alaira.webp', box: [8, 70, 895, 1541], d: [0.3, 0.16], tex: [1000, 1722] },
   pesos: 'assets/a12/pesos.png',
   parpados: { medio: 'assets/a12/parpadeo-medio.png', cerrado: 'assets/a12/parpadeo-cerrado.png', rect: [0.4012, 0.0788, 0.1752, 0.0374] },
   pocion: [0.248, 0.122], // centro de la luz de la poción (proporción de la capa de Alaira)
@@ -83,10 +83,59 @@ function makeRig(canvas, imgs) {
   };
 }
 
+/* ---------- Cielo estrellado (como el de A01): estrellas que titilan, algunas con destello en cruz, y estrellas fugaces ---------- */
+// Viven en la capa del fondo (se mueven con ella) y solo en el cielo; se apartan de los dos planetas.
+const PLANETAS = [[0.75, 0.096, 0.14], [0.787, 0.172, 0.03]]; // [x, y, radio] en proporción del fondo (radio sobre el ancho)
+function makeSky(canvas) {
+  const g = canvas.getContext('2d');
+  let W = 1, H = 1, q = 1, stars = [], shoot = null, nextShoot = 0;
+  const dot = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
+    const r = x.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.12, 'rgba(255,244,255,.95)'); r.addColorStop(.3, 'rgba(214,190,255,.35)'); r.addColorStop(1, 'rgba(200,170,255,0)');
+    x.fillStyle = r; x.fillRect(0, 0, 64, 64); return c; })();
+  function seed() {
+    stars = [];
+    for (let i = 0; i < 260; i++) {
+      const x = Math.random(), y = Math.pow(Math.random(), 1.35) * 0.5;
+      if (PLANETAS.some(([px, py, pr]) => Math.hypot((x - px) * W, (y - py) * H) < pr * W * 1.05)) continue;
+      const big = Math.random() < 0.11;
+      stars.push({ x, y, s: big ? 2.2 + Math.random() * 1.6 : 0.6 + Math.random() * 1.1, ph: Math.random() * 6.3, f: 0.4 + Math.random() * 1.4, big, a: 0.45 + Math.random() * 0.55 });
+    }
+  }
+  function fit() {
+    const r = canvas.getBoundingClientRect(); if (!r.width) return;
+    q = Math.min(2, devicePixelRatio || 1); const w = Math.round(r.width * q), h = Math.round(r.height * q);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = W = w; canvas.height = H = h; seed(); }
+  }
+  function draw(now) {
+    const t = now / 1000, u = W / 1000;
+    g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = 'lighter';
+    for (const st of stars) {
+      const tw = 0.55 + 0.45 * Math.sin(t * st.f + st.ph), fade = 1 - Math.max(0, (st.y - 0.34) / 0.16);
+      const a = st.a * tw * fade; if (a <= 0.02) continue;
+      const s = st.s * u * 7 * (0.8 + 0.25 * tw);
+      g.globalAlpha = a; g.drawImage(dot, st.x * W - s / 2, st.y * H - s / 2, s, s);
+      if (st.big) { // destello en cruz, como los de A01
+        const L = s * 2.4 * tw; g.globalAlpha = a * 0.7; g.fillStyle = '#f3e8ff';
+        g.fillRect(st.x * W - L, st.y * H - 0.6 * u, L * 2, 1.2 * u); g.fillRect(st.x * W - 0.6 * u, st.y * H - L * 0.7, 1.2 * u, L * 1.4);
+      }
+    }
+    if (!shoot && now > nextShoot) { shoot = { x: 0.15 + Math.random() * 0.5, y: 0.04 + Math.random() * 0.14, t0: now }; nextShoot = now + 7000 + Math.random() * 9000; }
+    if (shoot) {
+      const e = (now - shoot.t0) / 1100; if (e > 1) shoot = null; else {
+        const x = (shoot.x + e * 0.32) * W, y = (shoot.y + e * 0.12) * H, len = 90 * u;
+        const gr = g.createLinearGradient(x, y, x - len, y - len * 0.37); gr.addColorStop(0, 'rgba(255,250,255,.95)'); gr.addColorStop(1, 'rgba(210,180,255,0)');
+        g.globalAlpha = Math.sin(e * Math.PI); g.strokeStyle = gr; g.lineWidth = 1.6 * u; g.beginPath(); g.moveTo(x, y); g.lineTo(x - len, y - len * 0.37); g.stroke();
+      }
+    }
+    g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+  }
+  return { fit, draw };
+}
+
 const load = (src) => new Promise((res, rej) => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = rej; im.src = src; });
 
 export function mountA12({ stage, motion }) {
-  let root = null, built = false, active = false, rig = null, raf = 0, ready = null, last = 0;
+  let root = null, built = false, active = false, rig = null, raf = 0, ready = null, last = 0, sky = null;
   let blinkT0 = 0, blinkNext = 0, blinkLen = 260, held = null;
   const lookN = [0, 0];
 
@@ -96,7 +145,7 @@ export function mountA12({ stage, motion }) {
     const F = ESC.fondo, A = ESC.alaira, [px, py] = ESC.pocion;
     root = document.createElement('div');
     root.className = 'scene12'; root.id = 'scene-a12'; root.setAttribute('aria-hidden', 'true');
-    root.innerHTML = `<div class="a6-layer a12-fondo" style="${box(F.box)};${depth(F.d)}"><img src="${F.src}" alt="" decoding="async" draggable="false"></div>
+    root.innerHTML = `<div class="a6-layer a12-fondo" style="${box(F.box)};${depth(F.d)}"><img src="${F.src}" alt="" decoding="async" draggable="false"><canvas class="a12-estrellas"></canvas></div>
       <div class="a6-layer a12-alaira" style="${box(A.box)};${depth(A.d)}">
         <img class="a12-alaira-img" src="${A.src}" alt="" decoding="async" draggable="false">
         <canvas class="a12-rig"></canvas>
@@ -104,7 +153,8 @@ export function mountA12({ stage, motion }) {
         <i class="a12-pocion" style="left:${px * 100}%;top:${py * 100}%"></i>
       </div>`;
     stage.querySelector('#scene').after(root);
-    new ResizeObserver(() => rig?.fit()).observe(root);
+    sky = makeSky(root.querySelector('.a12-estrellas'));
+    new ResizeObserver(() => { rig?.fit(); sky.fit(); }).observe(root);
   }
   function prefetch() { const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500)); idle(() => build(), { timeout: 9000 }); }
   function prepare() {
@@ -128,13 +178,13 @@ export function mountA12({ stage, motion }) {
 
   function frame(now) {
     raf = 0;
-    if (!active || document.hidden || !rig) return;
-    if (now - last >= 32) { last = now; rig.draw(now / 1000, held ?? (motion.reduced ? 0 : blinkAmount(now)), lookN); }
+    if (!active || document.hidden) return;
+    if (now - last >= 32) { last = now; sky?.draw(motion.reduced ? 0 : now); rig?.draw(now / 1000, held ?? (motion.reduced ? 0 : blinkAmount(now)), lookN); }
     if (!motion.reduced) raf = requestAnimationFrame(frame);
   }
   const run = () => { if (!raf && active && !document.hidden) raf = requestAnimationFrame(frame); };
   document.addEventListener('visibilitychange', () => { if (!document.hidden) run(); });
-  motion.onChange?.((r) => { if (r) { look([0, 0]); rig?.draw(0, 0, [0, 0]); } else run(); });
+  motion.onChange?.((r) => { if (r) { look([0, 0]); rig?.draw(0, 0, [0, 0]); sky?.draw(0); } else run(); });
 
   function look([x, y]) {
     if (!root) return;
@@ -148,7 +198,7 @@ export function mountA12({ stage, motion }) {
   stage.addEventListener('pointerdown', (e) => {
     if (!active || e.target.closest('button, a, .panel')) return;
     const r = root.querySelector('.a12-alaira').getBoundingClientRect();
-    if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom * 0.5 + r.top * 0.5) { blinkNext = performance.now(); run(); }
+    if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.top + r.height * 0.3) { blinkNext = performance.now(); run(); }
   });
 
   return {
@@ -156,7 +206,7 @@ export function mountA12({ stage, motion }) {
     get el() { return root; },
     get active() { return active; },
     get animated() { return !!rig; },
-    enter() { prepare().then(() => { rig?.fit(); run(); }); active = true; root.classList.add('is-on'); schedule(performance.now()); run(); },
+    enter() { sky?.fit(); prepare().then(() => { rig?.fit(); sky?.fit(); run(); }); active = true; root.classList.add('is-on'); schedule(performance.now()); run(); },
     leave() { active = false; root?.classList.remove('is-on'); if (raf) cancelAnimationFrame(raf); raf = 0; },
     _debug: { blink: () => { blinkNext = performance.now(); run(); }, hold: (b) => { held = b; run(); } },
   };
