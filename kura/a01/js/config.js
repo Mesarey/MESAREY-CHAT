@@ -79,7 +79,7 @@ export const config = {
     // Auditoría de volumen: ajuste en dB por sonido para que todos lleguen al mismo nivel
     // (pico de corto plazo ≈ −24 dBFS medido dentro de la app). Medido con audio._measure(nombre).
     sfxLevels: { tap: 14, focus: 20.5, toggle: 17, error: 18, granted: -10, legal: -7, effects: 2.5, createAccount: -9.3, soundIcon: 4, closeLegal: -6.8, start: 14, starFloat: -1, decline: 3, fireworks: -29, greet: -15.4,
-      guiaAmaya: -2.1, guiaAzara: -11.5, guiaNova: -21.1, guiaOrion: -1.6, transicion: 13.5 },
+      guiaAmaya: -2.1, guiaAzara: -11.5, guiaNova: -21.1, guiaOrion: -1.6, transicion: 1.5 },
     // los cuatro sonidos de guía de A11 quedan iguales entre sí y 5 dB por debajo del resto de los efectos
     // fireworks: más bajo que la estrella (≈ −49 dB), como un eco lejano
     // starFloat es un fondo muy sutil (≈ 23 dB por debajo de los demás sonidos), en bucle mientras se ve A06
