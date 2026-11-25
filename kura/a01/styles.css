@@ -1074,6 +1074,63 @@ button, input { font: inherit; color: inherit; }
 .guia-card[data-guia="orion"] .guia-titulo { font-size: 8.4cqw; line-height: 1.08; }
 .guia-card[data-guia="orion"] .guia-filas { gap: 3.2cqw; }
 .guia-card[data-guia="orion"] .guia-filas .gi { padding: 3cqw 4cqw; }
+
+/* ---- Botón «Empezar con …» propio de cada mundo ---- */
+@property --gr { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+/* Azara: rubí tallado (facetas con cortes de luz, filo dorado, destellos en las aristas) */
+.guia-card[data-guia="azara"] .guia-start {
+  border: 1.5px solid rgba(240, 200, 150, .9); color: #fff4ec; font-weight: 600; font-size: 6.1cqw; text-shadow: 0 .3cqw 1.4cqw rgba(60, 0, 12, .85);
+  background:
+    linear-gradient(115deg, transparent 0 18%, rgba(255, 170, 190, .26) 18% 31%, transparent 31%),
+    linear-gradient(65deg, transparent 0 58%, rgba(255, 120, 150, .22) 58% 70%, transparent 70%),
+    linear-gradient(160deg, rgba(255, 255, 255, .1) 0 22%, transparent 22% 64%, rgba(70, 0, 18, .35) 64%),
+    linear-gradient(20deg, transparent 0 44%, rgba(255, 90, 120, .2) 44% 52%, transparent 52%),
+    radial-gradient(120% 140% at 50% 120%, #ff3b5c 0%, #c0122f 36%, #7a0619 70%, #4a0210 100%);
+  box-shadow: 0 0 6cqw rgba(255, 40, 80, .5), 0 1.4cqw 3cqw rgba(40, 0, 10, .6), inset 0 0 0 .5cqw rgba(120, 10, 30, .55), inset 0 -2cqw 4cqw rgba(255, 70, 110, .45), inset 0 1cqw 2cqw rgba(255, 220, 230, .25);
+}
+.guia-card[data-guia="azara"] .guia-start::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: radial-gradient(1.2cqw 1.2cqw at 16% 26%, #fff, transparent 70%), radial-gradient(.9cqw .9cqw at 84% 70%, #ffe6ee, transparent 70%), radial-gradient(.8cqw .8cqw at 62% 18%, #fff, transparent 70%);
+  animation: guia-destello 2.8s ease-in-out infinite alternate; }
+@keyframes guia-destello { from { opacity: .25; } to { opacity: 1; } }
+.guia-card[data-guia="azara"] .guia-sheen { background: linear-gradient(90deg, transparent, rgba(255, 220, 230, .2) 35%, rgba(255, 255, 255, .75) 50%, rgba(255, 220, 230, .2) 65%, transparent); }
+
+/* Nova: neón de ciudad (cristal oscuro, filo de luz azul que recorre el borde y un pulso de brillo) */
+.guia-card[data-guia="nova"] .guia-start {
+  border: 0; color: #eaf6ff; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; font-size: 3.9cqw;
+  background: linear-gradient(180deg, rgba(14, 30, 64, .92), rgba(6, 14, 34, .95));
+  box-shadow: 0 0 4cqw rgba(92, 200, 255, .45), 0 0 10cqw rgba(60, 140, 255, .25), inset 0 0 3cqw rgba(92, 200, 255, .18);
+  animation: guia-neon 2.4s ease-in-out infinite alternate;
+}
+.guia-card[data-guia="nova"] .guia-start::after { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 2;
+  background: conic-gradient(from var(--gr), rgba(92, 200, 255, .15) 0deg, #5cc8ff 40deg, #fff 60deg, #8a7bff 90deg, rgba(92, 200, 255, .15) 140deg 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: guia-giro 3.2s linear infinite; }
+@keyframes guia-giro { to { --gr: 360deg; } }
+@keyframes guia-neon { from { box-shadow: 0 0 3cqw rgba(92, 200, 255, .35), 0 0 8cqw rgba(60, 140, 255, .18), inset 0 0 3cqw rgba(92, 200, 255, .14); }
+  to { box-shadow: 0 0 5.5cqw rgba(92, 200, 255, .65), 0 0 14cqw rgba(60, 140, 255, .32), inset 0 0 4cqw rgba(92, 200, 255, .26); } }
+.guia-card[data-guia="nova"] .guia-start::before { background: linear-gradient(180deg, rgba(160, 220, 255, .22), rgba(160, 220, 255, 0)); }
+.guia-card[data-guia="nova"] .guia-start .gi-chev { color: #5cc8ff; }
+
+/* Orion: cielo de astrolabio (azul noche con estrellas, doble filo dorado grabado) */
+.guia-card[data-guia="orion"] .guia-start {
+  border: 1.5px solid #d6a45b; color: #f6ead2; font-weight: 600; font-size: 6cqw; text-shadow: 0 .3cqw 1.4cqw rgba(0, 4, 16, .9);
+  background:
+    radial-gradient(.5cqw .5cqw at 12% 30%, #fff6dc 40%, transparent 60%), radial-gradient(.4cqw .4cqw at 24% 72%, #f3d9a0 40%, transparent 60%),
+    radial-gradient(.45cqw .45cqw at 78% 24%, #fff 40%, transparent 60%), radial-gradient(.35cqw .35cqw at 88% 66%, #f3d9a0 40%, transparent 60%),
+    radial-gradient(.3cqw .3cqw at 40% 20%, #fff 40%, transparent 60%), radial-gradient(.3cqw .3cqw at 63% 80%, #fff 40%, transparent 60%),
+    radial-gradient(90% 160% at 50% 0%, rgba(80, 110, 190, .55), transparent 70%),
+    linear-gradient(180deg, #16264a, #0b1630);
+  box-shadow: 0 0 5cqw rgba(214, 164, 91, .35), inset 0 0 0 .7cqw #0d1a36, inset 0 0 0 .95cqw rgba(214, 164, 91, .55), inset 0 0 4cqw rgba(214, 164, 91, .18);
+}
+.guia-card[data-guia="orion"] .guia-start::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: radial-gradient(.7cqw .7cqw at 12% 30%, rgba(255, 246, 220, .95), transparent 70%), radial-gradient(.6cqw .6cqw at 78% 24%, #fff, transparent 70%), radial-gradient(.5cqw .5cqw at 63% 80%, #fff, transparent 70%);
+  animation: guia-destello 3.4s ease-in-out infinite alternate; }
+.guia-card[data-guia="orion"] .guia-start::before { background: linear-gradient(180deg, rgba(243, 217, 160, .2), rgba(243, 217, 160, 0)); }
+.guia-card[data-guia="orion"] .guia-sheen { background: linear-gradient(90deg, transparent, rgba(243, 217, 160, .18) 35%, rgba(255, 240, 210, .6) 50%, rgba(243, 217, 160, .18) 65%, transparent); }
+.guia-card[data-guia="orion"] .guia-start .gi-chev { color: #d6a45b; }
+.reduce-motion .guia-start, .reduce-motion .guia-start::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .guia-start, .guia-start::after { animation: none !important; } }
 .reduce-motion .guia-dialog[open] .guia-card, .reduce-motion .guia-card .guia-arte, .reduce-motion .guia-card .guia-body, .reduce-motion .guia-sheen, .reduce-motion .guia-flashes i { animation: none; }
 @media (prefers-reduced-motion: reduce) { .guia-dialog[open] .guia-card, .guia-card .guia-arte, .guia-card .guia-body, .guia-sheen, .guia-flashes i { animation: none; } }
 
