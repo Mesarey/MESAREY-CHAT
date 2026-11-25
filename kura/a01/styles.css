@@ -1106,6 +1106,21 @@ button, input { font: inherit; color: inherit; }
 .guia-card[data-guia="orion"] .guia-sheen, .guia-card[data-guia="orion"] .guia-start::before { display: none; }
 .reduce-motion .guia-start, .reduce-motion .guia-start::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .guia-start, .guia-start::after { animation: none !important; } }
+
+/* Cristal esmerilado: paneles más transparentes y desenfocados en Azara, Nova y Orion (el mundo se ve a través) */
+.guia-card[data-guia="azara"] { --g-glass: rgba(70, 12, 24, .24); }
+.guia-card[data-guia="nova"] { --g-glass: rgba(10, 26, 60, .26); }
+.guia-card[data-guia="orion"] { --g-glass: rgba(16, 26, 56, .26); }
+.guia-card:not([data-guia="amaya"]) .guia-lista, .guia-card:not([data-guia="amaya"]) .guia-filas .gi, .guia-card[data-guia="nova"] .guia-grid,
+.guia-card:not([data-guia="amaya"]) .guia-contempla, .guia-card:not([data-guia="amaya"]) .guia-nav, .guia-card:not([data-guia="amaya"]) .guia-close {
+  backdrop-filter: blur(16px) saturate(1.35); -webkit-backdrop-filter: blur(16px) saturate(1.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 4cqw rgba(255, 255, 255, .04), 0 1.2cqw 4cqw rgba(0, 0, 0, .18); }
+.guia-card[data-guia="azara"] .guia-velo { background: linear-gradient(180deg, rgba(40, 6, 14, 0) 30%, rgba(58, 9, 20, .5) 46%, rgba(50, 8, 18, .68) 62%, rgba(42, 8, 16, .8) 100%); }
+.guia-card[data-guia="nova"] .guia-velo { background: linear-gradient(180deg, rgba(4, 10, 28, 0) 32%, rgba(6, 14, 36, .5) 46%, rgba(6, 12, 30, .66) 60%, rgba(6, 12, 30, .8) 100%); }
+.guia-card[data-guia="orion"] .guia-velo { background: linear-gradient(180deg, rgba(8, 14, 30, 0) 32%, rgba(10, 18, 36, .5) 48%, rgba(10, 17, 34, .68) 64%, rgba(11, 20, 38, .8) 100%); }
+/* el texto sigue nítido sobre el cristal */
+.guia-card:not([data-guia="amaya"]) .guia-titulo, .guia-card:not([data-guia="amaya"]) .gi, .guia-card:not([data-guia="amaya"]) .guia-contempla, .guia-card:not([data-guia="amaya"]) .guia-sub,
+.guia-card:not([data-guia="amaya"]) .gh-tag, .guia-card:not([data-guia="amaya"]) .gh-orion { text-shadow: 0 .2cqw 1.4cqw rgba(0, 0, 0, .55); }
 .reduce-motion .guia-dialog[open] .guia-card, .reduce-motion .guia-card .guia-arte, .reduce-motion .guia-card .guia-body, .reduce-motion .guia-sheen, .reduce-motion .guia-flashes i { animation: none; }
 @media (prefers-reduced-motion: reduce) { .guia-dialog[open] .guia-card, .guia-card .guia-arte, .guia-card .guia-body, .guia-sheen, .guia-flashes i { animation: none; } }
 
