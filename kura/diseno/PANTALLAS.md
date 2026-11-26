@@ -53,7 +53,7 @@ Referencia principal: «Alaira en cuatro pantallas de KURA lunar». Conservar ro
 
 | Código | Pantalla | Qué aparece |
 |---|---|---|
-| L01 | Hoy con Alaira | Alaira en primer plano, saludo personalizado y afirmación en grande. Siguiente, Guardar y Escuchar cuando haya audio. Acceso a sus actividades. |
+| L01 | Hoy con Alaira | Portada de su mundo (se llega con «Entrar al mundo de Alaira» en A12). Jardín lunar con cielo estrellado vivo y Alaira animada (cabello y falda ondean, parpadeo suave, la estrella gira y flota en sus manos). Arriba solo el Aura y su nivel. Los objetos del jardín son los atajos, en medallones de cristal animados: Horóscopo (luna), Tarot (cartas), Afirmaciones (pociones: abre las categorías), Soundscape (fuente), Emociones (libro: abre el mapa de emociones de L08) y Gratitud (flores). Abajo la afirmación del día (tocarla pasa a la siguiente) con Categorías, Guardar, Escuchar y «×» Ocultar (con Deshacer). En el centro el orbe «Ritual» abre «Elige tu ritual»: Ritual de Alaira (gratis) o Ritual de los mundos (una afirmación de cada guía, KURA PASS), 1 o 5 min y Comenzar. Menú: Hoy · Mundos · Mi camino · Biblioteca · Perfil. Diseño aprobado en `diseno/L01/`. |
 | L02 | Explorar con Alaira | Categorías, Diario de gratitud, Respiración, Ritual y Contemplación. |
 | L03 | Categorías de Alaira | Gratitud, calma, espiritualidad, pensamiento positivo y rutina matutina. |
 | L04 | Diario de gratitud | Alaira escribiendo y tres botones: Una persona, Un lugar, Un momento. |

@@ -393,6 +393,47 @@
       </section>
       </div>
 
+      <!-- L01 · Hoy con Alaira: portada de su mundo. Los objetos del jardín son los atajos (medallones);
+           la afirmación del día con categorías, guardar, escuchar y ocultar; el orbe abre «Elige tu ritual». -->
+      <div class="view view-l01" id="view-l01" data-view="l01" hidden>
+        <h2 class="sr" id="titulo-l01" data-i18n="l01Title">Hoy con Alaira</h2>
+        <button class="l01-aura" id="l01-aura" type="button" data-i18n-attr="aria-label:l01AuraLabel">
+          <span class="l01-aura-orbe" aria-hidden="true"><svg viewBox="0 0 48 48"><circle class="l01-aura-pista" cx="24" cy="24" r="21"/><circle class="l01-aura-avance" cx="24" cy="24" r="21"/><path class="l01-aura-estrella" d="M24 9c1.2 8.6 4.4 11.8 13 13-8.6 1.2-11.8 4.4-13 13-1.2-8.6-4.4-11.8-13-13 8.6-1.2 11.8-4.4 13-13Z"/></svg></span>
+          <span class="l01-aura-nivel" id="l01-nivel">Nv 1</span>
+        </button>
+        <nav class="l01-atajos" data-i18n-attr="aria-label:l01Atajos">
+          <button class="l01-med" type="button" data-fn="horoscopo" style="--x:114;--y:350;--i:0"><span class="l01-burbuja"><img class="m-luna" src="assets/l01/luna.webp" alt="" draggable="false"></span><span class="l01-med-nombre" data-i18n="l01Horoscopo">Horóscopo</span></button>
+          <button class="l01-med" type="button" data-fn="tarot" style="--x:114;--y:556;--i:1"><span class="l01-burbuja"><img class="m-cartas" src="assets/l01/cartas.webp" alt="" draggable="false"></span><span class="l01-med-nombre" data-i18n="l01Tarot">Tarot</span></button>
+          <button class="l01-med" type="button" data-fn="afirmaciones" style="--x:114;--y:762;--i:2"><span class="l01-burbuja"><img class="m-pociones" src="assets/l01/pociones.webp" alt="" draggable="false"><i class="m-burbujas"><b></b><b></b><b></b><b></b></i></span><span class="l01-med-nombre" data-i18n="l01Afirmaciones">Afirmaciones</span></button>
+          <button class="l01-med" type="button" data-fn="soundscape" style="--x:797;--y:350;--i:3"><span class="l01-burbuja"><img class="m-fuente" src="assets/l01/fuente.webp" alt="" draggable="false"><i class="m-agua"></i></span><span class="l01-med-nombre" data-i18n="l01Soundscape">Soundscape</span></button>
+          <button class="l01-med" type="button" data-fn="emociones" style="--x:797;--y:556;--i:4"><span class="l01-burbuja"><img class="m-libro" src="assets/l01/libro.webp" alt="" draggable="false"><i class="m-pagina"></i></span><span class="l01-med-nombre" data-i18n="l01Emociones">Emociones</span></button>
+          <button class="l01-med" type="button" data-fn="gratitud" style="--x:797;--y:762;--i:5"><span class="l01-burbuja"><img class="m-flores" src="assets/l01/flores.webp" alt="" draggable="false"></span><span class="l01-med-nombre" data-i18n="l01Gratitud">Gratitud</span></button>
+        </nav>
+        <section class="panel panel-l01" id="panel-l01" aria-labelledby="titulo-l01">
+          <p class="l01-afirmacion" id="l01-afirmacion" aria-live="polite"></p>
+          <div class="l01-deshacer" id="l01-deshacer" hidden><span data-i18n="l01Oculta">Afirmación oculta</span><button type="button" id="l01-deshacer-btn" data-i18n="l01Deshacer">Deshacer</button></div>
+          <div class="l01-acciones">
+            <button class="l01-ico" id="l01-categorias" type="button" data-i18n-attr="aria-label:l01Categorias"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 9 4.6-9 4.6-9-4.6 9-4.6Z"/><path d="m3 12.2 9 4.6 9-4.6"/><path d="m3 16.3 9 4.6 9-4.6"/></svg></button>
+            <button class="l01-ico" id="l01-guardar" type="button" aria-pressed="false" data-i18n-attr="aria-label:l01Guardar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-4-5.5 4v-17Z"/></svg></button>
+            <button class="l01-ritual" id="cta-l01" type="button" aria-haspopup="dialog" aria-controls="ritual-hoja">
+              <span class="l01-ritual-onda" aria-hidden="true"></span><span class="l01-ritual-onda" aria-hidden="true"></span>
+              <img class="l01-ritual-orbe" src="assets/l01/orbe.webp" alt="" draggable="false">
+              <span class="l01-ritual-brillo" aria-hidden="true"></span>
+              <span class="l01-ritual-texto" data-i18n="l01Ritual">Ritual</span>
+            </button>
+            <button class="l01-ico" id="l01-escuchar" type="button" data-i18n-attr="aria-label:l01Escuchar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 4.5v15l12-7.5-12-7.5Z"/></svg></button>
+            <button class="l01-ico" id="l01-ocultar" type="button" data-i18n-attr="aria-label:l01Ocultar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+          </div>
+        </section>
+        <nav class="l01-menu" data-i18n-attr="aria-label:l01Menu">
+          <button type="button" class="is-on" aria-current="page" data-tab="hoy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4.5l8 6.5v8.5h-5.2v-5.5H9.2v5.5H4V11Z"/></svg><span data-i18n="l01TabHoy">Hoy</span></button>
+          <button type="button" data-tab="mundos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5.6"/><path d="M5.2 15.6c-2.6 1.9-3.6 3.7-2.8 4.6 1.5 1.6 7.6-1.3 13.6-6.5S24.3 4.9 22.8 3.3c-.8-.9-2.9-.2-5.4 1.6"/></svg><span data-i18n="l01TabMundos">Mundos</span></button>
+          <button type="button" data-tab="camino"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20.5c3-1 4.5-3 3.2-5S7.6 11 11 10.5s5.2-2.6 4-5"/><path d="M15 2.8v6M15 2.8l4.5 1.6L15 6.2"/><circle cx="5" cy="20.5" r="1.2"/></svg><span data-i18n="l01TabCamino">Mi camino</span></button>
+          <button type="button" data-tab="biblioteca"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5c-2.2-1.6-5-2-8.5-1.6v13.4c3.5-.4 6.3 0 8.5 1.6 2.2-1.6 5-2 8.5-1.6V4.9c-3.5-.4-6.3 0-8.5 1.6Z"/><path d="M12 6.5v12.9"/></svg><span data-i18n="l01TabBiblioteca">Biblioteca</span></button>
+          <button type="button" data-tab="perfil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-4 3.7-6 7.5-6s6.7 2 7.5 6"/></svg><span data-i18n="l01TabPerfil">Perfil</span></button>
+        </nav>
+      </div>
+
       <nav class="prefs" aria-label="Preferencias">
         <button type="button" id="lang" class="pref" data-i18n="otherLang">English</button>
         <span aria-hidden="true">·</span>
@@ -443,6 +484,45 @@
     </dialog>
 
     <!-- A11: vista previa de cada guía (se abre al tocar su banner) -->
+    <!-- L01 · Elige tu ritual: el de Alaira (gratis) o el de los cinco mundos (KURA PASS) -->
+    <dialog class="l01-hoja" id="ritual-hoja" aria-labelledby="ritual-hoja-titulo">
+      <form method="dialog" class="l01-hoja-card">
+        <i class="l01-hoja-asa" aria-hidden="true"></i>
+        <h3 class="l01-hoja-titulo" id="ritual-hoja-titulo"><span aria-hidden="true">✦</span> <span data-i18n="l01RitualTitulo">Elige tu ritual</span> <span aria-hidden="true">✦</span></h3>
+        <label class="l01-opcion">
+          <input type="radio" name="ritual" value="alaira" checked>
+          <img class="l01-op-retrato" src="assets/l01/retratos/alaira.webp" alt="" draggable="false">
+          <span class="l01-op-texto"><span class="l01-op-nombre" data-i18n="l01RitualAlaira">Ritual de Alaira</span><span class="l01-op-sub" id="l01-op-sub" data-i18n="l01RitualAlairaSub">5 afirmaciones · 1 min</span></span>
+          <span class="l01-tag" data-i18n="l01Gratis">Gratis</span>
+        </label>
+        <label class="l01-opcion l01-opcion-pass">
+          <input type="radio" name="ritual" value="mundos">
+          <span class="l01-op-retratos" aria-hidden="true"><img src="assets/l01/retratos/alaira.webp" alt=""><img src="assets/l01/retratos/amaya.webp" alt=""><img src="assets/l01/retratos/azara.webp" alt=""><img src="assets/l01/retratos/nova.webp" alt=""><img src="assets/l01/retratos/orion.webp" alt=""></span>
+          <span class="l01-op-texto"><span class="l01-op-nombre" data-i18n="l01RitualMundos">Ritual de los mundos</span><span class="l01-op-sub" data-i18n="l01RitualMundosSub">Una afirmación de cada guía</span><span class="l01-tag-pass"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>KURA PASS</span></span>
+        </label>
+        <div class="l01-duracion" role="radiogroup" data-i18n-attr="aria-label:l01Duracion">
+          <label><input type="radio" name="duracion" value="1" checked><span>1 min</span></label>
+          <label><input type="radio" name="duracion" value="5"><span>5 min</span></label>
+        </div>
+        <button class="l01-hoja-cta" value="start" data-i18n="l01Comenzar">Comenzar</button>
+      </form>
+    </dialog>
+    <!-- L01 · Categorías de afirmaciones de Alaira -->
+    <dialog class="l01-hoja" id="cats-hoja" aria-labelledby="cats-hoja-titulo">
+      <form method="dialog" class="l01-hoja-card">
+        <i class="l01-hoja-asa" aria-hidden="true"></i>
+        <h3 class="l01-hoja-titulo" id="cats-hoja-titulo"><span aria-hidden="true">✦</span> <span data-i18n="l01CatsTitulo">Categorías</span> <span aria-hidden="true">✦</span></h3>
+        <p class="l01-hoja-sub" data-i18n="l01CatsSub">Elige de qué temas quieres tus afirmaciones.</p>
+        <div class="l01-chips" id="l01-chips">
+          <label><input type="checkbox" value="gratitud"><span data-i18n="l01CatGratitud">Gratitud</span></label>
+          <label><input type="checkbox" value="calma"><span data-i18n="l01CatCalma">Calma</span></label>
+          <label><input type="checkbox" value="espiritualidad"><span data-i18n="l01CatEspiritualidad">Espiritualidad</span></label>
+          <label><input type="checkbox" value="positivo"><span data-i18n="l01CatPositivo">Pensamiento positivo</span></label>
+          <label><input type="checkbox" value="manana"><span data-i18n="l01CatManana">Rutina matutina</span></label>
+        </div>
+        <button class="l01-hoja-cta" value="ok" data-i18n="l01Listo">Listo</button>
+      </form>
+    </dialog>
     <dialog class="guia-dialog" id="guia-dialog" aria-labelledby="guia-nombre">
       <div class="guia-card"></div>
     </dialog>
