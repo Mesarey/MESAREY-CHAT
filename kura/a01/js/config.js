@@ -96,7 +96,7 @@ export const config = {
       fireworks: 'audio/sfx/fuegos-artificiales.wav', // A07: fuegos artificiales al poner el nombre
       decline: 'audio/sfx/falta-dato.wav',         // falta un dato para avanzar: campos vacíos en A01–A03 y la introducción (A07 en adelante)
       starFloat: 'audio/sfx/estrella-flotando.wav', // la estrella de la mano de Alaira (A06), en bucle y muy suave
-      transicion: 'audio/sfx/transicion.wav',      // paso de A09 a A10 y de A10 a A11 (cambio de escenario)
+      transicion: 'audio/sfx/transicion.wav',      // paso de A09→A10, A10→A11 y A11→A12 (cambio de escenario)
       guiaAmaya: 'audio/sfx/guia-amaya.wav',       // A11: elegir a Amaya (banner o flechas de la vista previa)
       guiaAzara: 'audio/sfx/guia-azara.wav',       // A11: elegir a Azara
       guiaNova: 'audio/sfx/guia-nova.wav',         // A11: elegir a Nova

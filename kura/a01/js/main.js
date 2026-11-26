@@ -258,7 +258,7 @@ function showView(name, { animate = true } = {}) {
   view = next;
   { const d = $('guia-dialog'); if (d.open) d.close(); } // la vista previa de un guía no sobrevive a un cambio de pantalla
   const sceneChange = sceneOf(name) !== sceneOf(prev.name);
-  if ((prev.name === 'a09' && name === 'a10') || (prev.name === 'a10' && name === 'a11')) audio.sfx('transicion'); // paso de escenario hacia adelante
+  if ((prev.name === 'a09' && name === 'a10') || (prev.name === 'a10' && name === 'a11') || (prev.name === 'a11' && name === 'a12')) audio.sfx('transicion'); // paso de escenario hacia adelante
   const swap = () => {
     prev.el.hidden = true; prev.el.classList.remove('is-active');
     next.el.hidden = false; next.el.classList.add('is-active');
