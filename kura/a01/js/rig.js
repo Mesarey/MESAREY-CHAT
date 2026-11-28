@@ -122,3 +122,91 @@ export function makeSky(canvas, url) {
 
 export const load = (src) => new Promise((res, rej) => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = rej; im.src = src; });
 
+
+/* ---------- Paisaje vivo (fondo de L01) ----------
+   Una sola ilustración HD y un mapa de zonas (R glicinas, G agua del lago, B luces cálidas): las glicinas se mecen,
+   el agua ondula y destella, y los faroles y ventanas titilan. Sin repetir capas: todo sale de la misma imagen. */
+const SCENERY_FS = `precision mediump float;
+varying vec2 uv;
+uniform sampler2D tex,zon;
+uniform float t;
+uniform vec2 px;
+void main(){
+  vec3 z=texture2D(zon,uv).rgb;
+  vec2 d=vec2(0.);
+  d.x+=z.r*(9.*sin(t*.85+uv.y*8.)+3.*sin(t*1.9+uv.y*23.+uv.x*6.));
+  d.y+=z.r*2.*sin(t*.7+uv.x*9.);
+  d.x+=z.g*(2.6*sin(uv.y*240.-t*1.7)+1.4*sin(uv.y*90.+t*1.1+uv.x*12.));
+  d.y+=z.g*.9*sin(uv.x*35.+t*1.3);
+  vec4 c=texture2D(tex,uv-d*px);
+  float sh=sin(uv.y*420.-t*2.3+uv.x*28.)*sin(uv.x*60.+t*.9);
+  c.rgb*=1.+z.g*.07*sh;
+  float fl=.55+.45*sin(t*3.1+uv.x*40.)*sin(t*1.7+uv.y*30.);
+  c.rgb+=z.b*c.rgb*.24*fl;
+  gl_FragColor=c;
+}`;
+/* ---------- Video con transparencia (Alaira animada) ----------
+   El MP4 trae el color arriba y la transparencia abajo (en gris): se combinan aquí. Así funciona igual en iPhone
+   y Android (los videos con alfa nativo no son compatibles entre navegadores). */
+const ALPHA_FS = `precision mediump float;
+varying vec2 uv;
+uniform sampler2D vid;
+void main(){
+  vec3 c=texture2D(vid,vec2(uv.x,uv.y*.5)).rgb;
+  float a=smoothstep(.06,.94,texture2D(vid,vec2(uv.x,.5+uv.y*.5)).r);
+  gl_FragColor=vec4(c*a,a);
+}`;
+function glQuad(canvas, fs) {
+  const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false });
+  if (!gl) return null;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
+  gl.useProgram(prog);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  gl.clearColor(0, 0, 0, 0);
+  const texture = (unit, name) => {
+    const tx = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, tx);
+    for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v);
+    gl.uniform1i(gl.getUniformLocation(prog, name), unit);
+    return tx;
+  };
+  const fit = () => {
+    const r = canvas.getBoundingClientRect(); if (!r.width) return;
+    const q = Math.min(2, devicePixelRatio || 1), W = Math.round(r.width * q), H = Math.round(r.height * q);
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H); }
+  };
+  return { gl, prog, texture, fit, U: (n) => gl.getUniformLocation(prog, n) };
+}
+export function makeScenery(canvas, img, zonas) {
+  const q = glQuad(canvas, SCENERY_FS); if (!q) return null;
+  const { gl } = q;
+  q.texture(0, 'tex'); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+  q.texture(1, 'zon'); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, zonas);
+  gl.uniform2f(q.U('px'), 1 / img.naturalWidth, 1 / img.naturalHeight);
+  const uT = q.U('t');
+  return { fit: q.fit, draw(t) { gl.uniform1f(uT, t); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); } };
+}
+export function makeAlphaVideo(canvas, video) {
+  const q = glQuad(canvas, ALPHA_FS); if (!q) return null;
+  const { gl } = q;
+  q.texture(0, 'vid');
+  let ready = false, hasFrame = false;
+  // solo se dibuja cuando el navegador ya presentó un cuadro real (antes puede subir un cuadro gris vacío)
+  if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(() => { hasFrame = true; });
+  else video.addEventListener('timeupdate', function f() { if (video.currentTime > 0.05) { hasFrame = true; video.removeEventListener('timeupdate', f); } });
+  return {
+    fit: q.fit,
+    get ready() { return ready; },
+    // sube el cuadro actual del video y lo dibuja; false si todavía no hay cuadro
+    draw() {
+      if (!hasFrame || video.readyState < 2) return false;
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video);
+      gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      ready = true; return true;
+    },
+  };
+}

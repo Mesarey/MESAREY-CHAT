@@ -648,8 +648,8 @@ function introA06() {
     .from('.sound', { opacity: 0, duration: 1.2 }, .7)
     .from(V.querySelectorAll('.ch'), { opacity: 0, yPercent: 50, filter: 'blur(8px)', stagger: .03, duration: 1.3 }, .9)
     .from(V.querySelector('.panel'), { y: 60 * u, duration: 1.5 }, 1.2)
-    .from(V.querySelector('.panel').children, { opacity: 0, duration: 1.5 }, 1.2)
-    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a10-hint, .a10-opt, .a10-actions, .a11-eyebrow, .a11-filete, .a11-sub, .a11-card, .a11-skip, .a12-eyebrow, .a12-filete, .a12-sub, .a12-funciones li, .a12-camino, .l01-aura, .l01-med, .l01-afirmacion, .l01-acciones, .l01-menu, .cta'), { opacity: 0, y: 14 * u, stagger: .05, duration: 1 }, 1.5)
+    .from(V.querySelector('.panel').children, { opacity: 0, duration: 1.5, clearProps: 'opacity' }, 1.2)
+    .from(V.querySelectorAll('.a06-guide, .a06-question, .a07-info, .a07-field-wrap, .a10-hint, .a10-opt, .a10-actions, .a11-eyebrow, .a11-filete, .a11-sub, .a11-card, .a11-skip, .a12-eyebrow, .a12-filete, .a12-sub, .a12-funciones li, .a12-camino, .l01-aura, .l01-med, .l01-menu, .cta'), { opacity: 0, y: 14 * u, stagger: .05, duration: 1 }, 1.5)
     .to(reveal, { sky6: inAlaira(view.name) ? 1 : 0, duration: 3, ease: 'sine.inOut' }, .6)
     .to(reveal, { flares: 1, zoom: 1, duration: 2.2, ease: 'sine.inOut' }, 2.2)
     .add(() => setTimeout(invite, 1200), 2.6);

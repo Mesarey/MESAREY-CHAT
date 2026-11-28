@@ -1228,10 +1228,13 @@ html:has(.booting) { overflow: hidden; }
 .scene-l01 { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; background: #1a1640;
   opacity: 0; visibility: hidden; scale: 1.02; transform-origin: 50% 30%; }
 .scene-l01.is-on { visibility: visible; }
-.scene-l01 .a6-layer > img, .scene-l01 .l01-rig, .scene-l01 .l01-cielo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
-.scene-l01 .l01-rig { visibility: hidden; }
-.scene-l01.has-rig .l01-rig { visibility: visible; }
-.scene-l01.has-rig .l01-alaira-img { visibility: hidden; }
+.scene-l01 .a6-layer > img, .scene-l01 .a6-layer > canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
+/* paisaje vivo (WebGL) sobre la ilustración; Alaira en video sobre su ilustración HD (se cambia cuando el video ya corre) */
+.scene-l01 .l01-paisaje, .scene-l01 .l01-video { visibility: hidden; }
+.scene-l01.has-paisaje .l01-paisaje, .scene-l01.has-video .l01-video { visibility: visible; }
+.scene-l01.has-video .l01-alaira-img { visibility: hidden; }
+.l01-alaira { -webkit-mask: linear-gradient(#000 80%, transparent 99%); mask: linear-gradient(#000 80%, transparent 99%); } /* las rodillas se funden con el lago */
+.l01-video-src { position: absolute; left: 0; top: 0; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
 .scene-l01::after { content: ''; position: absolute; left: 0; right: 0; top: calc(1010 * var(--v)); bottom: 0; pointer-events: none;
   background: linear-gradient(180deg, rgba(24, 18, 56, 0), rgba(24, 18, 56, .62) 26%, rgba(22, 17, 52, .9) 48%, #1a1640 70%); }
 /* la estrella de sus manos: gira despacio, flota, late y le ilumina las palmas */
